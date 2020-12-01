@@ -36,7 +36,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
     assert_equal [@tag.name], issue_tags
   end
 
-  def test_contacts_should_return_json
+  def test_issue_tags_should_return_json
     get :issue_tags,
         params: { project_id: 'ecookbook', q: 'Fir' }
 

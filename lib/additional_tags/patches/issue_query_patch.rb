@@ -1,11 +1,10 @@
-require_dependency 'issue_query'
-
 module AdditionalTags
   module Patches
     module IssueQueryPatch
       extend ActiveSupport::Concern
 
       included do
+        include AdditionalsQuery
         include InstanceMethods
 
         alias_method :initialize_available_filters_without_tags, :initialize_available_filters

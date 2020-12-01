@@ -93,7 +93,7 @@ module AdditionalTags
       scope.select(columns.join(', '))
            .joins(tag_for_joins(klass, options))
            .group("#{TAG_TABLE_NAME}.id, #{TAG_TABLE_NAME}.name").having('COUNT(*) > 0')
-           .order(Arel.sql("#{ActiveRecord::Base.connection.quote_column_name order_column} #{order}"))
+           .order(Arel.sql("#{TAG_TABLE_NAME}.#{ActiveRecord::Base.connection.quote_column_name order_column} #{order}"))
     end
 
     def remove_unused_tags
