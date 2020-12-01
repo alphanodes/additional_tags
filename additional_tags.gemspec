@@ -1,4 +1,4 @@
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path '../lib', __FILE__
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'additional_tags/version'
 
@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Redmine plugin for adding tag functionality'
   spec.description   = 'Redmine plugin for adding tag functionality'
   spec.homepage      = 'https://github.com/alphanodes/additional_tags'
-  spec.license       = 'GPL-3.0'
+  spec.license       = 'GPL-2.0'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^((test|spec|features)/|Gemfile)})

@@ -115,8 +115,8 @@ jobs:
         working-directory: redmine
         run: |
           bundle exec rake generate_secret_token
+          bin/rails db:environment:set
           bundle exec rake db:create db:migrate redmine:plugins:migrate
-          bundle exec rake db:test:prepare
 
       - name: Run tests
         env:
