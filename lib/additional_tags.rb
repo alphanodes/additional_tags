@@ -32,7 +32,7 @@ module AdditionalTags
       WikiPage.include AdditionalTags::Patches::WikiPagePatch
 
       # because of this bug: https://www.redmine.org/issues/33290
-      if ActiveRecord::Base.connected? && ActiveRecord::Base.connection.table_exists?(TAG_TABLE_NAME)
+      if Additionals.redmine_database_ready? TAG_TABLE_NAME
         IssueQuery.include AdditionalTags::Patches::IssueQueryPatch
         TimeEntryQuery.include AdditionalTags::Patches::TimeEntryQueryPatch
       end
