@@ -1,3 +1,5 @@
+require_dependency 'issue_query'
+
 module AdditionalTags
   module Patches
     module IssueQueryPatch
