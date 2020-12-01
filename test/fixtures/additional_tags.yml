@@ -1,0 +1,29 @@
+tag_one:
+  id: 1
+  name: First
+  created_at: 2017-01-27 15:08:27 +01:00
+  updated_at: 2017-01-27 15:08:27 +01:00
+
+tag_two:
+  id: 2
+  name: Second
+  created_at: 2017-01-27 15:08:27 +01:00
+  updated_at: 2017-01-27 15:08:27 +01:00
+
+tag_three:
+  id: 3
+  name: Third
+  created_at: 2017-01-27 15:08:27 +01:00
+  updated_at: 2017-01-27 15:08:27 +01:00
+
+tag_four:
+  id: 4
+  name: Four
+  created_at: 2017-01-27 15:08:27 +01:00
+  updated_at: 2017-01-27 15:08:27 +01:00
+
+tag_five:
+  id: 5
+  name: five
+  created_at: 2017-01-27 15:08:27 +01:00
+  updated_at: 2017-01-27 15:08:27 +01:00

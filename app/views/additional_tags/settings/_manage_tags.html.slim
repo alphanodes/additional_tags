@@ -1,0 +1,35 @@
+- tags = manageable_tags
+- if tags.present?
+  table.list.issues
+    thead
+      tr
+        th.checkbox.hide-when-print
+          = check_box_tag 'ids[]', '', false, class: 'toggle-selection',
+                          title: "#{l :button_check_all}/#{l :button_uncheck_all}"
+
+        th = l :field_name
+        - manageable_tag_columns.each do |_column, column_values|
+          th = column_values[:label]
+        th
+    tbody
+      - tags.each do |tag|
+        tr.hascontextmenu id="#{tag.id}"
+          td.checkbox.hide-when-print
+           = check_box_tag('ids[]', tag.id, false, id: nil)
+          td = additional_tag_link tag, link: edit_additional_tag_path(tag)
+          - manageable_tag_column_values(tag).each do |column|
+            td = column
+          td.buttons
+            = link_to l(:button_edit), edit_additional_tag_path(tag),
+                      class: 'icon icon-edit'
+            = link_to l(:button_delete), additional_tags_path(ids: tag), method: :delete,
+                      data: { confirm: l(:text_are_you_sure) }, class: 'icon icon-del'
+- else
+  p.nodata = l :label_no_data
+
+javascript:
+  $(document).ready(function(){
+    $('#settings form').data('cmUrl', "#{context_menu_additional_tags_path}")
+  })
+
+= context_menu

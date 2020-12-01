@@ -1,0 +1,10 @@
+- if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:edit_issue_tags, @projects || @project)
+  li.folder
+    a.submenu[href="#"]
+      = l :field_tags
+    ul
+      li
+        = context_menu_link l(:button_add),
+                            edit_issue_tags_path(ids: @issue_ids),
+                            remote: true,
+                            class: 'icon icon-add'

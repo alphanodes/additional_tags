@@ -1,0 +1,9 @@
+- if AdditionalTags.setting? :active_wiki_tags
+  .wiki-attributes
+    = render partial: 'additional_tags/tag_list',
+             locals: { entry: page,
+                       show_always: true,
+                       link_wiki_tag: true,
+                       editable: User.current.allowed_to?(:add_wiki_tags, @project),
+                       update_url: update_tags_project_wiki_page_path(@project, page.title),
+                       use_colors: AdditionalTags.setting?(:use_colors) }

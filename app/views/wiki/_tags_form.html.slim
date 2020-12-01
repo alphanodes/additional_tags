@@ -1,0 +1,7 @@
+= additionals_select2_tag 'wiki_page[tag_list]',
+                          options_for_select(@page.tag_list.map { |tag| [tag, tag] }, @page.tag_list),
+                          multiple: true,
+                          width: '95%',
+                          url: wiki_tags_auto_completes_path(project_id: @project),
+                          placeholder: l(:label_add_tags),
+                          tags: true

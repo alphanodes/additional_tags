@@ -1,0 +1,72 @@
+require File.expand_path '../../test_helper', __FILE__
+
+class IssueTest < AdditionalTags::TestCase
+  fixtures :projects,
+           :users, :email_addresses, :user_preferences,
+           :roles,
+           :members,
+           :member_roles,
+           :issues,
+           :issue_statuses,
+           :issue_relations,
+           :versions,
+           :trackers,
+           :projects_trackers,
+           :issue_categories,
+           :enabled_modules,
+           :enumerations,
+           :attachments,
+           :workflows,
+           :custom_fields, :custom_values, :custom_fields_projects, :custom_fields_trackers,
+           :time_entries,
+           :journals, :journal_details,
+           :additional_tags, :additional_taggings
+
+  def setup
+    # run as the admin
+    User.stubs(:current).returns(users(:users_001))
+
+    @project_a = Project.find 1
+    @project_b = Project.find 3
+  end
+
+  test 'patch was applied' do
+    assert_respond_to Issue, :available_tags, 'Issue has available_tags getter'
+    assert_respond_to Issue.new, :tags, 'Issue instance has tags getter'
+    assert_respond_to Issue.new, :tags=, 'Issue instance has tags setter'
+    assert_respond_to Issue.new, :tag_list=, 'Issue instance has tag_list setter'
+  end
+
+  test 'available tags should return list of distinct tags' do
+    assert_equal 5, Issue.available_tags.to_a.size
+  end
+
+  def test_open_issue_tags
+    assert(Issue.available_tags(open_issues_only: true).to_a.size < Issue.available_tags.to_a.size)
+  end
+
+  test 'available tags should allow list tags of specific project only' do
+    assert_equal 4, Issue.available_tags(project: @project_a).to_a.size
+    assert_equal 1, Issue.available_tags(project: @project_b).to_a.size
+
+    assert_equal 3, Issue.available_tags(open_issues_only: true, project: @project_a).to_a.size
+    assert_equal 1, Issue.available_tags(open_issues_only: true, project: @project_b).to_a.size
+  end
+
+  test 'available tags should allow list tags found by name' do
+    assert_equal 3, Issue.available_tags(name_like: 'i').to_a.size
+    assert_equal 1, Issue.available_tags(name_like: 'rd').to_a.size
+    assert_equal 2, Issue.available_tags(name_like: 's').to_a.size
+    assert_equal 2, Issue.available_tags(name_like: 'e').to_a.size
+
+    assert_equal 2, Issue.available_tags(name_like: 'f', project: @project_a).to_a.size
+    assert_equal 0, Issue.available_tags(name_like: 'b', project: @project_a).to_a.size
+    assert_equal 1, Issue.available_tags(name_like: 'sec', open_issues_only: true, project: @project_a).to_a.size
+    assert_equal 1, Issue.available_tags(name_like: 'fir', open_issues_only: true, project: @project_a).to_a.size
+  end
+
+  test 'Issue.all_tags should return all tags kind of Issue' do
+    tags = Issue.available_tags.map(&:name)
+    assert_equal %w[First Four Second Third five], tags
+  end
+end

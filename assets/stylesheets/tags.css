@@ -1,0 +1,110 @@
+/* stylelint-disable font-family-no-missing-generic-family-keyword */
+
+#admin-menu a.tags::before {
+  font-family: Font Awesome\ 5 Free;
+  font-size: 1.2em;
+  font-weight: 900;
+  content: "\f02c"; /* fas fa-tags */
+  padding-right: 4px;
+}
+
+#admin-menu a.tags {
+  padding-left: 0;
+}
+
+/* Mobile menu style FontAwesome icon */
+.flyout-is-active #admin-menu li a.tags {
+  padding-left: 8px !important;
+}
+
+ul.tags {
+  list-style: none;
+  padding: 0;
+}
+
+ul.tags li { margin: 0.25em 0; }
+
+span.additional-tag-label-color {
+  display: inline-block;
+  margin-bottom: 5px !important;
+  border-radius: 2px !important;
+}
+
+td.tags span.additional-tag-label-color {
+  display: inline-block;
+  line-height: normal;
+  margin: 2px !important;
+}
+
+.additional-tag-label-color {
+  padding: 2px 4px;
+  font-size: 10px !important;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.additional-tag-label-color a::before {
+  font-family: Font Awesome\ 5 Free;
+  font-size: 0.9em;
+  font-weight: 900;
+  content: "\f02b"; /* fas fa-tag */
+  padding-right: 3px;
+}
+
+.additional-tag-label-color .tag-count,
+.tag-label .tag-count {
+  font-size: 0.75em;
+  margin-left: 0.5em;
+}
+
+span.additional-tag-label-color:hover a {
+  text-decoration: none !important;
+}
+
+#edit_tags_form.box { margin: 1px 5px 0 0; }
+
+#edit_tags_form.box label {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+#edit_tags_form.box #contact_tags {
+  margin-bottom: 10px;
+}
+
+div#tags-data span.contextual {
+  float: none;
+  padding-left: 0;
+}
+
+#edit_tags_link { opacity: 0; }
+
+#tags-data:hover #edit_tags_link { opacity: 1; }
+
+#sidebar ul.tags-cloud li.letter {
+  border-bottom: 1px dotted;
+  margin: 10px 30px 10px 0;
+  font-weight: bold;
+}
+
+.most_used_tag {
+  cursor: pointer;
+  color: #169;
+}
+
+.most_used_tag:hover { text-decoration: underline; }
+
+div.wiki-attributes .attribute {
+  padding-left: 50px;
+  clear: left;
+  min-height: 1.8em;
+}
+
+div.wiki-attributes .attribute .label {
+  width: 40px;
+  margin-left: -50px;
+  font-weight: bold;
+  float: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

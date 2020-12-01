@@ -1,0 +1,6 @@
+= stylesheet_link_tag 'tags', plugin: 'additional_tags'
+= javascript_include_tag 'tags', plugin: 'additional_tags'
+- if User.current.allowed_to?(:edit_issue_tags, @project, global: true) || \
+     User.current.allowed_to?(:create_issue_tags, @project, global: true) || \
+     User.current.allowed_to?(:add_wiki_tags, @project, global: true)
+  = additionals_library_load :select2

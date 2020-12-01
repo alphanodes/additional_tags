@@ -1,0 +1,11 @@
+- if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:view_issue_tags, @project)
+  h3
+    = l :field_tags
+    |  
+    = link_to l(:label_details),
+              project_issues_report_details_path(@project, detail: 'tag'),
+              class: 'icon-only icon-zoom-in',
+              title: l(:label_details)
+
+  = render partial: 'simple',
+           locals: { data: @issues_by_tags, field_name: 'tag_id', rows: @tags }

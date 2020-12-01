@@ -1,0 +1,8 @@
+.DS_Store
+.buildpath
+coverage/
+tmp/
+Gemfile.lock
+.project
+.settings/
+._*

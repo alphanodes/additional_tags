@@ -1,0 +1,35 @@
+- if defined?(show_always) && show_always || entry.tag_list.present?
+  .tags.attribute
+    - unless defined? hide_label
+      span.label
+        = l(:field_tag_list)
+        ' :
+    - if defined?(editable) && editable
+      #tags-data
+        = additional_tag_links entry.tags,
+                               project: @project,
+                               unsorted: defined?(unsorted) ? unsorted : false,
+                               link_wiki_tag: defined?(link_wiki_tag) ? link_wiki_tag : false,
+                               use_colors: defined?(use_colors) ? use_colors : true
+        '
+        span.contextual
+          = link_to l(:label_edit_tags),
+                    {},
+                    onclick: "$('#edit_tags_form').show(); $('#tags-data').hide(); return false;",
+                    id: 'edit_tags_link'
+
+      #edit_tags_form style="display: none;"
+        = form_tag update_url, method: :put do
+          = render partial: defined?(tags_form) ? tags_form : 'tags_form',
+                   locals: { css_id: defined?(css_id) ? css_id : nil }
+          '
+          = submit_tag l(:button_save), class: 'button-small'
+          '
+          = link_to l(:button_cancel), {}, onclick: "$('#edit_tags_form').hide(); $('#tags-data').show(); return false;"
+
+    - else
+      = additional_tag_links entry.tags,
+                             project: @project,
+                             unsorted: defined?(unsorted) ? unsorted : false,
+                             link_wiki_tag: defined?(link_wiki_tag) ? link_wiki_tag : false,
+                             use_colors: defined?(use_colors) ? use_colors : true

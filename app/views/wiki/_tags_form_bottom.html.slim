@@ -1,0 +1,5 @@
+- if AdditionalTags.setting?(:active_wiki_tags) && User.current.allowed_to?(:add_wiki_tags, @project)
+  p#wiki_tags
+    = label_tag l(:field_tag_list)
+    = render partial: 'wiki/tags_form',
+             locals: { project: project, page: page }

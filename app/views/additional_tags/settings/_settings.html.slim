@@ -1,0 +1,9 @@
+- tags_tabs = [{ name: 'general',
+                 partial: 'additional_tags/settings/general',
+                 label: :label_general },
+               { name: 'manage_tags',
+                 partial: 'additional_tags/settings/manage_tags',
+                 label: :label_manage_tags }]
+
+- html_title l(:label_settings), l(:field_tags)
+= render_tabs tags_tabs

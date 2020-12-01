@@ -1,0 +1,7 @@
+- tags = defined?(form) ? form.object.tag_list : []
+= additionals_select2_tag 'issue[tag_list]',
+                           options_for_select(tags.map { |tag| [tag, tag] }, tags),
+                           multiple: true,
+                           url: issue_tags_auto_completes_path,
+                           placeholder: l(:label_add_tags),
+                           tags: true

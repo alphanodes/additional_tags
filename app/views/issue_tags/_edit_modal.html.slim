@@ -1,0 +1,30 @@
+h3.title = l :label_add_tags
+
+- if @is_bulk_editing
+  h3 = l :label_bulk_edit_selected_issues
+  ul
+    - @issues.each do |issue|
+      li = link_to_issue issue
+- else
+  h3
+    span = link_to_issue @issues.first
+
+= form_tag issue_tags_path(ids: @issue_ids) do
+  fieldset.box
+    legend = l :field_tags
+    #issue_tags
+      = additionals_select2_tag 'issue[tag_list]',
+                                options_for_select(@issue_tags.map { |tag| [tag, tag] }, @issue_tags),
+                                multiple: true,
+                                style: 'width: 100%;',
+                                url: issue_tags_auto_completes_path(project_id: @project),
+                                placeholder: @is_bulk_editing ? t(:label_no_change_option) : '+ add tag',
+                                tags: User.current.allowed_to?(:create_issue_tags, @project)
+    p.most_used_tags
+      = safe_join @most_used_tags.collect { |t| tag.span(t.name, class: 'most_used_tag') }, ', '
+    = javascript_tag "var mostUsedTags = #{@most_used_tags.map(&:name)}"
+
+  .buttons
+    = submit_tag l(:button_add), name: nil
+    '
+    = submit_tag l(:button_cancel), name: nil, onclick: 'hideModal(this);', type: 'button'

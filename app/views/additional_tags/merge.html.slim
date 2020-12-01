@@ -1,0 +1,17 @@
+h2
+  = link_to l(:label_manage_tags), @tag_list_path
+  '
+  = Additionals::LIST_SEPARATOR
+  = l :label_merge_selected_tags
+
+= form_tag merge_additional_tags_path(ids: @tags.map(&:id)), class: 'tabular' do
+  = error_messages_for 'tag'
+  = additional_tag_links @tags, { show_count: true,
+                                  use_colors: AdditionalTags.setting?(:use_colors),
+                                  link: '#' }
+  .box
+    p
+      label[for="tag_name"]
+        = l :field_name
+      = text_field 'tag', 'name', value: @tags.first.name
+  = submit_tag l(:button_save)

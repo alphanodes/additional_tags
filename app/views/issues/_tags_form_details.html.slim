@@ -1,0 +1,7 @@
+- project = @issue&.project || @projects || @project
+- if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:edit_issue_tags, project)
+  div
+    p#issue_tags
+      = label_tag l(:field_tag_list)
+      = render partial: tags_form,
+               locals: { project: project }

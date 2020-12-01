@@ -1,0 +1,45 @@
+fieldset.settings
+  legend = l :label_general
+
+  p
+    = label_tag 'settings[tags_sidebar]', l(:tags_sidebar)
+    = select_tag 'settings[tags_sidebar]',
+                 options_for_select(%w[none list cloud simple_cloud].collect { |v| [l("tags_sidebar_#{v}"), v] },
+                                    @settings[:tags_sidebar])
+
+  p
+    = additionals_settings_checkbox :show_with_count
+
+  p
+    = label_tag 'settings[tags_sort_by]', l(:tags_sort_by)
+    = select_tag 'settings[tags_sort_by]',
+                 options_for_select(%w[name count].collect { |v| [l("tags_sort_by_#{v}"), v] },
+                                    @settings[:tags_sort_by])
+    '
+    = select_tag 'settings[tags_sort_order]',
+                 options_for_select([[l(:label_ascending), 'asc'], [l(:label_descending), 'desc']],
+                                    @settings[:tags_sort_order])
+
+  p
+    = label_tag 'settings[tags_suggestion_order]', l(:tags_suggestion_order)
+    = select_tag 'settings[tags_suggestion_order]',
+                 options_for_select(%w[name last_created most_used].collect { |v| [l("tags_order_by_#{v}"), v] },
+                                    @settings['tags_suggestion_order'])
+
+  p
+    = additionals_settings_checkbox :use_colors
+
+fieldset.settings
+  legend = l :label_issue_plural
+
+  p
+    = additionals_settings_checkbox :active_issue_tags
+
+  p
+    = additionals_settings_checkbox :open_issues_only
+
+fieldset.settings
+  legend = l :label_wiki
+
+  p
+    = additionals_settings_checkbox :active_wiki_tags

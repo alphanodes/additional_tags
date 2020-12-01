@@ -1,0 +1,14 @@
+h2
+  = link_to l(:label_manage_tags), @tag_list_path
+  '
+  = Additionals::LIST_SEPARATOR
+  = h "#{l :label_tags_tag}: #{@tag.name}"
+
+= form_tag additional_tag_path(@tag, tab: 'tags'), class: 'tabular', method: :put do
+  = error_messages_for 'tag'
+  .box
+    p
+      label[for="tag_name"]
+        = l :field_name
+      = text_field 'tag', 'name'
+  = submit_tag l(:button_save)

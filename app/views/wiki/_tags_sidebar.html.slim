@@ -1,0 +1,4 @@
+- if AdditionalTags.setting?(:active_wiki_tags) && sidebar_tags.present?
+  .sidebar-tags
+    h3 = l :tags
+    = render_sidebar_tags

@@ -1,0 +1,16 @@
+ul
+  - if @tag
+    li
+      = link_to l(:button_edit),
+                edit_additional_tag_path(@tag),
+                class: 'icon icon-edit'
+  - else
+    li
+      = link_to l(:button_merge),
+                merge_additional_tags_path(ids: @tags.collect(&:id)),
+                class: 'icon icon-tags-merge'
+  li
+    = link_to l(:button_delete),
+              additional_tags_path(ids: @tags.collect(&:id), back_url: @back),
+              method: :delete, data: { confirm: l(:text_are_you_sure) },
+              class: 'icon icon-del'

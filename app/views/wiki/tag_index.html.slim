@@ -1,0 +1,22 @@
+.contextual
+  - if User.current.allowed_to? :edit_wiki_pages, @project
+    = link_to l(:label_wiki_page_new), new_project_wiki_page_path(@project), remote: true, class: 'icon icon-add'
+
+h2 = l :label_wiki_index_for_tag, @tag
+
+- if @pages.empty?
+  p.nodata = l :label_no_data
+- else
+  ul.wiki-tag-entries
+    - @pages.each do |page|
+      li
+        = link_to page.pretty_title, project_wiki_page_path(@project, page.title)
+        - next if page.parent.blank?
+
+        p.parent
+          = l :field_parent_title
+          ' :
+          = link_to page.parent.pretty_title, project_wiki_page_path(@project, page.parent.title)
+
+- content_for :sidebar do
+  = render partial: 'sidebar'

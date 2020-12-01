@@ -1,0 +1,11 @@
+- project = defined?(project) ? project : @project
+- options = { multiple: true,
+              width: '95%',
+              url: issue_tags_auto_completes_path(project_id: project),
+              placeholder: l(:label_add_tags),
+              tags: true }
+- options[:id] = css_id if defined? css_id
+
+= additionals_select2_tag 'issue[tag_list]',
+                           options_for_select(@issue.tag_list.map { |tag| [tag, tag] }, @issue.tag_list),
+                           options
