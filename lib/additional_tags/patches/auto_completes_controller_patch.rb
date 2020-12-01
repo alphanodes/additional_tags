@@ -8,15 +8,11 @@ module AdditionalTags
       end
 
       module InstanceMethods
-        SORTING_FIELDS = { 'name' => 'name',
-                           'last_created' => 'created_at',
-                           'most_used' => 'count' }.freeze
-
         def issue_tags
           suggestion_order = AdditionalTags.setting(:tags_suggestion_order) || 'name'
           @name = (params[:q] || params[:term]).to_s.strip
           @tags = Issue.available_tags name_like: @name,
-                                       sort_by: SORTING_FIELDS[suggestion_order],
+                                       sort_by: suggestion_order,
                                        order: (suggestion_order == 'name' ? 'ASC' : 'DESC')
 
           @tags = AdditionalTags.sort_tag_list @tags if suggestion_order == 'name'

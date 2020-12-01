@@ -19,7 +19,7 @@ en:
   permission_edit_issue_tags: "Edit issue tags"
   permission_view_issue_tags: "Display issue tags"
   tags_order_by_last_created: "Last created"
-  tags_order_by_most_used: "Most used"
+  tags_order_by_count: "Most used"
   tags_order_by_name: "Name"
   tags_sidebar_cloud: "Cloud"
   tags_sidebar_list: "List"

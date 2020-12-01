@@ -87,13 +87,21 @@ module AdditionalTags
                  "COUNT(DISTINCT #{TAGGING_TABLE_NAME}.taggable_id) AS count"]
 
       order = options[:order] == 'DESC' ? 'DESC' : 'ASC'
-      columns << "MIN(#{TAGGING_TABLE_NAME}.created_at) AS created_at" if options[:sort_by] == 'created_at'
-      order_column = options[:sort_by] || 'name'
+      columns << "MIN(#{TAGGING_TABLE_NAME}.created_at) AS last_created" if options[:sort_by] == 'last_created'
+
+      order_column = case options[:sort_by]
+                     when 'last_created'
+                       'last_created'
+                     when 'count'
+                       'count'
+                     else
+                       "#{TAG_TABLE_NAME}.name"
+                     end
 
       scope.select(columns.join(', '))
            .joins(tag_for_joins(klass, options))
            .group("#{TAG_TABLE_NAME}.id, #{TAG_TABLE_NAME}.name").having('COUNT(*) > 0')
-           .order(Arel.sql("#{TAG_TABLE_NAME}.#{ActiveRecord::Base.connection.quote_column_name order_column} #{order}"))
+           .order(Arel.sql("#{order_column} #{order}"))
     end
 
     def remove_unused_tags

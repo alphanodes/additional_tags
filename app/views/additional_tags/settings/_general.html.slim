@@ -23,7 +23,7 @@ fieldset.settings
   p
     = label_tag 'settings[tags_suggestion_order]', l(:tags_suggestion_order)
     = select_tag 'settings[tags_suggestion_order]',
-                 options_for_select(%w[name last_created most_used].collect { |v| [l("tags_order_by_#{v}"), v] },
+                 options_for_select(%w[name last_created count].collect { |v| [l("tags_order_by_#{v}"), v] },
                                     @settings['tags_suggestion_order'])
 
   p

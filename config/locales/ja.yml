@@ -19,7 +19,7 @@ ja:
   permission_edit_issue_tags: "課題タグの編集"
   permission_view_issue_tags: "課題タグの表示"
   tags_order_by_last_created: "最後に作成された"
-  tags_order_by_most_used: "最も使用されている"
+  tags_order_by_count: "最も使用されている"
   tags_order_by_name: "名前"
   tags_sidebar_cloud: "クラウド"
   tags_sidebar_list: "リスト"

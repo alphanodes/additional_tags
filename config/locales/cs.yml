@@ -19,7 +19,7 @@ cs:
   permission_edit_issue_tags: "Upravte značky problému"
   permission_view_issue_tags: "Zobrazit značky problémů"
   tags_order_by_last_created: "Naposledy vytvořeno"
-  tags_order_by_most_used: "Nejvíc používaný"
+  tags_order_by_count: "Nejvíc používaný"
   tags_order_by_name: "Název"
   tags_sidebar_cloud: "Cloud"
   tags_sidebar_list: "Seznam"

@@ -19,7 +19,7 @@ ko:
   permission_edit_issue_tags: "이슈 태그 수정"
   permission_view_issue_tags: "문제 태그 표시"
   tags_order_by_last_created: "마지막 생성"
-  tags_order_by_most_used: "가장 많이 사용"
+  tags_order_by_count: "가장 많이 사용"
   tags_order_by_name: "이름"
   tags_sidebar_cloud: "구름"
   tags_sidebar_list: "명부"

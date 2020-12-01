@@ -19,7 +19,7 @@ de:
   permission_edit_issue_tags: Ticket TAGs bearbeiten
   permission_view_issue_tags: Ticket TAGs anzeigen
   tags_order_by_last_created: zuletzt angelegt
-  tags_order_by_most_used: am meisten benutzt
+  tags_order_by_count: am meisten benutzt
   tags_order_by_name: Name
   tags_sidebar_cloud: Cloud
   tags_sidebar_list: Liste

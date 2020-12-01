@@ -19,7 +19,7 @@ pt-BR:
   permission_edit_issue_tags: "Editar etiquetas de edição"
   permission_view_issue_tags: "Exibir etiquetas de edição"
   tags_order_by_last_created: "Última criação"
-  tags_order_by_most_used: "Mais utilizados"
+  tags_order_by_count: "Mais utilizados"
   tags_order_by_name: "Nome"
   tags_sidebar_cloud: "Cloud"
   tags_sidebar_list: "Lista"

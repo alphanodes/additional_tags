@@ -19,7 +19,7 @@ fr:
   permission_edit_issue_tags: "Éditer les tags de demandes"
   permission_view_issue_tags: "Afficher les tags des demandes"
   tags_order_by_last_created: "Dernière création"
-  tags_order_by_most_used: "Les plus utilisés"
+  tags_order_by_count: "Les plus utilisés"
   tags_order_by_name: "Nom"
   tags_sidebar_cloud: "Cloud"
   tags_sidebar_list: "Liste"
