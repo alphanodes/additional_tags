@@ -32,7 +32,7 @@ module AdditionalTags
       WikiPage.include AdditionalTags::Patches::WikiPagePatch
 
       # because of this bug: https://www.redmine.org/issues/33290
-      if !Redmine::Plugin.installed?('redmine_hrm') || ActiveRecord::Base.connection.table_exists?(HrmUserType.table_name)
+      if ActiveRecord::Base.connected? && ActiveRecord::Base.connection.table_exists?(TAG_TABLE_NAME)
         IssueQuery.include AdditionalTags::Patches::IssueQueryPatch
         TimeEntryQuery.include AdditionalTags::Patches::TimeEntryQueryPatch
       end
