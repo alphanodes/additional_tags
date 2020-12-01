@@ -110,13 +110,12 @@ jobs:
         run: |
           bundle install --jobs=4 --retry=3 --without development
 
-      - name: Run Redmine rake prepare tasks
+      - name: Generate session store secret
         env:
           RAILS_ENV: test
         working-directory: redmine
         run: |
           bundle exec rake generate_secret_token
-          bin/rails db:environment:set
 
       - name: Run Redmine DB and migration tasks
         env:
