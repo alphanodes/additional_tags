@@ -53,7 +53,7 @@ class AdditionalTagsController < ApplicationController
       @tags.reject { |t| t.id == tag.id }.each(&:destroy)
       # remove duplicate taggings
       valid_ids = ActsAsTaggableOn::Tagging.group(:tag_id, :taggable_id, :taggable_type, :context)
-                                           .pluck('MIN(id)')
+                                           .pluck(Arel.sql('MIN(id)'))
       ActsAsTaggableOn::Tagging.where.not(id: valid_ids).destroy_all if valid_ids.any?
       # recalc count for new tag
       ActsAsTaggableOn::Tag.reset_counters tag.id, :taggings
