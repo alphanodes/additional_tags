@@ -67,6 +67,6 @@ class IssueTest < AdditionalTags::TestCase
 
   test 'Issue.all_tags should return all tags kind of Issue' do
     tags = Issue.available_tags.map(&:name)
-    assert_equal %w[First Four Second Third five], tags
+    assert_equal %w[First Four Second Third five], tags.sort
   end
 end
