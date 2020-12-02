@@ -21,7 +21,7 @@ module AdditionalTags
         def available_tags(options = {})
           options[:project_join] = project_joins
           options[:permission] = :view_wiki_pages
-          AdditionalTags.available_tags self, options
+          AdditionalTags::Tags.available_tags self, options
         end
       end
 
@@ -31,7 +31,7 @@ module AdditionalTags
         def sort_tag_list
           return unless tag_list.present? && tag_list_changed?
 
-          self.tag_list = AdditionalTags.sort_tags tag_list
+          self.tag_list = AdditionalTags::Tags.sort_tags tag_list
         end
       end
     end

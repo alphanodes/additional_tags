@@ -9,7 +9,7 @@ module AdditionalTags
 
       module InstanceOverwriteMethods
         def issue_report
-          @tags = AdditionalTags.sort_tag_list Issue.available_tags(project_id: @project.id)
+          @tags = AdditionalTags::Tags.sort_tag_list Issue.available_tags(project_id: @project.id)
           @issues_by_tags = Issue.by_tags @project, with_subprojects: Setting.display_subprojects_issues?
           super
         end
@@ -19,7 +19,7 @@ module AdditionalTags
              AdditionalTags.setting?(:active_issue_tags) &&
              User.current.allowed_to?(:view_issue_tags, @project)
             @field = 'tag_id'
-            @rows = AdditionalTags.sort_tag_list Issue.available_tags(project_id: @project.id)
+            @rows = AdditionalTags::Tags.sort_tag_list Issue.available_tags(project_id: @project.id)
             @data = Issue.by_tags @project, with_subprojects: Setting.display_subprojects_issues?
             @report_title = l :field_tags
           else

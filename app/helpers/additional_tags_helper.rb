@@ -4,7 +4,7 @@ module AdditionalTagsHelper
   include ActsAsTaggableOn::TagsHelper
 
   def manageable_tags
-    AdditionalTags.sort_tag_list ActsAsTaggableOn::Tag.where({})
+    AdditionalTags::Tags.sort_tag_list ActsAsTaggableOn::Tag.where({})
   end
 
   def manageable_tag_columns
@@ -51,13 +51,13 @@ module AdditionalTagsHelper
 
     case "#{AdditionalTags.setting :tags_sort_by}:#{AdditionalTags.setting :tags_sort_order}"
     when 'name:desc'
-      tags = AdditionalTags.sort_tag_list(tags).reverse
+      tags = AdditionalTags::Tags.sort_tag_list(tags).reverse
     when 'count:asc'
       tags.sort! { |a, b| a.count <=> b.count }
     when 'count:desc'
       tags.sort! { |a, b| b.count <=> a.count }
     else
-      tags = AdditionalTags.sort_tag_list tags
+      tags = AdditionalTags::Tags.sort_tag_list tags
     end
 
     case style
@@ -156,7 +156,7 @@ module AdditionalTagsHelper
           end
 
     unsorted = options.delete(:unsorted)
-    tag_list = AdditionalTags.sort_tag_list(tag_list) unless unsorted
+    tag_list = AdditionalTags::Tags.sort_tag_list(tag_list) unless unsorted
 
     safe_join tag_list.map { |tag| additional_tag_link tag, options }, sep
   end

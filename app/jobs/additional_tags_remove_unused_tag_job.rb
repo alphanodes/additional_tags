@@ -1,5 +1,5 @@
 class AdditionalTagsRemoveUnusedTagJob < AdditionalTagsJob
   def perform
-    AdditionalTags.remove_unused_tags
+    AdditionalTags::Tags.remove_unused_tags
   end
 end

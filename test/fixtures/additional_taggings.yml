@@ -60,3 +60,10 @@ tagging_009:
   taggable_type: Issue
   context: tags
   created_at: 2013-01-27 15:08:27 +01:00
+
+wiki_tag:
+  tag_id: 1
+  taggable_id: 3
+  taggable_type: WikiPage
+  context: tags
+  created_at: 2020-01-27 15:08:27 +01:00

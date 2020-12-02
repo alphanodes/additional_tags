@@ -15,7 +15,7 @@ module AdditionalTags
                                        sort_by: suggestion_order,
                                        order: (suggestion_order == 'name' ? 'ASC' : 'DESC')
 
-          @tags = AdditionalTags.sort_tag_list @tags if suggestion_order == 'name'
+          @tags = AdditionalTags::Tags.sort_tag_list @tags if suggestion_order == 'name'
 
           render layout: false, partial: 'additional_tag_list', locals: { unsorted: true }
         end

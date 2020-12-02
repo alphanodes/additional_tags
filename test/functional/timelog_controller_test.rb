@@ -22,10 +22,11 @@ class TimelogControllerTest < AdditionalTags::ControllerTest
 
   def setup
     prepare_tests
-    @request.session[:user_id] = 1
   end
 
   def test_get_report_with_tags
+    @request.session[:user_id] = 2
+
     get :report,
         params: { criteria: ['tags'],
                   set_filter: '1',

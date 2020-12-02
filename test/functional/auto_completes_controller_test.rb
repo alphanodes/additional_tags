@@ -15,6 +15,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
            :enabled_modules,
            :enumerations,
            :attachments,
+           :wikis, :wiki_pages, :wiki_contents, :wiki_content_versions,
            :workflows,
            :custom_fields, :custom_values, :custom_fields_projects, :custom_fields_trackers,
            :additional_tags, :additional_taggings
@@ -71,15 +72,15 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
     assert_equal %w[First five Four Second Third], tags
   end
 
-  def test_suggestion_order_most_used
-    with_tags_settings tags_suggestion_order: 'most_used' do
+  def test_suggestion_order_count
+    with_tags_settings tags_suggestion_order: 'count' do
       get :issue_tags,
           params: { project_id: 'ecookbook' }
     end
 
     assert_response :success
     tags = ActiveSupport::JSON.decode(response.body).map { |item| item['id'] }
-    assert_equal %w[five Third Second Four First], tags
+    assert_equal %w[Second First Four Third five], tags
   end
 
   def test_suggestion_order_last_created
@@ -91,5 +92,18 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
     assert_response :success
     tags = ActiveSupport::JSON.decode(response.body).map { |item| item['id'] }
     assert_equal %w[First Third Four five Second], tags
+  end
+
+  def test_wiki_tags_should_return_json
+    get :wiki_tags,
+        params: { project_id: 'onlinestore', q: 'Fir' }
+
+    assert_response :success
+    json = ActiveSupport::JSON.decode(response.body)
+    assert_kind_of Array, json
+    parsed_tag = json.last
+    assert_kind_of Hash, parsed_tag
+    assert_equal @tag.name, parsed_tag['id']
+    assert_equal @tag.name, parsed_tag['text']
   end
 end

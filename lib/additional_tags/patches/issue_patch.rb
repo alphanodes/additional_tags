@@ -28,7 +28,7 @@ module AdditionalTags
 
         def available_tags(options = {})
           options[:permission] = :view_issues
-          tags = AdditionalTags.available_tags self, options
+          tags = AdditionalTags::Tags.available_tags self, options
           return tags unless options[:open_issues_only]
 
           tags.joins("JOIN #{IssueStatus.table_name} ON #{IssueStatus.table_name}.id = #{table_name}.status_id")
@@ -65,7 +65,7 @@ module AdditionalTags
           tags = tag_list.reject(&:empty?)
           return unless tags.present? && tag_list_changed?
 
-          self.tag_list = AdditionalTags.sort_tags tags
+          self.tag_list = AdditionalTags::Tags.sort_tags tags
         end
       end
     end

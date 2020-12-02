@@ -42,7 +42,7 @@ module AdditionalTags
         def load_pages_for_index_with_tag
           pattern = "%#{@tag.to_s.strip}%"
           @pages = @wiki.pages
-                        .joins(AdditionalTags.tag_to_joins(WikiPage))
+                        .joins(AdditionalTags::Tags.tag_to_joins(WikiPage))
                         .where("LOWER(#{ActiveRecord::Base.connection.quote_table_name(ActsAsTaggableOn.tags_table)}.name) LIKE LOWER(:p)",
                                p: pattern)
                         .with_updated_on

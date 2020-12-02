@@ -34,7 +34,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_index_displays_tags_as_html_in_the_correct_column
-    @request.session[:user_id] = 1
+    @request.session[:user_id] = 2
 
     with_tags_settings active_issue_tags: 1 do
       with_settings issue_list_default_columns: ['tags'] do
@@ -63,7 +63,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
   def test_show_issue_should_not_display_tags_if_disabled
     with_tags_settings active_issue_tags: '0' do
-      @request.session[:user_id] = 1
+      @request.session[:user_id] = 2
       get :show, params: {
         id: 1
       }
@@ -75,7 +75,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
   def test_show_issue_should_display_tags
     with_tags_settings active_issue_tags: 1 do
-      @request.session[:user_id] = 1
+      @request.session[:user_id] = 2
       get :show, params: {
         id: 1
       }
@@ -87,7 +87,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
   def test_show_issue_should_display_multiple_tags
     with_tags_settings active_issue_tags: 1 do
-      @request.session[:user_id] = 1
+      @request.session[:user_id] = 2
       get :show, params: {
         id: 6
       }
@@ -110,7 +110,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   def test_show_issue_should_display_contrast_tag_colors
     with_tags_settings active_issue_tags: 1,
                        use_colors: 1 do
-      @request.session[:user_id] = 1
+      @request.session[:user_id] = 2
       get :show, params: {
         id: 6
       }
@@ -133,7 +133,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
   def test_edit_issue_tags_should_journalize_changes
     with_tags_settings active_issue_tags: 1 do
-      @request.session[:user_id] = 1
+      @request.session[:user_id] = 2
 
       put :update, params: {
         id: 3, issue: { tag_list: ['First'] }
@@ -336,6 +336,23 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       assert_response :redirect
       assert_equal issue.description, 'New description'
       assert_not issue.tag_list.include?(new_tag)
+    end
+  end
+
+  def test_filter_by_tag
+    with_tags_settings active_issue_tags: 1 do
+      @request.session[:user_id] = 1
+      get :index,
+          params: { project_id: 1,
+                    set_filter: 1,
+                    c: ['tags'],
+                    f: ['tags'],
+                    op: { 'tags' => '=' },
+                    v: { 'tags' => ['First'] } }
+
+      assert_response :success
+      assert_select 'table.issues td.tags'
+      assert_select 'table.issues td.tags span.additional-tag-label-color'
     end
   end
 end
