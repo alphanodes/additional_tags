@@ -80,7 +80,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
 
     assert_response :success
     tags = ActiveSupport::JSON.decode(response.body).map { |item| item['id'] }
-    assert_equal %w[Second First Four Third five], tags
+    assert_equal 'Second', tags.first
   end
 
   def test_suggestion_order_last_created
