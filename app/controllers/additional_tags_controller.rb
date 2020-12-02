@@ -47,8 +47,15 @@ class AdditionalTagsController < ApplicationController
 
     ActsAsTaggableOn::Tagging.transaction do
       tag = ActsAsTaggableOn::Tag.find_by(name: params[:tag][:name]) || ActsAsTaggableOn::Tag.create(name: params[:tag][:name])
+      # Update old tagging with new tag
       ActsAsTaggableOn::Tagging.where(tag_id: @tags.map(&:id)).update_all tag_id: tag.id
+      # remove old (merged) tags
       @tags.reject { |t| t.id == tag.id }.each(&:destroy)
+      # remove duplicate taggings
+      valid_ids = ActsAsTaggableOn::Tagging.group(:tag_id, :taggable_id, :taggable_type, :context)
+                                           .pluck('MIN(id)')
+      ActsAsTaggableOn::Tagging.where.not(id: valid_ids).destroy_all if valid_ids.any?
+      # recalc count for new tag
       ActsAsTaggableOn::Tag.reset_counters tag.id, :taggings
       redirect_to @tag_list_path
     end
