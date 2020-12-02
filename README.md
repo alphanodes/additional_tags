@@ -28,7 +28,7 @@ Other models are support with plugins, which uses additional_tags as framework. 
 
 - Ruby `>= 2.4.10`
 - Redmine `>= 4.1.0`
-
+- Redmine plugins: [additionals]((https://www.redmine.org/plugins/additionals))
 
 ## Installing
 
@@ -36,27 +36,27 @@ Choose 1a OR 1b
 
 1a. Clone this repository into `redmine/plugins/additional_tags`.
 
-    ```
-    cd redmine/plugins
-    git clone https://github.com/alphanodes/additionals.git
-    git clone https://github.com/alphanodes/additional_tags.git
-    ```
+```shell
+cd redmine/plugins
+git clone https://github.com/alphanodes/additionals.git
+git clone https://github.com/alphanodes/additional_tags.git
+```
 
 1b. Add the gem to your Gemfile.local:
 
-    ```
-   `gem "additional_tags"`
-    ```
+```ruby
+gem 'additional_tags'
+```
 
-    At the moment, additionals should be installed before using gem method. In later versions
-    addtionals plugins is usable as gem, too.
+At the moment, additionals should be installed before using gem method. In later versions
+addtionals plugins is usable as gem, too.
 
 2. Install dependencies and migrate database.
 
-    ```
-    bundle install
-    rake redmine:plugins:migrate NAME=additional_tags RAILS_ENV=production
-    ```
+```shell
+bundle install
+bundle exec rake redmine:plugins:migrate RAILS_ENV=production
+```
 
 3. Restart your Redmine web server.
 
@@ -65,21 +65,19 @@ Choose 1a OR 1b
 
 Make sure you have the latest database structure loaded to the test database:
 
-```
-
-rake db:drop db:create db:migrate RAILS_ENV=test
+```shell
+bundle exec rake db:drop db:create db:migrate RAILS_ENV=test
 ```
 
 After you cloned the plugin, run the following command:
 
-```
+```shell
 rake redmine:plugins:test RAILS_ENV=test NAME=additional_tags
 ```
 
-
 ## Uninstall
 
-```
+```shell
 rake redmine:plugins:migrate NAME=additional_tags VERSION=0
 ```
 
