@@ -52,9 +52,9 @@ class AdditionalTagsController < ApplicationController
       # remove old (merged) tags
       @tags.reject { |t| t.id == tag.id }.each(&:destroy)
       # remove duplicate taggings
-      valid_ids = ActsAsTaggableOn::Tagging.group(:tag_id, :taggable_id, :taggable_type, :context)
-                                           .pluck(Arel.sql('MIN(id)'))
-      ActsAsTaggableOn::Tagging.where.not(id: valid_ids).destroy_all if valid_ids.any?
+      dup_scope = ActsAsTaggableOn::Tagging.where(tag_id: tag.id)
+      valid_ids = dup_scope.group(:tag_id, :taggable_id, :taggable_type, :context).pluck(Arel.sql('MIN(id)'))
+      dup_scope.where.not(id: valid_ids).destroy_all if valid_ids.any?
       # recalc count for new tag
       ActsAsTaggableOn::Tag.reset_counters tag.id, :taggings
       redirect_to @tag_list_path
