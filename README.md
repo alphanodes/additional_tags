@@ -28,7 +28,7 @@ Other models are support with plugins, which uses additional_tags as framework. 
 
 - Ruby `>= 2.4.10`
 - Redmine `>= 4.1.0`
-- Redmine plugins: [additionals]((https://www.redmine.org/plugins/additionals))
+- Redmine plugins: [additionals](https://www.redmine.org/plugins/additionals)
 
 ## Installing
 
