@@ -34,7 +34,6 @@ module AdditionalTags
 
       # because of this bug: https://www.redmine.org/issues/33290
       if Additionals.redmine_database_ready? TAG_TABLE_NAME
-        Rails.logger.debug "debug issue query patch loaded with table #{TAG_TABLE_NAME}"
         IssueQuery.include AdditionalTags::Patches::IssueQueryPatch
         TimeEntryQuery.include AdditionalTags::Patches::TimeEntryQueryPatch
 

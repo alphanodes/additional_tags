@@ -19,22 +19,12 @@ module AdditionalTags
         columns = ["#{TAG_TABLE_NAME}.*",
                    "COUNT(DISTINCT #{TAGGING_TABLE_NAME}.taggable_id) AS count"]
 
-        order = options[:order] == 'DESC' ? 'DESC' : 'ASC'
         columns << "MIN(#{TAGGING_TABLE_NAME}.created_at) AS last_created" if options[:sort_by] == 'last_created'
-
-        order_column = case options[:sort_by]
-                       when 'last_created'
-                         'last_created'
-                       when 'count'
-                         'count'
-                       else
-                         "#{TAG_TABLE_NAME}.name"
-                       end
 
         scope.select(columns.join(', '))
              .joins(tag_for_joins(klass, options))
              .group("#{TAG_TABLE_NAME}.id, #{TAG_TABLE_NAME}.name").having('COUNT(*) > 0')
-             .order(Arel.sql("#{order_column} #{order}"))
+             .order(build_order_sql(options[:sort_by], options[:order]))
       end
 
       def all_type_tags(klass, options = {})
@@ -74,6 +64,21 @@ module AdditionalTags
       end
 
       private
+
+      def build_order_sql(sort_by, order)
+        order = order.present? && order == 'DESC' ? 'DESC' : 'ASC'
+
+        sql = case sort_by
+              when 'last_created'
+                "last_created #{order}, #{TAG_TABLE_NAME}.name ASC"
+              when 'count'
+                "count #{order}, #{TAG_TABLE_NAME}.name ASC"
+              else
+                "#{TAG_TABLE_NAME}.name #{order}"
+              end
+
+        Arel.sql sql
+      end
 
       def tag_for_joins(klass, options = {})
         table_name = klass.table_name
