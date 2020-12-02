@@ -46,7 +46,7 @@ class AdditionalTagsController < ApplicationController
     return unless request.post? && params[:tag].present? && params[:tag][:name].present?
 
     ActsAsTaggableOn::Tagging.transaction do
-      tag = ActsAsTaggableOn::Tag.find_or_create_with_like_by_name params[:tag][:name]
+      tag = ActsAsTaggableOn::Tag.find_by(name: params[:tag][:name]) || ActsAsTaggableOn::Tag.create(name: params[:tag][:name])
       ActsAsTaggableOn::Tagging.where(tag_id: @tags.map(&:id)).update_all tag_id: tag.id
       @tags.reject { |t| t.id == tag.id }.each(&:destroy)
       ActsAsTaggableOn::Tag.reset_counters tag.id, :taggings
