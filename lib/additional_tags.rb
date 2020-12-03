@@ -22,7 +22,6 @@ module AdditionalTags
       Issue.include AdditionalTags::Patches::IssuePatch
       IssuesController.include AdditionalTags::Patches::IssuesControllerPatch
       ImportsController.include AdditionalTags::Patches::ImportsControllerPatch
-      Redmine::Export::PDF::IssuesPdfHelper.include AdditionalTags::Patches::IssuesPdfHelperPatch
       QueriesHelper.include AdditionalTags::Patches::QueriesHelperPatch
       ReportsController.include AdditionalTags::Patches::ReportsControllerPatch
       SettingsController.include AdditionalTags::Patches::SettingsControllerPatch
