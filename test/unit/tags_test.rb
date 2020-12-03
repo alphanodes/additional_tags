@@ -54,4 +54,42 @@ class TagsTest < AdditionalTags::TestCase
                                                project_join: WikiPage.project_joins
     assert_equal 0, tags.to_a.size
   end
+
+  def test_merge_with_new_tag_name
+    tag_name = 'not_existing_tag'
+
+    tags = ActsAsTaggableOn::Tag.where name: %w[First Second]
+
+    issue3 = issues :issues_003
+    issue6 = issues :issues_006
+
+    assert_equal %w[Second], issue3.tag_list
+    assert_equal %w[Four Second], issue6.tag_list
+
+    assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
+      AdditionalTags::Tags.merge tag_name, tags
+    end
+
+    assert_equal [tag_name], Issue.find(3).tag_list
+    assert_equal ['Four', tag_name], Issue.find(6).tag_list
+  end
+
+  def test_merge_with_exiting_tag_name
+    tag_name = 'Four'
+
+    tags = ActsAsTaggableOn::Tag.where name: %w[First Second]
+
+    issue3 = issues :issues_003
+    issue6 = issues :issues_006
+
+    assert_equal %w[Second], issue3.tag_list
+    assert_equal %w[Four Second], issue6.tag_list
+
+    assert_difference 'ActsAsTaggableOn::Tag.count', -2 do
+      AdditionalTags::Tags.merge tag_name, tags
+    end
+
+    assert_equal [tag_name], Issue.find(3).tag_list
+    assert_equal [tag_name], Issue.find(6).tag_list
+  end
 end

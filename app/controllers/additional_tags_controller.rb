@@ -43,22 +43,12 @@ class AdditionalTagsController < ApplicationController
   end
 
   def merge
-    return unless request.post? && params[:tag].present? && params[:tag][:name].present?
+    return unless request.post? &&
+                  params[:tag].present? &&
+                  params[:tag][:name].present?
 
-    ActsAsTaggableOn::Tagging.transaction do
-      tag = ActsAsTaggableOn::Tag.find_by(name: params[:tag][:name]) || ActsAsTaggableOn::Tag.create(name: params[:tag][:name])
-      # Update old tagging with new tag
-      ActsAsTaggableOn::Tagging.where(tag_id: @tags.map(&:id)).update_all tag_id: tag.id
-      # remove old (merged) tags
-      @tags.reject { |t| t.id == tag.id }.each(&:destroy)
-      # remove duplicate taggings
-      dup_scope = ActsAsTaggableOn::Tagging.where(tag_id: tag.id)
-      valid_ids = dup_scope.group(:tag_id, :taggable_id, :taggable_type, :context).pluck(Arel.sql('MIN(id)'))
-      dup_scope.where.not(id: valid_ids).destroy_all if valid_ids.any?
-      # recalc count for new tag
-      ActsAsTaggableOn::Tag.reset_counters tag.id, :taggings
-      redirect_to @tag_list_path
-    end
+    AdditionalTags::Tags.merge params[:tag][:name], @tags
+    redirect_to @tag_list_path
   end
 
   private

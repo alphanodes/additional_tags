@@ -49,6 +49,24 @@ module AdditionalTags
                              .each(&:destroy)
       end
 
+      def merge(tag_name, tags_to_merge)
+        return if tag_name.blank? || tags_to_merge.none?
+
+        ActsAsTaggableOn::Tagging.transaction do
+          tag = ActsAsTaggableOn::Tag.find_by(name: tag_name) || ActsAsTaggableOn::Tag.create(name: tag_name)
+          # Update old tagging with new tag
+          ActsAsTaggableOn::Tagging.where(tag_id: tags_to_merge.map(&:id)).update_all tag_id: tag.id
+          # remove old (merged) tags
+          tags_to_merge.reject { |t| t.id == tag.id }.each(&:destroy)
+          # remove duplicate taggings
+          dup_scope = ActsAsTaggableOn::Tagging.where(tag_id: tag.id)
+          valid_ids = dup_scope.group(:tag_id, :taggable_id, :taggable_type, :tagger_id, :tagger_type, :context).pluck(Arel.sql('MIN(id)'))
+          dup_scope.where.not(id: valid_ids).destroy_all if valid_ids.any?
+          # recalc count for new tag
+          ActsAsTaggableOn::Tag.reset_counters tag.id, :taggings
+        end
+      end
+
       # sort tags alphabetically with special characters support
       def sort_tags(tags)
         tags.sort! do |a, b|
