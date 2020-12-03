@@ -24,10 +24,17 @@ Other models are support with plugins, which uses additional_tags as framework. 
 - redmine_servicedesk (contact tagging)
 
 
+## Why another Tag plugin?
+
+1. Main reason: a stable tag solution for a current Redmine version is needed - NOW
+2. Other plugins are no longer maintained or not available on a public community plattform as github or gitlab
+3. Redmine (core) does not support tags. A feature request for issue tags exists since 2008, see [#1448](https://www.redmine.org/issues/1448).
+4. Lots of plugins using its own tag implementation (redmine_knowledgebase, redmine_contacts, redmine_products, redmine_passwords, redmine_db, ....). A common functional base was required. This plugin closes this gap. It would be great, if other plugins would use ``additional_tags`` for it.
+
 ## Requirements
 
-- Ruby `>= 2.4.10`
 - Redmine `>= 4.1.0`
+- Ruby `>= 2.4.10`
 - Redmine plugins: [additionals](https://www.redmine.org/plugins/additionals)
 
 ## Installing
@@ -69,19 +76,31 @@ Make sure you have the latest database structure loaded to the test database:
 bundle exec rake db:drop db:create db:migrate RAILS_ENV=test
 ```
 
-After you cloned the plugin, run the following command:
+Run the following command to start tests:
 
 ```shell
-rake redmine:plugins:test RAILS_ENV=test NAME=additional_tags
+bundle exec rake redmine:plugins:test NAME=additional_tags RAILS_ENV=test
 ```
+
+## Migrate from other plugin
+
+If you use [redmine_tags](https://github.com/ixti/redmine_tags) or [redmineup_tags](https://www.redmine.org/plugins/redmineup_tags) you can migrate your tags.
+``additional_tags`` uses its own database tables, to prevent conflicts with other plugins (e.g. redmine_knowledgebase, redmine_contacts, etc)
+To migrate your data to ``additional_tags`` use the following steps (order is important):
+
+1. Remove plugin directory of your old plugin, e.g plugin/redmine_tags
+2. Install ``additional_tags`` as is descript above (this automatically migrate data to new tables)
+
+The old database tables are existing after these steps.
+
 
 ## Uninstall
 
 ```shell
-rake redmine:plugins:migrate NAME=additional_tags VERSION=0
+cd $REDMINE_ROOT
+bundle exec rake redmine:plugins:migrate NAME=additional_tags VERSION=0 RAILS_ENV=production
+rm -rf plugins/additional_tags
 ```
-
-After this remove REDMINE/plugins/additional_tags directory.
 
 
 ## License
