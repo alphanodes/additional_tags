@@ -40,11 +40,13 @@ module AdditionalTags
 
         def build_from_params_with_tags(params, defaults = {})
           build_from_params_without_tags params, defaults
-          return if params[:tag_id].blank?
+          return self if params[:tag_id].blank?
 
           add_filter 'tags',
                      '=',
                      [ActsAsTaggableOn::Tag.find_by(id: params[:tag_id]).try(:name)]
+
+          self
         end
       end
     end
