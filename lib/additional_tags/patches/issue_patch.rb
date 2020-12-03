@@ -42,14 +42,18 @@ module AdditionalTags
 
       module InstanceMethods
         def safe_attributes_with_tags=(attrs, user = User.current)
-          self.safe_attributes_without_tags = attrs
+          if attrs && attrs[:tag_list]
+            tags = attrs.delete :tag_list
+            tags = Array(tags).reject(&:empty?)
 
-          return unless attrs && attrs[:tag_list] && user.allowed_to?(:edit_issue_tags, project)
+            if user.allowed_to?(:create_issue_tags, project) ||
+               user.allowed_to?(:edit_issue_tags, project) && Issue.allowed_tags?(tags)
+              attrs[:tag_list] = tags
+              self.tag_list = tags
+            end
+          end
 
-          tags = Array(attrs[:tag_list]).reject(&:empty?)
-          return unless user.allowed_to?(:create_issue_tags, project) || Issue.allowed_tags?(tags)
-
-          self.tag_list = tags
+          send 'safe_attributes_without_tags=', attrs, user
         end
 
         def copy_from_with_tags(arg, options = {})
