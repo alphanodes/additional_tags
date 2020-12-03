@@ -24,14 +24,17 @@ At the moment this are:
 -   redmine_hrm (holiday tagging)
 -   redmine_servicedesk (contact tagging)
 
-Start using it, too.
+Start using it, too. The example image shows the centralized tag management in the plugin configuration.
+
+![screenshot](https://raw.githubusercontent.com/alphanodes/additional_tags/master/assets/images/additoinal-tags-framework.png)
+
 
 ## Why another Tag plugin?
 
-1. Main reason: a stable tag solution for a current Redmine version is needed - NOW
-2. Other plugins are no longer maintained or not available on a public community plattform as github or gitlab
-3. Redmine (core) does not support tags. A feature request for issue tags exists since 2008, see [#1448](https://www.redmine.org/issues/1448).
-4. Lots of plugins are using its own tag implementation (redmine_knowledgebase, redmine_contacts, redmine_products, redmine_passwords, redmine_db, ....). A common functional base was required. This plugin closes this gap. It would be great, if other plugins would use ``additional_tags`` for it.
+1.  Main reason: a stable tag solution for a current Redmine version is needed - NOW
+2.  Other plugins are no longer maintained or not available on a public community plattform as github or gitlab
+3.  Redmine (core) does not support tags. A feature request for issue tags exists since 2008, see [#1448](https://www.redmine.org/issues/1448).
+4.  Lots of plugins are using its own tag implementation (redmine_knowledgebase, redmine_contacts, redmine_products, redmine_passwords, redmine_db, ....). A common functional base was required. This plugin closes this gap. It would be great, if other plugins would use ``additional_tags`` for it.
 
 ## Requirements
 
@@ -60,14 +63,14 @@ gem 'additional_tags'
 At the moment, additionals should be installed before using gem method. In later versions
 addtionals plugins is usable as gem, too.
 
-2. Install dependencies and migrate database.
+2.  Install dependencies and migrate database.
 
 ```shell
 bundle install
 bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ```
 
-3. Restart your Redmine web server.
+3.  Restart your Redmine web server.
 
 
 ## Running tests
@@ -90,8 +93,8 @@ If you use [redmine_tags](https://github.com/ixti/redmine_tags) or [redmineup_ta
 ``additional_tags`` uses its own database tables, to prevent conflicts with other plugins (e.g. redmine_knowledgebase, redmine_contacts, etc)
 To migrate your data to ``additional_tags`` use the following steps (order is important):
 
-1. Remove plugin directory of your old plugin, e.g plugin/redmine_tags
-2. Install ``additional_tags`` as is descript above (this automatically migrate data to new tables)
+1.  Remove plugin directory of your old plugin, e.g plugin/redmine_tags
+2.  Install ``additional_tags`` as is descript above (this automatically migrate data to new tables)
 
 The old database tables are existing after these steps.
 
