@@ -55,7 +55,7 @@ module AdditionalTags
         # find_existing_page can not be used from wiki_controller, because it would be disable index only rule
         def find_page_for_update_tags
           @page = @wiki.find_page params[:id]
-          render_404 @page.nil?
+          render_404 if @page.nil?
         end
       end
     end
