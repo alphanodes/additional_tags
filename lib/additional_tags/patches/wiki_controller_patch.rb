@@ -8,7 +8,7 @@ module AdditionalTags
         helper :additional_tags
         helper :additional_tags_wiki
 
-        before_action :find_existing_page, only: :update_tags
+        before_action :find_page_for_update_tags, only: :update_tags
       end
 
       module InstanceOverwriteMethods
@@ -50,6 +50,12 @@ module AdditionalTags
                         .reorder("#{WikiPage.table_name}.title")
                         .includes(wiki: :project)
                         .includes(:parent).to_a
+        end
+
+        # find_existing_page can not be used from wiki_controller, because it would be disable index only rule
+        def find_page_for_update_tags
+          @page = @wiki.find_page params[:id]
+          render_404 @page.nil?
         end
       end
     end
