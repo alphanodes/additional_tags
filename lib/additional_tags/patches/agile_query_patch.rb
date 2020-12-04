@@ -4,7 +4,9 @@ module AdditionalTags
       extend ActiveSupport::Concern
 
       included do
+        include AdditionalsQuery
         include InstanceMethods
+
         alias_method :initialize_available_filters_without_tags, :initialize_available_filters
         alias_method :initialize_available_filters, :initialize_available_filters_with_tags
 
