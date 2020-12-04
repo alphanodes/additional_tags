@@ -33,7 +33,7 @@ module AdditionalTagsIssuesHelper
 
   def render_sidebar_tags
     options = { show_count: AdditionalTags.setting?(:show_with_count),
-                open_issues_only: AdditionalTags.setting?(:open_issues_only),
+                filter: AdditionalTags.setting?(:open_issues_only) ? { field: :status_id, operator: 'o' } : nil,
                 style: AdditionalTags.setting(:tags_sidebar).to_sym,
                 project: @project }
 

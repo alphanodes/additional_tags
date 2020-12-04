@@ -15,7 +15,7 @@ Redmine::Plugin.register :additional_tags do
   project_module :issue_tracking do
     permission :create_issue_tags, {}
     permission :edit_issue_tags, {}
-    permission :view_issue_tags, {}
+    permission :view_issue_tags, {}, read: true
   end
 
   project_module :wiki do

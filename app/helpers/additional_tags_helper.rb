@@ -170,9 +170,11 @@ module AdditionalTagsHelper
     values = { tags: [tag_name] }
     operators = { tags: '=' }
 
-    if options[:open_issues_only]
-      fields << :status_id
-      operators[:status_id] = 'o'
+    if options[:filter].present?
+      field = options[:filter][:field]
+      fields << field
+      operators[field] = options[:filter][:operator]
+      values[field] = options[:filter][:value] if options[:filter].key?(:value)
     end
 
     { controller: options[:tag_controller].presence || controller_name,
