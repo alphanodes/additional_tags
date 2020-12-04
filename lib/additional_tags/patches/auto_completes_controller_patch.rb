@@ -30,8 +30,8 @@ module AdditionalTags
           return render_403 unless User.current.admin?
 
           @name = params[:q].to_s
-          @tags = ActsAsTaggableOn::Tag.where("LOWER(#{ActsAsTaggableOn.tags_table}.name) LIKE ?",
-                                              "%#{@name.downcase}%")
+          sql_for_where = "LOWER(#{ActiveRecord::Base.connection.quote_table_name(ActsAsTaggableOn.tags_table)}.name) LIKE ?"
+          @tags = ActsAsTaggableOn::Tag.where(sql_for_where, "%#{@name.downcase}%")
                                        .order(name: :asc)
 
           render layout: false, partial: 'additional_tag_list', locals: { unsorted: true }
