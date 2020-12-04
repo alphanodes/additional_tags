@@ -4,6 +4,7 @@ class RoutingTest < Redmine::RoutingTest
   def test_auto_completes
     should_route 'GET /auto_completes/issue_tags' => 'auto_completes#issue_tags'
     should_route 'GET /auto_completes/wiki_tags' => 'auto_completes#wiki_tags'
+    should_route 'GET /auto_completes/all_tags' => 'auto_completes#all_tags'
   end
 
   def test_additional_tags

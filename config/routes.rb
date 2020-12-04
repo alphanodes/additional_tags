@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     collection do
       get :wiki_tags
       get :issue_tags
+      get :all_tags
     end
   end
 

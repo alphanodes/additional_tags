@@ -24,7 +24,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
     prepare_tests
     @tag = ActsAsTaggableOn::Tag.find_by name: 'First'
 
-    @request.session[:user_id] = 1
+    @request.session[:user_id] = 2
   end
 
   def test_issue_tags_should_not_be_case_sensitive
@@ -105,5 +105,27 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
     assert_kind_of Hash, parsed_tag
     assert_equal @tag.name, parsed_tag['id']
     assert_equal @tag.name, parsed_tag['text']
+  end
+
+  def test_all_tags_should_return_json
+    @request.session[:user_id] = 1
+
+    get :all_tags,
+        params: { project_id: 'onlinestore', q: 'Fir' }
+
+    assert_response :success
+    json = ActiveSupport::JSON.decode(response.body)
+    assert_kind_of Array, json
+    parsed_tag = json.last
+    assert_kind_of Hash, parsed_tag
+    assert_equal @tag.name, parsed_tag['id']
+    assert_equal @tag.name, parsed_tag['text']
+  end
+
+  def test_all_tags_forbidden_for_non_admins
+    get :all_tags,
+        params: { project_id: 'onlinestore', q: 'Fir' }
+
+    assert_response :forbidden
   end
 end

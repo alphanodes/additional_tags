@@ -25,6 +25,17 @@ module AdditionalTags
           @tags = WikiPage.available_tags project: @project, name_like: @name
           render layout: false, partial: 'additional_tag_list', locals: { unsorted: true }
         end
+
+        def all_tags
+          return render_403 unless User.current.admin?
+
+          @name = params[:q].to_s
+          @tags = ActsAsTaggableOn::Tag.where("LOWER(#{ActsAsTaggableOn.tags_table}.name) LIKE ?",
+                                              "%#{@name.downcase}%")
+                                       .order(name: :asc)
+
+          render layout: false, partial: 'additional_tag_list', locals: { unsorted: true }
+        end
       end
     end
   end
