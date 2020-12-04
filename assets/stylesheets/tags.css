@@ -61,6 +61,15 @@ span.additional-tag-label-color:hover a {
   text-decoration: none !important;
 }
 
+.flyout-menu div.sidebar-tags h3 {
+  margin-left: -8px;
+}
+
+.flyout-menu div.sidebar-tags ul.tags-cloud li a {
+  line-height: 22px;
+  height: 22px;
+}
+
 #edit_tags_form.box { margin: 1px 5px 0 0; }
 
 #edit_tags_form.box label {
