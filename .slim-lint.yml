@@ -22,3 +22,4 @@ linters:
       - Rails/OutputSafety
       - Style/IfUnlessModifier
       - Style/WhileUntilModifier
+      - Style/Next

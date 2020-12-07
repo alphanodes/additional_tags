@@ -11,12 +11,11 @@ h2 = l :label_wiki_index_for_tag, @tag
     - @pages.each do |page|
       li
         = link_to page.pretty_title, project_wiki_page_path(@project, page.title)
-        - next if page.parent.blank?
-
-        p.parent
-          = l :field_parent_title
-          ' :
-          = link_to page.parent.pretty_title, project_wiki_page_path(@project, page.parent.title)
+        - if page.parent.present?
+          p.parent
+            = l :field_parent_title
+            ' :
+            = link_to page.parent.pretty_title, project_wiki_page_path(@project, page.parent.title)
 
 - content_for :sidebar do
   = render partial: 'sidebar'
