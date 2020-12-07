@@ -28,14 +28,8 @@ module AdditionalTags
     def tags_journal(issue, params)
       return unless params && params[:issue] && params[:issue][:tag_list]
 
-      old_tags = Issue.find(issue.id).tag_list.to_s
-      new_tags = issue.tag_list.to_s
-      return if old_tags == new_tags || issue.current_journal.blank?
-
-      issue.current_journal.details << JournalDetail.new(property: 'attr',
-                                                         prop_key: 'tag_list',
-                                                         old_value: old_tags,
-                                                         value: new_tags)
+      issue.tags_to_journal Issue.find_by(id: issue.id)&.tag_list&.to_s,
+                            issue.tag_list.to_s
     end
   end
 end
