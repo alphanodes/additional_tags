@@ -16,14 +16,16 @@ module AdditionalTags
         scope = scope.where("#{TAGGING_TABLE_NAME}.taggable_id!=?", options[:exclude_id]) if options[:exclude_id]
         scope = scope.where(options[:where_field] => options[:where_value]) if options[:where_field].present? && options[:where_value]
 
-        columns = ["#{TAG_TABLE_NAME}.*",
+        columns = ["#{TAG_TABLE_NAME}.id",
+                   "#{TAG_TABLE_NAME}.name",
+                   "#{TAG_TABLE_NAME}.taggings_count",
                    "COUNT(DISTINCT #{TAGGING_TABLE_NAME}.taggable_id) AS count"]
 
         columns << "MIN(#{TAGGING_TABLE_NAME}.created_at) AS last_created" if options[:sort_by] == 'last_created'
 
         scope.select(columns.join(', '))
              .joins(tag_for_joins(klass, options))
-             .group("#{TAG_TABLE_NAME}.id, #{TAG_TABLE_NAME}.name").having('COUNT(*) > 0')
+             .group("#{TAG_TABLE_NAME}.id, #{TAG_TABLE_NAME}.name, #{TAG_TABLE_NAME}.taggings_count").having('COUNT(*) > 0')
              .order(build_order_sql(options[:sort_by], options[:order]))
       end
 
