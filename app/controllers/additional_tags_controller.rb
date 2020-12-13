@@ -61,11 +61,14 @@ class AdditionalTagsController < ApplicationController
     @tags = ActsAsTaggableOn::Tag.joins("JOIN #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.taggings_table}" \
                                         " ON #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.taggings_table}.tag_id =" \
                                         " #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id ")
-                                 .select("#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.*," \
+                                 .select("#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id," \
+                                         "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name," \
+                                         "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.taggings_count," \
                                          " COUNT(DISTINCT #{ActsAsTaggableOn.taggings_table}.taggable_id) AS count")
                                  .where(id: params[:id] ? [params[:id]] : params[:ids])
                                  .group("#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id" \
-                                        ", #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name")
+                                        ", #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name" \
+                                        ", #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.taggings_count")
     raise ActiveRecord::RecordNotFound if @tags.empty?
   end
 
