@@ -23,6 +23,34 @@ module AdditionalTags
       tags_journal context[:issue], context[:params]
     end
 
+    # this hook is missing in redmine core at the moment
+    def view_issue_pdf_fields(context = {})
+      issue = context[:issue]
+      right = context[:right]
+
+      if AdditionalTags.setting?(:active_issue_tags) &&
+         User.current.allowed_to?(:view_issue_tags, issue.project)
+        right << [l(:field_tag_list), issue.tag_list]
+      end
+    end
+
+    # this hook is missing in redmine core at the moment
+    def view_wiki_pdf_buttom(context = {})
+      page = context[:page]
+      pdf = context[:pdf]
+
+      return if page.tag_list.blank?
+
+      pdf.ln 5
+      pdf.SetFontStyle 'B', 9
+      pdf.RDMCell 190, 5, l(:field_tag_list), 'B'
+
+      pdf.ln
+      pdf.SetFontStyle '', 8
+      pdf.RDMCell 190, 5, page.tag_list.join(', ')
+      pdf.ln
+    end
+
     private
 
     def tags_journal(issue, params)
