@@ -1,6 +1,7 @@
 cs:
   field_tag_list: Tags
   field_tags: Tags
+  field_issue_tags: Issue tags
   label_active_issue_tags: "Aktivujte značky problému"
   label_active_wiki_tags: "Aktivujte značky wiki"
   label_add_tags: "Přidat štítky"

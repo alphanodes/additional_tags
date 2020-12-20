@@ -1,6 +1,7 @@
 de:
   field_tag_list: TAGs
   field_tags: TAGs
+  field_issue_tags: Ticket TAGs
   label_active_issue_tags: Ticket TAGs aktivieren
   label_active_wiki_tags: Wiki TAGs aktivieren
   label_add_tags: Tags hinzufügen

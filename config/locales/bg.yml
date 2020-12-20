@@ -1,6 +1,7 @@
 bg:
   field_tag_list: Маркери
   field_tags: Маркери
+  field_issue_tags: Issue tags
   label_active_issue_tags: "Активиране на маркерите за задачи"
   label_active_wiki_tags: "Активиране на маркерите за wiki страници"
   label_add_tags: "Добавяне на маркери"

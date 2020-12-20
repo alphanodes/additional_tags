@@ -1,6 +1,7 @@
 en:
   field_tag_list: Tags
   field_tags: Tags
+  field_issue_tags: Issue tags
   label_active_issue_tags: "Activate issue tags"
   label_active_wiki_tags: "Activate wiki tags"
   label_add_tags: "Add tags"

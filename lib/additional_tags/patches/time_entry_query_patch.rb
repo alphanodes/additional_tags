@@ -31,7 +31,7 @@ module AdditionalTags
           if @available_columns.nil?
             @available_columns = available_columns_without_tags
             if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:view_issue_tags, project, global: true)
-              @available_columns << QueryColumn.new(:tags)
+              @available_columns << QueryColumn.new(:issue_tags)
             end
           else
             available_columns_without_tags
@@ -40,7 +40,7 @@ module AdditionalTags
         end
 
         def sql_for_issue_tags_field(_field, operator, value)
-          AdditionalTags.sql_for_tags_field(Issue, operator, value)
+          AdditionalTags.sql_for_tags_field Issue, operator, value
         end
 
         def available_issue_tags_values

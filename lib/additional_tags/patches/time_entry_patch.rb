@@ -8,7 +8,7 @@ module AdditionalTags
       end
 
       module InstanceMethods
-        def tags
+        def issue_tags
           return [] if issue.nil?
 
           issue.tags
