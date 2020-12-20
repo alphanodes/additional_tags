@@ -1,7 +1,7 @@
 es:
   field_tag_list: Tags
   field_tags: Tags
-  field_issue_tags: Issue tags
+  field_issue_tags: "Petición tags"
   label_active_issue_tags: "Activar tags de peticiones"
   label_active_wiki_tags: "Activar tags wiki"
   label_add_tags: "Agregar etiquetas"
