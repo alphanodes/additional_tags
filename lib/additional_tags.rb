@@ -19,6 +19,7 @@ module AdditionalTags
       DashboardsController.include AdditionalTags::Patches::DashboardsControllerPatch
       DashboardAsyncBlocksController.include AdditionalTags::Patches::DashboardAsyncBlocksControllerPatch
       GanttsController.include AdditionalTags::Patches::GanttsControllerPatch
+      MyController.include AdditionalTags::Patches::MyControllerPatch
       Issue.include AdditionalTags::Patches::IssuePatch
       Journal.include AdditionalTags::Patches::JournalPatch
       IssuesController.include AdditionalTags::Patches::IssuesControllerPatch
