@@ -41,6 +41,7 @@ module AdditionalTags
         if Redmine::Plugin.installed? 'redmine_agile'
           AgileQuery.include AdditionalTags::Patches::AgileQueryPatch
           AgileBoardsController.include AdditionalTags::Patches::AgileBoardsControllerPatch
+          AgileVersionsController.include AdditionalTags::Patches::AgileVersionsControllerPatch
           AgileVersionsQuery.include(AdditionalTags::Patches::AgileVersionsQueryPatch) if AGILE_VERSION_TYPE == 'PRO version'
         end
       end
