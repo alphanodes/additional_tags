@@ -25,13 +25,10 @@ module AdditionalTags
         end
 
         def column_content_with_tags(column, item)
-          if item.is_a?(Issue) && column.name == :tags
+          if item.is_a?(Issue) && column.name == :tags ||
+             item.is_a?(TimeEntry) && column.name == :issue_tags
             additional_tag_links column.value(item),
                                  tag_controller: 'issues',
-                                 use_colors: AdditionalTags.setting?(:use_colors)
-          elsif item.is_a?(TimeEntry) && column.name == :tags
-            additional_tag_links column.value(item),
-                                 tag_controller: 'timelog',
                                  use_colors: AdditionalTags.setting?(:use_colors)
           else
             column_content_without_tags column, item
