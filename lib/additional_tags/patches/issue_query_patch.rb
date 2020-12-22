@@ -22,6 +22,7 @@ module AdditionalTags
           initialize_available_filters_without_tags
 
           initialize_tags_filter if !available_filters.key?('tags') &&
+                                    AdditionalTags.setting?(:active_issue_tags) &&
                                     User.current.allowed_to?(:view_issue_tags, project, global: true)
         end
 
