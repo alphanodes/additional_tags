@@ -72,4 +72,6 @@ Style/HashTransformValues:
   Enabled: false
 
 Naming/VariableNumber:
-  Enabled: false
+  Enabled: true
+  Exclude:
+    - 'test/**/*'
