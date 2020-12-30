@@ -8,10 +8,12 @@ module AdditionalTagsWikiHelper
   end
 
   def render_sidebar_tags
-    render_tags_list sidebar_tags,
-                     show_count: AdditionalTags.setting?(:show_with_count),
-                     style: AdditionalTags.setting(:tags_sidebar).to_sym,
-                     link_wiki_tag: true,
-                     project: @project
+    options = { show_count: AdditionalTags.setting?(:show_with_count),
+                style: AdditionalTags.setting(:tags_sidebar).to_sym,
+                link_wiki_tag: true,
+                project: @project }
+
+    options[:tag_action] = 'show' if %w[wiki_guide].include? controller_name
+    render_tags_list sidebar_tags, options
   end
 end

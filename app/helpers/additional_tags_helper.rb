@@ -104,9 +104,12 @@ module AdditionalTagsHelper
                         options[:link],
                         style: tag_style
               elsif options[:link_wiki_tag]
-                link_to safe_join(tag_name),
-                        project_wiki_index_path(options[:project], tag: tag_object.name),
-                        style: tag_style
+                link = if options[:project].present?
+                         project_wiki_index_path options[:project], tag: tag_object.name
+                       else
+                         wiki_path tag: tag_object.name
+                       end
+                link_to safe_join(tag_name), link, style: tag_style
               else
                 link_to safe_join(tag_name),
                         tag_url(tag_object.name, options),
