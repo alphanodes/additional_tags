@@ -12,7 +12,7 @@ pt-BR:
   label_show_with_count: "Mostrar quantidade na etiqueta"
   label_tags_tag: "Tag"
   label_use_colors: "Usar cores"
-  label_wiki_index_for_tag: "Páginas Wiki com tag %{value}"
+  label_wiki_index_for_tag_html: "Páginas Wiki com tag <em>%{tag}</em>"
   notice_failed_to_add_tags: "Falha em adicionar tags"
   notice_tags_added: "Tags adicionadas"
   permission_add_wiki_tags: "Adicionar etiquetas wiki"

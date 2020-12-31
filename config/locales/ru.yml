@@ -12,7 +12,7 @@ ru:
   label_show_with_count: "Отображаемое количество на теге"
   label_tags_tag: "Tag"
   label_use_colors: "Использовать цвета"
-  label_wiki_index_for_tag: "Вики-страницы с тегом %{value}"
+  label_wiki_index_for_tag_html: "Вики-страницы с тегом <em>%{tag}</em>"
   notice_failed_to_add_tags: "Не удалось добавить теги"
   notice_tags_added: "Теги добавлены"
   permission_add_wiki_tags: "Добавить вики-теги"

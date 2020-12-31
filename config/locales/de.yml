@@ -12,7 +12,7 @@ de:
   label_show_with_count: Zeige Anzahl zu TAG
   label_tags_tag: TAG
   label_use_colors: Farben verwenden
-  label_wiki_index_for_tag: Wiki Seiten mit TAG %{value}
+  label_wiki_index_for_tag_html: Wiki Seiten mit TAG <em>%{tag}</em>
   notice_failed_to_add_tags: Fehler beim hinzufügen der TAGs
   notice_tags_added: Tags hinzugefügt
   permission_add_wiki_tags: Wiki TAGs hinzufügen

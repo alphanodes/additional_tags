@@ -12,7 +12,7 @@ bg:
   label_show_with_count: "Показване на брой маркирани обекти"
   label_tags_tag: "Маркер"
   label_use_colors: "Използване на цветове"
-  label_wiki_index_for_tag: "Wiki страници с маркер %{value}"
+  label_wiki_index_for_tag_html: "Wiki страници с маркер <em>%{tag}</em>"
   notice_failed_to_add_tags: "Добавянето на маркери е неуспешно"
   notice_tags_added: "Маркерите са добавени"
   permission_add_wiki_tags: "Добавяне на маркери за wiki страници"

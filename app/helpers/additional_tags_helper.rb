@@ -107,7 +107,7 @@ module AdditionalTagsHelper
                 link = if options[:project].present?
                          project_wiki_index_path options[:project], tag: tag_object.name
                        else
-                         wiki_path tag: tag_object.name
+                         wiki_path tag_object.name
                        end
                 link_to safe_join(tag_name), link, style: tag_style
               else

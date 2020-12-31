@@ -12,7 +12,7 @@ ko:
   label_show_with_count: "태그에 금액 표시"
   label_tags_tag: "Tag"
   label_use_colors: "색상 사용"
-  label_wiki_index_for_tag: "태그가있는 위키 페이지 %{value}"
+  label_wiki_index_for_tag_html: "태그가있는 위키 페이지 <em>%{tag}</em>"
   notice_failed_to_add_tags: "태그를 추가하지 못했습니다."
   notice_tags_added: "추가 된 태그"
   permission_add_wiki_tags: "위키 태그 추가"

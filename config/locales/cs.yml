@@ -12,7 +12,7 @@ cs:
   label_show_with_count: "Zobrazit částku na značce"
   label_tags_tag: "Tag"
   label_use_colors: "Použijte barvy"
-  label_wiki_index_for_tag: "Wiki stránky se značkou %{value}"
+  label_wiki_index_for_tag_html: "Wiki stránky se značkou <em>%{tag}</em>"
   notice_failed_to_add_tags: "Přidání značek se nezdařilo"
   notice_tags_added: "Přidány značky"
   permission_add_wiki_tags: "Přidejte značky wiki"

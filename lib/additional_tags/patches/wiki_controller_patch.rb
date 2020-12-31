@@ -8,6 +8,8 @@ module AdditionalTags
         helper :additional_tags
         helper :additional_tags_wiki
 
+        include AdditionalTagsWikiHelper
+
         before_action :find_page_for_update_tags, only: :update_tags
       end
 
@@ -27,7 +29,7 @@ module AdditionalTags
           @tag = params[:tag]
           return super unless AdditionalTags.setting?(:active_wiki_tags) && @tag.present?
 
-          load_pages_for_index_with_tag
+          @pages = wiki_pages_with_tag @tag, @wiki
 
           respond_to do |format|
             format.html do
@@ -38,19 +40,6 @@ module AdditionalTags
         end
 
         private
-
-        def load_pages_for_index_with_tag
-          pattern = "%#{@tag.to_s.strip}%"
-          @pages = @wiki.pages
-                        .joins(AdditionalTags::Tags.tag_to_joins(WikiPage))
-                        .where("LOWER(#{ActiveRecord::Base.connection.quote_table_name(ActsAsTaggableOn.tags_table)}.name) LIKE LOWER(:p)",
-                               p: pattern)
-                        .with_updated_on
-                        .distinct
-                        .reorder("#{WikiPage.table_name}.title")
-                        .includes(wiki: :project)
-                        .includes(:parent).to_a
-        end
 
         # find_existing_page can not be used from wiki_controller, because it would be disable index only rule
         def find_page_for_update_tags
