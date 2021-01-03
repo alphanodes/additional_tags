@@ -22,7 +22,7 @@ module AdditionalTags
 
         def wiki_tags
           @name = params[:q].to_s
-          @tags = WikiPage.available_tags project: @project, name_like: @name
+          @tags = WikiPage.available_tags project: nil, name_like: @name
           render layout: false, partial: 'additional_tag_list', locals: { unsorted: true }
         end
 
