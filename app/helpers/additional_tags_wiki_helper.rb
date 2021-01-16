@@ -31,12 +31,16 @@ module AdditionalTagsWikiHelper
     end
   end
 
-  def wiki_pages_with_tag(tag, wiki = nil)
-    scope = if wiki.nil?
-              WikiPage.where({})
-            else
+  def wiki_pages_with_tag(tag, project = nil)
+    wiki = project&.wiki
+
+    scope = if wiki
               wiki.pages
+            else
+              WikiPage.joins(wiki: :project)
             end
+
+    scope = scope.visible(User.current, project: project) if scope.respond_to? :visible
 
     scope = scope.joins(AdditionalTags::Tags.tag_to_joins(WikiPage))
                  .where("LOWER(#{ActiveRecord::Base.connection.quote_table_name(ActsAsTaggableOn.tags_table)}.name) = LOWER(:p)",

@@ -29,7 +29,7 @@ module AdditionalTags
           @tag = params[:tag]
           return super unless AdditionalTags.setting?(:active_wiki_tags) && @tag.present?
 
-          @pages = wiki_pages_with_tag @tag, @wiki
+          @pages = wiki_pages_with_tag @tag, @project
 
           respond_to do |format|
             format.html do
