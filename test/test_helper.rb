@@ -9,12 +9,14 @@ if ENV['JENKINS']
 end
 
 require File.expand_path "#{File.dirname __FILE__}/../../../test/test_helper"
+require File.expand_path "#{File.dirname __FILE__}/global_test_helper"
 require File.expand_path "#{File.dirname __FILE__}/../../additionals/test/global_test_helper"
 require File.expand_path "#{File.dirname __FILE__}/../../additionals/test/crud_controller_base"
 
 module AdditionalTags
   module TestHelper
     include Additionals::GlobalTestHelper
+    include AdditionalTags::GlobalTestHelper
 
     def with_tags_settings(settings, &_block)
       saved_settings = Setting.plugin_additional_tags.dup
