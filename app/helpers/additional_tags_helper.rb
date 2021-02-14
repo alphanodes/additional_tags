@@ -149,19 +149,22 @@ module AdditionalTagsHelper
     s.join sep
   end
 
+  def additional_tag_sep(use_colors)
+    if use_colors.nil? || use_colors
+      ' '
+    else
+      ', '
+    end
+  end
+
   def additional_tag_links(tag_list, options = {})
     return if tag_list.blank?
-
-    sep = if options[:use_colors].nil? || options[:use_colors]
-            ' '
-          else
-            ', '
-          end
 
     unsorted = options.delete(:unsorted)
     tag_list = AdditionalTags::Tags.sort_tag_list(tag_list) unless unsorted
 
-    safe_join tag_list.map { |tag| additional_tag_link tag, options }, sep
+    safe_join tag_list.map { |tag| additional_tag_link tag, options },
+              additional_tag_sep(options[:use_colors])
   end
 
   private
