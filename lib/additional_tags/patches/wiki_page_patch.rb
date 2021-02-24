@@ -8,7 +8,11 @@ module AdditionalTags
 
         acts_as_ordered_taggable
 
-        safe_attributes 'tag_list'
+        safe_attributes 'tag_list', (->(page, _user) { user.allowed_to?(:add_wiki_tags, page.project) })
+
+        alias_method :safe_attributes_without_tags=, :safe_attributes=
+        alias_method :safe_attributes=, :safe_attributes_with_tags=
+
         before_save :sort_tag_list
       end
 
@@ -26,6 +30,23 @@ module AdditionalTags
       end
 
       module InstanceMethods
+        def safe_attributes_with_tags=(attrs, user = User.current)
+          if !attrs.is_a?(Array) && attrs && attrs[:tag_list]
+            tags = attrs[:tag_list]
+            tags = Array(tags).reject(&:empty?)
+
+            # only assign it, if changed
+            if tags == tag_list
+              attrs.delete :tag_list
+            else
+              attrs[:tag_list] = tags
+              self.tag_list = tags
+            end
+          end
+
+          send 'safe_attributes_without_tags=', attrs, user
+        end
+
         private
 
         def sort_tag_list
