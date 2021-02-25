@@ -7,6 +7,7 @@ class WikiPageTest < AdditionalTags::TestCase
            :additional_tags, :additional_taggings
 
   def setup
+    prepare_tests
     User.current = nil
     @wiki = wikis :wikis_001
     @page = @wiki.pages.first
@@ -33,7 +34,7 @@ class WikiPageTest < AdditionalTags::TestCase
         assert_save page
 
         page.reload
-        assert_equal ['Test1'], page.tag_list
+        assert_equal %w[First Test1], page.tag_list.sort
       end
     end
   end

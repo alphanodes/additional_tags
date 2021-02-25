@@ -8,11 +8,6 @@ module AdditionalTags
 
         acts_as_ordered_taggable
 
-        safe_attributes 'tag_list',
-                        if: (lambda do |page, user|
-                          AdditionalTags.setting?(:active_wiki_tags) && user.allowed_to?(:add_wiki_tags, page.project)
-                        end)
-
         alias_method :safe_attributes_without_tags=, :safe_attributes=
         alias_method :safe_attributes=, :safe_attributes_with_tags=
 
@@ -39,7 +34,9 @@ module AdditionalTags
             tags = Array(tags).reject(&:empty?)
 
             # only assign it, if changed
-            if tags == tag_list
+            if tags == tag_list ||
+               !AdditionalTags.setting?(:active_wiki_tags) ||
+               !user.allowed_to?(:add_wiki_tags, project)
               attrs.delete :tag_list
             else
               attrs[:tag_list] = tags

@@ -52,7 +52,7 @@ class TagsTest < AdditionalTags::TestCase
                                                user: users(:users_003),
                                                permission: :view_wiki_pages,
                                                project_join: WikiPage.project_joins
-    assert_equal 0, tags.to_a.size
+    assert_equal 1, tags.to_a.size
   end
 
   def test_merge_with_new_tag_name

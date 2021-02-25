@@ -63,7 +63,7 @@ tagging_009:
 
 wiki_tag:
   tag_id: 1
-  taggable_id: 3
+  taggable_id: 2
   taggable_type: WikiPage
   context: tags
   created_at: 2020-01-27 15:08:27 +01:00
