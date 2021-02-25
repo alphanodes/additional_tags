@@ -8,7 +8,10 @@ module AdditionalTags
 
         acts_as_ordered_taggable
 
-        safe_attributes 'tag_list', (->(page, _user) { user.allowed_to?(:add_wiki_tags, page.project) })
+        safe_attributes 'tag_list',
+                        if: (lambda do |page, user|
+                          AdditionalTags.setting?(:active_wiki_tags) && user.allowed_to?(:add_wiki_tags, page.project)
+                        end)
 
         alias_method :safe_attributes_without_tags=, :safe_attributes=
         alias_method :safe_attributes=, :safe_attributes_with_tags=
