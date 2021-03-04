@@ -74,7 +74,7 @@ module AdditionalTags
 
       case operator
       when '=', '!'
-        ids_list = klass.tagged_with(values, any: true).map(&:id).push(0).join ','
+        ids_list = klass.tagged_with(values, any: true).pluck(:id).push(0).join ','
         "(#{klass.table_name}.id #{compare} (#{ids_list}))"
       else
         entries = klass.tagged_with AdditionalTags::Tags.available_tags(klass, project: project).pluck(:name), exclude: true
