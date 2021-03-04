@@ -17,7 +17,7 @@ module AdditionalTags
         def sql_for_tags_field(_field, operator, value)
           case operator
           when '=', '!'
-            issues = Issue.tagged_with(value.clone)
+            issues = Issue.tagged_with(value.clone, any: true)
           when '!*'
             issues = Issue.joins(:tags).uniq
           else

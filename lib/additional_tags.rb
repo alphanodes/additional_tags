@@ -69,9 +69,9 @@ module AdditionalTags
       setting(:tags_sidebar).present? && setting(:tags_sidebar) != 'none'
     end
 
-    def sql_for_tags_field(klass, operator, value)
+    def sql_for_tags_field(klass, operator, values)
       compare   = operator.eql?('=') ? 'IN' : 'NOT IN'
-      ids_list  = klass.tagged_with(value).map(&:id).push(0).join(',')
+      ids_list  = klass.tagged_with(values, any: true).map(&:id).push(0).join(',')
       "(#{klass.table_name}.id #{compare} (#{ids_list})) "
     end
 
