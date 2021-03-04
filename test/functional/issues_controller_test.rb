@@ -348,11 +348,30 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
                     c: ['tags'],
                     f: ['tags'],
                     op: { 'tags' => '=' },
-                    v: { 'tags' => ['First'] } }
+                    v: { 'tags' => %w[First Second] } }
 
       assert_response :success
       assert_select 'table.issues td.tags'
       assert_select 'table.issues td.tags span.additional-tag-label-color'
+      assert_select 'tr#issue-1'
+    end
+  end
+
+  def test_filter_by_tag_with_not
+    with_tags_settings active_issue_tags: 1 do
+      @request.session[:user_id] = 1
+      get :index,
+          params: { project_id: 1,
+                    set_filter: 1,
+                    c: ['tags'],
+                    f: ['tags'],
+                    op: { 'tags' => '!' },
+                    v: { 'tags' => %w[First Second] } }
+
+      assert_response :success
+      assert_select 'table.issues td.tags'
+      assert_select 'table.issues td.tags span.additional-tag-label-color'
+      assert_select 'tr#issue-1', count: 0
     end
   end
 end
