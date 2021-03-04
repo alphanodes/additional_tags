@@ -370,8 +370,42 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
       assert_response :success
       assert_select 'table.issues td.tags'
-      assert_select 'table.issues td.tags span.additional-tag-label-color'
       assert_select 'tr#issue-1', count: 0
+      assert_select 'tr#issue-2', count: 1
+    end
+  end
+
+  def test_filter_by_tag_with_none
+    with_tags_settings active_issue_tags: 1 do
+      @request.session[:user_id] = 1
+      get :index,
+          params: { project_id: 1,
+                    set_filter: 1,
+                    c: ['tags'],
+                    f: ['tags'],
+                    op: { 'tags' => '!*' } }
+
+      assert_response :success
+      assert_select 'table.issues td.tags'
+      assert_select 'tr#issue-1', count: 0
+      assert_select 'tr#issue-2'
+    end
+  end
+
+  def test_filter_by_tag_with_all
+    with_tags_settings active_issue_tags: 1 do
+      @request.session[:user_id] = 1
+      get :index,
+          params: { project_id: 1,
+                    set_filter: 1,
+                    c: ['tags'],
+                    f: ['tags'],
+                    op: { 'tags' => '*' } }
+
+      assert_response :success
+      assert_select 'table.issues td.tags'
+      assert_select 'tr#issue-1'
+      assert_select 'tr#issue-2', count: 0
     end
   end
 end

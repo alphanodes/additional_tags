@@ -40,7 +40,7 @@ module AdditionalTags
         end
 
         def sql_for_issue_tags_field(_field, operator, value)
-          AdditionalTags.sql_for_tags_field Issue, operator, value
+          AdditionalTags.sql_for_tags_field Issue, operator, value, project
         end
 
         def available_issue_tags_values
