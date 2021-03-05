@@ -22,7 +22,7 @@ module AdditionalTags
           return unless AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:view_issue_tags, project, global: true)
 
           add_available_filter 'issue.tags',
-                               type: :list,
+                               type: :list_optional,
                                name: l('label_attribute_of_issue', name: l(:field_tags)),
                                values: -> { available_issue_tags_values }
         end
@@ -45,7 +45,8 @@ module AdditionalTags
 
         def available_issue_tags_values
           Issue.available_tags(project: project)
-               .map { |c| [c.name, c.name] }
+               .pluck(:name)
+               .map { |name| [name, name] }
         end
       end
     end
