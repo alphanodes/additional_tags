@@ -70,15 +70,15 @@ module AdditionalTags
     end
 
     def sql_for_tags_field(klass, operator, values)
-      compare = ['=', '!*'].include?(operator) ? 'IN' : 'NOT IN'
+      compare = ['=', '*'].include?(operator) ? 'IN' : 'NOT IN'
 
       case operator
       when '=', '!'
-        ids_list = klass.tagged_with(values, any: true).pluck(:id).push(0).join ','
-        "(#{klass.table_name}.id #{compare} (#{ids_list}))"
+        ids_list = klass.tagged_with(values, any: true).pluck :id
+        "(#{klass.table_name}.id #{compare} (#{ids_list.join ','}))" if ids_list.present?
       else
-        entries = klass.tagged_with ActsAsTaggableOn::Tag.all.pluck(:name), exclude: true
-        "(#{klass.table_name}.id #{compare} (#{entries.select(:id).to_sql}))"
+        entries = ActsAsTaggableOn::Tagging.where(taggable_type: 'Issue')
+        "(#{klass.table_name}.id #{compare} (#{entries.select(:taggable_id).to_sql}))"
       end
     end
 
