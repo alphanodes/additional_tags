@@ -77,7 +77,7 @@ module AdditionalTags
         ids_list = klass.tagged_with(values, any: true).pluck :id
         "(#{klass.table_name}.id #{compare} (#{ids_list.join ','}))" if ids_list.present?
       else
-        entries = ActsAsTaggableOn::Tagging.where(taggable_type: 'Issue')
+        entries = ActsAsTaggableOn::Tagging.where taggable_type: klass.name
         "(#{klass.table_name}.id #{compare} (#{entries.select(:taggable_id).to_sql}))"
       end
     end
