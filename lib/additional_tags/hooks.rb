@@ -20,7 +20,11 @@ module AdditionalTags
     end
 
     def controller_issues_bulk_edit_before_save(context = {})
-      tags_journal context[:issue], context[:params]
+      issue = context[:issue]
+      params = context[:params]
+
+      issues_bulk_tags_fix issue, params
+      tags_journal issue, params
     end
 
     # this hook is missing in redmine core at the moment
@@ -52,6 +56,12 @@ module AdditionalTags
     end
 
     private
+
+    def issues_bulk_tags_fix(issue, params)
+      old_tags = issue.tags.map(&:name)
+      new_tags = Array(params[:issue][:tag_list]).reject(&:empty?)
+      issue.tag_list = (old_tags + new_tags).uniq
+    end
 
     def tags_journal(issue, params)
       return unless params && params[:issue] && params[:issue][:tag_list]
