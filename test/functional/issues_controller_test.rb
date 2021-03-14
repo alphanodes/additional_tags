@@ -27,8 +27,8 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   def setup
     prepare_tests
 
-    @tag = ActsAsTaggableOn::Tag.create(name: 'test_tag')
-    @last_tag = ActsAsTaggableOn::Tag.create(name: 'last_tag')
+    @tag = ActsAsTaggableOn::Tag.create name: 'test_tag'
+    @last_tag = ActsAsTaggableOn::Tag.create name: 'last_tag'
 
     User.current = nil
   end
@@ -176,33 +176,41 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   def test_post_bulk_edit_with_empty_string_tags
     with_tags_settings active_issue_tags: 1 do
       @request.session[:user_id] = 3
-      issue_ids = [1, 3]
-      issue_ids.each { |i| assert Issue.find(i).tag_list.any? }
+      issue1 = Issue.find 1
+      issue2 = Issue.find 2
+
+      assert_equal ['First'], issue1.tag_list
+      assert_equal [], issue2.tag_list
+
       post :bulk_update,
-           params: { ids: issue_ids,
+           params: { ids: [issue1.id, issue2.id],
                      issue: { project_id: '', tracker_id: '', tag_list: ['', ''] } }
 
       assert_response :redirect
-      issue_ids.each { |i| assert_equal [], Issue.find(i).tag_list }
+      assert_equal ['First'], Issue.find(1).tag_list
+      assert_equal [], Issue.find(2).tag_list
     end
   end
 
   def test_post_bulk_edit_with_changed_tags
     with_tags_settings active_issue_tags: 1 do
       @request.session[:user_id] = 2
-      issue1 = Issue.find(1)
+      issue1 = Issue.find 1
       issue1.tags << @tag
 
-      issue2 = Issue.find(2)
+      issue2 = Issue.find 2
       issue2.tags << @last_tag
 
+      assert_equal %w[First test_tag], issue1.tag_list
+      assert_equal %w[last_tag], issue2.tag_list
+
       post :bulk_update,
-           params: { ids: [1, 2],
+           params: { ids: [issue1.id, issue2.id],
                      issue: { project_id: '', tracker_id: '', tag_list: ['bulk_tag'] } }
 
       assert_response :redirect
-      assert_equal ['bulk_tag'], Issue.find(1).tag_list
-      assert_equal ['bulk_tag'], Issue.find(2).tag_list
+      assert_equal %w[bulk_tag First test_tag], Issue.find(1).tag_list
+      assert_equal %w[bulk_tag last_tag], Issue.find(2).tag_list
     end
   end
 
