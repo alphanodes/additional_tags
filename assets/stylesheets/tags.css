@@ -1,6 +1,6 @@
 /* stylelint-disable font-family-no-missing-generic-family-keyword */
 
-#admin-menu a.tags::before {
+#admin-menu a.additional-tags::before {
   font-family: Font Awesome\ 5 Free;
   font-size: 1.2em;
   font-weight: 900;
@@ -8,12 +8,12 @@
   padding-right: 4px;
 }
 
-#admin-menu a.tags {
+#admin-menu a.additional-tags {
   padding-left: 0;
 }
 
 /* Mobile menu style FontAwesome icon */
-.flyout-is-active #admin-menu li a.tags {
+.flyout-is-active #admin-menu li a.additional-tags {
   padding-left: 8px !important;
 }
 

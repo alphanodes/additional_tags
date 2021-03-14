@@ -23,7 +23,9 @@ Redmine::Plugin.register :additional_tags do
   end
 
   menu :admin_menu,
-       :tags, { controller: 'settings', action: 'plugin', id: 'additional_tags' }, caption: :field_tags
+       :additional_tags,
+       { controller: 'settings', action: 'plugin', id: 'additional_tags' },
+       caption: :field_tags
 end
 
 Rails.configuration.to_prepare do
