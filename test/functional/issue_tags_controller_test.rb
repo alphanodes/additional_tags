@@ -40,7 +40,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
           xhr: true
 
       assert_response :success
-      assert_equal 'text/javascript', response.content_type
+      assert_equal 'text/javascript', response.media_type
 
       html_form = response.body[/<form.+form>/].delete('\\')
       assert_select_in html_form, 'select#issue_tag_list', 1 do
@@ -63,7 +63,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
           xhr: true
 
       assert_response :success
-      assert_equal 'text/javascript', response.content_type
+      assert_equal 'text/javascript', response.media_type
 
       html_form = response.body[/<form.+form>/].delete('\\')
 
