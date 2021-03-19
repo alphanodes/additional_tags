@@ -36,7 +36,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: 'BestPasswordEver'
         ports:
-          - 3306:3306
+          # will assign a random free host port
+          - 3306/tcp
         options: >-
           --health-cmd="mysqladmin ping"
           --health-interval=10s
