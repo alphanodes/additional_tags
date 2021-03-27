@@ -26,8 +26,8 @@ de:
   tags_sidebar_list: Liste
   tags_sidebar_none: Keine
   tags_sidebar_simple_cloud: Einfache Cloud
-  tags_sidebar: Zeige TAGs in der Sidebar
+  label_tags_sidebar: Zeige TAGs in der Sidebar
   tags_sort_by_count: Anzahl
   tags_sort_by_name: Name
-  tags_sort_by: Sortiere TAGs nach
-  tags_suggestion_order: Reihenfolge der Vorschläge
+  label_tags_sort_by: Sortiere TAGs nach
+  label_tags_suggestion_order: Reihenfolge der Vorschläge
