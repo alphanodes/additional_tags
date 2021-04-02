@@ -10,11 +10,9 @@ class AdditionalTagsController < ApplicationController
 
   def destroy
     @tags.each do |tag|
-      begin
-        tag.reload.destroy
-      rescue ::ActiveRecord::RecordNotFound
-        Rails.logger.warn "Tag #{tag} could not be deleted"
-      end
+      tag.reload.destroy
+    rescue ::ActiveRecord::RecordNotFound
+      Rails.logger.warn "Tag #{tag} could not be deleted"
     end
     redirect_back_or_default @tag_list_path
   end
