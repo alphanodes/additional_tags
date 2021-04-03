@@ -50,12 +50,12 @@ Start using it, too. The example image shows the centralized tag management in t
 To install stable version of additional_tags, use
 
 ```shell
-cd redmine/plugins
-git clone -b stable https://www.github.com/alphanodes/additionals.git
-git clone -b 1.0.0 https://www.github.com/alphanodes/additional_tags.git
+cd $REDMINE_ROOT
+git clone -b stable https://www.github.com/alphanodes/additionals.git plugins/additionals
+git clone -b 1.0.0 https://www.github.com/alphanodes/additional_tags.git plugins/additional_tags
 ```
 
-It is also possible to use stable version as a gem package as an alternative. If you want it, add this to your Gemfile.local:
+It is also possible to use stable version as a gem package as an alternative. If you want it, add this to your $REDMINE_ROOT/Gemfile.local:
 
 ```ruby
 gem 'additional_tags'
@@ -67,9 +67,9 @@ addtionals plugins is usable as gem, too.
 If you want to use the latest development version, use
 
 ```shell
-cd redmine/plugins
-git clone https://github.com/alphanodes/additionals.git
-git clone https://github.com/alphanodes/additional_tags.git
+cd $REDMINE_ROOT
+git clone https://github.com/alphanodes/additionals.git plugins/additionals
+git clone https://github.com/alphanodes/additional_tags.git plugins/additional_tags
 ```
 
 ### 2. Install dependencies and migrate database.
