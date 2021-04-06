@@ -12,22 +12,17 @@ jobs:
 
     - name: Install package dependencies
       run: >
-        sudo apt-get install --yes --quiet
-        pandoc
+        sudo apt-get install --yes --quiet pandoc
+
+    - name: Setup Gemfile
+      run: |
+        cp test/support/gemfile.rb Gemfile
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.6
         bundler-cache: true
-
-    - name: Set Gemfile
-      run: |
-        echo "source 'https://rubygems.org'" > Gemfile
-        echo "group :test do" >> Gemfile
-        echo "  gem 'brakeman', require: false" >> Gemfile
-        echo "  gem 'pandoc-ruby', require: false" >> Gemfile
-        echo "end">> Gemfile
 
     - name: Setup gems
       run: |

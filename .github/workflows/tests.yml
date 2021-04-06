@@ -92,15 +92,14 @@ jobs:
       - name: Prepare Redmine source
         working-directory: redmine
         run: |
-          sed -i '/rubocop/d' Gemfile
-          rm -f .rubocop*
           cp plugins/additional_tags/test/support/database-${{ matrix.db }}.yml config/database.yml
           cp plugins/additional_tags/test/support/configuration.yml config/configuration.yml
 
       - name: Install Ruby dependencies
         working-directory: redmine
         run: |
-          bundle install --jobs=4 --retry=3 --without development
+          bundle config set --local without 'development'
+          bundle install --jobs=4 --retry=3
 
       - name: Generate session store secret
         env:
