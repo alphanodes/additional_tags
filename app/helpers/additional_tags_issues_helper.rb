@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AdditionalTagsIssuesHelper
   # Hacked render_api_custom_values to add plugin values to issue api
   def render_api_custom_values(custom_values, api)
@@ -9,7 +11,7 @@ module AdditionalTagsIssuesHelper
 
       api.array :tags do
         @issue.tags.each do |tag|
-          api.tag(id: tag.id, name: tag.name)
+          api.tag id: tag.id, name: tag.name
         end
       end
     end

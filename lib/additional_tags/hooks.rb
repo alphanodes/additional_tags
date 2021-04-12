@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AdditionalTags
   class AdditionalTagsHookListener < Redmine::Hook::ViewListener
     render_on :view_issues_bulk_edit_details_bottom,

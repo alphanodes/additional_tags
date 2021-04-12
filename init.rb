@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Redmine::Plugin.register :additional_tags do
   name        'Additional Tags'
   author      'AlphaNodes GmbH'

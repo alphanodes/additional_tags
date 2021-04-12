@@ -15,7 +15,7 @@
       - tags.each do |tag|
         tr.hascontextmenu id="#{tag.id}"
           td.checkbox.hide-when-print
-           = check_box_tag('ids[]', tag.id, false, id: nil)
+           = check_box_tag 'ids[]', tag.id, false, id: nil
           td = additional_tag_link tag, link: edit_additional_tag_path(tag)
           - manageable_tag_column_values(tag).each do |column|
             td = column

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 $VERBOSE = nil
 
 if ENV['JENKINS']
@@ -53,9 +55,9 @@ module AdditionalTags
     def fixtures(*table_names)
       dir = "#{File.dirname __FILE__}/fixtures/"
       table_names.each do |x|
-        ActiveRecord::FixtureSet.create_fixtures(dir, x) if File.exist?("#{dir}/#{x}.yml")
+        ActiveRecord::FixtureSet.create_fixtures dir, x if File.exist? "#{dir}/#{x}.yml"
       end
-      super(table_names)
+      super table_names
     end
   end
 

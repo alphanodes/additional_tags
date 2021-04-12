@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActsAsTaggableMigration < ActiveRecord::Migration[5.2]
   def up
     create_table ActsAsTaggableOn.tags_table do |t|
@@ -30,7 +32,7 @@ class ActsAsTaggableMigration < ActiveRecord::Migration[5.2]
 
     return unless ActsAsTaggableOn::Utils.using_mysql?
 
-    execute("ALTER TABLE #{ActsAsTaggableOn.tags_table} MODIFY name varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;")
+    execute "ALTER TABLE #{ActsAsTaggableOn.tags_table} MODIFY name varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"
   end
 
   def down

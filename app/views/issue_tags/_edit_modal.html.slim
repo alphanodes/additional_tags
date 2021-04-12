@@ -21,7 +21,7 @@ h3.title = l :label_add_tags
                                 placeholder: @is_bulk_editing ? t(:label_no_change_option) : '+ add tag',
                                 tags: User.current.allowed_to?(:create_issue_tags, @project)
     p.most_used_tags
-      = safe_join @most_used_tags.collect { |t| tag.span(t.name, class: 'most_used_tag') }, ', '
+      = safe_join @most_used_tags.collect { |t| tag.span t.name, class: 'most_used_tag' }, ', '
     = javascript_tag "var mostUsedTags = #{@most_used_tags.map(&:name)}"
 
   .buttons

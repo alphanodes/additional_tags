@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AdditionalTags
   module Patches
     module SettingsControllerPatch

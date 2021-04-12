@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require File.expand_path '../../test_helper', __FILE__
 
 class AutoCompletesControllerTest < AdditionalTags::ControllerTest
@@ -42,7 +44,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
         params: { project_id: 'ecookbook', q: 'Fir' }
 
     assert_response :success
-    json = ActiveSupport::JSON.decode(response.body)
+    json = ActiveSupport::JSON.decode response.body
     assert_kind_of Array, json
     parsed_tag = json.last
     assert_kind_of Hash, parsed_tag
@@ -99,7 +101,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
         params: { project_id: 'onlinestore', q: 'Fir' }
 
     assert_response :success
-    json = ActiveSupport::JSON.decode(response.body)
+    json = ActiveSupport::JSON.decode response.body
     assert_kind_of Array, json
     parsed_tag = json.last
     assert_kind_of Hash, parsed_tag
@@ -114,7 +116,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
         params: { project_id: 'onlinestore', q: 'Fir' }
 
     assert_response :success
-    json = ActiveSupport::JSON.decode(response.body)
+    json = ActiveSupport::JSON.decode response.body
     assert_kind_of Array, json
     parsed_tag = json.last
     assert_kind_of Hash, parsed_tag

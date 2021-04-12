@@ -56,7 +56,9 @@ Style/AutoResourceCleanup:
   Enabled: true
 
 Style/FrozenStringLiteralComment:
-  Enabled: false
+  Enabled: true
+  Exclude:
+    - '/**/*.rsb'
 
 Style/Documentation:
   Enabled: false
@@ -64,6 +66,31 @@ Style/Documentation:
 # required for travis/ci (symbolic links problem)
 Style/ExpandPathArguments:
   Enabled: false
+
+Style/OptionHash:
+  Enabled: true
+  SuspiciousParamNames:
+    - options
+    - api_options
+    - opts
+    - args
+    - params
+    - parameters
+    - settings
+  Exclude:
+    - lib/additional_tags/patches/*.rb
+
+Style/ReturnNil:
+  Enabled: true
+
+Style/UnlessLogicalOperators:
+  Enabled: true
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  AllowParenthesesInMultilineCall: true
+  AllowParenthesesInChaining: true
+  EnforcedStyle: omit_parentheses
 
 Style/HashTransformKeys:
   Enabled: false

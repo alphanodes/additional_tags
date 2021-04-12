@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IssueTagsController < ApplicationController
   before_action :find_issues, only: %i[edit update]
 
@@ -25,7 +27,7 @@ class IssueTagsController < ApplicationController
       tags = params[:issue] && params[:issue][:tag_list] ? params[:issue][:tag_list].reject(&:empty?) : []
 
       unless User.current.allowed_to?(:create_issue_tags, @projects.first) || Issue.allowed_tags?(tags)
-        flash[:error] = t(:notice_failed_to_add_tags)
+        flash[:error] = t :notice_failed_to_add_tags
         return
       end
 
@@ -35,13 +37,13 @@ class IssueTagsController < ApplicationController
           issue.save!
         end
       end
-      flash[:notice] = t(:notice_tags_added)
+      flash[:notice] = t :notice_tags_added
     else
-      flash[:error] = t(:notice_failed_to_add_tags)
+      flash[:error] = t :notice_failed_to_add_tags
     end
   rescue StandardError => e
     Rails.logger.warn "Failed to add tags: #{e.inspect}"
-    flash[:error] = t(:notice_failed_to_add_tags)
+    flash[:error] = t :notice_failed_to_add_tags
   ensure
     redirect_to_referer_or { render text: 'Tags updated.', layout: true }
   end

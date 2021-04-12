@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AdditionalTags
   module Patches
     module IssuePatch
@@ -20,11 +22,11 @@ module AdditionalTags
       class_methods do
         def allowed_tags?(tags)
           allowed_tags = available_tags.map(&:name)
-          tags.all? { |tag| allowed_tags.include?(tag) }
+          tags.all? { |tag| allowed_tags.include? tag }
         end
 
         def by_tags(project, with_subprojects: false)
-          count_and_group_by(project: project, association: :tags, with_subprojects: with_subprojects)
+          count_and_group_by project: project, association: :tags, with_subprojects: with_subprojects
         end
 
         def available_tags(options = {})
@@ -66,7 +68,7 @@ module AdditionalTags
         end
 
         def copy_from_with_tags(arg, options = {})
-          copy_from_without_tags(arg, options)
+          copy_from_without_tags arg, options
           issue = arg.is_a?(Issue) ? arg : Issue.visible.find(arg)
           self.tag_list = issue.tag_list
           self

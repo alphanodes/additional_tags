@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AdditionalTags
   module Patches
     module AutoCompletesControllerPatch
@@ -30,7 +32,7 @@ module AdditionalTags
           return render_403 unless User.current.admin?
 
           @name = params[:q].to_s
-          sql_for_where = "LOWER(#{ActiveRecord::Base.connection.quote_table_name(ActsAsTaggableOn.tags_table)}.name) LIKE ?"
+          sql_for_where = "LOWER(#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name) LIKE ?"
           @tags = ActsAsTaggableOn::Tag.where(sql_for_where, "%#{@name.downcase}%")
                                        .order(name: :asc)
 

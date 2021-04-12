@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AdditionalTags
   module GlobalTestHelper
     def with_tags_settings(settings, &_block)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'digest/md5'
 
 module AdditionalTagsHelper
@@ -12,13 +14,13 @@ module AdditionalTagsHelper
 
     columns = {}
 
-    if AdditionalTags.setting?(:active_issue_tags)
+    if AdditionalTags.setting? :active_issue_tags
       columns[:issue] = { label: l(:label_issue_plural),
                           tag_controller: :issues,
                           counts: Issue.available_tags.map { |tag| [tag.id, tag.count] }.to_h }
     end
 
-    if AdditionalTags.setting?(:active_wiki_tags)
+    if AdditionalTags.setting? :active_wiki_tags
       columns[:wiki] = { label: l(:label_wiki),
                          counts: WikiPage.available_tags.map { |tag| [tag.id, tag.count] }.to_h }
     end
@@ -43,11 +45,11 @@ module AdditionalTagsHelper
     columns
   end
 
-  def render_tags_list(tags, options = {})
+  def render_tags_list(tags, **options)
     return if tags.blank?
 
-    style = options.delete(:style)
-    tags = tags.all.to_a if tags.respond_to?(:all)
+    style = options.delete :style
+    tags = tags.all.to_a if tags.respond_to? :all
 
     case "#{AdditionalTags.setting :tags_sort_by}:#{AdditionalTags.setting :tags_sort_order}"
     when 'name:desc'
@@ -71,7 +73,7 @@ module AdditionalTagsHelper
       raise 'Unknown list style'
     end
 
-    content = ''.html_safe
+    content = +''.html_safe
     if style == :list && AdditionalTags.setting(:tags_sort_by) == 'name'
       tags.group_by { |tag| tag.name.downcase.first }.each do |letter, grouped_tags|
         content << content_tag(item_el, letter.upcase, class: 'letter')
@@ -84,13 +86,13 @@ module AdditionalTagsHelper
     content_tag(list_el, content, class: 'tags-cloud', style: (style == :simple_cloud ? 'text-align: left;' : ''))
   end
 
-  def additional_tag_link(tag_object, options = {})
+  def additional_tag_link(tag_object, **options)
     tag_name = []
     tag_name << tag_object.name
 
     options[:project] = @project if options[:project].blank? && @project.present?
 
-    use_colors = AdditionalTags.setting?(:use_colors)
+    use_colors = AdditionalTags.setting? :use_colors
     if use_colors
       tag_bg_color = additional_tag_color tag_object.name
       tag_fg_color = additional_tag_fg_color tag_bg_color
@@ -157,11 +159,11 @@ module AdditionalTagsHelper
     end
   end
 
-  def additional_tag_links(tag_list, options = {})
+  def additional_tag_links(tag_list, **options)
     return if tag_list.blank?
 
-    unsorted = options.delete(:unsorted)
-    tag_list = AdditionalTags::Tags.sort_tag_list(tag_list) unless unsorted
+    unsorted = options.delete :unsorted
+    tag_list = AdditionalTags::Tags.sort_tag_list tag_list unless unsorted
 
     safe_join tag_list.map { |tag| additional_tag_link tag, options },
               additional_tag_sep(options[:use_colors])
@@ -169,7 +171,7 @@ module AdditionalTagsHelper
 
   private
 
-  def tag_url(tag_name, options = {})
+  def tag_url(tag_name, **options)
     action = options[:tag_action].presence || (controller_name == 'hrm_user_resources' ? 'show' : 'index')
 
     fields = [:tags]
@@ -180,7 +182,7 @@ module AdditionalTagsHelper
       field = options[:filter][:field]
       fields << field
       operators[field] = options[:filter][:operator]
-      values[field] = options[:filter][:value] if options[:filter].key?(:value)
+      values[field] = options[:filter][:value] if options[:filter].key? :value
     end
 
     { controller: options[:tag_controller].presence || controller_name,

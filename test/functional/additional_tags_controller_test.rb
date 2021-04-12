@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require File.expand_path '../../test_helper', __FILE__
 
 class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
@@ -35,7 +37,7 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_get_edit
-    tag = ActsAsTaggableOn::Tag.find_by(name: 'a1')
+    tag = ActsAsTaggableOn::Tag.find_by name: 'a1'
     get :edit,
         params: { id: tag.id }
     assert_response :success
@@ -43,7 +45,7 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_put_update
-    tag1 = ActsAsTaggableOn::Tag.find_by(name: 'a1')
+    tag1 = ActsAsTaggableOn::Tag.find_by name: 'a1'
     new_name = 'updated main'
     put :update,
         params: { id: tag1.id, tag: { name: new_name } }
@@ -54,7 +56,7 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   test 'should delete destroy' do
-    tag1 = ActsAsTaggableOn::Tag.find_by(name: 'a1')
+    tag1 = ActsAsTaggableOn::Tag.find_by name: 'a1'
     assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
       post :destroy,
            params: { ids: tag1.id }
@@ -63,8 +65,8 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   test 'should post merge' do
-    tag1 = ActsAsTaggableOn::Tag.find_by(name: 'a1')
-    tag2 = ActsAsTaggableOn::Tag.find_by(name: 'b8')
+    tag1 = ActsAsTaggableOn::Tag.find_by name: 'a1'
+    tag2 = ActsAsTaggableOn::Tag.find_by name: 'b8'
     assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
       post :merge,
            params: { ids: [tag1.id, tag2.id], tag: { name: 'a1' } }
@@ -77,7 +79,7 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
   private
 
   def add_issue(project, tags, closed)
-    issue = Issue.generate!(project_id: project.id)
+    issue = Issue.generate! project_id: project.id
     issue.tag_list = tags
     issue.status = IssueStatus.where(is_closed: true).first if closed
     issue.save

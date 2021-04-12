@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AdditionalTagsController < ApplicationController
   before_action :require_admin
   before_action :find_tag, only: %i[edit update]

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module AdditionalTagsWikiHelper
   def sidebar_tags
     unless @sidebar_tags
       @sidebar_tags = []
-      @sidebar_tags = WikiPage.available_tags(project: @project) if AdditionalTags.show_sidebar_tags?
+      @sidebar_tags = WikiPage.available_tags project: @project if AdditionalTags.show_sidebar_tags?
     end
     @sidebar_tags
   end
@@ -37,13 +39,13 @@ module AdditionalTagsWikiHelper
     scope = if wiki
               wiki.pages
             else
-              WikiPage.joins(wiki: :project)
+              WikiPage.joins wiki: :project
             end
 
-    scope = scope.visible(User.current, project: project) if scope.respond_to? :visible
+    scope = scope.visible User.current, project: project if scope.respond_to? :visible
 
     scope = scope.joins(AdditionalTags::Tags.tag_to_joins(WikiPage))
-                 .where("LOWER(#{ActiveRecord::Base.connection.quote_table_name(ActsAsTaggableOn.tags_table)}.name) = LOWER(:p)",
+                 .where("LOWER(#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name) = LOWER(:p)",
                         p: tag.to_s.strip)
                  .with_updated_on
                  .joins(wiki: :project)

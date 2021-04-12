@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MigrateExistingTags < ActiveRecord::Migration[5.2]
   def up
     return unless table_exists?(MigrateTag.table_name) && table_exists?(MigrateTagging.table_name)
@@ -11,7 +13,7 @@ class MigrateExistingTags < ActiveRecord::Migration[5.2]
         old_tag.migrate_taggings.each do |tagging|
           next if excluded_taggable_types.include? tagging.taggable_type
 
-          tag = ActsAsTaggableOn::Tag.create!(name: old_tag.name) if cnt.zero? && tag.nil?
+          tag = ActsAsTaggableOn::Tag.create! name: old_tag.name if cnt.zero? && tag.nil?
           context = tagging.respond_to?('context') && tagging.context.present? ? tagging.context : 'tags'
 
           # old data can include dups
@@ -28,7 +30,7 @@ class MigrateExistingTags < ActiveRecord::Migration[5.2]
           cnt += 1
         end
 
-        ActsAsTaggableOn::Tag.reset_counters(tag.id, :taggings) unless tag.nil?
+        ActsAsTaggableOn::Tag.reset_counters tag.id, :taggings unless tag.nil?
       end
     end
   end

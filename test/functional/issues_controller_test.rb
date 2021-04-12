@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require File.expand_path '../../test_helper', __FILE__
 
 class IssuesControllerTest < AdditionalTags::ControllerTest
@@ -141,7 +143,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
       assert_redirected_to action: 'show', id: '3'
 
-      issue = Issue.find(3)
+      issue = Issue.find 3
       journals = issue.journals
       journal_details = journals.first.details
 
@@ -157,10 +159,10 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     with_tags_settings active_issue_tags: 1 do
       @request.session[:user_id] = 2
 
-      issue1 = Issue.find(1)
+      issue1 = Issue.find 1
       issue1.tags = [@tag]
 
-      issue2 = Issue.find(2)
+      issue2 = Issue.find 2
       issue2.tags = [@last_tag]
 
       post :bulk_update,
@@ -248,7 +250,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     with_tags_settings active_issue_tags: 1 do
       # User(id: 2) has role Manager in Project(id: 1) and Project(id: 1) contains Issue(id: 1)
       @request.session[:user_id] = 2
-      manager_role = Role.find(1)
+      manager_role = Role.find 1
       manager_role.add_permission! :edit_tags
       get :edit,
           params: { id: 1, issue: { project_id: 1 } }

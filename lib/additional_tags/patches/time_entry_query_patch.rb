@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_dependency 'time_entry_query'
 
 module AdditionalTags

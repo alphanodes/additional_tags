@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AdditionalTags
   module Patches
     module AgileQueryPatch
@@ -17,7 +19,7 @@ module AdditionalTags
         def sql_for_tags_field(_field, operator, value)
           case operator
           when '=', '!'
-            issues = Issue.tagged_with(value.clone, any: true)
+            issues = Issue.tagged_with value.clone, any: true
           when '!*'
             issues = Issue.joins(:tags).uniq
           else

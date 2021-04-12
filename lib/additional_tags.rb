@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'additional_tags/version'
 require 'additional_tags/tags'
 
 module AdditionalTags
-  TAG_TABLE_NAME = 'additional_tags'.freeze
-  TAGGING_TABLE_NAME = 'additional_taggings'.freeze
+  TAG_TABLE_NAME = 'additional_tags'
+  TAGGING_TABLE_NAME = 'additional_taggings'
 
   class << self
     def setup

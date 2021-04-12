@@ -1,20 +1,22 @@
+# frozen_string_literal: true
+
 module AdditionalTags
   class Tags
     class << self
-      def available_tags(klass, options = {})
+      def available_tags(klass, **options)
         user = options[:user].presence || User.current
 
         scope = ActsAsTaggableOn::Tag.where({})
-        scope = scope.where("#{Project.table_name}.id = ?", options[:project]) if options[:project]
+        scope = scope.where "#{Project.table_name}.id = ?", options[:project] if options[:project]
         if options[:permission]
-          scope = scope.where(tag_access(options[:permission], user))
+          scope = scope.where tag_access(options[:permission], user)
         elsif options[:visible_condition]
-          scope = scope.where(klass.visible_condition(user))
+          scope = scope.where klass.visible_condition(user)
         end
-        scope = scope.where("LOWER(#{TAG_TABLE_NAME}.name) LIKE ?", "%#{options[:name_like].downcase}%") if options[:name_like]
-        scope = scope.where("#{TAG_TABLE_NAME}.name=?", options[:name]) if options[:name]
-        scope = scope.where("#{TAGGING_TABLE_NAME}.taggable_id!=?", options[:exclude_id]) if options[:exclude_id]
-        scope = scope.where(options[:where_field] => options[:where_value]) if options[:where_field].present? && options[:where_value]
+        scope = scope.where "LOWER(#{TAG_TABLE_NAME}.name) LIKE ?", "%#{options[:name_like].downcase}%" if options[:name_like]
+        scope = scope.where "#{TAG_TABLE_NAME}.name=?", options[:name] if options[:name]
+        scope = scope.where "#{TAGGING_TABLE_NAME}.taggable_id!=?", options[:exclude_id] if options[:exclude_id]
+        scope = scope.where options[:where_field] => options[:where_value] if options[:where_field].present? && options[:where_value]
 
         columns = ["#{TAG_TABLE_NAME}.id",
                    "#{TAG_TABLE_NAME}.name",
@@ -29,7 +31,7 @@ module AdditionalTags
              .order(build_order_sql(options[:sort_by], options[:order]))
       end
 
-      def all_type_tags(klass, options = {})
+      def all_type_tags(klass, options)
         ActsAsTaggableOn::Tag.where({})
                              .joins(tag_for_joins(klass, options))
                              .distinct
@@ -61,7 +63,7 @@ module AdditionalTags
           # remove old (merged) tags
           tags_to_merge.reject { |t| t.id == tag.id }.each(&:destroy)
           # remove duplicate taggings
-          dup_scope = ActsAsTaggableOn::Tagging.where(tag_id: tag.id)
+          dup_scope = ActsAsTaggableOn::Tagging.where tag_id: tag.id
           valid_ids = dup_scope.group(:tag_id, :taggable_id, :taggable_type, :tagger_id, :tagger_type, :context).pluck(Arel.sql('MIN(id)'))
           dup_scope.where.not(id: valid_ids).destroy_all if valid_ids.any?
           # recalc count for new tag
@@ -100,16 +102,16 @@ module AdditionalTags
         Arel.sql sql
       end
 
-      def tag_for_joins(klass, options = {})
+      def tag_for_joins(klass, project_join: nil, project: nil, without_projects: false, **_)
         table_name = klass.table_name
 
         joins = ["JOIN #{TAGGING_TABLE_NAME} ON #{TAGGING_TABLE_NAME}.tag_id = #{TAG_TABLE_NAME}.id"]
         joins << "JOIN #{table_name} " \
                  "ON #{table_name}.id = #{TAGGING_TABLE_NAME}.taggable_id AND #{TAGGING_TABLE_NAME}.taggable_type = '#{klass}'"
 
-        if options[:project_join]
-          joins << options[:project_join]
-        elsif options[:project] || !options[:without_projects]
+        if project_join
+          joins << project_join
+        elsif project || !without_projects
           joins << "JOIN #{Project.table_name} ON #{table_name}.project_id = #{Project.table_name}.id"
         end
 
