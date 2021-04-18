@@ -20,13 +20,7 @@ module AdditionalTags
       module InstanceMethods
         def initialize_available_filters_with_tags
           initialize_available_filters_without_tags
-
-          return unless AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:view_issue_tags, project, global: true)
-
-          add_available_filter 'issue.tags',
-                               type: :list_optional,
-                               name: l('label_attribute_of_issue', name: l(:field_tags)),
-                               values: -> { available_issue_tags_values }
+          initialize_issue_tags_filter
         end
 
         def available_columns_with_tags
@@ -41,14 +35,8 @@ module AdditionalTags
           @available_columns
         end
 
-        def sql_for_issue_tags_field(_field, operator, value)
-          AdditionalTags.sql_for_tags_field Issue, operator, value
-        end
-
-        def available_issue_tags_values
-          Issue.available_tags(project: project)
-               .pluck(:name)
-               .map { |name| [name, name] }
+        def sql_for_issue_tags_field(_field, operator, values)
+          build_sql_for_tags_field klass: Issue, operator: operator, values: values
         end
       end
     end

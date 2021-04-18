@@ -17,9 +17,7 @@ module AdditionalTags
 
       module InstanceMethods
         def csv_content_with_tags(column, item)
-          if item.is_a?(Issue) && column.name == :tags ||
-             item.is_a?(TimeEntry) && column.name == :issue_tags
-
+          if column.name == :issue_tags || item.is_a?(Issue) && column.name == :tags
             additional_plain_tag_list column.value_object(item)
           else
             csv_content_without_tags column, item
@@ -27,8 +25,7 @@ module AdditionalTags
         end
 
         def column_content_with_tags(column, item)
-          if item.is_a?(Issue) && column.name == :tags ||
-             item.is_a?(TimeEntry) && column.name == :issue_tags
+          if column.name == :issue_tags || item.is_a?(Issue) && column.name == :tags
             additional_tag_links column.value(item),
                                  tag_controller: 'issues',
                                  use_colors: AdditionalTags.setting?(:use_colors)

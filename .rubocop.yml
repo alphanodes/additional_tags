@@ -16,6 +16,10 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Enabled: false
 
+Metrics/ParameterLists:
+  Enabled: true
+  CountKeywordArgs: false
+
 Metrics/ClassLength:
   Enabled: false
 
@@ -33,6 +37,12 @@ Metrics/ModuleLength:
 
 Metrics/PerceivedComplexity:
   Max: 25
+
+Style/ExpandPathArguments:
+  Enabled: true
+  Exclude:
+    - additional_tags.gemspec
+    - test/**/*
 
 Rails/ApplicationJob:
   Enabled: false
@@ -61,10 +71,6 @@ Style/FrozenStringLiteralComment:
     - '/**/*.rsb'
 
 Style/Documentation:
-  Enabled: false
-
-# required for travis/ci (symbolic links problem)
-Style/ExpandPathArguments:
   Enabled: false
 
 Style/OptionHash:

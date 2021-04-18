@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-$VERBOSE = nil
-
 if ENV['JENKINS']
   require 'simplecov'
   SimpleCov.start :rails do

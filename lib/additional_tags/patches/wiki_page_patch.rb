@@ -22,10 +22,10 @@ module AdditionalTags
            "JOIN #{Project.table_name} ON wikis.project_id = #{Project.table_name}.id"]
         end
 
-        def available_tags(options = {})
+        def available_tags(**options)
           options[:project_join] = project_joins
           options[:permission] = :view_wiki_pages
-          AdditionalTags::Tags.available_tags self, options
+          AdditionalTags::Tags.available_tags self, **options
         end
       end
 

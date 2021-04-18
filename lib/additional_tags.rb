@@ -24,6 +24,7 @@ module AdditionalTags
       MyController.include AdditionalTags::Patches::MyControllerPatch
       Issue.include AdditionalTags::Patches::IssuePatch
       Journal.include AdditionalTags::Patches::JournalPatch
+      Query.include AdditionalTags::Patches::QueryPatch
       IssuesController.include AdditionalTags::Patches::IssuesControllerPatch
       ImportsController.include AdditionalTags::Patches::ImportsControllerPatch
       QueriesHelper.include AdditionalTags::Patches::QueriesHelperPatch
@@ -69,19 +70,6 @@ module AdditionalTags
 
     def show_sidebar_tags?
       setting(:tags_sidebar).present? && setting(:tags_sidebar) != 'none'
-    end
-
-    def sql_for_tags_field(klass, operator, values)
-      compare = ['=', '*'].include?(operator) ? 'IN' : 'NOT IN'
-
-      case operator
-      when '=', '!'
-        ids_list = klass.tagged_with(values, any: true).pluck :id
-        "(#{klass.table_name}.id #{compare} (#{ids_list.join ','}))" if ids_list.present?
-      else
-        entries = ActsAsTaggableOn::Tagging.where taggable_type: klass.name
-        "(#{klass.table_name}.id #{compare} (#{entries.select(:taggable_id).to_sql}))"
-      end
     end
 
     private

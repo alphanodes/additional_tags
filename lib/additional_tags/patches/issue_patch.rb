@@ -29,9 +29,9 @@ module AdditionalTags
           count_and_group_by project: project, association: :tags, with_subprojects: with_subprojects
         end
 
-        def available_tags(options = {})
+        def available_tags(**options)
           options[:permission] = :view_issues
-          tags = AdditionalTags::Tags.available_tags self, options
+          tags = AdditionalTags::Tags.available_tags self, **options
           return tags unless options[:open_issues_only]
 
           tags.joins("JOIN #{IssueStatus.table_name} ON #{IssueStatus.table_name}.id = #{table_name}.status_id")

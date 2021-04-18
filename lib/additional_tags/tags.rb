@@ -26,14 +26,14 @@ module AdditionalTags
         columns << "MIN(#{TAGGING_TABLE_NAME}.created_at) AS last_created" if options[:sort_by] == 'last_created'
 
         scope.select(columns.join(', '))
-             .joins(tag_for_joins(klass, options))
+             .joins(tag_for_joins(klass, **options.slice(:project_join, :project, :without_projects)))
              .group("#{TAG_TABLE_NAME}.id, #{TAG_TABLE_NAME}.name, #{TAG_TABLE_NAME}.taggings_count").having('COUNT(*) > 0')
              .order(build_order_sql(options[:sort_by], options[:order]))
       end
 
-      def all_type_tags(klass, options)
-        ActsAsTaggableOn::Tag.where({})
-                             .joins(tag_for_joins(klass, options))
+      def all_type_tags(klass, without_projects: false)
+        ActsAsTaggableOn::Tag.all
+                             .joins(tag_for_joins(klass, without_projects: without_projects))
                              .distinct
                              .order("#{TAG_TABLE_NAME}.name")
       end
@@ -85,6 +85,15 @@ module AdditionalTags
         end
       end
 
+      def build_relation_tags(entries)
+        return [] if entries.none?
+
+        tags = entries.map(&:tags)
+        tags.flatten!
+
+        tags.uniq
+      end
+
       private
 
       def build_order_sql(sort_by, order)
@@ -102,7 +111,7 @@ module AdditionalTags
         Arel.sql sql
       end
 
-      def tag_for_joins(klass, project_join: nil, project: nil, without_projects: false, **_)
+      def tag_for_joins(klass, project_join: nil, project: nil, without_projects: false)
         table_name = klass.table_name
 
         joins = ["JOIN #{TAGGING_TABLE_NAME} ON #{TAGGING_TABLE_NAME}.tag_id = #{TAG_TABLE_NAME}.id"]

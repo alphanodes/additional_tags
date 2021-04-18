@@ -86,26 +86,26 @@ module AdditionalTagsHelper
     content_tag(list_el, content, class: 'tags-cloud', style: (style == :simple_cloud ? 'text-align: left;' : ''))
   end
 
-  def additional_tag_link(tag_object, **options)
+  def additional_tag_link(tag_object, link: nil, link_wiki_tag: false, show_count: false, use_colors: nil, **options)
     tag_name = []
     tag_name << tag_object.name
 
     options[:project] = @project if options[:project].blank? && @project.present?
 
-    use_colors = AdditionalTags.setting? :use_colors
+    use_colors ||= AdditionalTags.setting? :use_colors
     if use_colors
       tag_bg_color = additional_tag_color tag_object.name
       tag_fg_color = additional_tag_fg_color tag_bg_color
       tag_style = "background-color: #{tag_bg_color}; color: #{tag_fg_color}"
     end
 
-    tag_name << tag.span("(#{tag_object.count})", class: 'tag-count') if options[:show_count]
+    tag_name << tag.span("(#{tag_object.count})", class: 'tag-count') if show_count
 
-    content = if options[:link]
+    content = if link
                 link_to safe_join(tag_name),
-                        options[:link],
+                        link,
                         style: tag_style
-              elsif options[:link_wiki_tag]
+              elsif link_wiki_tag
                 link = if options[:project].present?
                          project_wiki_index_path options[:project], tag: tag_object.name
                        else
@@ -114,7 +114,7 @@ module AdditionalTagsHelper
                 link_to safe_join(tag_name), link, style: tag_style
               else
                 link_to safe_join(tag_name),
-                        tag_url(tag_object.name, options),
+                        tag_url(tag_object.name, **options),
                         style: tag_style
               end
 
@@ -124,7 +124,7 @@ module AdditionalTagsHelper
               { class: 'tag-label' }
             end
 
-    tag.span content, style
+    tag.span content, **style
   end
 
   def additional_tag_color(tag_name)
@@ -142,21 +142,15 @@ module AdditionalTagsHelper
   end
 
   # plain list of tags
-  def additional_plain_tag_list(tags, sep = ' ')
-    s = if tags.blank?
-          ['']
-        else
-          tags.map(&:name)
-        end
+  def additional_plain_tag_list(tags, sep: nil)
+    sep ||= "#{additional_csv_separator} "
+
+    s = tags.present? ? tags.map(&:name) : ['']
     s.join sep
   end
 
-  def additional_tag_sep(use_colors)
-    if use_colors.nil? || use_colors
-      ' '
-    else
-      ', '
-    end
+  def additional_tag_sep(use_colors: true)
+    use_colors ? ' ' : ', '
   end
 
   def additional_tag_links(tag_list, **options)
@@ -165,30 +159,30 @@ module AdditionalTagsHelper
     unsorted = options.delete :unsorted
     tag_list = AdditionalTags::Tags.sort_tag_list tag_list unless unsorted
 
-    safe_join tag_list.map { |tag| additional_tag_link tag, options },
-              additional_tag_sep(options[:use_colors])
+    safe_join tag_list.map { |tag| additional_tag_link tag, **options },
+              additional_tag_sep(use_colors: options[:use_colors])
   end
 
   private
 
-  def tag_url(tag_name, **options)
-    action = options[:tag_action].presence || (controller_name == 'hrm_user_resources' ? 'show' : 'index')
+  def tag_url(tag_name, filter: nil, tag_action: nil, tag_controller: nil, project: nil)
+    action = tag_action.presence || (controller_name == 'hrm_user_resources' ? 'show' : 'index')
 
     fields = [:tags]
     values = { tags: [tag_name] }
     operators = { tags: '=' }
 
-    if options[:filter].present?
-      field = options[:filter][:field]
+    if filter.present?
+      field = filter[:field]
       fields << field
-      operators[field] = options[:filter][:operator]
-      values[field] = options[:filter][:value] if options[:filter].key? :value
+      operators[field] = filter[:operator]
+      values[field] = filter[:value] if filter.key? :value
     end
 
-    { controller: options[:tag_controller].presence || controller_name,
+    { controller: tag_controller.presence || controller_name,
       action: action,
       set_filter: 1,
-      project_id: options[:project],
+      project_id: project,
       f: fields,
       v: values,
       op: operators }
