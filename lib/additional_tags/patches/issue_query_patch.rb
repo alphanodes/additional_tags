@@ -33,7 +33,7 @@ module AdditionalTags
             @available_columns = available_columns_without_tags
 
             if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:view_issue_tags, project, global: true)
-              @available_columns << QueryColumn.new(:tags)
+              @available_columns << QueryTagsColumn.new
             end
           else
             available_columns_without_tags

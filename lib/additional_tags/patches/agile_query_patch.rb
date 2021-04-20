@@ -12,7 +12,7 @@ module AdditionalTags
         alias_method :initialize_available_filters_without_tags, :initialize_available_filters
         alias_method :initialize_available_filters, :initialize_available_filters_with_tags
 
-        add_available_column QueryColumn.new(:tags)
+        add_available_column QueryTagsColumn.new
       end
 
       module InstanceMethods

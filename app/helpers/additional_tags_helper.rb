@@ -143,7 +143,7 @@ module AdditionalTagsHelper
 
   # plain list of tags
   def additional_plain_tag_list(tags, sep: nil)
-    sep ||= "#{additional_csv_separator} "
+    sep ||= "#{Query.additional_csv_separator} "
 
     s = tags.present? ? tags.map(&:name) : ['']
     s.join sep
