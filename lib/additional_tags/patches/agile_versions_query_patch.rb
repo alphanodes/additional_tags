@@ -6,7 +6,7 @@ module AdditionalTags
       extend ActiveSupport::Concern
 
       included do
-        add_available_column QueryTagsColumn.new
+        add_available_column ::QueryTagsColumn.new
       end
     end
   end
