@@ -121,10 +121,10 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
     assert_select 'div#tags-data' do
       assert_select 'span.additional-tag-label-color', 2, :text
-      assert_select 'span.additional-tag-label-color[style*=?]', 'color: white', text: 'Four'
-      assert_select 'span.additional-tag-label-color[style*=?]', 'background-color: #981b8f', text: 'Four'
-      assert_select 'span.additional-tag-label-color[style*=?]', 'color: white', text: 'Second'
-      assert_select 'span.additional-tag-label-color[style*=?]', 'background-color: #c22cf8', text: 'Second'
+      assert_select 'span.additional-tag-label-color[style*=?]', 'color: black', text: 'Four'
+      assert_select 'span.additional-tag-label-color[style*=?]', 'background-color: #12f5ae', text: 'Four'
+      assert_select 'span.additional-tag-label-color[style*=?]', 'color: black', text: 'Second'
+      assert_select 'span.additional-tag-label-color[style*=?]', 'background-color: #8b88a8', text: 'Second'
     end
 
     assert_select 'select#issue_tag_list_show' do

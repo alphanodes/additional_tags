@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'digest/md5'
-
 module AdditionalTagsHelper
   include ActsAsTaggableOn::TagsHelper
 
@@ -128,7 +126,7 @@ module AdditionalTagsHelper
   end
 
   def additional_tag_color(tag_name)
-    "##{Digest::MD5.hexdigest(tag_name)[0..5]}"
+    "##{Digest::SHA256.hexdigest(tag_name)[0..5]}"
   end
 
   def additional_tag_fg_color(bg_color)
