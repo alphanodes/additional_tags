@@ -58,7 +58,7 @@ class AdditionalTagsController < ApplicationController
   end
 
   def bulk_find_tags
-    @tags = ActsAsTaggableOn::Tag.joins("JOIN #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.taggings_table}" \
+    @tags = ActsAsTaggableOn::Tag.joins("LEFT JOIN #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.taggings_table}" \
                                         " ON #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.taggings_table}.tag_id =" \
                                         " #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id ")
                                  .select("#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id," \
@@ -69,6 +69,7 @@ class AdditionalTagsController < ApplicationController
                                  .group("#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id" \
                                         ", #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name" \
                                         ", #{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.taggings_count")
+
     raise ActiveRecord::RecordNotFound if @tags.empty?
   end
 
