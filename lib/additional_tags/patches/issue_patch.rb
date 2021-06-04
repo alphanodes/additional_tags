@@ -67,8 +67,8 @@ module AdditionalTags
           send 'safe_attributes_without_tags=', attrs, user
         end
 
-        def copy_from_with_tags(arg, options = {})
-          copy_from_without_tags arg, options
+        def copy_from_with_tags(arg, **options)
+          copy_from_without_tags(arg, **options)
           issue = arg.is_a?(Issue) ? arg : Issue.visible.find(arg)
           self.tag_list = issue.tag_list
           self
