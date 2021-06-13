@@ -7,6 +7,7 @@ module AdditionalTags
 
       included do
         include AdditionalsQuery
+        prepend InstanceOverwriteMethods
         include InstanceMethods
 
         alias_method :initialize_available_filters_without_tags, :initialize_available_filters
@@ -14,9 +15,20 @@ module AdditionalTags
 
         alias_method :available_columns_without_tags, :available_columns
         alias_method :available_columns, :available_columns_with_tags
+      end
 
-        alias_method :build_from_params_without_tags, :build_from_params
-        alias_method :build_from_params, :build_from_params_with_tags
+      module InstanceOverwriteMethods
+        def build_from_params(params, defaults = {})
+          super
+
+          return self if params[:tag_id].blank?
+
+          add_filter 'tags',
+                     '=',
+                     [ActsAsTaggableOn::Tag.find_by(id: params[:tag_id]).try(:name)]
+
+          self
+        end
       end
 
       module InstanceMethods
@@ -39,17 +51,6 @@ module AdditionalTags
             available_columns_without_tags
           end
           @available_columns
-        end
-
-        def build_from_params_with_tags(params, defaults = {})
-          build_from_params_without_tags params, defaults
-          return self if params[:tag_id].blank?
-
-          add_filter 'tags',
-                     '=',
-                     [ActsAsTaggableOn::Tag.find_by(id: params[:tag_id]).try(:name)]
-
-          self
         end
       end
     end
