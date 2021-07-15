@@ -91,7 +91,7 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
   def add_issue(project, tags, closed)
     issue = Issue.generate! project_id: project.id
     issue.tag_list = tags
-    issue.status = IssueStatus.where(is_closed: true).first if closed
+    issue.status = IssueStatus.where(is_closed: true).sorted.first if closed
     issue.save
   end
 end
