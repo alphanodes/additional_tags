@@ -151,6 +151,10 @@ module AdditionalTagsHelper
     use_colors ? ' ' : ', '
   end
 
+  def additional_tags_from_string(str)
+    str.to_s.split(',').map(&:strip)
+  end
+
   def additional_tag_links(tag_list, **options)
     return if tag_list.blank?
 
