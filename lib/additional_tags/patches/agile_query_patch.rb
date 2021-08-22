@@ -17,14 +17,14 @@ module AdditionalTags
 
       module InstanceMethods
         def sql_for_tags_field(_field, operator, value)
-          case operator
-          when '=', '!'
-            issues = Issue.tagged_with value.clone, any: true
-          when '!*'
-            issues = Issue.joins(:tags).uniq
-          else
-            issues = Issue.tagged_with(ActsAsTaggableOn::Tag.all.map(&:to_s), any: true)
-          end
+          issues = case operator
+                   when '=', '!'
+                     Issue.tagged_with value.clone, any: true
+                   when '!*'
+                     Issue.joins(:tags).uniq
+                   else
+                     Issue.tagged_with(ActsAsTaggableOn::Tag.all.map(&:to_s), any: true)
+                   end
 
           compare   = operator.include?('!') ? 'NOT IN' : 'IN'
           ids_list  = issues.collect(&:id).push(0).join(',')

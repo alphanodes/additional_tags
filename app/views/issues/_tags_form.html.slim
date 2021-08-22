@@ -1,4 +1,4 @@
-- project = defined?(project) ? project : @project
+- project = @project unless defined?(project)
 - options = { multiple: true,
               width: '95%',
               url: issue_tags_auto_completes_path(project_id: project),
