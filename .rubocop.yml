@@ -47,6 +47,15 @@ Style/ExpandPathArguments:
 Rails/ApplicationJob:
   Enabled: false
 
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: false
+
+# bug with rubocop-rails 2.12.2: api.tag raise error
+Rails/ContentTag:
+  Enabled: true
+  Exclude:
+    - app/helpers/additional_tags_issues_helper.rb
+
 Rails/ApplicationRecord:
   Enabled: false
 

@@ -40,7 +40,7 @@ module AdditionalTags
           quoted_joined_field = self.class.connection.quote_column_name joined_field
           quoted_target_field = self.class.connection.quote_column_name target_field
           subsql = ActsAsTaggableOn::Tagging.joins("INNER JOIN #{quoted_joined_table}" \
-                                                    " ON additional_taggings.taggable_id = #{quoted_joined_table}.#{quoted_target_field}")
+                                                   " ON additional_taggings.taggable_id = #{quoted_joined_table}.#{quoted_target_field}")
                                             .where(taggable_type: klass.name)
                                             .where("#{self.class.connection.quote_table_name queried_table_name}.id ="\
                                                    " #{quoted_joined_table}.#{quoted_joined_field}")
