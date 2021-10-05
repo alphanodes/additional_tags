@@ -50,7 +50,6 @@ Rails/ApplicationJob:
 Lint/AmbiguousOperatorPrecedence:
   Enabled: false
 
-# bug with rubocop-rails 2.12.2: api.tag raise error
 Rails/ContentTag:
   Enabled: true
   Exclude:

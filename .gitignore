@@ -6,4 +6,5 @@ Gemfile.lock
 .project
 .settings/
 ._*
+*.gem
 .enable_dev
