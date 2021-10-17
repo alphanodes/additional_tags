@@ -2,29 +2,28 @@
 
 [![Rate at redmine.org](https://img.shields.io/badge/rate%20at-redmine.org-blue.svg?style=flat)](https://www.redmine.org/plugins/additional_tags) [![Run Linters](https://github.com/AlphaNodes/additional_tags/workflows/Run%20Linters/badge.svg)](https://github.com/AlphaNodes/additional_tags/actions?query=workflow%3A%22Run+Linters%22) [![Run Brakeman](https://github.com/AlphaNodes/additional_tags/workflows/Run%20Brakeman/badge.svg)](https://github.com/AlphaNodes/additional_tags/actions?query=workflow%3A%22Run+Brakeman%22) [![Run Tests](https://github.com/AlphaNodes/additional_tags/workflows/Tests/badge.svg)](https://github.com/AlphaNodes/additional_tags/actions?query=workflow%3ATests)
 
-
 ## Features
 
--   Tags for issues
--   Tags for wiki pages
--   Accented and non-latin characters supported for tag order
--   View, edit and create tag permissions for issues
--   Create permission for wiki tags
--   Managing tags
--   Custom tags and tagging tables (additional_tags and additional_taggings). If a other plugin
+- Tags for issues
+- Tags for wiki pages
+- Accented and non-latin characters supported for tag order
+- View, edit and create tag permissions for issues
+- Create permission for wiki tags
+- Managing tags
+- Custom tags and tagging tables (additional_tags and additional_taggings). If a other plugin
   used tags or tagging tables for issue or wiki tagging, there tags will be migrated automatically
--   Based on the very popular [acts-as-taggable-on](https://github.com/mbleigh/acts-as-taggable-on)
+- Based on the very popular [acts-as-taggable-on](https://github.com/mbleigh/acts-as-taggable-on)
 
 ![screenshot](https://raw.githubusercontent.com/AlphaNodes/additional_tags/master/doc/images/additional-tags.gif)
 
 Other plugins use additional_tags as framework in order to support tags for their entities.
 At the moment this are:
 
--   redmine_db (db entry tagging)
--   redmine_passwords (password tagging)
--   redmine_reporting (project tagging)
--   redmine_hrm (holiday tagging)
--   redmine_servicedesk (contact tagging)
+- redmine_db (db entry tagging)
+- redmine_passwords (password tagging)
+- redmine_reporting (project tagging)
+- redmine_hrm (holiday tagging)
+- redmine_servicedesk (contact tagging)
 
 Start using it, too. The example image shows the centralized tag management in the plugin configuration.
 
@@ -40,7 +39,7 @@ Start using it, too. The example image shows the centralized tag management in t
 ## Requirements
 
 - Redmine `>= 4.1.0`
-- Ruby `>= 2.5`
+- Ruby `>= 2.6`
 - Redmine plugins: [additionals](https://www.redmine.org/plugins/additionals)
 
 ## Installing
