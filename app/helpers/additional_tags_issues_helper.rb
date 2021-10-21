@@ -40,6 +40,6 @@ module AdditionalTagsIssuesHelper
                 project: @project }
 
     options[:tag_action] = 'show' if %w[gantts calendars].include? controller_name
-    render_tags_list sidebar_tags, options
+    render_tags_list sidebar_tags, **options
   end
 end

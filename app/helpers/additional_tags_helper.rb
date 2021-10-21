@@ -193,7 +193,7 @@ module AdditionalTagsHelper
   def add_tags(style, tags, content, item_el, options)
     tag_cloud tags, (1..8).to_a do |tag, weight|
       content << ' '.html_safe + content_tag(item_el,
-                                             additional_tag_link(tag, options),
+                                             additional_tag_link(tag, **options),
                                              class: "tag-nube-#{weight}",
                                              style: (style == :simple_cloud ? 'font-size: 1em;' : '')) + ' '.html_safe
     end

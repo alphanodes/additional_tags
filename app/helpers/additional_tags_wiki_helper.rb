@@ -15,7 +15,7 @@ module AdditionalTagsWikiHelper
                 link_wiki_tag: true,
                 project: @project }
 
-    render_tags_list sidebar_tags, options
+    render_tags_list sidebar_tags, **options
   end
 
   def render_wiki_index_title(project, tag = nil)
