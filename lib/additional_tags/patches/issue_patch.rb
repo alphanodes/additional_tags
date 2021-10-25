@@ -67,12 +67,15 @@ module AdditionalTags
           send 'safe_attributes_without_tags=', attrs, user
         end
 
-        def copy_from_with_tags(arg, **options)
-          copy_from_without_tags(arg, **options)
+        # copy_from requires hash for Redmine - works with Ruby 3
+        # rubocop: disable Style/OptionHash
+        def copy_from_with_tags(arg, options = {})
+          copy_from_without_tags arg, options
           issue = arg.is_a?(Issue) ? arg : Issue.visible.find(arg)
           self.tag_list = issue.tag_list
           self
         end
+        # rubocop: enable Style/OptionHash
 
         def tags_to_journal(old_tags, new_tags)
           return if current_journal.blank? || old_tags == new_tags
