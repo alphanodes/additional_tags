@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.version       = AdditionalTags::VERSION
   spec.authors       = ['AlphaNodes']
   spec.email         = ['alex@alphanodes.com']
+  spec.metadata      = { 'rubygems_mfa_required' => 'true' }
 
   spec.summary       = 'Redmine plugin for adding tag functionality'
   spec.description   = 'Redmine plugin for adding tag functionality'
