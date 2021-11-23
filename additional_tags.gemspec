@@ -2,11 +2,11 @@
 
 lib = File.expand_path '../lib', __FILE__
 $LOAD_PATH.unshift lib unless $LOAD_PATH.include? lib
-require 'additional_tags/version'
+require 'additional_tags/plugin_version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'additional_tags'
-  spec.version       = AdditionalTags::VERSION
+  spec.version       = AdditionalTags::PluginVersion::VERSION
   spec.authors       = ['AlphaNodes']
   spec.email         = ['alex@alphanodes.com']
   spec.metadata      = { 'rubygems_mfa_required' => 'true' }

@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
-require 'additional_tags/version'
-require 'additional_tags/tags'
-
 module AdditionalTags
   TAG_TABLE_NAME = 'additional_tags'
   TAGGING_TABLE_NAME = 'additional_taggings'
 
   class << self
     def setup
-      raise 'Please install additionals plugin (https://github.com/alphanodes/additionals)' unless Redmine::Plugin.installed? 'additionals'
+      # TODO: this check does not work with Rails 6 at the moment
+      # reason: ActiveSupport.on_load(:active_record) is used for setup
+      # as temp solution
+      if Rails.version < '6.0' && !Redmine::Plugin.installed?('additionals')
+        raise 'Please install additionals plugin (https://github.com/alphanodes/additionals)'
+      end
 
       Additionals.incompatible_plugins(%w[redmine_tags
                                           redmine_tagging
@@ -52,7 +54,7 @@ module AdditionalTags
       end
 
       # Hooks
-      require_dependency 'additional_tags/hooks'
+      AdditionalTags::Hooks
     end
 
     # support with default setting as fall back

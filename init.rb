@@ -4,9 +4,9 @@ Redmine::Plugin.register :additional_tags do
   name        'Additional Tags'
   author      'AlphaNodes GmbH'
   description 'Redmine tagging support'
-  version     AdditionalTags::VERSION
+  version     AdditionalTags::PluginVersion::VERSION
   url         'https://github.com/alphanodes/additional_tags/'
-  author_url 'https://alphanodes.com/'
+  author_url  'https://alphanodes.com/'
   directory __dir__
 
   requires_redmine version_or_higher: '4.1'
@@ -30,6 +30,8 @@ Redmine::Plugin.register :additional_tags do
        caption: :field_tags
 end
 
-Rails.configuration.to_prepare do
-  AdditionalTags.setup
+if Rails.version > '6.0'
+  ActiveSupport.on_load(:active_record) { AdditionalTags.setup }
+else
+  Rails.configuration.to_prepare { AdditionalTags.setup }
 end
