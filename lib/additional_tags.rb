@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'additional_tags/tags'
+
 module AdditionalTags
   TAG_TABLE_NAME = 'additional_tags'
   TAGGING_TABLE_NAME = 'additional_taggings'
