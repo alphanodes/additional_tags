@@ -27,6 +27,50 @@ module AdditionalTags
           options[:permission] = :view_wiki_pages
           AdditionalTags::Tags.available_tags self, **options
         end
+
+        def with_tags(tag, project: nil, order: 'title_asc', max_entries: nil)
+          wiki = project&.wiki
+
+          scope = if wiki
+                    wiki.pages
+                  else
+                    WikiPage.joins wiki: :project
+                  end
+
+          scope = scope.visible User.current, project: project if scope.respond_to? :visible
+          scope = scope.limit max_entries if max_entries
+
+          tags = Array tag
+          tags.map!(&:strip)
+          tags.reject!(&:blank?)
+          return [] if tags.count.zero?
+
+          tags.map!(&:downcase)
+          scope = scope.joins(AdditionalTags::Tags.tag_to_joins(WikiPage))
+                       .where("LOWER(#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name) IN (:p)",
+                              p: tags)
+                       .with_updated_on
+                       .joins(wiki: :project)
+
+          return scope if order.nil?
+
+          sorted = order.split '_'
+          raise 'unsupported sort order' if sorted != 2 && %w[title date].exclude?(sorted.first)
+
+          order_dir = sorted.second == 'desc' ? 'DESC' : 'ASC'
+
+          case sorted.first
+          when 'date'
+            scope.joins(:content)
+                 .reorder("#{WikiContent.table_name}.updated_on #{order_dir}")
+          else
+            if wiki.nil?
+              scope.order "#{Project.table_name}.name, #{WikiPage.table_name}.title #{order_dir}"
+            else
+              scope.includes(:parent).order "#{WikiPage.table_name}.title #{order_dir}"
+            end
+          end
+        end
       end
 
       module InstanceMethods

@@ -46,7 +46,7 @@ class TagsTest < AdditionalTags::TestCase
   def test_available_tags_for_wiki_page
     tags = AdditionalTags::Tags.available_tags WikiPage,
                                                project_join: WikiPage.project_joins
-    assert_equal 1, tags.to_a.size
+    assert_equal 2, tags.to_a.size
   end
 
   def test_available_tags_for_wiki_page_with_permission

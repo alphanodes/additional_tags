@@ -61,9 +61,16 @@ tagging_009:
   context: tags
   created_at: 2013-01-27 15:08:27 +01:00
 
-wiki_tag:
+wiki_tag_001:
   tag_id: 1
   taggable_id: 2
   taggable_type: WikiPage
   context: tags
   created_at: 2020-01-27 15:08:27 +01:00
+
+wiki_tag_002:
+  tag_id: 2
+  taggable_id: 4
+  taggable_type: WikiPage
+  context: tags
+  created_at: 2021-11-24 16:45:27 +01:00

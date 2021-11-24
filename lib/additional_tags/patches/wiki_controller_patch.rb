@@ -31,7 +31,7 @@ module AdditionalTags
           @tag = params[:tag]
           return super unless AdditionalTags.setting?(:active_wiki_tags) && @tag.present?
 
-          @pages = wiki_pages_with_tag @tag, @project
+          @pages = WikiPage.with_tags @tag, project: @project
 
           respond_to do |format|
             format.html do

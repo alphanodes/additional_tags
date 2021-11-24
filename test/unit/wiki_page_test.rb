@@ -40,4 +40,24 @@ class WikiPageTest < AdditionalTags::TestCase
       end
     end
   end
+
+  def test_with_tags_with_nil
+    assert_equal [], WikiPage.with_tags(nil)
+  end
+
+  def test_with_tags_with_non_existing_tag
+    assert_equal [], WikiPage.with_tags('non-existing-tag')
+  end
+
+  def test_with_tags_with_existing_tag
+    assert_equal 1, WikiPage.with_tags('First').count
+  end
+
+  def test_with_tags_mulitple_tags
+    assert_equal 2, WikiPage.with_tags(%w[First Second]).count
+  end
+
+  def test_with_tags_order_by_date
+    assert_equal 1, WikiPage.with_tags('First', order: 'date_desc').count
+  end
 end
