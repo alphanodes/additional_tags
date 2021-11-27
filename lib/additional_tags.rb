@@ -15,48 +15,50 @@ module AdditionalTags
         raise 'Please install additionals plugin (https://github.com/alphanodes/additionals)'
       end
 
-      Additionals.incompatible_plugins(%w[redmine_tags
-                                          redmine_tagging
-                                          redmineup_tags], 'additional_tags')
+      loader = AdditionalsLoader.new plugin_id: 'additional_tags'
+
+      loader.incompatible? %w[redmine_tags
+                              redmine_tagging
+                              redmineup_tags]
 
       # Patches
-      AutoCompletesController.include AdditionalTags::Patches::AutoCompletesControllerPatch
-      CalendarsController.include AdditionalTags::Patches::CalendarsControllerPatch
-      DashboardsController.include AdditionalTags::Patches::DashboardsControllerPatch
-      DashboardAsyncBlocksController.include AdditionalTags::Patches::DashboardAsyncBlocksControllerPatch
-      GanttsController.include AdditionalTags::Patches::GanttsControllerPatch
-      MyController.include AdditionalTags::Patches::MyControllerPatch
-      Issue.include AdditionalTags::Patches::IssuePatch
-      Journal.include AdditionalTags::Patches::JournalPatch
-      Query.include AdditionalTags::Patches::QueryPatch
-      IssuesController.include AdditionalTags::Patches::IssuesControllerPatch
-      ImportsController.include AdditionalTags::Patches::ImportsControllerPatch
-      QueriesHelper.include AdditionalTags::Patches::QueriesHelperPatch
-      ReportsController.include AdditionalTags::Patches::ReportsControllerPatch
-      SettingsController.include AdditionalTags::Patches::SettingsControllerPatch
-      Redmine::Helpers::TimeReport.include AdditionalTags::Patches::TimeReportPatch
-      TimeEntry.include AdditionalTags::Patches::TimeEntryPatch
-      TimelogController.include AdditionalTags::Patches::TimelogControllerPatch
-      WikiController.include AdditionalTags::Patches::WikiControllerPatch
-      WikiPage.include AdditionalTags::Patches::WikiPagePatch
+      loader.add_patch %w[AutoCompletesController
+                          CalendarsController
+                          DashboardsController
+                          DashboardAsyncBlocksController
+                          GanttsController
+                          MyController
+                          Issue
+                          Journal
+                          Query
+                          IssuesController
+                          ImportsController
+                          QueriesHelper
+                          ReportsController
+                          SettingsController
+                          TimeEntry
+                          TimelogController
+                          WikiController
+                          WikiPage]
+
+      loader.add_patch({ target: Redmine::Helpers::TimeReport,
+                         patch: 'TimeReport' })
 
       # because of this bug: https://www.redmine.org/issues/33290
-      if Additionals.redmine_database_ready? TAG_TABLE_NAME
-        IssueQuery.include AdditionalTags::Patches::IssueQueryPatch
-        TimeEntryQuery.include AdditionalTags::Patches::TimeEntryQueryPatch
+      if AdditionalsLoader.redmine_database_ready? TAG_TABLE_NAME
+        loader.add_patch %w[IssueQuery TimeEntryQuery]
 
         if Redmine::Plugin.installed? 'redmine_agile'
-          AgileQuery.include AdditionalTags::Patches::AgileQueryPatch
-          AgileBoardsController.include AdditionalTags::Patches::AgileBoardsControllerPatch
-          if AGILE_VERSION_TYPE == 'PRO version'
-            AgileVersionsController.include AdditionalTags::Patches::AgileVersionsControllerPatch
-            AgileVersionsQuery.include AdditionalTags::Patches::AgileVersionsQueryPatch
-          end
+          loader.add_patch %w[AgileQuery AgileBoardsController]
+          loader.add_patch %w[AgileVersionsController AgileVersionsQuery] if AGILE_VERSION_TYPE == 'PRO version'
         end
       end
 
+      # Apply patches and helper
+      loader.apply!
+
       # Hooks
-      AdditionalTags::Hooks
+      loader.load_hooks!
     end
 
     # support with default setting as fall back
@@ -64,7 +66,7 @@ module AdditionalTags
       if settings.key? value
         settings[value]
       else
-        Additionals.load_settings('additional_tags')[value]
+        AdditionalsLoader.default_settings('additional_tags')[value]
       end
     end
 

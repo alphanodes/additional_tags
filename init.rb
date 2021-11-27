@@ -13,7 +13,7 @@ Redmine::Plugin.register :additional_tags do
 
   requires_redmine version_or_higher: '4.1'
 
-  settings default: Additionals.load_settings('additional_tags'),
+  settings default: AdditionalsLoader.default_settings('additional_tags'),
            partial: 'additional_tags/settings/settings'
 
   project_module :issue_tracking do
@@ -32,8 +32,6 @@ Redmine::Plugin.register :additional_tags do
        caption: :field_tags
 end
 
-if Rails.version > '6.0'
-  ActiveSupport.on_load(:active_record) { AdditionalTags.setup }
-else
-  Rails.configuration.to_prepare { AdditionalTags.setup }
+AdditionalsLoader.to_prepare do
+  AdditionalTags.setup
 end
