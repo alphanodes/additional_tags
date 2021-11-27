@@ -46,9 +46,8 @@ module AdditionalTags
           return [] if tags.count.zero?
 
           tags.map!(&:downcase)
-          scope = scope.joins(AdditionalTags::Tags.tag_to_joins(WikiPage))
-                       .where("LOWER(#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name) IN (:p)",
-                              p: tags)
+
+          scope = scope.where(id: tagged_with(tags, any: true).ids)
                        .with_updated_on
                        .joins(wiki: :project)
 

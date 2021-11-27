@@ -50,7 +50,7 @@ class WikiPageTest < AdditionalTags::TestCase
   end
 
   def test_with_tags_with_existing_tag
-    assert_equal 1, WikiPage.with_tags('First').count
+    assert_equal 2, WikiPage.with_tags('First').count
   end
 
   def test_with_tags_mulitple_tags
@@ -58,6 +58,6 @@ class WikiPageTest < AdditionalTags::TestCase
   end
 
   def test_with_tags_order_by_date
-    assert_equal 1, WikiPage.with_tags('First', order: 'date_desc').count
+    assert_equal 2, WikiPage.with_tags('First', order: 'date_desc').count
   end
 end
