@@ -51,7 +51,7 @@ To install stable version of additional_tags, use
 ```shell
 cd $REDMINE_ROOT
 git clone -b stable https://www.github.com/alphanodes/additionals.git plugins/additionals
-git clone -b 1.0.0 https://www.github.com/alphanodes/additional_tags.git plugins/additional_tags
+git clone -b stable https://www.github.com/alphanodes/additional_tags.git plugins/additional_tags
 ```
 
 It is also possible to use stable version as a gem package as an alternative. If you want it, add this to your $REDMINE_ROOT/Gemfile.local:
