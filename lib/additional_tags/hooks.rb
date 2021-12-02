@@ -18,6 +18,10 @@ module AdditionalTags
       render_on :view_wiki_show_bottom, partial: 'tags_show'
       render_on :view_wiki_show_sidebar_bottom, partial: 'wiki/tags_sidebar'
 
+      def after_plugins_loaded(_context = {})
+        AdditionalTags.setup if Rails.version > '6.0'
+      end
+
       def controller_issues_edit_before_save(context = {})
         tags_journal context[:issue], context[:params]
       end

@@ -32,6 +32,5 @@ Redmine::Plugin.register :additional_tags do
        caption: :field_tags
 end
 
-AdditionalsLoader.to_prepare do
-  AdditionalTags.setup
-end
+AdditionalsLoader.load_hooks! 'additional_tags'
+AdditionalsLoader.to_prepare { AdditionalTags.setup } if Rails.version < '6.0'

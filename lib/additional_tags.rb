@@ -56,9 +56,6 @@ module AdditionalTags
 
       # Apply patches and helper
       loader.apply!
-
-      # Hooks
-      loader.load_hooks!
     end
 
     # support with default setting as fall back
@@ -102,7 +99,7 @@ module AdditionalTags
 
       # gem is used as redmine plugin
       require File.expand_path '../init', __dir__
-      AdditionalTags.setup
+      AdditionalTags.setup if Rails.version < '6.0'
       Additionals::Gemify.install_assets plugin_id
       Additionals::Gemify.create_plugin_hint plugin_id
     end
