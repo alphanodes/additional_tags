@@ -91,11 +91,20 @@ module AdditionalTags
 
     config.after_initialize do
       # engine_name could be used (additional_tags_plugin), but can
-      # create some side effencts
+      # create some side effects
       plugin_id = 'additional_tags'
 
       # if plugin is already in plugins directory, use this and leave here
       next if Redmine::Plugin.installed? plugin_id
+
+      if Rails.version > '6.0'
+        directory = AdditionalsLoader.plugin_dir plugin_id
+        engine_cfg = Rails::Engine::Configuration.new directory.to_s
+        engine_cfg.paths.add 'lib', eager_load: true
+        engine_cfg.eager_load_paths.each do |dir|
+          Rails.autoloaders.main.push_dir dir
+        end
+      end
 
       # gem is used as redmine plugin
       require File.expand_path '../init', __dir__
