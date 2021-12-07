@@ -2,7 +2,7 @@
 
 module AdditionalTags
   module Hooks
-    class AdditionalTagsHookListener < Redmine::Hook::ViewListener
+    class ViewHook < Redmine::Hook::ViewListener
       render_on :view_issues_bulk_edit_details_bottom,
                 partial: 'issues/tags_form_details',
                 locals: { tags_form: 'issues/tags_bulk_edit' }
@@ -17,10 +17,6 @@ module AdditionalTags
       render_on :view_wiki_form_bottom, partial: 'tags_form_bottom'
       render_on :view_wiki_show_bottom, partial: 'tags_show'
       render_on :view_wiki_show_sidebar_bottom, partial: 'wiki/tags_sidebar'
-
-      def after_plugins_loaded(_context = {})
-        AdditionalTags.setup if Rails.version > '6.0'
-      end
 
       def controller_issues_edit_before_save(context = {})
         tags_journal context[:issue], context[:params]

@@ -2,6 +2,8 @@
 
 require 'additional_tags/plugin_version'
 
+loader = RedminePluginKit::Loader.new plugin_id: 'additional_tags'
+
 Redmine::Plugin.register :additional_tags do
   name        'Additional Tags'
   author      'AlphaNodes GmbH'
@@ -13,7 +15,7 @@ Redmine::Plugin.register :additional_tags do
 
   requires_redmine version_or_higher: '4.1'
 
-  settings default: AdditionalsLoader.default_settings('additional_tags'),
+  settings default: loader.default_settings,
            partial: 'additional_tags/settings/settings'
 
   project_module :issue_tracking do
@@ -32,5 +34,5 @@ Redmine::Plugin.register :additional_tags do
        caption: :field_tags
 end
 
-AdditionalsLoader.load_hooks! 'additional_tags'
-AdditionalsLoader.to_prepare { AdditionalTags.setup } if Rails.version < '6.0'
+RedminePluginKit::Loader.persisting { loader.load_model_hooks! }
+RedminePluginKit::Loader.to_prepare { AdditionalTags.setup!(loader) } if Rails.version < '6.0'
