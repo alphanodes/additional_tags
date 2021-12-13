@@ -9,7 +9,7 @@ h3.title = l :label_add_tags
   h3
     span = link_to_issue @issues.first
 
-= form_tag issue_tags_path(ids: @issue_ids) do
+= form_tag issue_tags_path(ids: @issue_ids, search: params[:search]) do
   fieldset.box
     legend = l :field_tags
     #issue_tags
@@ -22,9 +22,11 @@ h3.title = l :label_add_tags
                                 tags: User.current.allowed_to?(:create_issue_tags, @project)
     p.most_used_tags
       = safe_join @most_used_tags.collect { |t| tag.span t.name, class: 'most_used_tag' }, ', '
-    = javascript_tag "var mostUsedTags = #{@most_used_tags.map(&:name)}"
 
   .buttons
     = submit_tag l(:button_add), name: nil
     '
     = link_to_function l(:button_cancel), 'hideModal(this);'
+
+javascript:
+  var mostUsedTags = #{raw @most_used_tags.map(&:name)};

@@ -5,6 +5,6 @@
     ul
       li
         = context_menu_link l(:button_add),
-                            edit_issue_tags_path(ids: @issue_ids),
+                            edit_issue_tags_path(ids: @issue_ids, search: params[:search]),
                             remote: true,
                             class: 'icon icon-add'
