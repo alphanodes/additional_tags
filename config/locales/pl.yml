@@ -31,8 +31,8 @@ pl:
   tags_sort_by_name: "Nazwa"
   label_tags_sort_by: "Sortuj znaczniki według"
   label_tags_suggestion_order: "Zamówienie ofertowe"
-  label_with_table_of_values: With table of values
-  label_with_chart: With chart
-  label_amount_tags: Amount tags
-  label_amount_entities_with_tags: Amount %{name} with tags
+  label_with_table_of_values: "Z tabelą wartości"
+  label_with_chart: "Z wykresem"
+  label_amount_tags: "Kwota Tags"
+  label_amount_entities_with_tags: "Kwota %{name} z Tags"
   label_quantity: "Ilość"

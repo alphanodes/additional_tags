@@ -31,8 +31,8 @@ bg:
   tags_sort_by_name: "Име"
   label_tags_sort_by: "Сортиране на маркерите по"
   label_tags_suggestion_order: "Ред на предлагане"
-  label_with_table_of_values: With table of values
-  label_with_chart: With chart
-  label_amount_tags: Amount tags
-  label_amount_entities_with_tags: Amount %{name} with tags
-  label_quantity: "Quantity"
+  label_with_table_of_values: "С таблица на стойността"
+  label_with_chart: "С графиком"
+  label_amount_tags: "Теги Сумма"
+  label_amount_entities_with_tags: "Сумма %{name} с тегами"
+  label_quantity: "Количество"

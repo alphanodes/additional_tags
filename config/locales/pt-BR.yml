@@ -31,8 +31,8 @@ pt-BR:
   tags_sort_by_name: "Nome"
   label_tags_sort_by: "Ordenar tags por"
   label_tags_suggestion_order: "Pedido de sugestão"
-  label_with_table_of_values: With table of values
-  label_with_chart: With chart
-  label_amount_tags: Amount tags
-  label_amount_entities_with_tags: Amount %{name} with tags
+  label_with_table_of_values: "Com tabela de valores"
+  label_with_chart: "Com gráfico"
+  label_amount_tags: "Valor Etiquetas"
+  label_amount_entities_with_tags: "Quantidade %{name} com etiquetas"
   label_quantity: "Quantidade"
