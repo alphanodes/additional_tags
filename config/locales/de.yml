@@ -31,3 +31,8 @@ de:
   tags_sort_by_name: Name
   label_tags_sort_by: Sortiere TAGs nach
   label_tags_suggestion_order: Reihenfolge der Vorschläge
+  label_with_table_of_values: Mit Wertetabelle
+  label_with_chart: Mit Chart
+  label_amount_tags: Anzahl TAGs
+  label_amount_entities_with_tags: Anzahl %{name} mit TAGs
+  label_quantity: Anzahl

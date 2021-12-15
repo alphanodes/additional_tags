@@ -47,6 +47,14 @@ class IssueTest < AdditionalTags::TestCase
     assert(Issue.available_tags(open_issues_only: true).to_a.size < Issue.available_tags.to_a.size)
   end
 
+  def test_group_by_status_with_tags
+    assert_equal 6, Issue.group_by_status_with_tags.size
+  end
+
+  def test_group_by_status_with_tags_for_project
+    assert_equal 5, Issue.group_by_status_with_tags(@project_a).size
+  end
+
   test 'available tags should allow list tags of specific project only' do
     assert_equal 4, Issue.available_tags(project: @project_a).to_a.size
     assert_equal 1, Issue.available_tags(project: @project_b).to_a.size

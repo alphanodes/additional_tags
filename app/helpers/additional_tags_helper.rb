@@ -43,13 +43,13 @@ module AdditionalTagsHelper
     columns
   end
 
-  def render_tags_list(tags, **options)
-    return if tags.blank?
+  def sort_tags_for_list(tags, sort_by: nil, sort_order: nil)
+    return tags if tags.size < 2
 
-    style = options.delete :style
-    tags = tags.all.to_a if tags.respond_to? :all
+    sort_by = AdditionalTags.setting :tags_sort_by if sort_by.blank?
+    sort_order = AdditionalTags.setting :tags_sort_order if sort_order.blank?
 
-    case "#{AdditionalTags.setting :tags_sort_by}:#{AdditionalTags.setting :tags_sort_order}"
+    case "#{sort_by}:#{sort_order}"
     when 'name:desc'
       tags = AdditionalTags::Tags.sort_tag_list(tags).reverse
     when 'count:asc'
@@ -59,6 +59,16 @@ module AdditionalTagsHelper
     else
       tags = AdditionalTags::Tags.sort_tag_list tags
     end
+
+    tags
+  end
+
+  def render_tags_list(tags, **options)
+    return if tags.blank?
+
+    style = options.delete :style
+    tags = tags.all.to_a if tags.respond_to? :all
+    tags = sort_tags_for_list tags
 
     case style
     when :list
@@ -84,18 +94,22 @@ module AdditionalTagsHelper
     content_tag(list_el, content, class: 'tags-cloud', style: (style == :simple_cloud ? 'text-align: left;' : ''))
   end
 
-  def additional_tag_link(tag_object, link: nil, link_wiki_tag: false, show_count: false, use_colors: nil, **options)
+  def additional_tag_link(tag_object, link: nil, link_wiki_tag: false, show_count: false, use_colors: nil, name: nil, **options)
     tag_name = []
-    tag_name << tag_object.name
+    tag_name << if name.nil?
+                  tag_object.name
+                else
+                  name
+                end
 
     options[:project] = @project if options[:project].blank? && @project.present?
+    use_colors = AdditionalTags.setting? :use_colors if use_colors.nil?
 
-    use_colors ||= AdditionalTags.setting? :use_colors
-    if use_colors
-      tag_bg_color = additional_tag_color tag_object.name
-      tag_fg_color = additional_tag_fg_color tag_bg_color
-      tag_style = "background-color: #{tag_bg_color}; color: #{tag_fg_color}"
-    end
+    tag_style = if use_colors
+                  tag_bg_color = additional_tag_color tag_object.name
+                  tag_fg_color = additional_tag_fg_color tag_bg_color
+                  "background-color: #{tag_bg_color}; color: #{tag_fg_color}"
+                end
 
     tag_name << tag.span("(#{tag_object.count})", class: 'tag-count') if show_count
 
@@ -165,6 +179,45 @@ module AdditionalTagsHelper
 
     safe_join tag_list.map { |tag| additional_tag_link tag, **options },
               additional_tag_sep(use_colors: options[:use_colors])
+  end
+
+  def scope_for_tags_aggr(project: nil, open_issues_only: nil)
+    Issue.available_tags project: project,
+                         open_issues_only: open_issues_only
+  end
+
+  def issues_count_group_by_tags(project, tags)
+    scope = Issue.group_by_status_with_tags project
+
+    issue_counts = {}
+    tags.each do |tag|
+      # binding.pry
+      open_issues = scope[[0, tag.id]] || scope[[false, tag.id]] || 0
+      closed_issues = scope[[1, tag.id]] || scope[[true, tag.id]] || 0
+      issue_counts[tag.name] = { open: open_issues,
+                                 closed: closed_issues,
+                                 total: open_issues + closed_issues,
+                                 tag: tag }
+    end
+
+    issue_counts
+  end
+
+  def link_to_totals_for_tags(issue_counts:, project:, open_issues_only:)
+    sum = if issue_counts.blank? || issue_counts.size.zero?
+            0
+          else
+            query = IssueQuery.new project: project, name: '_'
+            query.add_filter 'tags', '*'
+            query.filters['status_id'][:operator] = '*' if !open_issues_only && query.filters.key?('status_id')
+
+            query.issue_count
+          end
+
+    link_to sum, _project_issues_path(project,
+                                      set_filter: 1,
+                                      tags: '*',
+                                      status_id: open_issues_only ? 'o' : '*')
   end
 
   private

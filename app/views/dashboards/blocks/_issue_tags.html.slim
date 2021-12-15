@@ -1,0 +1,63 @@
+h3 = block_definition[:label]
+
+- open_issues_only = RedminePluginKit.true? settings[:open_issues_only]
+- tags = scope_for_tags_aggr project: @project,
+                             open_issues_only: open_issues_only
+- issue_counts = issues_count_group_by_tags @project, tags
+
+ul.reporting-list.tag-summary
+  li.amount-tags
+    = l :label_amount_tags
+    ' :
+    span.value
+      = tags.to_a.size
+  li.amount-entities-with-tags
+    = l :label_amount_entities_with_tags, name: l(:label_issue_plural)
+    ' :
+    span.value
+      = link_to_totals_for_tags project: @project,
+                                issue_counts: issue_counts,
+                                open_issues_only: open_issues_only
+
+- if RedminePluginKit.true? settings[:with_table_of_values]
+  - if tags.present?
+    - tags = sort_tags_for_list tags
+    table.list.tags
+      thead
+        tr
+          th = l :field_name
+          - if open_issues_only
+            th = l :label_quantity
+          - else
+            th = l :label_open_issues_plural
+            th = l :label_closed_issues_plural
+            th = l :label_total
+      tbody
+        - tags.each do |tag|
+          tr
+            td.name = additional_tag_link tag,
+                                          tag_action: 'index',
+                                          tag_controller: 'issues',
+                                          filter: open_issues_only ? { field: :status_id, operator: 'o' } : nil,
+                                          use_colors: RedminePluginKit.true?(settings[:use_colors])
+            - unless open_issues_only
+              td.value = additional_tag_link tag,
+                                             tag_action: 'index',
+                                             tag_controller: 'issues',
+                                             filter: { field: :status_id, operator: 'o' },
+                                             use_colors: false,
+                                             name: issue_counts[tag.name][:open]
+              td.value = additional_tag_link tag,
+                                             tag_action: 'index',
+                                             tag_controller: 'issues',
+                                             filter: { field: :status_id, operator: 'c' },
+                                             use_colors: false,
+                                             name: issue_counts[tag.name][:closed]
+            td.value = additional_tag_link tag,
+                                           tag_action: 'index',
+                                           tag_controller: 'issues',
+                                           filter: open_issues_only ? { field: :status_id, operator: 'o' } : nil,
+                                           use_colors: false,
+                                           name: open_issues_only ? issue_counts[tag.name][:open] : issue_counts[tag.name][:total]
+  - else
+    p.nodata = l :label_no_data

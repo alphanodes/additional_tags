@@ -36,12 +36,12 @@ module AdditionalTags
                           GanttsController
                           MyController
                           Issue
+                          DashboardContent
                           Journal
                           Query
                           IssuesController
                           ImportsController
                           QueriesHelper
-                          ReportsController
                           SettingsController
                           TimeEntry
                           TimelogController

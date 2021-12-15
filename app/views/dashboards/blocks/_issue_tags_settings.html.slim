@@ -1,0 +1,20 @@
+.box.tabular.settings
+  p
+    = additionals_settings_checkbox :with_table_of_values,
+                                    active_value: settings[:with_table_of_values],
+                                    tag_name: "settings[#{block}][with_table_of_values]"
+
+  / p
+  /   = additionals_settings_checkbox :with_chart,
+  /                                   active_value: settings[:with_chart],
+  /                                   tag_name: "settings[#{block}][with_chart]"
+
+  p
+    = additionals_settings_checkbox :open_issues_only,
+                                    active_value: settings[:open_issues_only],
+                                    tag_name: "settings[#{block}][open_issues_only]"
+
+  p
+    = additionals_settings_checkbox :use_colors,
+                                    active_value: settings[:use_colors],
+                                    tag_name: "settings[#{block}][use_colors]"

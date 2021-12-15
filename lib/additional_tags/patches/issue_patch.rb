@@ -25,8 +25,12 @@ module AdditionalTags
           tags.all? { |tag| allowed_tags.include? tag }
         end
 
-        def by_tags(project, with_subprojects: false)
-          count_and_group_by project: project, association: :tags, with_subprojects: with_subprojects
+        def group_by_status_with_tags(project = nil)
+          Issue.visible(User.current, project: project)
+               .joins(:status)
+               .joins(:tags)
+               .group(:is_closed, 'tag_id')
+               .count
         end
 
         def available_tags(**options)

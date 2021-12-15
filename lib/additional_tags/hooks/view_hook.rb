@@ -13,7 +13,6 @@ module AdditionalTags
       render_on :view_issues_show_details_bottom, partial: 'issues/tags'
       render_on :view_issues_sidebar_planning_bottom, partial: 'issues/tags_sidebar'
       render_on :view_layouts_base_html_head, partial: 'additional_tags/html_head'
-      render_on :view_reports_issue_report_split_content_right, partial: 'tags_simple'
       render_on :view_wiki_form_bottom, partial: 'tags_form_bottom'
       render_on :view_wiki_show_bottom, partial: 'tags_show'
       render_on :view_wiki_show_sidebar_bottom, partial: 'wiki/tags_sidebar'

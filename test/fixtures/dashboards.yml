@@ -1,0 +1,42 @@
+system_default_welcome:
+  name: Global default dashboard
+  dashboard_type: <%= DashboardContentWelcome::TYPE_NAME %>
+  system_default: true
+  enable_sidebar: false
+  author_id: 2
+  visibility: 2
+  options: |
+    ---
+    :layout:
+      top:
+      - issue_tags
+      left:
+      - welcome
+    :layout_settings:
+      issue_tags:
+        :with_table_of_values: '1'
+        :with_chart: '1'
+        :open_issues_only: '1'
+        :use_colors: '1'
+
+system_default_project:
+  name: Project default dashboard
+  dashboard_type: <%= DashboardContentProject::TYPE_NAME %>
+  system_default: true
+  enable_sidebar: true
+  project_id:
+  author_id: 2
+  visibility: 2
+  options: |
+    ---
+    :layout:
+      top:
+      - issue_tags
+      left:
+      - projectinformation
+    :layout_settings:
+      issue_tags:
+        :with_table_of_values: '1'
+        :with_chart: '1'
+        :open_issues_only: '1'
+        :use_colors: '1'

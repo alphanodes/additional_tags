@@ -31,3 +31,8 @@ ru:
   tags_sort_by_name: "Имени"
   label_tags_sort_by: "Сортировать теги по"
   label_tags_suggestion_order: "Порядок предложения при вводе"
+  label_with_table_of_values: With table of values
+  label_with_chart: With chart
+  label_amount_tags: Amount tags
+  label_amount_entities_with_tags: Amount %{name} with tags
+  label_quantity: "Количество"

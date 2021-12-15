@@ -31,3 +31,8 @@ es:
   tags_sort_by_name: "Nombre"
   label_tags_sort_by: "Ordenar las tags por"
   label_tags_suggestion_order: "Orden de sugerencia"
+  label_with_table_of_values: With table of values
+  label_with_chart: With chart
+  label_amount_tags: Amount tags
+  label_amount_entities_with_tags: Amount %{name} with tags
+  label_quantity: "Ctd."
