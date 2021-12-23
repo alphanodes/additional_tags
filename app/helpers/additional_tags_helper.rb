@@ -15,12 +15,12 @@ module AdditionalTagsHelper
     if AdditionalTags.setting? :active_issue_tags
       columns[:issue] = { label: l(:label_issue_plural),
                           tag_controller: :issues,
-                          counts: Issue.available_tags.map { |tag| [tag.id, tag.count] }.to_h }
+                          counts: Issue.available_tags.to_h { |tag| [tag.id, tag.count] } }
     end
 
     if AdditionalTags.setting? :active_wiki_tags
       columns[:wiki] = { label: l(:label_wiki),
-                         counts: WikiPage.available_tags.map { |tag| [tag.id, tag.count] }.to_h }
+                         counts: WikiPage.available_tags.to_h { |tag| [tag.id, tag.count] } }
     end
 
     call_hook :helper_additional_manageable_tag_columns, columns: columns
