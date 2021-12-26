@@ -89,7 +89,7 @@ module AdditionalTags
             end
           end
 
-          send 'safe_attributes_without_tags=', attrs, user
+          send :safe_attributes_without_tags=, attrs, user
         end
 
         private

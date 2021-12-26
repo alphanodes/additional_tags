@@ -68,7 +68,7 @@ module AdditionalTags
             end
           end
 
-          send 'safe_attributes_without_tags=', attrs, user
+          send :safe_attributes_without_tags=, attrs, user
         end
 
         # copy_from requires hash for Redmine - works with Ruby 3
