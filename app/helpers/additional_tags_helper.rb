@@ -191,7 +191,6 @@ module AdditionalTagsHelper
 
     issue_counts = {}
     tags.each do |tag|
-      # binding.pry
       open_issues = scope[[0, tag.id]] || scope[[false, tag.id]] || 0
       closed_issues = scope[[1, tag.id]] || scope[[true, tag.id]] || 0
       issue_counts[tag.name] = { open: open_issues,

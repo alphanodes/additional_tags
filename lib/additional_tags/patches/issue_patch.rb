@@ -6,6 +6,7 @@ module AdditionalTags
       extend ActiveSupport::Concern
 
       included do
+        include Additionals::EntityMethodsGlobal
         include InstanceMethods
         acts_as_ordered_taggable
 
@@ -80,15 +81,6 @@ module AdditionalTags
           self
         end
         # rubocop: enable Style/OptionHash
-
-        def tags_to_journal(old_tags, new_tags)
-          return if current_journal.blank? || old_tags == new_tags
-
-          current_journal.details << JournalDetail.new(property: 'attr',
-                                                       prop_key: 'tag_list',
-                                                       old_value: old_tags,
-                                                       value: new_tags)
-        end
 
         private
 

@@ -7,12 +7,13 @@ module AdditionalTags
 
       included do
         include InstanceMethods
+        include AdditionalsQueriesHelper
       end
 
       module InstanceMethods
         def issue_tags
           suggestion_order = AdditionalTags.setting(:tags_suggestion_order) || 'name'
-          @name = (params[:q] || params[:term]).to_s.strip
+          @name = build_search_query_term params
           @tags = Issue.available_tags name_like: @name,
                                        sort_by: suggestion_order,
                                        order: (suggestion_order == 'name' ? 'ASC' : 'DESC')
