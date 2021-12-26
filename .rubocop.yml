@@ -114,3 +114,8 @@ Naming/VariableNumber:
   Enabled: true
   Exclude:
     - 'test/**/*'
+
+# see https://github.com/rubocop/rubocop-rails/issues/578
+# redmine does not use load_defaults: https://rails.rubystyle.guide/#config-defaults
+Rails/RedundantPresenceValidationOnBelongsTo:
+  Enabled: false
