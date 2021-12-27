@@ -63,7 +63,13 @@ module AdditionalTags
           case operator
           when '=', '!'
             ids_list = klass.tagged_with(values, any: true).pluck :id
-            "(#{klass.table_name}.id #{compare} (#{ids_list.join ','}))" if ids_list.present?
+            if ids_list.present?
+              "(#{klass.table_name}.id #{compare} (#{ids_list.join ','}))"
+            elsif values.present? && operator == '='
+              Additionals.debug 'special case'
+              # special case: filter with deleted tag
+              '(1=0)'
+            end
           else
             entries = ActsAsTaggableOn::Tagging.where taggable_type: klass.name
             id_table = klass.table_name
