@@ -66,7 +66,6 @@ module AdditionalTags
             if ids_list.present?
               "(#{klass.table_name}.id #{compare} (#{ids_list.join ','}))"
             elsif values.present? && operator == '='
-              Additionals.debug 'special case'
               # special case: filter with deleted tag
               '(1=0)'
             end

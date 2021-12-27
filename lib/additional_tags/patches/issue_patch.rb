@@ -13,6 +13,8 @@ module AdditionalTags
         before_save :prepare_save_tag_change
         before_save :sort_tag_list
 
+        after_update :add_remove_unused_tags_job, if: proc { AdditionalTags.setting?(:active_issue_tags) }
+
         alias_method :safe_attributes_without_tags=, :safe_attributes=
         alias_method :safe_attributes=, :safe_attributes_with_tags=
 
@@ -41,10 +43,6 @@ module AdditionalTags
 
           tags.joins("JOIN #{IssueStatus.table_name} ON #{IssueStatus.table_name}.id = #{table_name}.status_id")
               .where(issue_statuses: { is_closed: false })
-        end
-
-        def remove_unused_tags!
-          AdditionalTagsRemoveUnusedTagJob.perform_later
         end
       end
 
