@@ -94,4 +94,12 @@ class TagsTest < AdditionalTags::TestCase
     assert_equal [tag_name], Issue.find(3).tag_list
     assert_equal [tag_name], Issue.find(6).tag_list
   end
+
+  def test_remove_unused_tags
+    ActsAsTaggableOn::Tag.create! name: 'unused_new_tag'
+
+    assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
+      AdditionalTags::Tags.remove_unused_tags
+    end
+  end
 end

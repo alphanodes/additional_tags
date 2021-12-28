@@ -75,6 +75,7 @@ module AdditionalTags
 
     ActsAsTaggableOn.tags_table = TAG_TABLE_NAME
     ActsAsTaggableOn.taggings_table = TAGGING_TABLE_NAME
+    ActsAsTaggableOn.remove_unused_tags = true
 
     config.after_initialize do
       # engine_name could be used (additional_tags_plugin), but can
