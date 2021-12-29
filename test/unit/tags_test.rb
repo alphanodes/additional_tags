@@ -102,4 +102,16 @@ class TagsTest < AdditionalTags::TestCase
       AdditionalTags::Tags.remove_unused_tags
     end
   end
+
+  def test_add_new_tag_should_increase_count
+    issue = issues :issues_002
+
+    assert_difference 'ActsAsTaggableOn::Tag.count', 1 do
+      issue.tag_list << 'unused_new_tag'
+      issue.save!
+    end
+
+    tag = ActsAsTaggableOn::Tag.find_by name: 'unused_new_tag'
+    assert_equal 1, tag.taggings_count
+  end
 end

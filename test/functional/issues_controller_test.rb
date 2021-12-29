@@ -28,10 +28,6 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
   def setup
     prepare_tests
-
-    @tag = ActsAsTaggableOn::Tag.create name: 'test_tag'
-    @last_tag = ActsAsTaggableOn::Tag.create name: 'last_tag'
-
     User.current = nil
   end
 
@@ -159,27 +155,32 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     with_tags_settings active_issue_tags: 1 do
       @request.session[:user_id] = 2
 
-      issue1 = Issue.find 1
-      issue1.tags = [@tag]
+      issue1 = issues :issues_001
+      issue1.tag_list << 'new_for_issue1'
+      issue1.save!
 
-      issue2 = Issue.find 2
-      issue2.tags = [@last_tag]
+      issue2 = issues :issues_002
+      issue2.tag_list << 'new_for_issue2'
+      issue2.save!
+
+      assert_equal %w[First new_for_issue1], issue1.reload.tag_list
+      assert_equal %w[new_for_issue2], issue2.reload.tag_list
 
       post :bulk_update,
            params: { ids: [1, 2],
                      issue: { project_id: '', tracker_id: '' } }
 
       assert_response :redirect
-      assert_equal [@tag.name], Issue.find(1).tag_list
-      assert_equal [@last_tag.name], Issue.find(2).tag_list
+      assert_equal %w[First new_for_issue1], Issue.find(1).tag_list
+      assert_equal %w[new_for_issue2], Issue.find(2).tag_list
     end
   end
 
   def test_post_bulk_edit_with_empty_string_tags
     with_tags_settings active_issue_tags: 1 do
       @request.session[:user_id] = 3
-      issue1 = Issue.find 1
-      issue2 = Issue.find 2
+      issue1 = issues :issues_001
+      issue2 = issues :issues_002
 
       assert_equal ['First'], issue1.tag_list
       assert_equal [], issue2.tag_list
@@ -197,22 +198,25 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   def test_post_bulk_edit_with_changed_tags
     with_tags_settings active_issue_tags: 1 do
       @request.session[:user_id] = 2
-      issue1 = Issue.find 1
-      issue1.tags << @tag
+      issue1 = issues :issues_001
+      issue1.tag_list << 'new_for_issue1'
+      issue1.save!
 
-      issue2 = Issue.find 2
-      issue2.tags << @last_tag
+      issue2 = issues :issues_002
+      issue2.tag_list << 'new_for_issue2'
+      issue2.save!
 
-      assert_equal %w[First test_tag], issue1.tag_list
-      assert_equal %w[last_tag], issue2.tag_list
+      assert_equal %w[First new_for_issue1], issue1.reload.tag_list
+      assert_equal %w[new_for_issue2], issue2.reload.tag_list
 
       post :bulk_update,
            params: { ids: [issue1.id, issue2.id],
                      issue: { project_id: '', tracker_id: '', tag_list: ['bulk_tag'] } }
 
       assert_response :redirect
-      assert_equal %w[bulk_tag First test_tag], Issue.find(1).tag_list
-      assert_equal %w[bulk_tag last_tag], Issue.find(2).tag_list
+
+      assert_equal %w[bulk_tag First new_for_issue1], Issue.find(1).tag_list
+      assert_equal %w[bulk_tag new_for_issue2], Issue.find(2).tag_list
     end
   end
 

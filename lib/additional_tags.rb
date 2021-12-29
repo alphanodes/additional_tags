@@ -17,12 +17,7 @@ module AdditionalTags
     private
 
     def setup
-      # TODO: this check does not work with Rails 6 at the moment
-      # reason: ActiveSupport.on_load(:active_record) is used for setup
-      # as temp solution
-      if Rails.version < '6.0' && !Redmine::Plugin.installed?('additionals')
-        raise 'Please install additionals plugin (https://github.com/alphanodes/additionals)'
-      end
+      raise 'Please install additionals plugin (https://github.com/alphanodes/additionals)' unless Redmine::Plugin.installed? 'additionals'
 
       loader.incompatible? %w[redmine_tags
                               redmine_tagging
@@ -75,7 +70,10 @@ module AdditionalTags
 
     ActsAsTaggableOn.tags_table = TAG_TABLE_NAME
     ActsAsTaggableOn.taggings_table = TAGGING_TABLE_NAME
-    ActsAsTaggableOn.remove_unused_tags = true
+    # NOTE: remove_unused_tags cannot be used, because tag is deleted before assign for tagging
+    # @see https://github.com/mbleigh/acts-as-taggable-on/issues/946
+    # NOTE2: merging tags is not compatible, too.
+    ActsAsTaggableOn.remove_unused_tags = false
 
     config.after_initialize do
       # engine_name could be used (additional_tags_plugin), but can

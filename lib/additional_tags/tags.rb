@@ -64,7 +64,8 @@ module AdditionalTags
           tags_to_merge.reject { |t| t.id == tag.id }.each(&:destroy)
           # remove duplicate taggings
           dup_scope = ActsAsTaggableOn::Tagging.where tag_id: tag.id
-          valid_ids = dup_scope.group(:tag_id, :taggable_id, :taggable_type, :tagger_id, :tagger_type, :context).pluck(Arel.sql('MIN(id)'))
+          valid_ids = dup_scope.group(:tag_id, :taggable_id, :taggable_type, :tagger_id, :tagger_type, :context)
+                               .pluck(Arel.sql('MIN(id)'))
           dup_scope.where.not(id: valid_ids).destroy_all if valid_ids.any?
           # recalc count for new tag
           ActsAsTaggableOn::Tag.reset_counters tag.id, :taggings

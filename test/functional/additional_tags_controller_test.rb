@@ -76,8 +76,6 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_destroy_tags_without_relations
-    ActsAsTaggableOn::Tagging.destroy_all
-
     tag1 = ActsAsTaggableOn::Tag.find_by name: 'a1'
     assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
       post :destroy,
