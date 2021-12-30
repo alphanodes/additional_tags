@@ -65,15 +65,18 @@ class WikiPageTest < AdditionalTags::TestCase
   end
 
   def test_with_tags_with_existing_tag
-    assert_equal 2, WikiPage.with_tags('First').count
+    User.current = users :users_002
+    assert_equal 3, WikiPage.with_tags('First').count
   end
 
   def test_with_tags_mulitple_tags
-    assert_equal 2, WikiPage.with_tags(%w[First Second]).count
+    User.current = users :users_002
+    assert_equal 3, WikiPage.with_tags(%w[First Second]).count
   end
 
   def test_with_tags_order_by_date
-    assert_equal 2, WikiPage.with_tags('First', order: 'date_desc').count
+    User.current = users :users_002
+    assert_equal 3, WikiPage.with_tags('First', order: 'date_desc').count
   end
 
   def test_with_tags_scope
