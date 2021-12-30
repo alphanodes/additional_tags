@@ -30,11 +30,10 @@ module AdditionalTags
         end
 
         def group_by_status_with_tags(project = nil)
-          Issue.visible(User.current, project: project)
-               .joins(:status)
-               .joins(:tags)
-               .group(:is_closed, 'tag_id')
-               .count
+          visible(User.current, project: project).joins(:status)
+                                                 .joins(:tags)
+                                                 .group(:is_closed, 'tag_id')
+                                                 .count
         end
 
         def available_tags(**options)

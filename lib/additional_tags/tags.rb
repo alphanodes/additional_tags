@@ -95,7 +95,54 @@ module AdditionalTags
         tags.uniq
       end
 
+      def entity_group_by(scope:, tags:, statuses: nil, sub_groups: nil, group_id_is_bool: false)
+        counts = {}
+        tags.each do |tag|
+          values = { tag: tag, total: 0, total_sub_groups: 0, groups: [] }
+
+          if statuses
+            statuses.each do |status|
+              group_id = status.first
+              group = status.second
+              values[group] = status_for_tag_value scope: scope,
+                                                   tag_id: tag.id,
+                                                   group_id: group_id,
+                                                   group_id_is_bool: group_id_is_bool
+              values[:groups] << { id: group_id, group: group, count: values[group] }
+              values[:total] += values[group]
+              values[:total_sub_groups] += values[group] if sub_groups&.include? group_id
+            end
+          else
+            values[:total] += status_for_tag_value scope: scope, tag_id: tag.id
+          end
+
+          values[:total_without_sub_groups] = values[:total] - values[:total_sub_groups]
+
+          counts[tag.name] = values
+        end
+
+        counts
+      end
+
       private
+
+      def status_for_tag_value(scope:, tag_id:, group_id: nil, group_id_is_bool: false)
+        value = if group_id_is_bool || group_id
+                  if group_id_is_bool
+                    if group_id
+                      scope[[1, tag_id]] || scope[[true, tag_id]]
+                    else
+                      scope[[0, tag_id]] || scope[[false, tag_id]]
+                    end
+                  else
+                    scope[[group_id, tag_id]]
+                  end
+                else
+                  scope[tag_id]
+                end
+
+        value || 0
+      end
 
       def build_order_sql(sort_by, order)
         order = order.present? && order == 'DESC' ? 'DESC' : 'ASC'

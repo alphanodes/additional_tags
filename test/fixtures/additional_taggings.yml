@@ -81,3 +81,10 @@ wiki_tag3:
   taggable_type: WikiPage
   context: tags
   created_at: 2020-01-27 15:08:27 +01:00
+
+wiki_tag4:
+  tag_id: 1
+  taggable_id: 3
+  taggable_type: WikiPage
+  context: tags
+  created_at: 2021-01-27 15:08:27 +01:00

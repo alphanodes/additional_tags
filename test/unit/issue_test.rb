@@ -28,8 +28,8 @@ class IssueTest < AdditionalTags::TestCase
     # run as the admin
     User.stubs(:current).returns(users(:users_001))
 
-    @project_a = Project.find 1
-    @project_b = Project.find 3
+    @project_a = projects :projects_001
+    @project_b = projects :projects_003
   end
 
   test 'patch was applied' do

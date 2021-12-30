@@ -1,0 +1,11 @@
+ul.reporting-list.tag-summary
+  li.amount-tags
+    = l :label_amount_tags
+    ' :
+    span.value
+      = tags.to_a.size
+  li.amount-entities-with-tags
+    = l :label_amount_entities_with_tags, name: entities_label
+    ' :
+    span.value
+      = totals_link

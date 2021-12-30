@@ -181,29 +181,8 @@ module AdditionalTagsHelper
               additional_tag_sep(use_colors: options[:use_colors])
   end
 
-  def scope_for_tags_aggr(project: nil, open_issues_only: nil)
-    Issue.available_tags project: project,
-                         open_issues_only: open_issues_only
-  end
-
-  def issues_count_group_by_tags(project, tags)
-    scope = Issue.group_by_status_with_tags project
-
-    issue_counts = {}
-    tags.each do |tag|
-      open_issues = scope[[0, tag.id]] || scope[[false, tag.id]] || 0
-      closed_issues = scope[[1, tag.id]] || scope[[true, tag.id]] || 0
-      issue_counts[tag.name] = { open: open_issues,
-                                 closed: closed_issues,
-                                 total: open_issues + closed_issues,
-                                 tag: tag }
-    end
-
-    issue_counts
-  end
-
-  def link_to_totals_for_tags(issue_counts:, project:, open_issues_only:)
-    sum = if issue_counts.blank? || issue_counts.size.zero?
+  def link_to_issue_tags_totals(entries:, project:, open_issues_only:)
+    sum = if entries.blank? || entries.size.zero?
             0
           else
             query = IssueQuery.new project: project, name: '_'

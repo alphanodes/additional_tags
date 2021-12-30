@@ -28,16 +28,23 @@ module AdditionalTags
           AdditionalTags::Tags.available_tags self, **options
         end
 
-        def with_tags(tag, project: nil, order: 'title_asc', max_entries: nil)
-          wiki = project&.wiki
-
+        def with_tags_scope(project: nil, wiki: nil)
           scope = if wiki
                     wiki.pages
                   else
-                    WikiPage.joins wiki: :project
+                    scope = WikiPage.joins wiki: :project
+                    scope = scope.where wikis: { project_id: project.id } if project
+                    scope
                   end
 
           scope = scope.visible User.current, project: project if scope.respond_to? :visible
+          scope
+        end
+
+        def with_tags(tag, project: nil, order: 'title_asc', max_entries: nil)
+          wiki = project&.wiki
+
+          scope = with_tags_scope wiki: wiki, project: project
           scope = scope.limit max_entries if max_entries
 
           tags = Array tag
@@ -49,7 +56,6 @@ module AdditionalTags
 
           scope = scope.where(id: tagged_with(tags, any: true).ids)
                        .with_updated_on
-                       .joins(wiki: :project)
 
           return scope if order.nil?
 
