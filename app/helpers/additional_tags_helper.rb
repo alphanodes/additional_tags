@@ -198,6 +198,14 @@ module AdditionalTagsHelper
                                       status_id: open_issues_only ? 'o' : '*')
   end
 
+  def issue_tag_status_filter(operator: nil, open_issues_only: false)
+    if operator
+      { field: :status_id, operator: operator }
+    elsif open_issues_only
+      { field: :status_id, operator: 'o' }
+    end
+  end
+
   private
 
   def tag_url(tag_name, filter: nil, tag_action: nil, tag_controller: nil, project: nil)

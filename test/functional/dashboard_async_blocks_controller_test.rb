@@ -18,7 +18,7 @@ class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
            :journals, :journal_details,
            :repositories, :changesets,
            :queries, :watchers,
-           :dashboards
+           :additional_tags, :additional_taggings, :dashboards
 
   include Redmine::I18n
 

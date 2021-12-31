@@ -114,4 +114,58 @@ class TagsTest < AdditionalTags::TestCase
     tag = ActsAsTaggableOn::Tag.find_by name: 'unused_new_tag'
     assert_equal 1, tag.taggings_count
   end
+
+  def test_entity_group_by_with_statuses
+    counts = AdditionalTags::Tags.entity_group_by scope: { [1, 1] => 1, [2, 1] => 1, [2, 2] => 5, [3, 3] => 10 },
+                                                  tags: Issue.available_tags,
+                                                  statuses: { 1 => :test1, 2 => :test2 }
+    assert_equal 5, counts.size
+    first = counts['First']
+
+    assert_equal 1, first[:tag].id
+    assert_equal 2, first[:total]
+    assert_equal 0, first[:total_sub_groups]
+    assert_equal 2, first[:groups].size
+    assert 1, first[:test1]
+    assert 1, first[:test2]
+    assert_equal 2, first[:total_without_sub_groups]
+
+    second = counts['Second']
+
+    assert_equal 2, second[:tag].id
+    assert_equal 5, second[:total]
+    assert_equal 0, second[:total_sub_groups]
+    assert_equal 2, second[:groups].size
+    assert 0, second[:test1]
+    assert 5, second[:test2]
+    assert_equal 5, second[:total_without_sub_groups]
+  end
+
+  def test_entity_group_by_with_statuses_and_bool
+    counts = AdditionalTags::Tags.entity_group_by scope: Issue.group_by_status_with_tags,
+                                                  tags: Issue.available_tags,
+                                                  statuses: { true => :closed, false => :open },
+                                                  group_id_is_bool: true
+    assert_equal 5, counts.size
+    first = counts['First']
+    assert_equal 1, first[:tag].id
+    assert_equal 2, first[:total]
+    assert_equal 0, first[:total_sub_groups]
+    assert_equal 2, first[:groups].size
+    assert_equal 2, first[:total_without_sub_groups]
+    assert first[:total] == first[:total_sub_groups] + first[:total_without_sub_groups]
+  end
+
+  def test_entity_group_by_without_statuses
+    counts = AdditionalTags::Tags.entity_group_by scope: Issue.group_by_status_with_tags,
+                                                  tags: Issue.available_tags
+    assert_equal 5, counts.size
+
+    first = counts['First']
+    assert_equal 1, first[:tag].id
+    assert_equal 0, first[:total]
+    assert_equal 0, first[:total_sub_groups]
+    assert_equal [], first[:groups]
+    assert_equal 0, first[:total_without_sub_groups]
+  end
 end
