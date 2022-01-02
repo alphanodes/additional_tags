@@ -35,7 +35,8 @@ module AdditionalTags
                .map { |name| [name, name] }
         end
 
-        def build_subquery_for_tags_field(klass:, operator:, values:, joined_table:, joined_field:, source_field: 'id', target_field: 'issue_id')
+        def build_subquery_for_tags_field(klass:, operator:, values:, joined_table:, joined_field:,
+                                          source_field: 'id', target_field: 'issue_id')
           quoted_joined_table = self.class.connection.quote_table_name joined_table
           quoted_joined_field = self.class.connection.quote_column_name joined_field
           quoted_source_field = self.class.connection.quote_column_name source_field

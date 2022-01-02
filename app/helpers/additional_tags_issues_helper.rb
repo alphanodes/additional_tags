@@ -16,6 +16,16 @@ module AdditionalTagsIssuesHelper
       end
     end
 
+    if @time_entry.present? &&
+       (defined?(controller_name) && controller_name == 'timelog' && action_name == 'show' || !defined?(controller_name)) &&
+       User.current.allowed_to?(:view_issues, @project)
+      api.array :issue_tags do
+        @time_entry.issue_tags.each do |tag|
+          api.tag id: tag.id, name: tag.name
+        end
+      end
+    end
+
     rc
   end
 
