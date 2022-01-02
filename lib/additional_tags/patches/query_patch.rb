@@ -35,14 +35,15 @@ module AdditionalTags
                .map { |name| [name, name] }
         end
 
-        def build_subquery_for_tags_field(klass:, operator:, values:, joined_table:, joined_field:, target_field: 'issue_id')
+        def build_subquery_for_tags_field(klass:, operator:, values:, joined_table:, joined_field:, source_field: 'id', target_field: 'issue_id')
           quoted_joined_table = self.class.connection.quote_table_name joined_table
           quoted_joined_field = self.class.connection.quote_column_name joined_field
+          quoted_source_field = self.class.connection.quote_column_name source_field
           quoted_target_field = self.class.connection.quote_column_name target_field
           subsql = ActsAsTaggableOn::Tagging.joins("INNER JOIN #{quoted_joined_table}" \
                                                    " ON additional_taggings.taggable_id = #{quoted_joined_table}.#{quoted_target_field}")
                                             .where(taggable_type: klass.name)
-                                            .where("#{self.class.connection.quote_table_name queried_table_name}.id ="\
+                                            .where("#{self.class.connection.quote_table_name queried_table_name}.#{quoted_source_field} ="\
                                                    " #{quoted_joined_table}.#{quoted_joined_field}")
                                             .select(1)
 

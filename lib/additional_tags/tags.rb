@@ -87,6 +87,7 @@ module AdditionalTags
       end
 
       def build_relation_tags(entries)
+        entries = Array(entries)
         return [] if entries.none?
 
         tags = entries.map(&:tags)
