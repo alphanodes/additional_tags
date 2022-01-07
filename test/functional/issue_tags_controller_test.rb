@@ -36,7 +36,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_get_edit_when_one_issue_chose
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       get :edit,
           params: { ids: [6] },
           xhr: true
@@ -59,7 +59,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_get_edit_when_several_issues_chose
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       get :edit,
           params: { ids: @ids },
           xhr: true
@@ -81,7 +81,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_get_not_found_when_no_ids
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       get :edit,
           params: { ids: [] },
           xhr: true
@@ -95,7 +95,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_change_issue_tags_empty_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: [1], issue: { tag_list: ['', '', ''] } }
 
@@ -107,7 +107,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_change_issue_tags_no_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: [1], issue: { tag_list: [] } }
 
@@ -120,7 +120,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_change_issue_tags_one_tag
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: [1], issue: { tag_list: %w[first] } }
       assert_response :redirect
@@ -131,7 +131,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_change_issue_tags_several_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: [1], issue: { tag_list: %w[first second third] } }
       assert_response :redirect
@@ -142,7 +142,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_bulk_change_issue_tags_no_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: @ids, issue: { tag_list: [] } }
       assert_response :redirect
@@ -153,7 +153,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_bulk_change_issue_tags_one_tag
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: @ids, issue: { tag_list: %w[first] } }
       assert_response :redirect
@@ -164,7 +164,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_should_bulk_change_issue_tags_several_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: @ids, issue: { tag_list: %w[first second third] } }
       assert_response :redirect
@@ -175,7 +175,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_edit_tags_permission
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       tag = 'Second'
       assert_not_equal @issue_1.tag_list, [tag]
       assert Issue.available_tags.map(&:name).include?(tag)
@@ -200,7 +200,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_bulk_edit_tags_permission
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       tag = 'First'
       assert Issue.all_tags.map(&:name).include?(tag)
       post :update,
@@ -215,7 +215,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_bulk_edit_tags_without_permission
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 7
       tag = 'Second'
 
@@ -231,7 +231,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_create_tags_permission
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       new_tag = 'enable_create_tags_permission'
 
       assert_not_equal Issue.find(1).tag_list, [new_tag]

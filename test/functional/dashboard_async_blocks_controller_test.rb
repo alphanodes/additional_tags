@@ -33,7 +33,7 @@ class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
 
   def test_issue_tags_block_on_welcome
     @request.session[:user_id] = 2
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       get :show,
           params: { dashboard_id: @welcome_dashboard.id,
                     block: 'issue_tags',
@@ -49,7 +49,7 @@ class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
 
   def test_issue_tags_block_on_project
     @request.session[:user_id] = 2
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       get :show,
           params: { dashboard_id: @project_dashboard.id,
                     block: 'issue_tags',
@@ -66,7 +66,7 @@ class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
 
   def test_issue_tags_block_on_welcome_if_disabled
     @request.session[:user_id] = 2
-    with_tags_settings active_issue_tags: 0 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 0 do
       get :show,
           params: { dashboard_id: @welcome_dashboard.id,
                     block: 'issue_tags',
@@ -78,7 +78,7 @@ class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
 
   def test_issue_tags_block_on_project_if_disabled
     @request.session[:user_id] = 2
-    with_tags_settings active_issue_tags: 0 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 0 do
       get :show,
           params: { dashboard_id: @project_dashboard.id,
                     block: 'issue_tags',

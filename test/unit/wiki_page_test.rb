@@ -33,7 +33,7 @@ class WikiPageTest < AdditionalTags::TestCase
   def test_no_change_should_not_update_page
     User.current = users :users_002
 
-    with_tags_settings active_wiki_tags: 1 do
+    with_plugin_settings 'additional_tags', active_wiki_tags: 1 do
       page = WikiPage.find_by title: 'Another_page'
       assert_no_difference 'WikiContentVersion.count' do
         assert_save page
@@ -44,7 +44,7 @@ class WikiPageTest < AdditionalTags::TestCase
   def test_add_tag_should_not_create_new_version
     User.current = users :users_002
 
-    with_tags_settings active_wiki_tags: 1 do
+    with_plugin_settings 'additional_tags', active_wiki_tags: 1 do
       page = WikiPage.find_by title: 'Another_page'
       assert_no_difference 'WikiContentVersion.count' do
         page.tag_list << 'Test1'

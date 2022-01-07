@@ -64,7 +64,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_suggestion_order_name
-    with_tags_settings tags_suggestion_order: 'name' do
+    with_plugin_settings 'additional_tags', tags_suggestion_order: 'name' do
       get :issue_tags,
           params: { project_id: 'ecookbook' }
     end
@@ -75,7 +75,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_suggestion_order_count
-    with_tags_settings tags_suggestion_order: 'count' do
+    with_plugin_settings 'additional_tags', tags_suggestion_order: 'count' do
       get :issue_tags,
           params: { project_id: 'ecookbook' }
     end
@@ -86,7 +86,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_suggestion_order_last_created
-    with_tags_settings tags_suggestion_order: 'last_created' do
+    with_plugin_settings 'additional_tags', tags_suggestion_order: 'last_created' do
       get :issue_tags,
           params: { project_id: 'ecookbook' }
     end

@@ -9,26 +9,12 @@ if ENV['COVERAGE']
 end
 
 require File.expand_path "#{File.dirname __FILE__}/../../../test/test_helper"
-require File.expand_path "#{File.dirname __FILE__}/global_test_helper"
 require File.expand_path "#{File.dirname __FILE__}/../../additionals/test/global_test_helper"
 require File.expand_path "#{File.dirname __FILE__}/../../additionals/test/crud_controller_base"
 
 module AdditionalTags
   module TestHelper
     include Additionals::GlobalTestHelper
-    include AdditionalTags::GlobalTestHelper
-
-    def with_tags_settings(settings, &_block)
-      saved_settings = Setting.plugin_additional_tags.dup
-      new_settings = Setting.plugin_additional_tags.dup
-      settings.each do |key, value|
-        new_settings[key] = value
-      end
-      Setting.plugin_additional_tags = new_settings
-      yield
-    ensure
-      Setting.plugin_additional_tags = saved_settings
-    end
 
     def prepare_tests
       Role.where(id: [1, 2, 3]).each do |r|

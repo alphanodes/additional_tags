@@ -83,7 +83,7 @@ class IssueTest < AdditionalTags::TestCase
   def test_update_issue_with_unused_tags_should_remove_tag
     issue = issues :issues_005
 
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
         issue.tag_list = []
         assert_save issue
@@ -96,7 +96,7 @@ class IssueTest < AdditionalTags::TestCase
     issue.tag_list << 'unused_new_tag'
     assert_save issue
 
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
         issue.destroy!
       end

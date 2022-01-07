@@ -34,7 +34,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   def test_index_displays_tags_as_html_in_the_correct_column
     @request.session[:user_id] = 2
 
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       with_settings issue_list_default_columns: ['tags'] do
         get :index
       end
@@ -60,7 +60,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_show_issue_should_not_display_tags_if_disabled
-    with_tags_settings active_issue_tags: '0' do
+    with_plugin_settings 'additional_tags', active_issue_tags: '0' do
       @request.session[:user_id] = 2
       get :show, params: {
         id: 1
@@ -72,7 +72,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_show_issue_should_display_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
       get :show, params: {
         id: 1
@@ -84,7 +84,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_show_issue_should_display_multiple_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
       get :show, params: {
         id: 6
@@ -106,8 +106,8 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_show_issue_should_display_contrast_tag_colors
-    with_tags_settings active_issue_tags: 1,
-                       use_colors: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1,
+                                            use_colors: 1 do
       @request.session[:user_id] = 2
       get :show, params: {
         id: 6
@@ -130,7 +130,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_edit_issue_tags_should_journalize_changes
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
 
       put :update, params: {
@@ -152,7 +152,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_post_bulk_edit_without_tag_list
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
 
       issue1 = issues :issues_001
@@ -177,7 +177,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_post_bulk_edit_with_empty_string_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 3
       issue1 = issues :issues_001
       issue2 = issues :issues_002
@@ -196,7 +196,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_post_bulk_edit_with_changed_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
       issue1 = issues :issues_001
       issue1.tag_list << 'new_for_issue1'
@@ -221,7 +221,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_get_new_with_permission_edit_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 3
       get :new,
           params: { issue: { project_id: 1 } }
@@ -231,7 +231,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_get_new_without_permission_edit_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 7
       get :new,
           params: { issue: { project_id: 1 } }
@@ -241,7 +241,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_get_new_with_permission_edit_tags_in_other_project
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
       get :new,
           params: { issue: { project_id: 3 } }
@@ -251,7 +251,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_get_edit_with_permission_edit_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       # User(id: 2) has role Manager in Project(id: 1) and Project(id: 1) contains Issue(id: 1)
       @request.session[:user_id] = 2
       manager_role = Role.find 1
@@ -264,7 +264,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_get_edit_without_permission_edit_tags
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 7
       get :edit,
           params: { id: 1, issue: { project_id: 1 } }
@@ -274,7 +274,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_edit_tags_permission
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 3
       tag = 'First'
 
@@ -289,7 +289,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_do_not_edit_tags_without_permission
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 7
       new_tag = 'Second'
 
@@ -314,7 +314,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_create_tags_permission
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
       new_tag = 'enable_create_tags_permission'
       assert_not_equal Issue.find(1).tag_list, [new_tag]
@@ -329,7 +329,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_do_not_create_tags_without_permission
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 3
       new_tag = 'not_allowed'
 
@@ -354,7 +354,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_filter_by_tag
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 1
       get :index,
           params: { project_id: 1,
@@ -372,7 +372,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_filter_by_tag_with_not
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 1
       get :index,
           params: { project_id: 1,
@@ -390,7 +390,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_filter_by_tag_with_none
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 1
       get :index,
           params: { project_id: 1,
@@ -407,7 +407,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_filter_by_tag_with_all
-    with_tags_settings active_issue_tags: 1 do
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 1
       get :index,
           params: { project_id: 1,
