@@ -7,4 +7,3 @@ Gemfile.lock
 .settings/
 ._*
 *.gem
-.enable_dev

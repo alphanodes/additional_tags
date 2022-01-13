@@ -1,6 +1,6 @@
 # Additional Tags - Tags for Redmine
 
-[![Rate at redmine.org](https://img.shields.io/badge/rate%20at-redmine.org-blue.svg?style=flat)](https://www.redmine.org/plugins/additional_tags) [![Run Linters](https://github.com/AlphaNodes/additional_tags/workflows/Run%20Linters/badge.svg)](https://github.com/AlphaNodes/additional_tags/actions?query=workflow%3A%22Run+Linters%22) [![Run Brakeman](https://github.com/AlphaNodes/additional_tags/workflows/Run%20Brakeman/badge.svg)](https://github.com/AlphaNodes/additional_tags/actions?query=workflow%3A%22Run+Brakeman%22) [![Run Tests](https://github.com/AlphaNodes/additional_tags/workflows/Tests/badge.svg)](https://github.com/AlphaNodes/additional_tags/actions?query=workflow%3ATests)
+[![Rate at redmine.org](https://img.shields.io/badge/rate%20at-redmine.org-blue.svg?style=flat)](https://www.redmine.org/plugins/additional_tags) [![Run Linters](https://github.com/AlphaNodes/additional_tags/workflows/Run%20Linters/badge.svg)](https://github.com/AlphaNodes/additional_tags/actions?query=workflow%3A%22Run+Linters%22) [![Run Tests](https://github.com/AlphaNodes/additional_tags/workflows/Tests/badge.svg)](https://github.com/AlphaNodes/additional_tags/actions?query=workflow%3ATests)
 
 ## Features
 

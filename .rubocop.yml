@@ -92,6 +92,12 @@ Style/OptionHash:
     - parameters
     - settings
 
+# postgresql and mysql are supported
+# autodetect does not work without database configuration
+Rails/BulkChangeTable:
+  Enabled: true
+  Database: postgresql
+
 Style/ReturnNil:
   Enabled: true
 

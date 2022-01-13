@@ -16,7 +16,7 @@ jobs:
 
     - name: Setup Gemfile
       run: |
-        touch .enable_dev
+        touch .enable_linters
         sed -i "3isource 'https://rubygems.org'" Gemfile
 
     - name: Setup Ruby
@@ -37,3 +37,7 @@ jobs:
       run: |
         bundle exec slim-lint app/views
       if: always()
+
+    - name: Run Brakeman
+      run: |
+        bundle exec brakeman -5
