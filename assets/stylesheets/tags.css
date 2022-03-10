@@ -56,16 +56,11 @@ td.tags span.additional-tag-label-color {
 
 .tag-label .tag-count {
   background: #f1f5fa;
-  border-radius: 0.75rem;
+  border-radius: 5px;
   padding: 0 5px;
   color: #666;
-  border: 1px soli;
-  border: 1px solid #999;
-}
-
-.tag-label .tag-count a:hover {
-  background: #fff;
-  text-decoration: none;
+  border: 1px solid #ddd;
+  vertical-align: middle;
 }
 
 .additional-tag-label-color .tag-count,
@@ -74,7 +69,8 @@ td.tags span.additional-tag-label-color {
   margin-left: 0.5em;
 }
 
-span.additional-tag-label-color:hover a {
+span.additional-tag-label-color:hover a,
+.tag-label .tag-count:hover a {
   text-decoration: none !important;
 }
 
