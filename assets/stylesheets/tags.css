@@ -45,6 +45,7 @@ td.tags span.additional-tag-label-color {
 
 .additional-tag-label-color .tag-count {
   background: #fff;
+  color: #000;
   padding-right: 5px;
   border-top-right-radius: 0.7rem;
   border-bottom-right-radius: 0.7rem;
