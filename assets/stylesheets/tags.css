@@ -46,12 +46,26 @@ td.tags span.additional-tag-label-color {
 .additional-tag-label-color .tag-count {
   display: inline-block;
   background: #fff;
-  color: #000;
+  color: #1f1f1f;
   padding-right: 5px;
   border-top-right-radius: 0.7rem;
   border-bottom-right-radius: 0.7rem;
   margin-right: -5px;
   padding-left: 3px;
+}
+
+.tag-label .tag-count {
+  background: #f1f5fa;
+  border-radius: 0.75rem;
+  padding: 0 5px;
+  color: #666;
+  border: 1px soli;
+  border: 1px solid #999;
+}
+
+.tag-label .tag-count a:hover {
+  background: #fff;
+  text-decoration: none;
 }
 
 .additional-tag-label-color .tag-count,
