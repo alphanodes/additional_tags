@@ -44,6 +44,7 @@ td.tags span.additional-tag-label-color {
 }
 
 .additional-tag-label-color .tag-count {
+  display: inline-block;
   background: #fff;
   color: #000;
   padding-right: 5px;
