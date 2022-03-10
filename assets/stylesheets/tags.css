@@ -43,6 +43,15 @@ td.tags span.additional-tag-label-color {
   border-radius: 0.75rem;
 }
 
+.additional-tag-label-color .tag-count {
+  background: #fff;
+  padding-right: 5px;
+  border-top-right-radius: 0.7rem;
+  border-bottom-right-radius: 0.7rem;
+  margin-right: -5px;
+  padding-left: 3px;
+}
+
 .additional-tag-label-color .tag-count,
 .tag-label .tag-count {
   font-size: 0.7rem;
