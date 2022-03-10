@@ -27,7 +27,7 @@ ul.tags li { margin: 0.25em 0; }
 span.additional-tag-label-color {
   display: inline-block;
   margin-bottom: 5px !important;
-  border-radius: 2px !important;
+  border-radius: 0.75rem !important;
 }
 
 td.tags span.additional-tag-label-color {
@@ -38,17 +38,9 @@ td.tags span.additional-tag-label-color {
 
 .additional-tag-label-color {
   padding: 2px 4px;
-  font-size: 10px !important;
+  font-size: 0.75rem !important;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-}
-
-.additional-tag-label-color a::before {
-  font-family: Font Awesome\ 5 Free;
-  font-size: 0.9em;
-  font-weight: 900;
-  content: "\f02b"; /* fas fa-tag */
-  padding-right: 3px;
+  border-radius: 0.75rem;
 }
 
 .additional-tag-label-color .tag-count,
