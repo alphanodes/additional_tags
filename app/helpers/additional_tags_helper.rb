@@ -111,13 +111,7 @@ module AdditionalTagsHelper
                   "background-color: #{tag_bg_color}; color: #{tag_fg_color}"
                 end
 
-    if show_count
-      tag_name << if use_colors
-                    tag.span tag_object.count, class: 'tag-count'
-                  else
-                    tag.span "(#{tag_object.count})", class: 'tag-count'
-                  end
-    end
+    tag_name << tag.span(tag_object.count, class: 'tag-count') if show_count
 
     content = if link
                 link_to safe_join(tag_name),
