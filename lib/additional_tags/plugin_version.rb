@@ -2,6 +2,6 @@
 
 module AdditionalTags
   module PluginVersion
-    VERSION = '1.0.4' unless defined? VERSION
+    VERSION = '1.0.5' unless defined? VERSION
   end
 end

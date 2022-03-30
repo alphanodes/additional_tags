@@ -13,7 +13,7 @@ Redmine::Plugin.register :additional_tags do
   author_url  'https://alphanodes.com/'
   directory __dir__
 
-  requires_redmine version_or_higher: '4.1'
+  requires_redmine version_or_higher: '5.0'
 
   settings default: loader.default_settings,
            partial: 'additional_tags/settings/settings'
@@ -35,4 +35,3 @@ Redmine::Plugin.register :additional_tags do
 end
 
 RedminePluginKit::Loader.persisting { loader.load_model_hooks! }
-RedminePluginKit::Loader.to_prepare { AdditionalTags.setup!(loader) } if Rails.version < '6.0'

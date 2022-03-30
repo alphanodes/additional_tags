@@ -168,7 +168,7 @@ module AdditionalTagsHelper
   def additional_tags_from_params(str)
     tags = str.is_a?(Array) ? str : str.to_s.split(',')
     tags.map!(&:strip)
-    tags.reject(&:blank?)
+    tags.compact_blank
   end
 
   def additional_tag_links(tag_list, **options)
