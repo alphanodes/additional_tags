@@ -49,7 +49,8 @@ module AdditionalTags
       end
 
       def remove_unused_tags
-        ActsAsTaggableOn::Tag.where.not(id: ActsAsTaggableOn::Tagging.select(:tag_id).distinct)
+        ActsAsTaggableOn::Tag.left_outer_joins(:taggings)
+                             .where(taggings: { id: nil })
                              .each(&:destroy)
       end
 
