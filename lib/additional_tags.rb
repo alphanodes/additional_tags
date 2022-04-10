@@ -46,14 +46,11 @@ module AdditionalTags
       loader.add_patch({ target: Redmine::Helpers::TimeReport,
                          patch: 'TimeReport' })
 
-      # because of this bug: https://www.redmine.org/issues/33290
-      if RedminePluginKit::Loader.redmine_database_ready? TAG_TABLE_NAME
-        loader.add_patch %w[IssueQuery TimeEntryQuery]
+      loader.add_patch %w[IssueQuery TimeEntryQuery]
 
-        if Redmine::Plugin.installed? 'redmine_agile'
-          loader.add_patch %w[AgileQuery AgileBoardsController]
-          loader.add_patch %w[AgileVersionsController AgileVersionsQuery] if AGILE_VERSION_TYPE == 'PRO version'
-        end
+      if Redmine::Plugin.installed? 'redmine_agile'
+        loader.add_patch %w[AgileQuery AgileBoardsController]
+        loader.add_patch %w[AgileVersionsController AgileVersionsQuery] if AGILE_VERSION_TYPE == 'PRO version'
       end
 
       # Apply patches and helper

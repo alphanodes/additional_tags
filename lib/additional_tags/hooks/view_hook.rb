@@ -61,6 +61,8 @@ module AdditionalTags
       private
 
       def issues_bulk_tags_fix(issue, params)
+        return unless params && params[:issue]
+
         old_tags = issue.tags.map(&:name)
         new_tags = Array(params[:issue][:tag_list]).reject(&:empty?)
         issue.tag_list = (old_tags + new_tags).uniq
