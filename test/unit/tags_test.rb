@@ -126,8 +126,8 @@ class TagsTest < AdditionalTags::TestCase
     assert_equal 2, first[:total]
     assert_equal 0, first[:total_sub_groups]
     assert_equal 2, first[:groups].size
-    assert 1, first[:test1]
-    assert 1, first[:test2]
+    assert_equal 1, first[:test1]
+    assert_equal 1, first[:test2]
     assert_equal 2, first[:total_without_sub_groups]
 
     second = counts['Second']
@@ -136,8 +136,8 @@ class TagsTest < AdditionalTags::TestCase
     assert_equal 5, second[:total]
     assert_equal 0, second[:total_sub_groups]
     assert_equal 2, second[:groups].size
-    assert 0, second[:test1]
-    assert 5, second[:test2]
+    assert_equal 0, second[:test1]
+    assert_equal 5, second[:test2]
     assert_equal 5, second[:total_without_sub_groups]
   end
 
@@ -153,7 +153,7 @@ class TagsTest < AdditionalTags::TestCase
     assert_equal 0, first[:total_sub_groups]
     assert_equal 2, first[:groups].size
     assert_equal 2, first[:total_without_sub_groups]
-    assert first[:total] == first[:total_sub_groups] + first[:total_without_sub_groups]
+    assert_equal first[:total], first[:total_sub_groups] + first[:total_without_sub_groups]
   end
 
   def test_entity_group_by_without_statuses
@@ -165,7 +165,7 @@ class TagsTest < AdditionalTags::TestCase
     assert_equal 1, first[:tag].id
     assert_equal 0, first[:total]
     assert_equal 0, first[:total_sub_groups]
-    assert_equal [], first[:groups]
+    assert_empty first[:groups]
     assert_equal 0, first[:total_without_sub_groups]
   end
 end

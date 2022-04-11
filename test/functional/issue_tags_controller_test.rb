@@ -102,7 +102,8 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
-      assert_equal [], @issue_1.tag_list
+      assert @issue_1.tag_list.is_a? Array
+      assert_empty @issue_1.tag_list
     end
   end
 
@@ -115,7 +116,8 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
 
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
-      assert_equal [], @issue_1.tag_list
+      assert @issue_1.tag_list.is_a? Array
+      assert_empty @issue_1.tag_list
     end
   end
 
@@ -148,7 +150,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
-      @issues.each { |issue| assert_equal [], issue.tag_list }
+      @issues.each { |issue| assert_empty issue.tag_list }
     end
   end
 
@@ -178,7 +180,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       tag = 'Second'
       assert_not_equal @issue_1.tag_list, [tag]
-      assert Issue.available_tags.map(&:name).include?(tag)
+      assert_includes Issue.available_tags.map(&:name), tag
       post :update,
            params: { ids: [1], issue: { tag_list: [tag] } }
       assert_response :redirect
@@ -189,7 +191,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       @role.remove_permission! :edit_issue_tags
       tag2 = 'Third'
 
-      assert Issue.available_tags.map(&:name).include?(tag2)
+      assert_includes Issue.available_tags.map(&:name), tag2
       post :update,
            params: { ids: [1], issue: { tag_list: [tag2] } }
       assert_response :redirect
@@ -202,7 +204,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   def test_bulk_edit_tags_permission
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       tag = 'First'
-      assert Issue.all_tags.map(&:name).include?(tag)
+      assert_includes Issue.all_tags.map(&:name), tag
       post :update,
            params: { ids: [1, 2], issue: { tag_list: [tag] } }
 
@@ -219,7 +221,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       @request.session[:user_id] = 7
       tag = 'Second'
 
-      assert Issue.all_tags.map(&:name).include?(tag)
+      assert_includes Issue.all_tags.map(&:name), tag
       post :update,
            params: { ids: [1, 2], issue: { tag_list: [tag] } }
       assert_response :redirect

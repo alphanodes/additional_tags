@@ -183,7 +183,8 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       issue2 = issues :issues_002
 
       assert_equal ['First'], issue1.tag_list
-      assert_equal [], issue2.tag_list
+      assert issue2.tag_list.is_a? Array
+      assert_empty issue2.tag_list
 
       post :bulk_update,
            params: { ids: [issue1.id, issue2.id],
@@ -191,7 +192,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
       assert_response :redirect
       assert_equal ['First'], Issue.find(1).tag_list
-      assert_equal [], Issue.find(2).tag_list
+      assert_empty Issue.find(2).tag_list
     end
   end
 
@@ -279,7 +280,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       tag = 'First'
 
       assert_not_equal Issue.find(2).tag_list, [tag]
-      assert Issue.available_tags.map(&:name).include?(tag)
+      assert_includes Issue.available_tags.map(&:name), tag
       post :update,
            params: { id: 2, issue: { project_id: 1, tag_list: [tag] } }
 
@@ -295,8 +296,8 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
       issue = issues :issues_001
 
-      assert Issue.available_tags.map(&:name).include?(new_tag)
-      assert_equal issue.description, 'Unable to print recipes'
+      assert_includes Issue.available_tags.map(&:name), new_tag
+      assert_equal 'Unable to print recipes', issue.description
       assert_not issue.tag_list.include?(new_tag)
 
       post :update,
@@ -308,7 +309,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       issue.reload
 
       assert_response :redirect
-      assert_equal issue.description, 'New description'
+      assert_equal 'New description', issue.description
       assert_not issue.tag_list.include?(new_tag)
     end
   end
@@ -336,7 +337,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       issue = issues :issues_001
 
       assert_not Issue.all_tags.map(&:name).include?(new_tag)
-      assert_equal issue.description, 'Unable to print recipes'
+      assert_equal 'Unable to print recipes', issue.description
       assert_not issue.tag_list.include?(new_tag)
 
       post :update,
@@ -348,7 +349,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       issue.reload
 
       assert_response :redirect
-      assert_equal issue.description, 'New description'
+      assert_equal 'New description', issue.description
       assert_not issue.tag_list.include?(new_tag)
     end
   end
