@@ -35,7 +35,7 @@ module AdditionalTags
         ActsAsTaggableOn::Tag.all
                              .joins(tag_for_joins(klass, without_projects: without_projects))
                              .distinct
-                             .order("#{TAG_TABLE_NAME}.name")
+                             .order(:name)
       end
 
       def tag_to_joins(klass)
