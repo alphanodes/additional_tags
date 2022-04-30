@@ -7,6 +7,7 @@ class AdditionalTagsController < ApplicationController
   before_action :set_tag_list_path
 
   helper :additional_tags_issues
+  include AdditionalTagsHelper
 
   accept_api_auth :index
 
@@ -14,7 +15,10 @@ class AdditionalTagsController < ApplicationController
   def index
     raise 'type is not provided' if params[:type].blank?
 
-    klass = params[:type].camelize.constantize
+    type_info = manageable_tag_columns.detect { |m| m.first.to_s == params[:type] }
+    raise 'type is not supported' unless type_info
+
+    klass = type_info.first.to_s.camelize.constantize
     raise "#{klass.name} does not support tags" unless klass.respond_to? :available_tags
 
     @tags = klass.available_tags.to_a
