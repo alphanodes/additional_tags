@@ -1,0 +1,5 @@
+api.array :tags, api_meta(total_count: @count, tag_type: @tag_type) do
+  @tags.each do |tag|
+    api.tag id: tag.id, name: tag.name, count: tag.count
+  end
+end

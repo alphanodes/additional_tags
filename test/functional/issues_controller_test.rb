@@ -129,6 +129,26 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
+  def test_should_create_ticket_with_tags
+    @request.session[:user_id] = 2
+    project = projects :projects_001
+    assert_difference 'Issue.count' do
+      post :create,
+           params: { issue: { tracker_id: 3,
+                              subject: 'test with tags',
+                              project_id: 1,
+                              status_id: 2,
+                              priority_id: 5,
+                              tag_list: ['cat, dog, mouse'] },
+                     project_id: project }
+    end
+
+    last_issue = Issue.last
+    assert_redirected_to controller: 'issues', action: 'show', id: last_issue.id
+    assert_equal 'test with tags', last_issue.subject
+    assert_sorted_equal %w[cat dog mouse], last_issue.tags.map(&:name)
+  end
+
   def test_edit_issue_tags_should_journalize_changes
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2

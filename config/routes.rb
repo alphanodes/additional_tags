@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :additional_tags, only: %i[edit update] do
+  resources :additional_tags, only: %i[index edit update] do
     collection do
       post :merge
       get :context_menu, :merge

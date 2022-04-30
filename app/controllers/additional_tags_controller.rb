@@ -8,6 +8,25 @@ class AdditionalTagsController < ApplicationController
 
   helper :additional_tags_issues
 
+  accept_api_auth :index
+
+  # used by api calls
+  def index
+    raise 'type is not provided' if params[:type].blank?
+
+    klass = params[:type].camelize.constantize
+    raise "#{klass.name} does not support tags" unless klass.respond_to? :available_tags
+
+    @tags = klass.available_tags.to_a
+    @count = @tags.count
+    @tag_type = klass.name
+
+    respond_to do |format|
+      format.html { head :not_acceptable }
+      format.api
+    end
+  end
+
   def edit; end
 
   def destroy

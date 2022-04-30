@@ -56,29 +56,29 @@ module AdditionalTags
         end
 
         def safe_attributes_with_tags=(attrs, user = User.current)
-          if attrs && attrs[:tag_list]
-            tags = attrs.delete :tag_list
-            tags = Array(tags).reject(&:empty?)
+          send :safe_attributes_without_tags=, attrs, user # required to fire first to get loaded project
+          return unless attrs && attrs[:tag_list]
 
-            if user.allowed_to?(:create_issue_tags, project) ||
-               user.allowed_to?(:edit_issue_tags, project) && Issue.allowed_tags?(tags)
-              attrs[:tag_list] = tags
-              self.tag_list = tags
-            end
+          tags = attrs.delete :tag_list
+          tags = Array(tags).reject(&:empty?)
+
+          Additionals.debug "tags: #{tags.inspect} - project: #{project&.id} - access: #{user.allowed_to? :create_issue_tags, project}"
+
+          if user.allowed_to?(:create_issue_tags, project) ||
+             user.allowed_to?(:edit_issue_tags, project) && Issue.allowed_tags?(tags)
+            attrs[:tag_list] = tags # required fix for journal details
+            self.tag_list = tags    # required fix for tags
           end
-
-          send :safe_attributes_without_tags=, attrs, user
         end
 
-        # copy_from requires hash for Redmine - works with Ruby 3
-        # rubocop: disable Style/OptionHash
-        def copy_from_with_tags(arg, options = {})
-          copy_from_without_tags arg, options
+        def copy_from_with_tags(arg, options = nil)
+          options ||= {} # works with Ruby 3
+
+          copy_from_without_tags arg, **options
           issue = arg.is_a?(Issue) ? arg : Issue.visible.find(arg)
           self.tag_list = issue.tag_list
           self
         end
-        # rubocop: enable Style/OptionHash
 
         private
 
