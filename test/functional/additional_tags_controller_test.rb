@@ -36,10 +36,12 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
   end
 
   def test_index_only_available_for_api
-    get :index,
-        params: { type: 'issue' }
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      get :index,
+          params: { type: 'issue' }
 
-    assert_response :not_acceptable
+      assert_response :not_acceptable
+    end
   end
 
   def test_index_without_permission

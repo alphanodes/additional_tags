@@ -25,25 +25,29 @@ module ApiTest
     end
 
     test 'GET /additional_tags.xml should contain metadata' do
-      get '/additional_tags.xml',
-          params: { type: 'issue' },
-          headers: credentials('admin')
+      with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+        get '/additional_tags.xml',
+            params: { type: 'issue' },
+            headers: credentials('admin')
 
-      assert_response :success
-      assert_select 'tags[total_count][tag_type="Issue"][type=array]'
+        assert_response :success
+        assert_select 'tags[total_count][tag_type="Issue"][type=array]'
+      end
     end
 
     test 'GET /additional_tags.json should list tags' do
-      get '/additional_tags.json',
-          params: { type: 'issue' },
-          headers: credentials('admin')
+      with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+        get '/additional_tags.json',
+            params: { type: 'issue' },
+            headers: credentials('admin')
 
-      assert_response :success
-      tags = JSON.parse response.body
-      assert_not_empty tags['tags']
-      assert_equal 5, tags['tags'].size
-      assert_equal({ 'id' => 1, 'name' => 'First', 'count' => 2 }, tags['tags'].first)
-      assert_equal({ 'id' => 4, 'name' => 'Four', 'count' => 2 }, tags['tags'].second)
+        assert_response :success
+        tags = JSON.parse response.body
+        assert_not_empty tags['tags']
+        assert_equal 5, tags['tags'].size
+        assert_sorted_equal(%w[First Four Second Third five],
+                            tags['tags'].map { |t| t['name'] })
+      end
     end
 
     test 'GET /additional_tags.xml should require type' do
