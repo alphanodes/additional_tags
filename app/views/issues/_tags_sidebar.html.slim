@@ -1,5 +1,8 @@
 - if AdditionalTags.setting?(:active_issue_tags) && \
-     User.current.allowed_to?(:view_issue_tags, @project, global: true) && sidebar_tags.present?
+     User.current.allowed_to?(:view_issue_tags, @project, global: true) && \
+     defined?(sidebar_tags) && \
+     sidebar_tags.present?
+
   .sidebar-tags
     h3 = l :field_tags
     = render_sidebar_tags
