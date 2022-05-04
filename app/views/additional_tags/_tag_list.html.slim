@@ -18,7 +18,7 @@
                     onclick: "$('#edit_tags_form').show(); $('#tags-data').hide(); return false;",
                     id: 'edit_tags_link'
 
-      #edit_tags_form style="display: none;"
+      #edit_tags_form.hidden
         = form_tag update_url, method: :put do
           = render partial: defined?(tags_form) ? tags_form : 'tags_form',
                    locals: { css_id: defined?(css_id) ? css_id : nil }
