@@ -25,7 +25,7 @@ module AdditionalTags
 
         columns << "MIN(#{TAGGING_TABLE_NAME}.created_at) AS last_created" if options[:sort_by] == 'last_created'
 
-        scope.select(columns.join(', '))
+        scope.select(columns.to_list)
              .joins(tag_for_joins(klass, **options.slice(:project_join, :project, :without_projects)))
              .group("#{TAG_TABLE_NAME}.id, #{TAG_TABLE_NAME}.name, #{TAG_TABLE_NAME}.taggings_count").having('COUNT(*) > 0')
              .order(build_order_sql(options[:sort_by], options[:order]))
