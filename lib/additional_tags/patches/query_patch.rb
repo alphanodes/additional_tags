@@ -44,7 +44,7 @@ module AdditionalTags
           subsql = ActsAsTaggableOn::Tagging.joins("INNER JOIN #{quoted_joined_table}" \
                                                    " ON additional_taggings.taggable_id = #{quoted_joined_table}.#{quoted_target_field}")
                                             .where(taggable_type: klass.name)
-                                            .where("#{self.class.connection.quote_table_name queried_table_name}.#{quoted_source_field} ="\
+                                            .where("#{self.class.connection.quote_table_name queried_table_name}.#{quoted_source_field} =" \
                                                    " #{quoted_joined_table}.#{quoted_joined_field}")
                                             .select(1)
 

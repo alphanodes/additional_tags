@@ -118,16 +118,13 @@ Style/MethodCallWithArgsParentheses:
   AllowParenthesesInChaining: true
   EnforcedStyle: omit_parentheses
 
-Style/HashTransformKeys:
-  Enabled: false
-
-Style/HashTransformValues:
-  Enabled: false
-
 Naming/VariableNumber:
   Enabled: true
   Exclude:
     - 'test/**/*'
+
+Layout/LineContinuationLeadingSpace:
+  Enabled: false
 
 # see https://github.com/rubocop/rubocop-rails/issues/578
 # redmine does not use load_defaults: https://rails.rubystyle.guide/#config-defaults
