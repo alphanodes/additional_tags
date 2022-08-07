@@ -51,7 +51,6 @@ module ApiTest
       end
     end
 
-    # Test for creating an issue with tags
     test 'POST /issues.json should create an issue with the tags' do
       payload = <<~JSON
         {
@@ -79,7 +78,6 @@ module ApiTest
       end
     end
 
-    # Test for update an issue and add tags
     test 'PUT /issues/:id.xml with tags' do
       with_plugin_settings 'additional_tags', active_issue_tags: 1 do
         assert_difference 'Journal.count' do
@@ -89,6 +87,20 @@ module ApiTest
               headers: credentials('jsmith')
         end
         issue = Issue.find 6
+        assert_equal 'API update', issue.subject
+        assert_sorted_equal %w[cat dog mouse], issue.tags.map(&:name)
+      end
+    end
+
+    test 'PUT /issues/:id.xml with existing tags' do
+      with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+        assert_difference 'Journal.count' do
+          put '/issues/1.xml',
+              params: { issue: { subject: 'API update',
+                                 tag_list: 'cat, dog, mouse' } },
+              headers: credentials('jsmith')
+        end
+        issue = Issue.find 1
         assert_equal 'API update', issue.subject
         assert_sorted_equal %w[cat dog mouse], issue.tags.map(&:name)
       end
