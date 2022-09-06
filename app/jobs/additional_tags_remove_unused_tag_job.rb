@@ -2,11 +2,16 @@
 
 class AdditionalTagsRemoveUnusedTagJob < AdditionalTagsJob
   def perform
-    # only once a minute to reduce load
-    cache_key = self.class.to_s
-    return if Rails.cache.read(cache_key) && !Rails.env.test?
-
-    Rails.cache.write cache_key, true, expires_in: 60
-    AdditionalTags::Tags.remove_unused_tags
+    if Rails.env.test?
+      # no cache for testing
+      AdditionalTags::Tags.remove_unused_tags
+    else
+      # only once a minute to reduce load
+      cache = ActiveSupport::Cache::MemoryStore.new expires_in: 1.minute
+      cache.fetch self.class.to_s do
+        AdditionalTags::Tags.remove_unused_tags
+        true
+      end
+    end
   end
 end
