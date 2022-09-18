@@ -7,12 +7,12 @@ h3 = block_definition[:label]
                                                 statuses: { true => :closed, false => :open },
                                                 group_id_is_bool: true
 
-= render partial: 'common/tag_summary_block',
-         locals: { tags: tags,
-                   entities_label: l(:label_issue_plural),
-                   totals_link: link_to_issue_tags_totals(entries: counts,
-                                                          project: @project,
-                                                          open_issues_only: open_issues_only) }
+= render 'common/tag_summary_block',
+         tags: tags,
+         entities_label: l(:label_issue_plural),
+         totals_link: link_to_issue_tags_totals(entries: counts,
+                                                project: @project,
+                                                open_issues_only: open_issues_only)
 
 - if RedminePluginKit.true? settings[:with_table_of_values]
   - if tags.present?

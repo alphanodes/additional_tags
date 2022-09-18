@@ -20,8 +20,8 @@
 
       #edit_tags_form.hidden
         = form_tag update_url, method: :put do
-          = render partial: defined?(tags_form) ? tags_form : 'tags_form',
-                   locals: { css_id: defined?(css_id) ? css_id : nil }
+          = render defined?(tags_form) ? tags_form : 'tags_form',
+                   css_id: defined?(css_id) ? css_id : nil
           '
           = submit_tag l(:button_save), class: 'button-small'
           '

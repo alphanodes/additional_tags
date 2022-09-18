@@ -8,3 +8,4 @@ Gemfile.lock
 .enable_*
 ._*
 *.gem
+rails_best_practices_output.html

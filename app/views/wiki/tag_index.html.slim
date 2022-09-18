@@ -18,4 +18,4 @@ h2 = render_wiki_index_title @project, @tag
             = link_to page.parent.pretty_title, project_wiki_page_path(@project, page.parent.title)
 
 - content_for :sidebar do
-  = render partial: 'sidebar'
+  = render 'sidebar'

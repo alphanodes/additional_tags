@@ -54,7 +54,7 @@ class AdditionalTagsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render action: 'edit' }
+        format.html { render :edit }
       end
     end
   end
