@@ -71,14 +71,14 @@ git clone https://github.com/alphanodes/additionals.git plugins/additionals
 git clone https://github.com/alphanodes/additional_tags.git plugins/additional_tags
 ```
 
-### 2. Install dependencies and migrate database.
+### 2. Install dependencies and migrate database
 
 ```shell
 bundle install
 bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ```
 
-### 3. Restart your Redmine web server.
+### 3. Restart your Redmine web server
 
 ## Running tests
 
