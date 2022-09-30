@@ -41,10 +41,11 @@ module AdditionalTags
           scope
         end
 
-        def with_tags(tag, project: nil, order: 'title_asc', max_entries: nil)
+        def with_tags(tag, project: nil, order: 'title_asc', max_entries: nil, exclude_page: nil)
           wiki = project&.wiki
 
           scope = with_tags_scope wiki: wiki, project: project
+          scope = scope.where.not id: exclude_page.id if exclude_page
           scope = scope.limit max_entries if max_entries
 
           tags = Array tag
