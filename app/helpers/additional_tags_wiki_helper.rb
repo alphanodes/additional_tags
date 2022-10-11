@@ -18,18 +18,23 @@ module AdditionalTagsWikiHelper
     render_tags_list sidebar_tags, **options
   end
 
-  def render_wiki_index_title(project, tag = nil)
+  def render_wiki_index_title(project: nil, name: nil, tag: nil, title: :label_wiki)
     if tag.present?
-      if project.nil?
-        title = [link_to(l(:label_wiki), wiki_index_path)]
+      if project
+        t :label_wiki_index_for_tag_html, tag: tag
+      else
+        title = [link_to(l(title), wiki_index_path)]
         title << Additionals::LIST_SEPARATOR
         title << t(:label_wiki_index_for_tag_html, tag: tag)
         safe_join title, ' '
-      else
-        t :label_wiki_index_for_tag_html, tag: tag
       end
+    elsif name.present?
+      title = [link_to(l(title), wiki_index_path)]
+      title << Additionals::LIST_SEPARATOR
+      title << name
+      safe_join title, ' '
     else
-      l :label_wiki
+      l title
     end
   end
 end
