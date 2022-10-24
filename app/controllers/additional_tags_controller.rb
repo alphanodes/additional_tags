@@ -33,15 +33,6 @@ class AdditionalTagsController < ApplicationController
 
   def edit; end
 
-  def destroy
-    @tags.each do |tag|
-      tag.reload.destroy!
-    rescue ::ActiveRecord::RecordNotFound, ::ActiveRecord::RecordNotDestroyed
-      Rails.logger.warn "Tag #{tag} could not be deleted"
-    end
-    redirect_back_or_default @tag_list_path
-  end
-
   def update
     @tag.name = params[:tag][:name] if params[:tag]
     if @tag.save
@@ -57,6 +48,15 @@ class AdditionalTagsController < ApplicationController
         format.html { render :edit }
       end
     end
+  end
+
+  def destroy
+    @tags.each do |tag|
+      tag.reload.destroy!
+    rescue ::ActiveRecord::RecordNotFound, ::ActiveRecord::RecordNotDestroyed
+      Rails.logger.warn "Tag #{tag} could not be deleted"
+    end
+    redirect_back_or_default @tag_list_path
   end
 
   def context_menu

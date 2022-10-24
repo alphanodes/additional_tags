@@ -45,8 +45,8 @@ module ApiTest
         tags = JSON.parse response.body
         assert_not_empty tags['tags']
         assert_equal 5, tags['tags'].size
-        assert_sorted_equal(%w[First Four Second Third five],
-                            tags['tags'].map { |t| t['name'] })
+        assert_sorted_equal %w[First Four Second Third five],
+                            tags['tags'].pluck('name')
       end
     end
 
