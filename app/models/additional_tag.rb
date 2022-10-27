@@ -3,8 +3,9 @@
 class AdditionalTag
   GROUP_SEP = '::'
 
-  def initialize(name:)
+  def initialize(name:, disable_grouping: false)
     @tag_name = name
+    @disable_grouping = disable_grouping
   end
 
   def tag_bg_color
@@ -44,6 +45,6 @@ class AdditionalTag
   end
 
   def group?
-    group_labels.length > 1
+    !@disable_grouping && group_labels.length > 1
   end
 end
