@@ -29,7 +29,7 @@ class AdditionalTag
   end
 
   def group_labels
-    @group_labels ||= @tag_name.split GROUP_SEP
+    @group_labels ||= @tag_name.split(GROUP_SEP).map(&:strip)
   end
 
   def group_name
