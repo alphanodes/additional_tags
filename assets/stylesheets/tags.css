@@ -65,9 +65,34 @@ td.tags span.additional-tag-label-color {
 }
 
 .additional-tag-label-color .tag-count,
-.tag-label .tag-count {
+.tag-label .tag-count,
+.additional-tag-label-color .tag-group-value,
+.tag-label .tag-group-value {
   font-size: 0.7rem;
   margin-left: 0.5em;
+}
+
+.additional-tag-label-color .tag-group-value {
+  display: inline-block;
+  background: #eee;
+  color: #1f1f1f;
+  padding-right: 5px;
+  margin-right: -5px;
+  padding-left: 3px;
+}
+
+.additional-tag-label-color .tag-group-value.tag-group-nocount {
+  border-top-right-radius: 0.7rem;
+  border-bottom-right-radius: 0.7rem;
+}
+
+.tag-label .tag-group-value {
+  background: #eee;
+  border-radius: 5px;
+  padding: 0 5px;
+  color: #666;
+  border: 1px solid #ddd;
+  vertical-align: middle;
 }
 
 span.additional-tag-label-color:hover a,

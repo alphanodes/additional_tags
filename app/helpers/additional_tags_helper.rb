@@ -95,21 +95,21 @@ module AdditionalTagsHelper
   end
 
   def additional_tag_link(tag_object, link: nil, link_wiki_tag: false, show_count: false, use_colors: nil, name: nil, **options)
-    tag_name = []
-    tag_name << if name.nil?
-                  tag_object.name
-                else
-                  name
-                end
+    tag_info = AdditionalTag.new(name: name.nil? ? tag_object.name : name)
+    tag_name = [tag_info.tag_name]
 
     options[:project] = @project if options[:project].blank? && @project.present?
     use_colors = AdditionalTags.setting? :use_colors if use_colors.nil?
 
-    tag_style = if use_colors
-                  tag_bg_color = additional_tag_color tag_object.name
-                  tag_fg_color = additional_tag_fg_color tag_bg_color
-                  "background-color: #{tag_bg_color}; color: #{tag_fg_color}"
-                end
+    tag_style = "background-color: #{tag_info.tag_bg_color}; color: #{tag_info.tag_fg_color}" if use_colors
+
+    if tag_info.group?
+      tag_name << if show_count
+                    tag.span tag_info.group_value, class: 'tag-group-value'
+                  else
+                    tag.span tag_info.group_value, class: 'tag-group-value tag-group-nocount'
+                  end
+    end
 
     tag_name << tag.span(tag_object.count, class: 'tag-count') if show_count
 
@@ -137,20 +137,6 @@ module AdditionalTagsHelper
             end
 
     tag.span content, **style
-  end
-
-  def additional_tag_color(tag_name)
-    "##{Digest::SHA256.hexdigest(tag_name)[0..5]}"
-  end
-
-  def additional_tag_fg_color(bg_color)
-    # calculate contrast text color according to YIQ method
-    # https://24ways.org/2010/calculating-color-contrast/
-    # https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
-    r = bg_color[1..2].hex
-    g = bg_color[3..4].hex
-    b = bg_color[5..6].hex
-    (r * 299 + g * 587 + b * 114) >= 128_000 ? 'black' : 'white'
   end
 
   # plain list of tags
