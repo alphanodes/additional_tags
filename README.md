@@ -6,10 +6,11 @@
 
 - Tags for issues
 - Tags for wiki pages
+- Grouping of tags when using two colons
 - Accented and non-latin characters supported for tag order
 - View, edit and create tag permissions for issues
 - Create permission for wiki tags
-- Managing tags
+- Managing tags centrally in the plugin settings
 - Custom tags and tagging tables (additional_tags and additional_taggings). If a other plugin
   used tags or tagging tables for issue or wiki tagging, there tags will be migrated automatically
 - Based on the very popular [acts-as-taggable-on](https://github.com/mbleigh/acts-as-taggable-on)
