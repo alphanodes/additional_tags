@@ -56,6 +56,7 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
     tag = ActsAsTaggableOn::Tag.find_by name: 'a1'
     get :edit,
         params: { id: tag.id }
+
     assert_response :success
     assert_select "input#tag_name[value='#{tag.name}']", 1
   end
@@ -68,6 +69,7 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
 
     assert_redirected_to controller: 'settings', action: 'plugin', id: 'additional_tags', tab: 'manage_tags'
     tag1.reload
+
     assert_equal new_name, tag1.name
   end
 
@@ -76,6 +78,7 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
     assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
       post :destroy,
            params: { ids: tag1.id }
+
       assert_response 302
     end
   end
@@ -86,8 +89,10 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
     assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
       post :merge,
            params: { ids: [tag1.id, tag2.id], tag: { name: 'a1' } }
+
       assert_redirected_to controller: 'settings', action: 'plugin', id: 'additional_tags', tab: 'manage_tags'
     end
+
     assert_equal 0, Issue.tagged_with('b8').count
     assert_equal 2, Issue.tagged_with('a1').count
   end
@@ -97,6 +102,7 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
     assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
       post :destroy,
            params: { ids: tag1.id }
+
       assert_response 302
     end
   end

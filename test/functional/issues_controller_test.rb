@@ -113,6 +113,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
         id: 6
       }
     end
+
     assert_response :success
 
     assert_select 'div#tags-data' do
@@ -144,6 +145,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
 
     last_issue = Issue.last
+
     assert_redirected_to controller: 'issues', action: 'show', id: last_issue.id
     assert_equal 'test with tags', last_issue.subject
     assert_sorted_equal %w[cat dog mouse], last_issue.tags.map(&:name)
@@ -338,12 +340,14 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
       new_tag = 'enable_create_tags_permission'
+
       assert_not_equal Issue.find(1).tag_list, [new_tag]
       # The project should not contain the new tag
       assert_not Issue.all_tags.map(&:name).include?(new_tag)
       post :update,
            params: { id: 1,
                      issue: { project_id: 1, tag_list: [new_tag] } }
+
       assert_response :redirect
       assert_equal [new_tag], Issue.find(1).tag_list
     end

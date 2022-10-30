@@ -26,8 +26,10 @@ class I18nTest < AdditionalTags::TestCase
       assert set_language_if_valid(lang)
       case lang.to_s
       when 'en'
+
         assert_equal 'Merge selected tags', l(:label_merge_selected_tags)
       when 'bg', 'cs', 'de', 'es', 'fr', 'it', 'ja', 'ko', 'pl', 'pt-BR', 'ru'
+
         assert_not l(:label_merge_selected_tags) == 'Merge selected tags', lang
       end
     end

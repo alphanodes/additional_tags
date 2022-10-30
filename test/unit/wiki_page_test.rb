@@ -48,9 +48,11 @@ class WikiPageTest < AdditionalTags::TestCase
       page = WikiPage.find_by title: 'Another_page'
       assert_no_difference 'WikiContentVersion.count' do
         page.tag_list << 'Test1'
+
         assert_save page
 
         page.reload
+
         assert_equal %w[First Test1], page.tag_list.sort
       end
     end
@@ -66,26 +68,31 @@ class WikiPageTest < AdditionalTags::TestCase
 
   def test_with_tags_with_existing_tag
     User.current = users :users_002
+
     assert_equal 3, WikiPage.with_tags('First').count
   end
 
   def test_with_tags_mulitple_tags
     User.current = users :users_002
+
     assert_equal 3, WikiPage.with_tags(%w[First Second]).count
   end
 
   def test_with_tags_order_by_date
     User.current = users :users_002
+
     assert_equal 3, WikiPage.with_tags('First', order: 'date_desc').count
   end
 
   def test_with_tags_scope
     User.current = users :users_002
+
     assert_equal 12, WikiPage.with_tags_scope.count
   end
 
   def test_with_tags_scope_for_project
     User.current = users :users_002
+
     assert_equal 4, WikiPage.with_tags_scope(project: projects(:projects_002)).count
   end
 end

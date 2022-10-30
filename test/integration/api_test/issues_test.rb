@@ -30,6 +30,7 @@ module ApiTest
     test 'GET /issues.xml should contain metadata' do
       with_plugin_settings 'additional_tags', active_issue_tags: 1 do
         get '/issues.xml', headers: credentials('jsmith')
+
         assert_select 'issues[type=array][total_count][limit="25"][offset="0"]'
       end
     end
@@ -72,6 +73,7 @@ module ApiTest
         end
 
         issue = Issue.order(id: :desc).first
+
         assert_equal 1, issue.project_id
         assert_equal 'API test', issue.subject
         assert_sorted_equal %w[cat dog mouse], issue.tags.map(&:name)
@@ -87,6 +89,7 @@ module ApiTest
               headers: credentials('jsmith')
         end
         issue = Issue.find 6
+
         assert_equal 'API update', issue.subject
         assert_sorted_equal %w[cat dog mouse], issue.tags.map(&:name)
       end
@@ -101,6 +104,7 @@ module ApiTest
               headers: credentials('jsmith')
         end
         issue = Issue.find 1
+
         assert_equal 'API update', issue.subject
         assert_sorted_equal %w[cat dog mouse], issue.tags.map(&:name)
       end

@@ -29,6 +29,7 @@ class WikiControllerTest < AdditionalTags::ControllerTest
     end
 
     page = Wiki.find(1).pages.find_by(title: 'Another_page')
+
     assert_equal 1, page.content.version
     assert_equal ['First'], page.tag_list
   end
@@ -48,6 +49,7 @@ class WikiControllerTest < AdditionalTags::ControllerTest
     end
 
     page = Wiki.find(1).pages.find_by(title: 'Another_page')
+
     assert_equal 2, page.content.version
     assert_equal ['test10'], page.tag_list
   end
@@ -67,6 +69,7 @@ class WikiControllerTest < AdditionalTags::ControllerTest
     end
 
     page = Wiki.find(1).pages.find_by(title: 'Another_page')
+
     assert_equal 1, page.content.version
     assert_equal ['First'], page.tag_list
   end

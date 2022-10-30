@@ -35,6 +35,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
 
     assert_response :success
     issue_tags = ActiveSupport::JSON.decode(response.body).pluck('id')
+
     assert_not_nil issue_tags
     assert_equal [@tag.name], issue_tags
   end
@@ -45,8 +46,10 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
 
     assert_response :success
     json = ActiveSupport::JSON.decode response.body
+
     assert_kind_of Array, json
     parsed_tag = json.last
+
     assert_kind_of Hash, parsed_tag
     assert_equal @tag.name, parsed_tag['id']
     assert_equal @tag.name, parsed_tag['text']
@@ -60,6 +63,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
 
     assert_response :success
     tags = ActiveSupport::JSON.decode(response.body).pluck('id')
+
     assert_equal %w[First five Four Second Third], tags
   end
 
@@ -71,6 +75,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
 
     assert_response :success
     tags = ActiveSupport::JSON.decode(response.body).pluck('id')
+
     assert_equal %w[First five Four Second Third], tags
   end
 
@@ -82,6 +87,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
 
     assert_response :success
     tags = ActiveSupport::JSON.decode(response.body).pluck('id')
+
     assert_equal 'Second', tags.first
   end
 
@@ -93,6 +99,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
 
     assert_response :success
     tags = ActiveSupport::JSON.decode(response.body).pluck('id')
+
     assert_equal %w[First Third Four five Second], tags
   end
 
@@ -102,8 +109,10 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
 
     assert_response :success
     json = ActiveSupport::JSON.decode response.body
+
     assert_kind_of Array, json
     parsed_tag = json.last
+
     assert_kind_of Hash, parsed_tag
     assert_equal @tag.name, parsed_tag['id']
     assert_equal @tag.name, parsed_tag['text']
@@ -117,8 +126,10 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
 
     assert_response :success
     json = ActiveSupport::JSON.decode response.body
+
     assert_kind_of Array, json
     parsed_tag = json.last
+
     assert_kind_of Hash, parsed_tag
     assert_equal @tag.name, parsed_tag['id']
     assert_equal @tag.name, parsed_tag['text']

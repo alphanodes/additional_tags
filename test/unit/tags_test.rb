@@ -32,6 +32,7 @@ class TagsTest < AdditionalTags::TestCase
 
   def test_available_tags_for_issue
     tags = AdditionalTags::Tags.available_tags Issue
+
     assert_equal 5, tags.to_a.size
   end
 
@@ -46,6 +47,7 @@ class TagsTest < AdditionalTags::TestCase
   def test_available_tags_for_wiki_page
     tags = AdditionalTags::Tags.available_tags WikiPage,
                                                project_join: WikiPage.project_joins
+
     assert_equal 2, tags.to_a.size
   end
 
@@ -54,6 +56,7 @@ class TagsTest < AdditionalTags::TestCase
                                                user: users(:users_003),
                                                permission: :view_wiki_pages,
                                                project_join: WikiPage.project_joins
+
     assert_equal 2, tags.to_a.size
   end
 
@@ -112,6 +115,7 @@ class TagsTest < AdditionalTags::TestCase
     end
 
     tag = ActsAsTaggableOn::Tag.find_by name: 'unused_new_tag'
+
     assert_equal 1, tag.taggings_count
   end
 
@@ -119,6 +123,7 @@ class TagsTest < AdditionalTags::TestCase
     counts = AdditionalTags::Tags.entity_group_by scope: { [1, 1] => 1, [2, 1] => 1, [2, 2] => 5, [3, 3] => 10 },
                                                   tags: Issue.available_tags,
                                                   statuses: { 1 => :test1, 2 => :test2 }
+
     assert_equal 5, counts.size
     first = counts['First']
 
@@ -146,8 +151,10 @@ class TagsTest < AdditionalTags::TestCase
                                                   tags: Issue.available_tags,
                                                   statuses: { true => :closed, false => :open },
                                                   group_id_is_bool: true
+
     assert_equal 5, counts.size
     first = counts['First']
+
     assert_equal 1, first[:tag].id
     assert_equal 2, first[:total]
     assert_equal 0, first[:total_sub_groups]
@@ -159,9 +166,11 @@ class TagsTest < AdditionalTags::TestCase
   def test_entity_group_by_without_statuses
     counts = AdditionalTags::Tags.entity_group_by scope: Issue.group_by_status_with_tags,
                                                   tags: Issue.available_tags
+
     assert_equal 5, counts.size
 
     first = counts['First']
+
     assert_equal 1, first[:tag].id
     assert_equal 0, first[:total]
     assert_equal 0, first[:total_sub_groups]

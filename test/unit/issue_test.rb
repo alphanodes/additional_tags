@@ -77,6 +77,7 @@ class IssueTest < AdditionalTags::TestCase
 
   test 'Issue.all_tags should return all tags kind of Issue' do
     tags = Issue.available_tags.map(&:name)
+
     assert_equal %w[First Four Second Third five], tags.sort
   end
 
@@ -86,6 +87,7 @@ class IssueTest < AdditionalTags::TestCase
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
         issue.tag_list = []
+
         assert_save issue
       end
     end
@@ -94,6 +96,7 @@ class IssueTest < AdditionalTags::TestCase
   def test_destroy_issue_with_unused_tags_should_remove_tag
     issue = issues :issues_002
     issue.tag_list << 'unused_new_tag'
+
     assert_save issue
 
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
