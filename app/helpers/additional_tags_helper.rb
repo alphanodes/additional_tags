@@ -103,7 +103,7 @@ module AdditionalTagsHelper
 
     tag_style = "background-color: #{tag_info.tag_bg_color}; color: #{tag_info.tag_fg_color}" if use_colors
 
-    if tag_info.group?
+    if tag_info.scoped?
       tag_name << if show_count
                     tag.span tag_info.group_value, class: 'tag-group-value'
                   else

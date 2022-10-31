@@ -1,4 +1,8 @@
 de:
+  activerecord:
+    errors:
+      messages:
+        invalid_mutually_exclusive_tags: verwendet sich gegenseitig ausschließende TAGs
   field_tag_list: TAGs
   field_tags: TAGs
   field_issue_tags: Ticket TAGs

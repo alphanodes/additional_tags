@@ -13,6 +13,7 @@ module AdditionalTags
         alias_method :safe_attributes_without_tags=, :safe_attributes=
         alias_method :safe_attributes=, :safe_attributes_with_tags=
 
+        validate :validate_tags
         before_save :sort_tag_list
       end
 
@@ -105,6 +106,10 @@ module AdditionalTags
           return unless tag_list.present? && tag_list_changed?
 
           self.tag_list = AdditionalTags::Tags.sort_tags tag_list
+        end
+
+        def validate_tags
+          errors.add :tag_list, :invalid_mutually_exclusive_tags unless AdditionalTag.valid_mutually_exclusive_tag tag_list
         end
       end
     end

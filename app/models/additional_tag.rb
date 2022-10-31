@@ -1,7 +1,20 @@
 # frozen_string_literal: true
 
 class AdditionalTag
-  GROUP_SEP = '::'
+  GROUP_SEP = ':'
+  SCOPE_SEP = '::'
+
+  class << self
+    def valid_mutually_exclusive_tag(tag_list)
+      return true if tag_list.blank?
+
+      tags = tag_list.select { |t| t.include? SCOPE_SEP }
+      return true if tags.blank?
+
+      groups = tags.map { |t| new(name: t).group_name }
+      groups == groups.uniq
+    end
+  end
 
   def initialize(name:, disable_grouping: false)
     @tag_name = name
@@ -9,7 +22,14 @@ class AdditionalTag
   end
 
   def tag_bg_color
-    @tag_bg_color ||= "##{Digest::SHA256.hexdigest(tag_name)[0..5]}"
+    # different colors for non-grouped, grouped and scoped tag
+    name = if scoped? || grouped?
+             "#{group_name}#{sep}"
+           else
+             tag_name
+           end
+
+    @tag_bg_color ||= "##{Digest::SHA256.hexdigest(name)[0..5]}"
   end
 
   # calculate contrast text color according to YIQ method
@@ -24,8 +44,20 @@ class AdditionalTag
     end
   end
 
+  def sep
+    scoped? ? SCOPE_SEP : GROUP_SEP
+  end
+
   def tag_name
-    group? ? group_name : @tag_name
+    scoped? ? group_name : @tag_name
+  end
+
+  def labels
+    @labels ||= scoped? ? scope_labels : group_labels
+  end
+
+  def scope_labels
+    @scope_labels ||= @tag_name.split(SCOPE_SEP).map(&:strip)
   end
 
   def group_labels
@@ -33,18 +65,22 @@ class AdditionalTag
   end
 
   def group_name
-    if group_labels.length > 2
-      group_labels[0...-1].join GROUP_SEP
+    if labels.length > 2
+      labels[0...-1].join sep
     else
-      group_labels.first
+      labels.first
     end
   end
 
   def group_value
-    group_labels.last
+    labels.last
   end
 
-  def group?
+  def scoped?
+    !@disable_grouping && scope_labels.length > 1
+  end
+
+  def grouped?
     !@disable_grouping && group_labels.length > 1
   end
 end

@@ -1,4 +1,8 @@
 bg:
+  activerecord:
+    errors:
+      messages:
+        invalid_mutually_exclusive_tags: uses mutually exclusive tags
   field_tag_list: Маркери
   field_tags: Маркери
   field_issue_tags: Issue tags

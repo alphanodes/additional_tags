@@ -33,6 +33,7 @@ span.additional-tag-label-color {
 td.tags span.additional-tag-label-color {
   display: inline-block;
   line-height: normal;
+  white-space: nowrap;
   margin: 2px !important;
 }
 

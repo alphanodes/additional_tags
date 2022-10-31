@@ -13,6 +13,8 @@ module AdditionalTags
         before_save :prepare_save_tag_change
         before_save :sort_tag_list
 
+        validate :validate_tags, if: proc { AdditionalTags.setting?(:active_issue_tags) }
+
         after_commit :add_remove_unused_tags_job, on: %i[update destroy],
                                                   if: proc { AdditionalTags.setting?(:active_issue_tags) }
 
@@ -62,7 +64,7 @@ module AdditionalTags
           tags = attrs.delete :tag_list
           tags = Array(tags).reject(&:empty?)
 
-          Additionals.debug "tags: #{tags.inspect} - project: #{project&.id} - access: #{user.allowed_to? :create_issue_tags, project}"
+          # Additionals.debug "tags: #{tags.inspect} - project: #{project&.id} - access: #{user.allowed_to? :create_issue_tags, project}"
 
           if user.allowed_to?(:create_issue_tags, project) ||
              user.allowed_to?(:edit_issue_tags, project) && Issue.allowed_tags?(tags)
@@ -87,6 +89,13 @@ module AdditionalTags
           return unless tags.present? && tag_list_changed?
 
           self.tag_list = AdditionalTags::Tags.sort_tags tags
+        end
+
+        def validate_tags
+          return if !User.current.allowed_to?(:create_issue_tags, project) &&
+                    !(User.current.allowed_to?(:edit_issue_tags, project) && Issue.allowed_tags?(tags))
+
+          errors.add :tag_list, :invalid_mutually_exclusive_tags unless AdditionalTag.valid_mutually_exclusive_tag tag_list
         end
       end
     end

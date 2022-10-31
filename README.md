@@ -6,7 +6,8 @@
 
 - Tags for issues
 - Tags for wiki pages
-- Grouping of tags when using two colons
+- Grouping of tags when using a colon in tag (all tags with same base name get the same color)
+- Scoped tags when using two colons in tag (only one tag of the same base name is allowed - base name and tag value are displayed seperatly
 - Accented and non-latin characters supported for tag order
 - View, edit and create tag permissions for issues
 - Create permission for wiki tags

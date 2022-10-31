@@ -27,6 +27,12 @@
           '
           = link_to l(:button_cancel), {}, onclick: "$('#edit_tags_form').hide(); $('#tags-data').show(); return false;"
 
+      javascript:
+        $(function() {
+          var eventSelect = $('#issue_tag_list');
+          eventSelect.on('select2:close', function(e) { fixScopedTags(e, eventSelect); });
+        })
+
     - else
       = additional_tag_links entry.tags,
                              project: @project,

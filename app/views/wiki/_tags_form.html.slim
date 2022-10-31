@@ -5,3 +5,7 @@
                           url: wiki_tags_auto_completes_path(project_id: @project),
                           placeholder: l(:label_add_tags),
                           tags: true
+
+javascript:
+  var eventSelect = $('#wiki_page_tag_list');
+  eventSelect.on('select2:close', function(e) { fixScopedTags(e, eventSelect); });

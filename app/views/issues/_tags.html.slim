@@ -6,3 +6,8 @@
            css_id: 'issue_tag_list_show',
            update_url: issue_path(issue),
            use_colors: AdditionalTags.setting?(:use_colors)
+
+  - if issue.editable? User.current
+    javascript:
+      var eventSelect = $('#issue_tag_list_show');
+      eventSelect.on('select2:close', function(e) { fixScopedTags(e, eventSelect); });
