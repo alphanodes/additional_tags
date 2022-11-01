@@ -2,7 +2,7 @@ it:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: uses mutually exclusive tags
+        invalid_mutually_exclusive_tags: "utilizza tag mutuamente esclusivi"
   field_tag_list: Tags
   field_tags: Tags
   field_issue_tags: "Segnalazione tags"

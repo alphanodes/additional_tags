@@ -2,7 +2,7 @@ bg:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: uses mutually exclusive tags
+        invalid_mutually_exclusive_tags: "Използва взаимно изключващи се етикети"
   field_tag_list: Маркери
   field_tags: Маркери
   field_issue_tags: Issue tags

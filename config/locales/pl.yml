@@ -2,10 +2,10 @@ pl:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: uses mutually exclusive tags
+        invalid_mutually_exclusive_tags: "używa wzajemnie wykluczających się tagów"
   field_tag_list: Tags
   field_tags: Tags
-  field_issue_tags: Issue tags
+  field_issue_tags: "Znaczniki emisji"
   label_active_issue_tags: "Aktywacja znaczników emisji"
   label_active_wiki_tags: "Aktywacja tagów wiki"
   label_add_tags: "Dodaj znaczniki"

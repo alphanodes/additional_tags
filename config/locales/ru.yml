@@ -2,7 +2,7 @@ ru:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: uses mutually exclusive tags
+        invalid_mutually_exclusive_tags: "использует взаимоисключающие теги"
   field_tag_list: Теги
   field_tags: Теги
   field_issue_tags: Теги задач
