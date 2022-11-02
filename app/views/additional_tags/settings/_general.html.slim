@@ -23,8 +23,6 @@ fieldset.settings
                                   options_for_select(%w[name last_created count].collect { |v| [l("tags_order_by_#{v}"), v] },
                                                      @settings['tags_suggestion_order'])
   p
-    = additionals_settings_checkbox :use_colors
-  p
     = additionals_settings_select :tags_color_theme, options_for_select([[l(:label_tags_without_color), '0'],
                                                                          [l(:label_tag_color_theme, value: 1), '1'],
                                                                          [l(:label_tag_color_theme, value: 2), 'a'],
