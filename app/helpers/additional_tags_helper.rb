@@ -178,6 +178,10 @@ module AdditionalTagsHelper
     unsorted = options.delete :unsorted
     tag_list = AdditionalTags::Tags.sort_tag_list tag_list unless unsorted
 
+    # set defaults if not defined
+    options[:use_colors] = AdditionalTags.use_colors? unless options.key? :use_colors
+    options[:color_theme] = AdditionalTags.setting :tags_color_theme unless options.key? :color_theme
+
     safe_join tag_list.map { |tag| additional_tag_link tag, **options },
               additional_tag_sep(use_colors: options[:use_colors])
   end

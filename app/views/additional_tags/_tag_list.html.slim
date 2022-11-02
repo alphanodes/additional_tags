@@ -10,8 +10,7 @@
                                project: @project,
                                unsorted: defined?(unsorted) ? unsorted : false,
                                link_wiki_tag: defined?(link_wiki_tag) ? link_wiki_tag : false,
-                               use_colors: defined?(use_colors) ? use_colors : true,
-                               color_theme: AdditionalTags.setting(:tags_color_theme)
+                               use_colors: defined?(use_colors) ? use_colors : true
         '
         span.contextual
           = link_to l(:label_edit_tags),
@@ -39,5 +38,4 @@
                              project: @project,
                              unsorted: defined?(unsorted) ? unsorted : false,
                              link_wiki_tag: defined?(link_wiki_tag) ? link_wiki_tag : false,
-                             use_colors: defined?(use_colors) ? use_colors : true,
-                             color_theme: AdditionalTags.setting(:tags_color_theme)
+                             use_colors: defined?(use_colors) ? use_colors : true
