@@ -17,14 +17,14 @@ pl:
   label_open_issues_only: "Wyświetlaj tylko sprawy otwarte"
   label_quantity: "Ilość"
   label_show_with_count: "Wyświetlanie ilości na etykiecie"
-  label_tag_color_theme: Color theme %{value}
-  label_tags_colors: Color
+  label_tag_color_theme: "Kolorowy motyw %{value}"
+  label_tags_colors: Kolor
   label_tags_sidebar: "Wyświetlać znaczniki na pasku bocznym jako"
   label_tags_sort_by: "Sortuj znaczniki według"
   label_tags_suggestion_order: "Zamówienie ofertowe"
   label_tags_tag: "Tag"
-  label_tags_without_color: Without color
-  label_use_colors: Use colors
+  label_tags_without_color: "Bez koloru"
+  label_use_colors: "Użyj kolorów"
   label_wiki_index_for_tag_html: "Strony Wiki z tagiem <em>%{tag}</em>"
   label_with_chart: "Z wykresem"
   label_with_table_of_values: "Z tabelą wartości"

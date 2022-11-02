@@ -17,14 +17,14 @@ cs:
   label_open_issues_only: "Zobrazit pouze otevřené problémy"
   label_quantity: "Množství"
   label_show_with_count: "Zobrazit částku na značce"
-  label_tag_color_theme: Color theme %{value}
-  label_tags_color_theme: Color
+  label_tag_color_theme: "Barevné téma %{value}"
+  label_tags_color_theme: "Barva"
   label_tags_sidebar: "Zobrazit značky na postranním panelu jako"
   label_tags_sort_by: "Řazení značek podle"
   label_tags_suggestion_order: "Objednávka návrhu"
   label_tags_tag: "Tag"
-  label_tags_without_color: Without color
-  label_use_colors: Use colors
+  label_tags_without_color: "Bez barvy"
+  label_use_colors: "Použít barvy"
   label_wiki_index_for_tag_html: "Wiki stránky se značkou <em>%{tag}</em>"
   label_with_chart: "S grafem"
   label_with_table_of_values: "S tabulkou hodnot"

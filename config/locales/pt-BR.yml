@@ -17,14 +17,14 @@ pt-BR:
   label_open_issues_only: "Exibir apenas questões em aberto"
   label_quantity: "Quantidade"
   label_show_with_count: "Mostrar quantidade na etiqueta"
-  label_tag_color_theme: Color theme %{value}
-  label_tags_colors: Color
+  label_tag_color_theme: "Tema da cor %{value}"
+  label_tags_colors: "Cor"
   label_tags_sidebar: "Mostrar etiquetas na barra lateral como"
   label_tags_sort_by: "Ordenar tags por"
   label_tags_suggestion_order: "Pedido de sugestão"
   label_tags_tag: "Tag"
-  label_tags_without_color: Without color
-  label_use_colors: Use colors
+  label_tags_without_color: "Sem cor"
+  label_use_colors: "Usar cores"
   label_wiki_index_for_tag_html: "Páginas Wiki com tag <em>%{tag}</em>"
   label_with_chart: "Com gráfico"
   label_with_table_of_values: "Com tabela de valores"

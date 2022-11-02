@@ -17,14 +17,14 @@ ru:
   label_open_issues_only: "Отображать только открытые задачи"
   label_quantity: "Количество"
   label_show_with_count: "Отображать количество на теге"
-  label_tag_color_theme: Color theme %{value}
-  label_tags_colors: Color
+  label_tag_color_theme: "Цветовая тема %{value}"
+  label_tags_colors: "Цвет"
   label_tags_sidebar: "Способ отображения тегов на боковой панели"
   label_tags_sort_by: "Сортировать теги по"
   label_tags_suggestion_order: "Порядок предложения при вводе"
   label_tags_tag: "Тег"
-  label_tags_without_color: Without color
-  label_use_colors: Use colors
+  label_tags_without_color: "Без цвета"
+  label_use_colors: "Использовать цвета"
   label_wiki_index_for_tag_html: "Вики-страницы с тегом <em>%{tag}</em>"
   label_with_chart: "С графиком"
   label_with_table_of_values: "С таблицей значений"

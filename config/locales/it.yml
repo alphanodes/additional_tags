@@ -17,17 +17,17 @@ it:
   label_open_issues_only: "Mostra solo i segnalazione"
   label_quantity: "Numero"
   label_show_with_count: "Visualizzare l'importo sul tag"
-  label_tag_color_theme: Color theme %{value}
-  label_tags_colors: Color
+  label_tag_color_theme: "Tema colore %{value}"
+  label_tags_colors: Colore
   label_tags_sidebar: "Visualizzare i tag sulla barra laterale come"
   label_tags_sort_by: "Ordina i tag per"
   label_tags_suggestion_order: "Ordine di suggerimento"
   label_tags_tag: "Tag"
-  label_tags_without_color: Without color
-  label_use_colors: Use colors
+  label_tags_without_color: "Senza colore"
+  label_use_colors: "Usa i colori"
   label_wiki_index_for_tag_html: "Pagine Wiki con tag <em>%{tag}</em>"
-  label_with_chart: With chart
-  label_with_table_of_values: With table of values
+  label_with_chart: "Con grafico"
+  label_with_table_of_values: "Con tabella di valori"
   notice_failed_to_add_tags: "Non è stato possibile aggiungere tag"
   notice_tags_added: "Tag aggiunti"
   permission_add_wiki_tags: "Aggiungi tag wiki"

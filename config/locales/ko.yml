@@ -17,14 +17,14 @@ ko:
   label_open_issues_only: "미해결 문제 만 표시"
   label_quantity: "수량"
   label_show_with_count: "태그에 금액 표시"
-  label_tag_color_theme: Color theme %{value}
-  label_tags_colors: Color
+  label_tag_color_theme: "색상 테마 %{value}"
+  label_tags_colors: "색깔"
   label_tags_sidebar: "사이드 바에 태그 표시"
   label_tags_sort_by: "태그 정렬 기준"
   label_tags_suggestion_order: "제안 순서"
   label_tags_tag: "Tag"
-  label_tags_without_color: Without color
-  label_use_colors: Use colors
+  label_tags_without_color: "무색"
+  label_use_colors: "색상 사용"
   label_wiki_index_for_tag_html: "태그가있는 위키 페이지 <em>%{tag}</em>"
   label_with_chart: "차트 포함"
   label_with_table_of_values: "가치 테이블"

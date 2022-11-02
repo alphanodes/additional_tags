@@ -17,14 +17,14 @@ bg:
   label_open_issues_only: "Показване само на отворените задачи"
   label_quantity: "Количество"
   label_show_with_count: "Показване на брой маркирани обекти"
-  label_tag_color_theme: Color theme %{value}
-  label_tags_color_theme: Color
+  label_tag_color_theme: "Тема на цвета %{value}"
+  label_tags_color_theme: "Цвят"
   label_tags_sidebar: "Показване на маркерите в страничния панел"
   label_tags_sort_by: "Сортиране на маркерите по"
   label_tags_suggestion_order: "Ред на предлагане"
   label_tags_tag: "Маркер"
-  label_tags_without_color: Without color
-  label_use_colors: Use colors
+  label_tags_without_color: "Без цвят"
+  label_use_colors: "Използване на цветове"
   label_wiki_index_for_tag_html: "Wiki страници с маркер <em>%{tag}</em>"
   label_with_chart: "С графиком"
   label_with_table_of_values: "С таблица на стойността"
