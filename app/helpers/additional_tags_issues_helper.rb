@@ -44,9 +44,7 @@ module AdditionalTagsIssuesHelper
   end
 
   def render_sidebar_tags
-    options = { show_count: AdditionalTags.setting?(:show_with_count),
-                filter: AdditionalTags.setting?(:open_issues_only) ? { field: :status_id, operator: 'o' } : nil,
-                style: AdditionalTags.setting(:tags_sidebar).to_sym,
+    options = { filter: AdditionalTags.setting?(:open_issues_only) ? { field: :status_id, operator: 'o' } : nil,
                 project: @project }
 
     options[:tag_action] = 'show' if %w[gantts calendars].include? controller_name

@@ -16,12 +16,13 @@ class AdditionalTag
     end
   end
 
-  def initialize(name:, disable_grouping: false)
-    @tag_name = name
+  def initialize(name:, disable_grouping: false, color_theme: nil)
+    @tag_name = name.to_s
     @disable_grouping = disable_grouping
+    @color_theme = color_theme.to_s
   end
 
-  def tag_bg_color
+  def name_for_color
     # different colors for non-grouped, grouped and scoped tag
     name = if scoped? || grouped?
              "#{group_name}#{sep}"
@@ -29,7 +30,15 @@ class AdditionalTag
              tag_name
            end
 
-    @tag_bg_color ||= "##{Digest::SHA256.hexdigest(name)[0..5]}"
+    if @color_theme.present? && @color_theme != '0' && @color_theme != '1'
+      "#{name}#{@color_theme}"
+    else
+      name
+    end
+  end
+
+  def tag_bg_color
+    @tag_bg_color ||= "##{Digest::SHA256.hexdigest(name_for_color)[0..5]}"
   end
 
   # calculate contrast text color according to YIQ method

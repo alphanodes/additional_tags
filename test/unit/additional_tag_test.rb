@@ -8,35 +8,31 @@ class AdditionalTagTest < AdditionalTags::TestCase
            :roles,
            :members,
            :member_roles,
-           :issues,
-           :issue_statuses,
-           :issue_relations,
-           :versions,
-           :trackers,
-           :projects_trackers,
-           :issue_categories,
-           :enabled_modules,
-           :enumerations,
-           :attachments,
-           :workflows,
-           :custom_fields, :custom_values, :custom_fields_projects, :custom_fields_trackers,
-           :time_entries,
-           :wikis, :wiki_pages, :wiki_contents, :wiki_content_versions,
-           :journals, :journal_details,
            :additional_tags, :additional_taggings
 
   def setup
-    prepare_tests
     @project = projects :projects_001
   end
 
   def test_tag_name
     assert_equal 'Test1', AdditionalTag.new(name: 'Test1').tag_name
-    assert_equal 'Test2', AdditionalTag.new(name: 'Test2::2').tag_name
+    assert_equal 'scoped', AdditionalTag.new(name: 'scoped::2').tag_name
     assert_equal 'Test3:2', AdditionalTag.new(name: 'Test3:2').tag_name
     assert_equal 'Test3 : 2', AdditionalTag.new(name: 'Test3 : 2').tag_name
-    assert_equal 'Test4:sub', AdditionalTag.new(name: 'Test4:sub::2').tag_name
-    assert_equal 'Test4::sub', AdditionalTag.new(name: 'Test4::sub::2').tag_name
+    assert_equal 'scoped:sub', AdditionalTag.new(name: 'scoped:sub::2').tag_name
+    assert_equal 'scoped::sub', AdditionalTag.new(name: 'scoped::sub::2').tag_name
+  end
+
+  def test_name_for_color
+    assert_equal 'Test1', AdditionalTag.new(name: 'Test1', color_theme: nil).name_for_color
+    assert_equal 'Test2', AdditionalTag.new(name: 'Test2', color_theme: '0').name_for_color
+    assert_equal 'Test3', AdditionalTag.new(name: 'Test3', color_theme: '1').name_for_color
+    assert_equal 'Test4a', AdditionalTag.new(name: 'Test4', color_theme: 'a').name_for_color
+    assert_equal 'Test5b', AdditionalTag.new(name: 'Test5', color_theme: 'b').name_for_color
+    assert_equal 'scoped::', AdditionalTag.new(name: 'scoped::1', color_theme: '1').name_for_color
+    assert_equal 'scoped::a', AdditionalTag.new(name: 'scoped::2', color_theme: 'a').name_for_color
+    assert_equal 'grouped:', AdditionalTag.new(name: 'grouped: 1', color_theme: '1').name_for_color
+    assert_equal 'grouped:a', AdditionalTag.new(name: 'grouped: 2', color_theme: 'a').name_for_color
   end
 
   def test_valid_mutually_exclusive_tag

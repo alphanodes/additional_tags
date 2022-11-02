@@ -5,7 +5,7 @@
            editable: issue.editable?(User.current),
            css_id: 'issue_tag_list_show',
            update_url: issue_path(issue),
-           use_colors: AdditionalTags.setting?(:use_colors)
+           use_colors: AdditionalTags.use_colors?
 
   - if issue.editable? User.current
     javascript:

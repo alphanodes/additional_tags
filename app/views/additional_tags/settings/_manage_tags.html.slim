@@ -13,11 +13,18 @@
             th = column_values[:label]
           th
       tbody
+        - use_colors = AdditionalTags.use_colors?
+        - color_theme = AdditionalTags.setting :tags_color_theme
         - tags.each do |tag|
           tr.hascontextmenu id="#{tag.id}"
             td.checkbox.hide-when-print
               = check_box_tag 'ids[]', tag.id, false, id: nil
-            td = additional_tag_link tag, link: edit_additional_tag_path(tag)
+            td
+              = additional_tag_link tag,
+                                    link: edit_additional_tag_path(tag),
+                                    use_colors: use_colors,
+                                    color_theme: color_theme
+
             - manageable_tag_column_values(tag).each do |column|
               td = column
             td.buttons

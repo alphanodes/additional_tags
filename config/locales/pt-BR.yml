@@ -3,40 +3,43 @@ pt-BR:
     errors:
       messages:
         invalid_mutually_exclusive_tags: "utiliza etiquetas mutuamente exclusivas"
+  field_issue_tags: Issue tags
   field_tag_list: Tags
   field_tags: Tags
-  field_issue_tags: Issue tags
   label_active_issue_tags: "Ativar as etiquetas de emissão"
   label_active_wiki_tags: "Ativar as etiquetas wiki"
   label_add_tags: "Adicionar etiquetas"
+  label_amount_entities_with_tags: "Quantidade %{name} com etiquetas"
+  label_amount_tags: "Valor Etiquetas"
   label_edit_tags: "Editar etiquetas"
   label_manage_tags: "Gerenciar etiquetas"
   label_merge_selected_tags: "Fundir tags selecionadas"
   label_open_issues_only: "Exibir apenas questões em aberto"
+  label_quantity: "Quantidade"
   label_show_with_count: "Mostrar quantidade na etiqueta"
+  label_tag_color_theme: Color theme %{value}
+  label_tags_colors: Color
+  label_tags_sidebar: "Mostrar etiquetas na barra lateral como"
+  label_tags_sort_by: "Ordenar tags por"
+  label_tags_suggestion_order: "Pedido de sugestão"
   label_tags_tag: "Tag"
-  label_use_colors: "Usar cores"
+  label_tags_without_color: Without color
+  label_use_colors: Use colors
   label_wiki_index_for_tag_html: "Páginas Wiki com tag <em>%{tag}</em>"
+  label_with_chart: "Com gráfico"
+  label_with_table_of_values: "Com tabela de valores"
   notice_failed_to_add_tags: "Falha em adicionar tags"
   notice_tags_added: "Tags adicionadas"
   permission_add_wiki_tags: "Adicionar etiquetas wiki"
   permission_create_issue_tags: "Adicionar etiquetas de edição"
   permission_edit_issue_tags: "Editar etiquetas de edição"
   permission_view_issue_tags: "Exibir etiquetas de edição"
-  tags_order_by_last_created: "Última criação"
   tags_order_by_count: "Mais utilizados"
+  tags_order_by_last_created: "Última criação"
   tags_order_by_name: "Nome"
   tags_sidebar_cloud: "Cloud"
   tags_sidebar_list: "Lista"
   tags_sidebar_none: "Nenhum"
   tags_sidebar_simple_cloud: "Simple cloud"
-  label_tags_sidebar: "Mostrar etiquetas na barra lateral como"
   tags_sort_by_count: "Conde"
   tags_sort_by_name: "Nome"
-  label_tags_sort_by: "Ordenar tags por"
-  label_tags_suggestion_order: "Pedido de sugestão"
-  label_with_table_of_values: "Com tabela de valores"
-  label_with_chart: "Com gráfico"
-  label_amount_tags: "Valor Etiquetas"
-  label_amount_entities_with_tags: "Quantidade %{name} com etiquetas"
-  label_quantity: "Quantidade"

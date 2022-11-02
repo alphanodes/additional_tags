@@ -3,40 +3,43 @@ cs:
     errors:
       messages:
         invalid_mutually_exclusive_tags: "používá vzájemně se vylučující značky"
+  field_issue_tags: Issue tags
   field_tag_list: Tags
   field_tags: Tags
-  field_issue_tags: Issue tags
   label_active_issue_tags: "Aktivujte značky problému"
   label_active_wiki_tags: "Aktivujte značky wiki"
   label_add_tags: "Přidat štítky"
+  label_amount_entities_with_tags: "Částka %{name} s TAGy"
+  label_amount_tags: "Částka TAGy"
   label_edit_tags: "Upravit značky"
   label_manage_tags: "Spravovat štítky"
   label_merge_selected_tags: "Sloučit vybrané značky"
   label_open_issues_only: "Zobrazit pouze otevřené problémy"
+  label_quantity: "Množství"
   label_show_with_count: "Zobrazit částku na značce"
+  label_tag_color_theme: Color theme %{value}
+  label_tags_color_theme: Color
+  label_tags_sidebar: "Zobrazit značky na postranním panelu jako"
+  label_tags_sort_by: "Řazení značek podle"
+  label_tags_suggestion_order: "Objednávka návrhu"
   label_tags_tag: "Tag"
-  label_use_colors: "Použijte barvy"
+  label_tags_without_color: Without color
+  label_use_colors: Use colors
   label_wiki_index_for_tag_html: "Wiki stránky se značkou <em>%{tag}</em>"
+  label_with_chart: "S grafem"
+  label_with_table_of_values: "S tabulkou hodnot"
   notice_failed_to_add_tags: "Přidání značek se nezdařilo"
   notice_tags_added: "Přidány značky"
   permission_add_wiki_tags: "Přidejte značky wiki"
   permission_create_issue_tags: "Přidejte značky problému"
   permission_edit_issue_tags: "Upravte značky problému"
   permission_view_issue_tags: "Zobrazit značky problémů"
-  tags_order_by_last_created: "Naposledy vytvořeno"
   tags_order_by_count: "Nejvíc používaný"
+  tags_order_by_last_created: "Naposledy vytvořeno"
   tags_order_by_name: "Název"
   tags_sidebar_cloud: "Cloud"
   tags_sidebar_list: "Seznam"
   tags_sidebar_none: "Žádný"
   tags_sidebar_simple_cloud: "Simple cloud"
-  label_tags_sidebar: "Zobrazit značky na postranním panelu jako"
   tags_sort_by_count: "Počet"
   tags_sort_by_name: "Název"
-  label_tags_sort_by: "Řazení značek podle"
-  label_tags_suggestion_order: "Objednávka návrhu"
-  label_with_table_of_values: "S tabulkou hodnot"
-  label_with_chart: "S grafem"
-  label_amount_tags: "Částka TAGy"
-  label_amount_entities_with_tags: "Částka %{name} s TAGy"
-  label_quantity: "Množství"

@@ -14,6 +14,11 @@ module AdditionalTags
       setting(:tags_sidebar).present? && setting(:tags_sidebar) != 'none'
     end
 
+    # color is used by default (if setting is missing, too)
+    def use_colors?
+      setting(:tags_color_theme).to_s != '0'
+    end
+
     private
 
     def setup

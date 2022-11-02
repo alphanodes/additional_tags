@@ -3,40 +3,43 @@ bg:
     errors:
       messages:
         invalid_mutually_exclusive_tags: "Използва взаимно изключващи се етикети"
+  field_issue_tags: Issue tags
   field_tag_list: Маркери
   field_tags: Маркери
-  field_issue_tags: Issue tags
   label_active_issue_tags: "Активиране на маркерите за задачи"
   label_active_wiki_tags: "Активиране на маркерите за wiki страници"
   label_add_tags: "Добавяне на маркери"
+  label_amount_entities_with_tags: "Сумма %{name} с тегами"
+  label_amount_tags: "Теги Сумма"
   label_edit_tags: "Редактиране на маркери"
   label_manage_tags: "Управление на маркерите"
   label_merge_selected_tags: "Обединение на избраните маркери"
   label_open_issues_only: "Показване само на отворените задачи"
+  label_quantity: "Количество"
   label_show_with_count: "Показване на брой маркирани обекти"
+  label_tag_color_theme: Color theme %{value}
+  label_tags_color_theme: Color
+  label_tags_sidebar: "Показване на маркерите в страничния панел"
+  label_tags_sort_by: "Сортиране на маркерите по"
+  label_tags_suggestion_order: "Ред на предлагане"
   label_tags_tag: "Маркер"
-  label_use_colors: "Използване на цветове"
+  label_tags_without_color: Without color
+  label_use_colors: Use colors
   label_wiki_index_for_tag_html: "Wiki страници с маркер <em>%{tag}</em>"
+  label_with_chart: "С графиком"
+  label_with_table_of_values: "С таблица на стойността"
   notice_failed_to_add_tags: "Добавянето на маркери е неуспешно"
   notice_tags_added: "Маркерите са добавени"
   permission_add_wiki_tags: "Добавяне на маркери за wiki страници"
   permission_create_issue_tags: "Добавяне на маркери за задачи"
   permission_edit_issue_tags: "Редактиране на маркери за задачи"
   permission_view_issue_tags: "Показване на маркерите за задачи"
-  tags_order_by_last_created: "Последно създадени"
   tags_order_by_count: "Най-често използвани"
+  tags_order_by_last_created: "Последно създадени"
   tags_order_by_name: "Име"
   tags_sidebar_cloud: "Облак"
   tags_sidebar_list: "Списък"
   tags_sidebar_none: "Не"
   tags_sidebar_simple_cloud: "Обикновен облак"
-  label_tags_sidebar: "Показване на маркерите в страничния панел"
   tags_sort_by_count: "брой обекти"
   tags_sort_by_name: "Име"
-  label_tags_sort_by: "Сортиране на маркерите по"
-  label_tags_suggestion_order: "Ред на предлагане"
-  label_with_table_of_values: "С таблица на стойността"
-  label_with_chart: "С графиком"
-  label_amount_tags: "Теги Сумма"
-  label_amount_entities_with_tags: "Сумма %{name} с тегами"
-  label_quantity: "Количество"

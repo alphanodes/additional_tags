@@ -3,40 +3,43 @@ ru:
     errors:
       messages:
         invalid_mutually_exclusive_tags: "использует взаимоисключающие теги"
+  field_issue_tags: Теги задач
   field_tag_list: Теги
   field_tags: Теги
-  field_issue_tags: Теги задач
   label_active_issue_tags: "Активировать теги задач"
   label_active_wiki_tags: "Активировать теги вики"
   label_add_tags: "Добавьте теги"
+  label_amount_entities_with_tags: "Сумма %{name} с тегами"
+  label_amount_tags: "Теги Сумма"
   label_edit_tags: "Редактировать теги"
   label_manage_tags: "Управление тегами"
   label_merge_selected_tags: "Объединить выбранные теги"
   label_open_issues_only: "Отображать только открытые задачи"
+  label_quantity: "Количество"
   label_show_with_count: "Отображать количество на теге"
+  label_tag_color_theme: Color theme %{value}
+  label_tags_colors: Color
+  label_tags_sidebar: "Способ отображения тегов на боковой панели"
+  label_tags_sort_by: "Сортировать теги по"
+  label_tags_suggestion_order: "Порядок предложения при вводе"
   label_tags_tag: "Тег"
-  label_use_colors: "Использовать цвета"
+  label_tags_without_color: Without color
+  label_use_colors: Use colors
   label_wiki_index_for_tag_html: "Вики-страницы с тегом <em>%{tag}</em>"
+  label_with_chart: "С графиком"
+  label_with_table_of_values: "С таблицей значений"
   notice_failed_to_add_tags: "Не удалось добавить теги"
   notice_tags_added: "Теги добавлены"
   permission_add_wiki_tags: "Добавление тегов вики"
   permission_create_issue_tags: "Добавление тегов задач"
   permission_edit_issue_tags: "Редактирование тегов задач"
   permission_view_issue_tags: "Просмотр тегов задач"
-  tags_order_by_last_created: "Недавно созданные"
   tags_order_by_count: "Наиболее часто используемые"
+  tags_order_by_last_created: "Недавно созданные"
   tags_order_by_name: "Имя"
   tags_sidebar_cloud: "Облако"
   tags_sidebar_list: "Список"
   tags_sidebar_none: "Нет"
   tags_sidebar_simple_cloud: "Простое облако"
-  label_tags_sidebar: "Способ отображения тегов на боковой панели"
   tags_sort_by_count: "Количеству"
   tags_sort_by_name: "Имени"
-  label_tags_sort_by: "Сортировать теги по"
-  label_tags_suggestion_order: "Порядок предложения при вводе"
-  label_with_table_of_values: "С таблицей значений"
-  label_with_chart: "С графиком"
-  label_amount_tags: "Теги Сумма"
-  label_amount_entities_with_tags: "Сумма %{name} с тегами"
-  label_quantity: "Количество"

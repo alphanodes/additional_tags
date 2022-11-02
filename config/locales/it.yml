@@ -3,40 +3,43 @@ it:
     errors:
       messages:
         invalid_mutually_exclusive_tags: "utilizza tag mutuamente esclusivi"
+  field_issue_tags: "Segnalazione tags"
   field_tag_list: Tags
   field_tags: Tags
-  field_issue_tags: "Segnalazione tags"
   label_active_issue_tags: "Attivare i tag di segnalazione"
   label_active_wiki_tags: "Attivare i tag wiki"
   label_add_tags: "Aggiungi tag"
+  label_amount_entities_with_tags: Amount %{name} with tags
+  label_amount_tags: Amount tags
   label_edit_tags: "Modifica i tag"
   label_manage_tags: "Gestire i tag"
   label_merge_selected_tags: "Unisci i tag selezionati"
   label_open_issues_only: "Mostra solo i segnalazione"
+  label_quantity: "Numero"
   label_show_with_count: "Visualizzare l'importo sul tag"
+  label_tag_color_theme: Color theme %{value}
+  label_tags_colors: Color
+  label_tags_sidebar: "Visualizzare i tag sulla barra laterale come"
+  label_tags_sort_by: "Ordina i tag per"
+  label_tags_suggestion_order: "Ordine di suggerimento"
   label_tags_tag: "Tag"
-  label_use_colors: "Utilizzare i colori"
+  label_tags_without_color: Without color
+  label_use_colors: Use colors
   label_wiki_index_for_tag_html: "Pagine Wiki con tag <em>%{tag}</em>"
+  label_with_chart: With chart
+  label_with_table_of_values: With table of values
   notice_failed_to_add_tags: "Non è stato possibile aggiungere tag"
   notice_tags_added: "Tag aggiunti"
   permission_add_wiki_tags: "Aggiungi tag wiki"
   permission_create_issue_tags: "Aggiungi i tag di segnalazione"
   permission_edit_issue_tags: "Modifica i tag di segnalazione"
   permission_view_issue_tags: "Visualizzare i tag di segnalazione"
-  tags_order_by_last_created: "Ultima creazione"
   tags_order_by_count: "I più usati"
+  tags_order_by_last_created: "Ultima creazione"
   tags_order_by_name: "Nome"
   tags_sidebar_cloud: "Cloud"
   tags_sidebar_list: "Elenco"
   tags_sidebar_none: "Nessuno"
   tags_sidebar_simple_cloud: "Simple cloud"
-  label_tags_sidebar: "Visualizzare i tag sulla barra laterale come"
   tags_sort_by_count: "Contate"
   tags_sort_by_name: "Nome"
-  label_tags_sort_by: "Ordina i tag per"
-  label_tags_suggestion_order: "Ordine di suggerimento"
-  label_with_table_of_values: With table of values
-  label_with_chart: With chart
-  label_amount_tags: Amount tags
-  label_amount_entities_with_tags: Amount %{name} with tags
-  label_quantity: "Numero"

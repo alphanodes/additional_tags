@@ -10,9 +10,7 @@ module AdditionalTagsWikiHelper
   end
 
   def render_sidebar_tags
-    options = { show_count: AdditionalTags.setting?(:show_with_count),
-                style: AdditionalTags.setting(:tags_sidebar).to_sym,
-                link_wiki_tag: true,
+    options = { link_wiki_tag: true,
                 project: @project }
 
     render_tags_list sidebar_tags, **options

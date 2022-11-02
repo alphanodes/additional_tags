@@ -28,13 +28,15 @@ h3 = block_definition[:label]
             th = l :label_closed_issues_plural
             th = l :label_total
       tbody
+        - color_theme = AdditionalTags.setting :tags_color_theme
         - tags.each do |tag|
           tr
             td.name = additional_tag_link tag,
                                           tag_action: 'index',
                                           tag_controller: 'issues',
                                           filter: issue_tag_status_filter(open_issues_only: open_issues_only),
-                                          use_colors: RedminePluginKit.true?(settings[:use_colors])
+                                          use_colors: RedminePluginKit.true?(settings[:use_colors]),
+                                          color_theme: color_theme
             - unless open_issues_only
               td.value = additional_tag_link tag,
                                              tag_action: 'index',

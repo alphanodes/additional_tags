@@ -6,4 +6,4 @@
              link_wiki_tag: true,
              editable: User.current.allowed_to?(:add_wiki_tags, @project),
              update_url: update_tags_project_wiki_page_path(@project, page.title),
-             use_colors: AdditionalTags.setting?(:use_colors)
+             use_colors: AdditionalTags.use_colors?

@@ -66,7 +66,11 @@ module AdditionalTagsHelper
   def render_tags_list(tags, **options)
     return if tags.blank?
 
-    style = options.delete :style
+    options[:show_count] = AdditionalTags.setting? :show_with_count unless options.key? :show_count
+    options[:color_theme] = AdditionalTags.setting :tags_color_theme unless options.key? :color_theme
+    options[:use_colors] = AdditionalTags.use_colors? unless options.key? :use_colors
+
+    style = options.key?(:style) ? options.delete(:style) : AdditionalTags.setting(:tags_sidebar).to_sym
     tags = tags.all.to_a if tags.respond_to? :all
     tags = sort_tags_for_list tags
 
@@ -94,11 +98,22 @@ module AdditionalTagsHelper
     content_tag(list_el, content, class: 'tags-cloud', style: (style == :simple_cloud ? 'text-align: left;' : ''))
   end
 
-  def additional_tag_link(tag_object, link: nil, link_wiki_tag: false, show_count: false, use_colors: nil, name: nil, **options)
+  def additional_tag_link(tag_object,
+                          link: nil,
+                          link_wiki_tag: false,
+                          show_count: false,
+                          use_colors: nil,
+                          name: nil,
+                          color_theme: nil,
+                          **options)
     options[:project] = @project if options[:project].blank? && @project.present?
-    use_colors = AdditionalTags.setting? :use_colors if use_colors.nil?
 
-    tag_info = AdditionalTag.new(name: name.nil? ? tag_object.name : name, disable_grouping: !use_colors)
+    use_colors = AdditionalTags.use_colors? if use_colors.nil?
+    color_theme = AdditionalTags.setting :tags_color_theme if color_theme.nil?
+
+    tag_info = AdditionalTag.new name: name.nil? ? tag_object.name : name,
+                                 disable_grouping: !use_colors,
+                                 color_theme: color_theme
     tag_name = [tag_info.tag_name]
 
     tag_style = "background-color: #{tag_info.tag_bg_color}; color: #{tag_info.tag_fg_color}" if use_colors

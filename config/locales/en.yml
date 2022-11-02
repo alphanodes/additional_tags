@@ -3,40 +3,43 @@ en:
     errors:
       messages:
         invalid_mutually_exclusive_tags: uses mutually exclusive tags
+  field_issue_tags: Issue tags
   field_tag_list: Tags
   field_tags: Tags
-  field_issue_tags: Issue tags
   label_active_issue_tags: "Activate issue tags"
   label_active_wiki_tags: "Activate wiki tags"
   label_add_tags: "Add tags"
+  label_amount_entities_with_tags: "Amount %{name} with tags"
+  label_amount_tags: "Amount tags"
   label_edit_tags: "Edit tags"
   label_manage_tags: "Manage tags"
   label_merge_selected_tags: "Merge selected tags"
   label_open_issues_only: "Display open issues only"
+  label_quantity: "Quantity"
   label_show_with_count: "Display amount on tag"
+  label_tag_color_theme: Color theme %{value}
+  label_tags_color_theme: Color
+  label_tags_sidebar: "Display tags on sidebar as"
+  label_tags_sort_by: "Sort tags by"
+  label_tags_suggestion_order: "Suggestion order"
   label_tags_tag: "Tag"
-  label_use_colors: "Use colors"
+  label_tags_without_color: Without color
+  label_use_colors: Use colors
   label_wiki_index_for_tag_html: "Wiki pages with tag <em>%{tag}</em>"
+  label_with_chart: "With chart"
+  label_with_table_of_values: "With table of values"
   notice_failed_to_add_tags: "Failed to add tags"
   notice_tags_added: "Tags added"
   permission_add_wiki_tags: "Add wiki tags"
   permission_create_issue_tags: "Add issue tags"
   permission_edit_issue_tags: "Edit issue tags"
   permission_view_issue_tags: "Display issue tags"
-  tags_order_by_last_created: "Last created"
   tags_order_by_count: "Most used"
+  tags_order_by_last_created: "Last created"
   tags_order_by_name: "Name"
   tags_sidebar_cloud: "Cloud"
   tags_sidebar_list: "List"
   tags_sidebar_none: "None"
   tags_sidebar_simple_cloud: "Simple cloud"
-  label_tags_sidebar: "Display tags on sidebar as"
   tags_sort_by_count: "Count"
   tags_sort_by_name: "Name"
-  label_tags_sort_by: "Sort tags by"
-  label_tags_suggestion_order: "Suggestion order"
-  label_with_table_of_values: "With table of values"
-  label_with_chart: "With chart"
-  label_amount_tags: "Amount tags"
-  label_amount_entities_with_tags: "Amount %{name} with tags"
-  label_quantity: "Quantity"
