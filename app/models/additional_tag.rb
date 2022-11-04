@@ -16,10 +16,13 @@ class AdditionalTag
     end
   end
 
-  def initialize(name:, disable_grouping: false, color_theme: nil)
+  # NOTE: only use bg_color parameter, if background color should not
+  #       calculated by AdditionalTag - if you want to assign manual color
+  def initialize(name:, disable_grouping: false, color_theme: nil, bg_color: nil)
     @tag_name = name.to_s
     @disable_grouping = disable_grouping
     @color_theme = color_theme.to_s
+    @bg_color = bg_color
   end
 
   def name_for_color
@@ -38,7 +41,7 @@ class AdditionalTag
   end
 
   def tag_bg_color
-    @tag_bg_color ||= "##{Digest::SHA256.hexdigest(name_for_color)[0..5]}"
+    @tag_bg_color ||= @bg_color || "##{Digest::SHA256.hexdigest(name_for_color)[0..5]}"
   end
 
   # calculate contrast text color according to YIQ method
