@@ -107,6 +107,9 @@ module AdditionalTagsHelper
                           color_theme: nil,
                           **options)
     options[:project] = @project if options[:project].blank? && @project.present?
+    if !options.key?(:display_type) && @query && @query.display_type != @query.default_display_type
+      options[:display_type] = @query.display_type
+    end
 
     use_colors = AdditionalTags.use_colors? if use_colors.nil?
     color_theme = AdditionalTags.setting :tags_color_theme if color_theme.nil?
@@ -213,7 +216,7 @@ module AdditionalTagsHelper
 
   private
 
-  def tag_url(tag_name, filter: nil, tag_action: nil, tag_controller: nil, project: nil)
+  def tag_url(tag_name, filter: nil, tag_action: nil, tag_controller: nil, project: nil, display_type: nil)
     action = tag_action.presence || (controller_name == 'hrm_user_resources' ? 'show' : 'index')
 
     fields = [:tags]
@@ -230,6 +233,7 @@ module AdditionalTagsHelper
     { controller: tag_controller.presence || controller_name,
       action: action,
       set_filter: 1,
+      display_type: display_type,
       project_id: project,
       f: fields,
       v: values,
