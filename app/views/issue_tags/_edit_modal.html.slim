@@ -26,7 +26,7 @@ h3.title = l :label_add_tags
   .buttons
     = submit_tag l(:button_add), name: nil
     '
-    = link_to_function l(:button_cancel), 'hideModal(this);'
+    = link_to_function l(:button_cancel), 'hideModal(this)'
 
 javascript:
   var mostUsedTags = #{raw @most_used_tags.map(&:name)};
