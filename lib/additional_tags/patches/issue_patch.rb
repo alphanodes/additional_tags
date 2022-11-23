@@ -46,6 +46,22 @@ module AdditionalTags
           tags.joins("JOIN #{IssueStatus.table_name} ON #{IssueStatus.table_name}.id = #{table_name}.status_id")
               .where(issue_statuses: { is_closed: false })
         end
+
+        def get_common_tag_list_from_multiple_issues(ids)
+          common_tags = ActsAsTaggableOn::Tag.joins(:taggings)
+                                             .select(
+                                               "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id",
+                                               "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name"
+                                             )
+                                             .where(taggings: { taggable_type: 'Issue', taggable_id: ids })
+                                             .group(
+                                               "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id",
+                                               "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name"
+                                             )
+                                             .having("count(*) = #{ids.count}").to_a
+
+          ActsAsTaggableOn::TagList.new common_tags
+        end
       end
 
       module InstanceMethods
