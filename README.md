@@ -4,18 +4,34 @@
 
 ## Features
 
-- Tags for issues
-- Tags for wiki pages
-- Grouping of tags when using a colon in tag (all tags with same base name get the same color)
-- Scoped tags when using two colons in tag (only one tag of the same base name is allowed) - base name and tag value are displayed seperatly
+- Tags for issues. To use them you need to:
+  -  *Activate issue tags* in the plugin configuration
+  -  and update your role permissions in the Redmine administration *Roles & permissions / Issue tracking*.
+- Tags for wiki pages. To use them  you need to:
+  - *Activate wiki tags* in the plugin configuration 
+  -  and update your role permissions in the Redmine administration *Roles & permissions / Wiki*
+- Available role permissions for issue tags (section *Issue tracking*): 
+  - Add issue tags
+  - Edit issue tags
+  - Display issue tags
+- Available role permissions wiki tags (section *Wiki*):
+  - Add wiki tags
+- Managing tags centrally in the plugin settings (edit, delete, merge)- 
+- Grouped tags.
+  - Grouping of tags possible, when using a colon in tag (all tags with same base name get the same color). Typo example: ``Plugin:HRM``
+- Scoped tags:
+  - Grouping of tags via *Scoped tags* possible, when using two colons in tag. Typo example: ``Product::Sprint 1``
+  - Only one tag of the same base name is allowed for an entity
+  - Base name and tag value are displayed seperatly
 - Accented and non-latin characters supported for tag order
-- View, edit and create tag permissions for issues
-- Create permission for wiki tags
-- Managing tags centrally in the plugin settings (edit, delete, merge)
 - Color theme selection possible
-- Custom tags and tagging tables (additional_tags and additional_taggings). If a other plugin
-  used tags or tagging tables for issue or wiki tagging, there tags will be migrated automatically
+- Custom tags and tagging tables (additional_tags and additional_taggings). If another plugin
+  used tags or tagging tables for issue or wiki tagging, tags will be migrated automatically there
 - Based on the very popular [acts-as-taggable-on](https://github.com/mbleigh/acts-as-taggable-on)
+
+![screenshot](https://raw.githubusercontent.com/AlphaNodes/additional_tags/master/doc/images/tag-overview.png)
+
+The screenshot shows: regular tags, grouped tags and scoped tags. The colors are assigned randomly. But you can change the color by choosing a *Color theme* in the plugin settings.
 
 ![screenshot](https://raw.githubusercontent.com/AlphaNodes/additional_tags/master/doc/images/additional-tags.gif)
 
