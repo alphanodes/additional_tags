@@ -243,6 +243,37 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
+  def test_post_bulk_edit_removal_of_shared_tags
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      @request.session[:user_id] = 2
+      issue1 = issues :issues_001
+      issue1.tag_list << 'a_common_tag'
+      issue1.save!
+
+      issue2 = issues :issues_002
+      issue2.tag_list << 'a_common_tag'
+      issue2.save!
+
+      assert_equal %w[First a_common_tag], issue1.reload.tag_list
+      assert_equal %w[a_common_tag], issue2.reload.tag_list
+
+      # Removing 'a_common_tag'
+      post :bulk_update,
+           params: { ids: [issue1.id, issue2.id],
+                     common_tags: Issue.get_common_tag_list_from_multiple_issues([issue1.id, issue2.id]).to_s,
+                     issue: { project_id: '', tracker_id: '', tag_list: [''] } }
+
+      assert_response :redirect
+
+      # Reset ActsAsTaggableOn::TagList cache
+      issue1.remove_instance_variable :@tag_list
+      issue2.remove_instance_variable :@tag_list
+
+      assert_equal %w[First], issue1.tag_list
+      assert_predicate issue2.tag_list, :empty?
+    end
+  end
+
   def test_get_new_with_permission_edit_tags
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 3

@@ -63,9 +63,22 @@ module AdditionalTags
       def issues_bulk_tags_fix(issue, params)
         return unless params && params[:issue]
 
-        old_tags = issue.tags.map(&:name)
+        common_tags =
+          if params[:common_tags].present?
+            params[:common_tags].split(ActsAsTaggableOn.delimiter).collect(&:strip)
+          else
+            []
+          end
+        current_tags = ActsAsTaggableOn::TagList.new issue.tags.to_a
         new_tags = Array(params[:issue][:tag_list]).reject(&:empty?)
-        issue.tag_list = (old_tags + new_tags).uniq
+
+        tags_to_add = new_tags - common_tags
+        tags_to_remove = common_tags - new_tags
+
+        current_tags.add tags_to_add
+        current_tags.remove tags_to_remove
+
+        issue.tag_list = current_tags
       end
 
       def tags_journal(issue, params)
