@@ -257,4 +257,43 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       assert_equal Issue.find(1).tag_list, [new_tag]
     end
   end
+
+  def test_should_append_tag_for_multiple_issues
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      post :update,
+           params: { ids: [1], issue: { tag_list: %w[First] } }
+
+      post :update,
+           params: { ids: [2], issue: { tag_list: %w[Second] } }
+
+      post :update,
+           params: { ids: [1, 2], issue: { tag_list: %w[Third] }, append: 'true' }
+      assert_response :redirect
+      assert_redirected_to action: 'update'
+      assert_equal %w[First Third], Issue.find(1).tag_list.sort
+      assert_equal %w[Second Third], Issue.find(2).tag_list.sort
+    end
+  end
+
+  def test_should_get_empty_option_when_add_for_multiple_issue
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      post :update,
+           params: { ids: [1], issue: { tag_list: ['First'] } }
+
+      post :update,
+           params: { ids: [2], issue: { tag_list: ['Second'] } }
+
+      get :edit,
+          params: { ids: [1,2] },
+          xhr: true
+
+      assert_response :success
+      assert_equal 'text/javascript', response.media_type
+
+      html_form = response.body[/<form.+form>/].delete('\\')
+      assert_select_in html_form, 'select#issue_tag_list', 1 do
+        assert_select 'option[selected="selected"]', {}
+      end
+    end
+  end
 end

@@ -6,6 +6,8 @@ en:
   label_active_wiki_tags: "Activate wiki tags"
   label_add_tags: "Add tags"
   label_edit_tags: "Edit tags"
+  label_edit_for_single_issue_tags: "Edit (for single issue)"
+  label_edit_tags_for_single_issue_tags: "Edit tags (for single issue)"
   label_manage_tags: "Manage tags"
   label_merge_selected_tags: "Merge selected tags"
   label_open_issues_only: "Display open issues only"
