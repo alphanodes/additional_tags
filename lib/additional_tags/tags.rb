@@ -25,14 +25,7 @@ module AdditionalTags
         scope = scope.where "#{TAGGING_TABLE_NAME}.taggable_id!=?", options[:exclude_id] if options[:exclude_id]
         scope = scope.where options[:where_field] => options[:where_value] if options[:where_field].present? && options[:where_value]
 
-        columns = ["#{TAG_TABLE_NAME}.id",
-                   "#{TAG_TABLE_NAME}.name",
-                   "#{TAG_TABLE_NAME}.taggings_count",
-                   "COUNT(DISTINCT #{TAGGING_TABLE_NAME}.taggable_id) AS count"]
-
-        columns << "MIN(#{TAGGING_TABLE_NAME}.created_at) AS last_created" if options[:sort_by] == 'last_created'
-
-        scope.select(columns.to_list)
+        scope.select(table_columns(options[:sort_by]))
              .joins(tag_for_joins(klass, **options.slice(:project_join, :project, :without_projects)))
              .group("#{TAG_TABLE_NAME}.id, #{TAG_TABLE_NAME}.name, #{TAG_TABLE_NAME}.taggings_count").having('COUNT(*) > 0')
              .order(build_order_sql(options[:sort_by], options[:order]))
@@ -133,6 +126,16 @@ module AdditionalTags
       end
 
       private
+
+      def table_columns(sort_by)
+        columns = ["#{TAG_TABLE_NAME}.id",
+                   "#{TAG_TABLE_NAME}.name",
+                   "#{TAG_TABLE_NAME}.taggings_count",
+                   "COUNT(DISTINCT #{TAGGING_TABLE_NAME}.taggable_id) AS count"]
+
+        columns << "MIN(#{TAGGING_TABLE_NAME}.created_at) AS last_created" if sort_by == 'last_created'
+        columns.to_list
+      end
 
       def status_for_tag_value(scope:, tag_id:, group_id: nil, group_id_is_bool: false)
         value = if group_id_is_bool || group_id
