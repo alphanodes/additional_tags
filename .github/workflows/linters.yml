@@ -23,9 +23,8 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.1
-        bundler-cache: true
 
-    - name: Setup gems
+    - name: Run bundle install
       run: |
         bundle install --jobs 4 --retry 3
 
