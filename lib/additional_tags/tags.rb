@@ -9,7 +9,8 @@ module AdditionalTags
         scope = ActsAsTaggableOn::Tag.where({})
         if options[:project]
           scope = if Setting.display_subprojects_issues?
-                    scope.where projects: { id: options[:project].self_and_descendants.ids }
+                    scope.where "#{Project.table_name}.lft >= #{options[:project].lft} " \
+                                "AND #{Project.table_name}.rgt <= #{options[:project].rgt}"
                   else
                     scope.where projects: { id: options[:project] }
                   end
