@@ -56,11 +56,23 @@ class IssueTest < AdditionalTags::TestCase
   end
 
   test 'available tags should allow list tags of specific project only' do
-    assert_equal 5, Issue.available_tags(project: @project_a).to_a.size
-    assert_equal 1, Issue.available_tags(project: @project_b).to_a.size
+    with_settings display_subprojects_issues: '1' do
+      assert_equal 5, Issue.available_tags(project: @project_a).to_a.size
+      assert_equal 1, Issue.available_tags(project: @project_b).to_a.size
 
-    assert_equal 4, Issue.available_tags(open_issues_only: true, project: @project_a).to_a.size
-    assert_equal 1, Issue.available_tags(open_issues_only: true, project: @project_b).to_a.size
+      assert_equal 4, Issue.available_tags(open_issues_only: true, project: @project_a).to_a.size
+      assert_equal 1, Issue.available_tags(open_issues_only: true, project: @project_b).to_a.size
+    end
+  end
+
+  test 'available tags should allow list tags of specific without subprojects' do
+    with_settings display_subprojects_issues: '0' do
+      assert_equal 4, Issue.available_tags(project: @project_a).to_a.size
+      assert_equal 1, Issue.available_tags(project: @project_b).to_a.size
+
+      assert_equal 3, Issue.available_tags(open_issues_only: true, project: @project_a).to_a.size
+      assert_equal 1, Issue.available_tags(open_issues_only: true, project: @project_b).to_a.size
+    end
   end
 
   test 'available tags should allow list tags found by name' do
@@ -68,11 +80,24 @@ class IssueTest < AdditionalTags::TestCase
     assert_equal 1, Issue.available_tags(name_like: 'rd').to_a.size
     assert_equal 2, Issue.available_tags(name_like: 's').to_a.size
     assert_equal 2, Issue.available_tags(name_like: 'e').to_a.size
+  end
 
-    assert_equal 3, Issue.available_tags(name_like: 'f', project: @project_a).to_a.size
-    assert_equal 0, Issue.available_tags(name_like: 'b', project: @project_a).to_a.size
-    assert_equal 1, Issue.available_tags(name_like: 'sec', open_issues_only: true, project: @project_a).to_a.size
-    assert_equal 1, Issue.available_tags(name_like: 'fir', open_issues_only: true, project: @project_a).to_a.size
+  test 'available tags should allow list tags found by name with project' do
+    with_settings display_subprojects_issues: '1' do
+      assert_equal 3, Issue.available_tags(name_like: 'f', project: @project_a).to_a.size
+      assert_equal 0, Issue.available_tags(name_like: 'b', project: @project_a).to_a.size
+      assert_equal 1, Issue.available_tags(name_like: 'sec', open_issues_only: true, project: @project_a).to_a.size
+      assert_equal 1, Issue.available_tags(name_like: 'fir', open_issues_only: true, project: @project_a).to_a.size
+    end
+  end
+
+  test 'available tags should allow list tags found by name without subprojects' do
+    with_settings display_subprojects_issues: '0' do
+      assert_equal 2, Issue.available_tags(name_like: 'f', project: @project_a).to_a.size
+      assert_equal 0, Issue.available_tags(name_like: 'b', project: @project_a).to_a.size
+      assert_equal 1, Issue.available_tags(name_like: 'sec', open_issues_only: true, project: @project_a).to_a.size
+      assert_equal 1, Issue.available_tags(name_like: 'fir', open_issues_only: true, project: @project_a).to_a.size
+    end
   end
 
   test 'Issue.all_tags should return all tags kind of Issue' do
@@ -106,7 +131,7 @@ class IssueTest < AdditionalTags::TestCase
     end
   end
 
-  def test_available_tags_with_project_option_should_respect_subprojects
+  def test_available_tags_with_project_should_respect_subprojects
     # tag exists only in subproject
     Issue.generate! project: @project_b, tag_list: 'im not exist in parent project'
 
@@ -114,9 +139,27 @@ class IssueTest < AdditionalTags::TestCase
 
     assert_not_nil new_tag
 
-    # parent project should list all available tags including subprojects
-    assert_includes Issue.available_tags(project: @project_a).to_a, new_tag
-    # subproject
-    assert_includes Issue.available_tags(project: @project_b).to_a, new_tag
+    with_settings display_subprojects_issues: '1' do
+      # parent project should list all available tags including subprojects
+      assert_includes Issue.available_tags(project: @project_a).to_a, new_tag
+      # subproject
+      assert_includes Issue.available_tags(project: @project_b).to_a, new_tag
+    end
+  end
+
+  def test_available_tags_with_project_should_ignore_subprojects_if_disabled
+    # tag exists only in subproject
+    Issue.generate! project: @project_b, tag_list: 'im not exist in parent project'
+
+    new_tag = ActsAsTaggableOn::Tag.find_by name: 'im not exist in parent project'
+
+    assert_not_nil new_tag
+
+    with_settings display_subprojects_issues: '0' do
+      # parent project should list all available tags without subprojects
+      assert_not_includes Issue.available_tags(project: @project_a).to_a, new_tag
+      # subproject
+      assert_includes Issue.available_tags(project: @project_b).to_a, new_tag
+    end
   end
 end

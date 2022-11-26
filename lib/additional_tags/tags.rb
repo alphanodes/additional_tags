@@ -7,7 +7,14 @@ module AdditionalTags
         user = options[:user].presence || User.current
 
         scope = ActsAsTaggableOn::Tag.where({})
-        scope = scope.where projects: { id: options[:project].self_and_descendants.ids } if options[:project]
+        if options[:project]
+          scope = if Setting.display_subprojects_issues?
+                    scope.where projects: { id: options[:project].self_and_descendants.ids }
+                  else
+                    scope.where projects: { id: options[:project] }
+                  end
+        end
+
         if options[:permission]
           scope = scope.where tag_access(options[:permission], user)
         elsif options[:visible_condition]
