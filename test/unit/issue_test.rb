@@ -52,7 +52,15 @@ class IssueTest < AdditionalTags::TestCase
   end
 
   def test_group_by_status_with_tags_for_project
-    assert_equal 5, Issue.group_by_status_with_tags(@project_a).size
+    with_settings display_subprojects_issues: '1' do
+      assert_equal 6, Issue.group_by_status_with_tags(@project_a).size
+    end
+  end
+
+  def test_group_by_status_with_tags_without_subprojects
+    with_settings display_subprojects_issues: '0' do
+      assert_equal 5, Issue.group_by_status_with_tags(@project_a).size
+    end
   end
 
   test 'available tags should allow list tags of specific project only' do

@@ -9,8 +9,7 @@ module AdditionalTags
         scope = ActsAsTaggableOn::Tag.where({})
         if options[:project]
           scope = if Setting.display_subprojects_issues?
-                    scope.where "#{Project.table_name}.lft >= #{options[:project].lft} " \
-                                "AND #{Project.table_name}.rgt <= #{options[:project].rgt}"
+                    scope.where subproject_sql(options[:project])
                   else
                     scope.where projects: { id: options[:project] }
                   end
@@ -124,6 +123,11 @@ module AdditionalTags
         end
 
         counts
+      end
+
+      def subproject_sql(project)
+        "#{Project.table_name}.lft >= #{project.lft} " \
+          "AND #{Project.table_name}.rgt <= #{project.rgt}"
       end
 
       private

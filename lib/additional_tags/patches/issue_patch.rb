@@ -31,11 +31,17 @@ module AdditionalTags
           tags.all? { |tag| allowed_tags.include? tag }
         end
 
-        def group_by_status_with_tags(project = nil)
-          visible(User.current, project: project).joins(:status)
-                                                 .joins(:tags)
-                                                 .group(:is_closed, 'tag_id')
-                                                 .count
+        def group_by_status_with_tags(project = nil, user = User.current)
+          scope = if project && Setting.display_subprojects_issues?
+                    visible(user).where(AdditionalTags::Tags.subproject_sql(project))
+                  else
+                    visible user, project: project
+                  end
+
+          scope.joins(:status)
+               .joins(:tags)
+               .group(:is_closed, 'tag_id')
+               .count
         end
 
         def available_tags(**options)
