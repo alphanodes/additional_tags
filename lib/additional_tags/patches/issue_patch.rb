@@ -47,7 +47,7 @@ module AdditionalTags
               .where(issue_statuses: { is_closed: false })
         end
 
-        def get_common_tag_list_from_multiple_issues(ids)
+        def common_tag_list_from_issues(ids)
           common_tags = ActsAsTaggableOn::Tag.joins(:taggings)
                                              .select(
                                                "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id",
@@ -58,7 +58,7 @@ module AdditionalTags
                                                "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id",
                                                "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name"
                                              )
-                                             .having("count(*) = #{ids.count}").to_a
+                                             .having('count(*) = ?', ids.count).to_a
 
           ActsAsTaggableOn::TagList.new common_tags
         end

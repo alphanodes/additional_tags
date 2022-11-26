@@ -260,7 +260,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       # Removing 'a_common_tag'
       post :bulk_update,
            params: { ids: [issue1.id, issue2.id],
-                     common_tags: Issue.get_common_tag_list_from_multiple_issues([issue1.id, issue2.id]).to_s,
+                     common_tags: Issue.common_tag_list_from_issues([issue1.id, issue2.id]).to_s,
                      issue: { project_id: '', tracker_id: '', tag_list: [''] } }
 
       assert_response :redirect
