@@ -8,4 +8,6 @@ Gemfile.lock
 .enable_*
 ._*
 *.gem
+/node_modules
+/yarn.lock
 rails_best_practices_output.html
