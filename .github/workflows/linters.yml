@@ -22,7 +22,11 @@ jobs:
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+        bundler-cache: true
+
+    - name: Run bundle install
+      run: |
+        bundle install --jobs 4 --retry 3
 
     - name: Run RuboCop
       run: |
