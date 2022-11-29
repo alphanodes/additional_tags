@@ -5,6 +5,12 @@
     ul
       li
         = context_menu_link l(:button_add),
-                            edit_issue_tags_path(ids: @issue_ids, search: params[:search]),
+                            edit_issue_tags_path(ids: @issue_ids, search: params[:search], append: 'true'),
                             remote: true,
                             class: 'icon icon-add'
+      - if @issue_ids.size == 1
+        li
+          = context_menu_link l(:label_edit_for_single_issue_tags),
+                              edit_issue_tags_path(ids: @issue_ids, search: params[:search]),
+                              remote: true,
+                              class: 'icon icon-edit'
