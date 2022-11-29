@@ -90,6 +90,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
 
       post :update,
            params: { ids: [], issue: { tag_list: [] } }
+
       assert_response :missing
     end
   end
@@ -125,6 +126,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: [1], issue: { tag_list: %w[first] } }
+
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
@@ -136,6 +138,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: [1], issue: { tag_list: %w[first second third] } }
+
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
@@ -147,6 +150,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: @ids, issue: { tag_list: [] } }
+
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
@@ -158,6 +162,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: @ids, issue: { tag_list: %w[first] } }
+
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
@@ -169,6 +174,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       post :update,
            params: { ids: @ids, issue: { tag_list: %w[first second third] } }
+
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
@@ -179,10 +185,12 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   def test_edit_tags_permission
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       tag = 'Second'
+
       assert_not_equal @issue_1.tag_list, [tag]
       assert_includes Issue.available_tags.map(&:name), tag
       post :update,
            params: { ids: [1], issue: { tag_list: [tag] } }
+
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
@@ -194,6 +202,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       assert_includes Issue.available_tags.map(&:name), tag2
       post :update,
            params: { ids: [1], issue: { tag_list: [tag2] } }
+
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_failed_to_add_tags), flash[:error]
@@ -204,6 +213,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   def test_bulk_edit_tags_permission
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       tag = 'First'
+
       assert_includes Issue.all_tags.map(&:name), tag
       post :update,
            params: { ids: [1, 2], issue: { tag_list: [tag] } }
@@ -224,6 +234,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       assert_includes Issue.all_tags.map(&:name), tag
       post :update,
            params: { ids: [1, 2], issue: { tag_list: [tag] } }
+
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_failed_to_add_tags), flash[:error]
@@ -240,6 +251,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       assert_not Issue.all_tags.map(&:name).include?(new_tag)
       post :update,
            params: { ids: [1], issue: { tag_list: [new_tag] } }
+
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
@@ -251,6 +263,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       assert_not Issue.all_tags.map(&:name).include?(new_tag2)
       post :update,
            params: { ids: [1], issue: { tag_list: [new_tag2] } }
+
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_failed_to_add_tags), flash[:error]
