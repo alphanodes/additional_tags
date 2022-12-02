@@ -68,19 +68,16 @@ module AdditionalTags
           case operator
           when '=', '!'
             ids_list = klass.tagged_with(values, any: true).ids
-            if ids_list.present?
-              "(#{klass.arel_table[:id].send(compare, ids_list).to_sql})"
-            elsif values.present? && operator == '='
-              # special case: filter with deleted tag
-              '(1=0)'
-            end
+            # special case: filter with deleted tag
+            return '(1=0)' if ids_list.blank? && values.present? && operator == '='
           else
             allowed_projects = Project.where(Project.allowed_to_condition(User.current, permission))
                                       .select(:id)
             ids_list = klass.tagged_with(klass.available_tags(skip_pre_condition: true), any: true)
                             .where(project_id: allowed_projects).ids
-            "(#{klass.arel_table[:id].send(compare, ids_list).to_sql})"
           end
+
+          "(#{klass.arel_table[:id].send(compare, ids_list).to_sql})"
         end
 
         # NOTE: should be used, if tags do not require permission check
