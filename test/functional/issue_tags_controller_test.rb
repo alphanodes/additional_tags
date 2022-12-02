@@ -24,6 +24,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   def setup
     prepare_tests
     @request.env['HTTP_REFERER'] = '/issue_tags'
+
     @request.session[:user_id] = 2
     @project_1 = projects :projects_001
     @issue_1 = issues :issues_001
@@ -52,7 +53,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       end
 
       assert_select_in html_form, '.most_used_tags' do
-        assert_select '.most_used_tag', 5
+        assert_select '.most_used_tag', 4
         @most_used_tags.each { |tag| assert_select '.most_used_tag', text: tag, count: 1 }
       end
     end
@@ -74,7 +75,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       end
 
       assert_select_in html_form, '.most_used_tags' do
-        assert_select '.most_used_tag', 5
+        assert_select '.most_used_tag', 4
         @most_used_tags.each { |tag| assert_select '.most_used_tag', text: tag, count: 1 }
       end
     end
@@ -185,9 +186,10 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
   def test_edit_tags_permission
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       tag = 'Second'
+      user = users :users_002
 
       assert_not_equal @issue_1.tag_list, [tag]
-      assert_includes Issue.available_tags.map(&:name), tag
+      assert_includes Issue.available_tags(user: user).map(&:name), tag
       post :update,
            params: { ids: [1], issue: { tag_list: [tag] } }
 
@@ -199,7 +201,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       @role.remove_permission! :edit_issue_tags
       tag2 = 'Third'
 
-      assert_includes Issue.available_tags.map(&:name), tag2
+      assert_includes Issue.available_tags(user: user).map(&:name), tag2
       post :update,
            params: { ids: [1], issue: { tag_list: [tag2] } }
 

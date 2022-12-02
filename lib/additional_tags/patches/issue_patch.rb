@@ -45,7 +45,7 @@ module AdditionalTags
         end
 
         def available_tags(**options)
-          options[:permission] = :view_issues
+          options[:permission] ||= :view_issue_tags
           tags = AdditionalTags::Tags.available_tags self, **options
           return tags unless options[:open_issues_only]
 

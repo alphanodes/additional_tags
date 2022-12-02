@@ -329,11 +329,12 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
   def test_edit_tags_permission
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
-      @request.session[:user_id] = 3
+      user = users :users_003
+      @request.session[:user_id] = user.id
       tag = 'First'
 
       assert_not_equal Issue.find(2).tag_list, [tag]
-      assert_includes Issue.available_tags.map(&:name), tag
+      assert_includes Issue.available_tags(user: user).map(&:name), tag
       post :update,
            params: { id: 2, issue: { project_id: 1, tag_list: [tag] } }
 
@@ -344,12 +345,14 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
   def test_do_not_edit_tags_without_permission
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
-      @request.session[:user_id] = 7
+      user = users :users_007
+      @request.session[:user_id] = user.id
       new_tag = 'Second'
 
       issue = issues :issues_001
 
-      assert_includes Issue.available_tags.map(&:name), new_tag
+      assert_includes Issue.available_tags(user: users(:users_001)).map(&:name), new_tag
+      assert_not_includes Issue.available_tags(user: user).map(&:name), new_tag
       assert_equal 'Unable to print recipes', issue.description
       assert_not issue.tag_list.include?(new_tag)
 
@@ -476,6 +479,29 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       assert_select 'table.issues td.tags'
       assert_select 'tr#issue-1'
       assert_select 'tr#issue-2', count: 0
+    end
+  end
+
+  def test_tag_column_should_not_contain_tags_if_user_has_no_permission
+    roles(:roles_003).remove_permission! :view_issue_tags
+    User.add_to_project users(:users_002), projects(:projects_003), roles(:roles_003)
+
+    with_settings display_subprojects_issues: 1 do
+      with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+        @request.session[:user_id] = 2
+        get :index,
+            params: { project_id: 1,
+                      set_filter: 1,
+                      c: ['tags'],
+                      f: ['tags'] }
+
+        assert_response :success
+
+        # User has no permission to view_issue_tags in this project
+        assert_select 'tr#issue-5' do
+          assert_select '.tags a', count: 0
+        end
+      end
     end
   end
 end

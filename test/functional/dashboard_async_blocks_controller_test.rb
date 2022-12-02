@@ -41,9 +41,9 @@ class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
 
       assert_response :success
       assert_select 'ul.tag-summary'
-      assert_select 'li.amount-tags .value', text: /4/
-      assert_select 'li.amount-entities-with-tags .value', text: /6/
-      assert_select 'table.list.tags tbody tr', count: 4
+      assert_select 'li.amount-tags .value', text: /3/
+      assert_select 'li.amount-entities-with-tags .value', text: /5/
+      assert_select 'table.list.tags tbody tr', count: 3
     end
   end
 

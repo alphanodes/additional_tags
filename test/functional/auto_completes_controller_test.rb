@@ -64,7 +64,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
     assert_response :success
     tags = ActiveSupport::JSON.decode(response.body).pluck('id')
 
-    assert_equal %w[First five Four Second Third], tags
+    assert_equal %w[First Four Second Third], tags
   end
 
   def test_suggestion_order_name
@@ -76,7 +76,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
     assert_response :success
     tags = ActiveSupport::JSON.decode(response.body).pluck('id')
 
-    assert_equal %w[First five Four Second Third], tags
+    assert_equal %w[First Four Second Third], tags
   end
 
   def test_suggestion_order_count
@@ -100,7 +100,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
     assert_response :success
     tags = ActiveSupport::JSON.decode(response.body).pluck('id')
 
-    assert_equal %w[First Third Four five Second], tags
+    assert_equal %w[First Third Four Second], tags
   end
 
   def test_wiki_tags_should_return_json

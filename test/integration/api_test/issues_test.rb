@@ -87,6 +87,8 @@ module ApiTest
               params: { issue: { subject: 'API update',
                                  tag_list: 'cat, dog, mouse' } },
               headers: credentials('jsmith')
+
+          assert_response :success
         end
         issue = Issue.find 6
 

@@ -25,7 +25,7 @@ module AdditionalTags
 
         def available_tags(**options)
           options[:project_join] = project_joins
-          options[:permission] = :view_wiki_pages
+          options[:permission] ||= :view_wiki_pages
           AdditionalTags::Tags.available_tags self, **options
         end
 

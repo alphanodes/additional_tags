@@ -28,6 +28,7 @@ class TagsTest < AdditionalTags::TestCase
   def setup
     prepare_tests
     @project = projects :projects_001
+    @user = users :users_002
   end
 
   def test_available_tags_for_issue
@@ -121,10 +122,10 @@ class TagsTest < AdditionalTags::TestCase
 
   def test_entity_group_by_with_statuses
     counts = AdditionalTags::Tags.entity_group_by scope: { [1, 1] => 1, [2, 1] => 1, [2, 2] => 5, [3, 3] => 10 },
-                                                  tags: Issue.available_tags,
+                                                  tags: Issue.available_tags(user: @user),
                                                   statuses: { 1 => :test1, 2 => :test2 }
 
-    assert_equal 5, counts.size
+    assert_equal 4, counts.size
     first = counts['First']
 
     assert_equal 1, first[:tag].id
@@ -148,11 +149,11 @@ class TagsTest < AdditionalTags::TestCase
 
   def test_entity_group_by_with_statuses_and_bool
     counts = AdditionalTags::Tags.entity_group_by scope: Issue.group_by_status_with_tags,
-                                                  tags: Issue.available_tags,
+                                                  tags: Issue.available_tags(user: @user),
                                                   statuses: { true => :closed, false => :open },
                                                   group_id_is_bool: true
 
-    assert_equal 5, counts.size
+    assert_equal 4, counts.size
     first = counts['First']
 
     assert_equal 1, first[:tag].id
@@ -165,9 +166,9 @@ class TagsTest < AdditionalTags::TestCase
 
   def test_entity_group_by_without_statuses
     counts = AdditionalTags::Tags.entity_group_by scope: Issue.group_by_status_with_tags,
-                                                  tags: Issue.available_tags
+                                                  tags: Issue.available_tags(user: @user)
 
-    assert_equal 5, counts.size
+    assert_equal 4, counts.size
 
     first = counts['First']
 

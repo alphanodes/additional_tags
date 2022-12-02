@@ -16,7 +16,7 @@ module AdditionalTags
         end
 
         if options[:permission]
-          scope = scope.where tag_access(options[:permission], user)
+          scope = scope.where tag_access(options[:permission], user, skip_pre_condition: options[:skip_pre_condition])
         elsif options[:visible_condition]
           scope = scope.where klass.visible_condition(user)
         end
@@ -191,11 +191,11 @@ module AdditionalTags
         joins
       end
 
-      def tag_access(permission, user)
+      def tag_access(permission, user, skip_pre_condition: false)
         projects_allowed = if permission.nil?
                              Project.visible.ids
                            else
-                             Project.where(Project.allowed_to_condition(user, permission)).ids
+                             Project.where(Project.allowed_to_condition(user, permission, skip_pre_condition: skip_pre_condition)).ids
                            end
 
         if projects_allowed.present?
