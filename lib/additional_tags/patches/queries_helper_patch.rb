@@ -15,8 +15,7 @@ module AdditionalTags
       module InstanceMethods
         def column_content_with_tags(column, item)
           if column.name == :issue_tags || item.is_a?(Issue) && column.name == :tags
-            additional_tag_links column.value(item),
-                                 tag_controller: 'issues'
+            additional_tag_links column.value(item), tag_controller: 'issues'
           else
             column_content_without_tags column, item
           end
