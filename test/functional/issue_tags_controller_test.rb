@@ -306,7 +306,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
 
       html_form = response.body[/<form.+form>/].delete('\\')
       assert_select_in html_form, 'select#issue_tag_list', 1 do
-        assert_select 'option[selected="selected"]', {}
+        assert_select 'option[selected="selected"]', 0
       end
     end
   end
