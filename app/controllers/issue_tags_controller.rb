@@ -34,9 +34,9 @@ class IssueTagsController < ApplicationController
 
       Issue.transaction do
         @issues.each do |issue|
-            # add tags added in placeholder for a single/multiple issue or overwrite tags for single issue
-            params[:append] == 'true' ? issue.tag_list << tags : issue.tag_list = tags
-            issue.save!
+          # add tags added in placeholder for a single/multiple issue or overwrite tags for single issue
+          params[:append] == 'true' ? issue.tag_list << tags : issue.tag_list = tags
+          issue.save!
         end
       end
       flash[:notice] = t :notice_tags_added

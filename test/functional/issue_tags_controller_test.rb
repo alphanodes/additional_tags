@@ -281,6 +281,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
 
       post :update,
            params: { ids: [1, 2], issue: { tag_list: %w[Third] }, append: 'true' }
+
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal %w[First Third], Issue.find(1).tag_list.sort
@@ -297,7 +298,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
            params: { ids: [2], issue: { tag_list: ['Second'] } }
 
       get :edit,
-          params: { ids: [1,2] },
+          params: { ids: [1, 2], append: 'true' },
           xhr: true
 
       assert_response :success
