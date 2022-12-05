@@ -482,28 +482,23 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
-  # TODO: find solution to fix it, without n+1 performance problem
   def test_tag_column_should_not_contain_tags_if_user_has_no_permission
-    skip 'known broken test, which should be fixed'
-
     roles(:roles_003).remove_permission! :view_issue_tags
     User.add_to_project users(:users_002), projects(:projects_003), roles(:roles_003)
 
-    with_settings display_subprojects_issues: 1 do
-      with_plugin_settings 'additional_tags', active_issue_tags: 1 do
-        @request.session[:user_id] = 2
-        get :index,
-            params: { project_id: 1,
-                      set_filter: 1,
-                      c: ['tags'],
-                      f: ['tags'] }
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      @request.session[:user_id] = 2
+      get :index,
+          params: { project_id: 1,
+                    set_filter: 1,
+                    c: ['tags'],
+                    f: ['tags'] }
 
-        assert_response :success
+      assert_response :success
 
-        # User has no permission to view_issue_tags in this project
-        assert_select 'tr#issue-5' do
-          assert_select '.tags a', count: 0
-        end
+      # User has no permission to view_issue_tags in this project
+      assert_select 'tr#issue-5' do
+        assert_select '.tags a', count: 0
       end
     end
   end

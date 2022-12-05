@@ -68,6 +68,21 @@ module AdditionalTags
 
           ActsAsTaggableOn::TagList.new common_tags
         end
+
+        def load_visible_tags(issues, user = User.current)
+          return if issues.blank?
+
+          available_projects = Project.where(AdditionalTags::Tags.visible_condition(user)).ids
+
+          issues.each do |issue|
+            tags = if available_projects.include? issue.project_id
+                     issue.tags
+                   else
+                     []
+                   end
+            issue.instance_variable_set :@visible_tags, tags
+          end
+        end
       end
 
       module InstanceMethods
