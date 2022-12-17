@@ -25,7 +25,7 @@ bg:
   label_tags_tag: "Маркер"
   label_tags_without_color: "Без цвят"
   label_use_colors: "Използване на цветове"
-  label_wiki_index_for_tag_html: "Wiki страници с маркер <em>%{tag}</em>"
+  label_wiki_index_for_tag: "Wiki страници с маркер"
   label_with_chart: "С графиком"
   label_with_table_of_values: "С таблица на стойността"
   notice_failed_to_add_tags: "Добавянето на маркери е неуспешно"

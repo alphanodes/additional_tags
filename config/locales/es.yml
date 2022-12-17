@@ -25,7 +25,7 @@ es:
   label_tags_tag: "Tag"
   label_tags_without_color: "Sin color"
   label_use_colors: "Usar colores"
-  label_wiki_index_for_tag_html: "Páginas Wiki con la tags <em>%{tag}</em>"
+  label_wiki_index_for_tag: "Páginas Wiki con la tags"
   label_with_chart: "Con tabla"
   label_with_table_of_values: "Con tabla de valores"
   notice_failed_to_add_tags: "No se han añadido tags"

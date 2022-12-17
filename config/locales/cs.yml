@@ -25,7 +25,7 @@ cs:
   label_tags_tag: "Tag"
   label_tags_without_color: "Bez barvy"
   label_use_colors: "Použít barvy"
-  label_wiki_index_for_tag_html: "Wiki stránky se značkou <em>%{tag}</em>"
+  label_wiki_index_for_tag: "Wiki stránky se značkou"
   label_with_chart: "S grafem"
   label_with_table_of_values: "S tabulkou hodnot"
   notice_failed_to_add_tags: "Přidání značek se nezdařilo"

@@ -25,7 +25,7 @@ it:
   label_tags_tag: "Tag"
   label_tags_without_color: "Senza colore"
   label_use_colors: "Usa i colori"
-  label_wiki_index_for_tag_html: "Pagine Wiki con tag <em>%{tag}</em>"
+  label_wiki_index_for_tag: "Pagine Wiki con tag"
   label_with_chart: "Con grafico"
   label_with_table_of_values: "Con tabella di valori"
   notice_failed_to_add_tags: "Non è stato possibile aggiungere tag"

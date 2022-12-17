@@ -18,12 +18,15 @@ module AdditionalTagsWikiHelper
 
   def render_wiki_index_title(project: nil, name: nil, tag: nil, title: :label_wiki)
     if tag.present?
+      tag_object = ActsAsTaggableOn::Tag.new name: tag
+
       if project
-        t :label_wiki_index_for_tag_html, tag: tag
+        safe_join [l(:label_wiki_index_for_tag), additional_tag_link(tag_object, link: '#')], ' '
       else
         title = [link_to(l(title), wiki_index_path)]
         title << Additionals::LIST_SEPARATOR
-        title << t(:label_wiki_index_for_tag_html, tag: tag)
+        title << l(:label_wiki_index_for_tag)
+        title << additional_tag_link(tag_object, link: '#')
         safe_join title, ' '
       end
     elsif name.present?

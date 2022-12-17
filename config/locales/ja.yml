@@ -25,7 +25,7 @@ ja:
   label_tags_tag: "Tag"
   label_tags_without_color: "色なし"
   label_use_colors: "色を使う"
-  label_wiki_index_for_tag_html: "タグが付いているウィキのページ <em>%{tag}</em>"
+  label_wiki_index_for_tag: "タグが付いているウィキのページ"
   label_with_chart: "チャート付き"
   label_with_table_of_values: "価値観のテーブル付き"
   notice_failed_to_add_tags: "タグの追加に失敗"

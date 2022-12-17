@@ -25,7 +25,7 @@ de:
   label_tags_tag: TAG
   label_tags_without_color: Ohne
   label_use_colors: Farbe verwenden
-  label_wiki_index_for_tag_html: Wiki Seiten mit TAG <em>%{tag}</em>
+  label_wiki_index_for_tag: Wiki Seiten mit TAG
   label_with_chart: Mit Chart
   label_with_table_of_values: Mit Wertetabelle
   notice_failed_to_add_tags: Fehler beim hinzufügen der TAGs

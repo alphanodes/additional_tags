@@ -25,7 +25,7 @@ pl:
   label_tags_tag: "Tag"
   label_tags_without_color: "Bez koloru"
   label_use_colors: "Użyj kolorów"
-  label_wiki_index_for_tag_html: "Strony Wiki z tagiem <em>%{tag}</em>"
+  label_wiki_index_for_tag: "Strony Wiki z tagiem"
   label_with_chart: "Z wykresem"
   label_with_table_of_values: "Z tabelą wartości"
   notice_failed_to_add_tags: "Nie dodano znaczników"

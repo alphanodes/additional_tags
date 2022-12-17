@@ -25,7 +25,7 @@ ko:
   label_tags_tag: "Tag"
   label_tags_without_color: "무색"
   label_use_colors: "색상 사용"
-  label_wiki_index_for_tag_html: "태그가있는 위키 페이지 <em>%{tag}</em>"
+  label_wiki_index_for_tag: "태그가있는 위키 페이지"
   label_with_chart: "차트 포함"
   label_with_table_of_values: "가치 테이블"
   notice_failed_to_add_tags: "태그를 추가하지 못했습니다."

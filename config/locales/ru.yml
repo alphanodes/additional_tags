@@ -25,7 +25,7 @@ ru:
   label_tags_tag: "Метка"
   label_tags_without_color: "Без цвета"
   label_use_colors: "Использовать цвета"
-  label_wiki_index_for_tag_html: "Вики-страницы с меткой <em>%{tag}</em>"
+  label_wiki_index_for_tag: "Вики-страницы с меткой"
   label_with_chart: "С графиком"
   label_with_table_of_values: "С таблицей значений"
   notice_failed_to_add_tags: "Не удалось добавить метки"
