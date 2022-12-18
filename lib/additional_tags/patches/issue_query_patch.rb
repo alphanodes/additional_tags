@@ -36,6 +36,14 @@ module AdditionalTags
                                                    values: values,
                                                    permission: :view_issue_tags
         end
+
+        def issues(**options)
+          issues = super
+          return issues unless has_column? :tags
+
+          Issue.load_visible_tags issues
+          issues
+        end
       end
 
       module InstanceMethods

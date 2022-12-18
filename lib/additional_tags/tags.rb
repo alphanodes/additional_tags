@@ -3,6 +3,13 @@
 module AdditionalTags
   class Tags
     class << self
+      def visible_condition(user, **options)
+        permission = options[:permission] || :view_issue_tags
+        skip_pre_condition = options[:skip_pre_condition] || true
+
+        tag_access permission, user, skip_pre_condition: skip_pre_condition
+      end
+
       def available_tags(klass, **options)
         user = options[:user].presence || User.current
 
