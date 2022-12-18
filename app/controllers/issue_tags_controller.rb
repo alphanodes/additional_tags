@@ -19,6 +19,7 @@ class IssueTagsController < ApplicationController
 
     @issue_tags.sort!
     @most_used_tags = Issue.available_tags.most_used 10
+    @append = params[:append] == 'true'
   end
 
   def update
@@ -33,7 +34,8 @@ class IssueTagsController < ApplicationController
 
       Issue.transaction do
         @issues.each do |issue|
-          issue.tag_list = tags
+          # add tags added in placeholder for a single/multiple issue or overwrite tags for single issue
+          params[:append] == 'true' ? issue.tag_list << tags : issue.tag_list = tags
           issue.save!
         end
       end
