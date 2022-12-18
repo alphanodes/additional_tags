@@ -1,7 +1,4 @@
-- if @append
-  h3.title = l :label_add_tags
-- else
-  h3.title = l :label_edit_tags_for_single_issue_tags
+h3.title = @append ? l(:label_add_tags) : l(:label_edit_tags)
 
 - if @is_bulk_editing
   h3 = l :label_bulk_edit_selected_issues
