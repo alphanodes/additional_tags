@@ -15,6 +15,9 @@ module AdditionalTags
 
         alias_method :available_columns_without_tags, :available_columns
         alias_method :available_columns, :available_columns_with_tags
+
+        alias_method :issues_without_tags, :issues
+        alias_method :issues, :issues_with_tags
       end
 
       module InstanceOverwriteMethods
@@ -36,17 +39,17 @@ module AdditionalTags
                                                    values: values,
                                                    permission: :view_issue_tags
         end
+      end
 
-        def issues(**options)
-          issues = super
+      module InstanceMethods
+        def issues_with_tags(**options)
+          issues = issues_without_tags(**options)
           return issues unless has_column? :tags
 
           Issue.load_visible_tags issues
           issues
         end
-      end
 
-      module InstanceMethods
         def initialize_available_filters_with_tags
           initialize_available_filters_without_tags
 
