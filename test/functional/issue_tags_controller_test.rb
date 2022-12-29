@@ -52,9 +52,9 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
         assert_select 'option[selected="selected"]', text: 'Second'
       end
 
-      assert_select_in html_form, '.most_used_tags' do
-        assert_select '.most_used_tag', 4
-        @most_used_tags.each { |tag| assert_select '.most_used_tag', text: tag, count: 1 }
+      assert_select_in html_form, '.most-used-tags' do
+        assert_select '.most-used-tag', 4
+        @most_used_tags.each { |tag| assert_select '.most-used-tag', text: tag, count: 1 }
       end
     end
   end
@@ -74,9 +74,9 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
         assert_select 'option[selected="selected"]', 1
       end
 
-      assert_select_in html_form, '.most_used_tags' do
-        assert_select '.most_used_tag', 4
-        @most_used_tags.each { |tag| assert_select '.most_used_tag', text: tag, count: 1 }
+      assert_select_in html_form, '.most-used-tags' do
+        assert_select '.most-used-tag', 4
+        @most_used_tags.each { |tag| assert_select '.most-used-tag', text: tag, count: 1 }
       end
     end
   end

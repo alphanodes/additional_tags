@@ -1,10 +1,8 @@
-/* stylelint-disable font-family-no-missing-generic-family-keyword */
-
 #admin-menu a.additional-tags::before {
-  font-family: Font Awesome\ 5 Free;
+  font-family: 'Font Awesome 5 Free';
   font-size: 1.2em;
   font-weight: 900;
-  content: "\f02c"; /* fas fa-tags */
+  content: '\f02c'; /* fas fa-tags */
   padding-right: 4px;
 }
 
@@ -41,7 +39,7 @@ td.tags span.additional-tag-label-color {
   padding: 0 5px;
   line-height: initial;
   font-size: 0.7rem !important;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgb(0 0 0 / 20%);
   border-radius: 0.75rem;
 }
 
@@ -110,15 +108,11 @@ span.additional-tag-label-color:hover a,
   height: 22px;
 }
 
-#edit_tags_form.box { margin: 1px 5px 0 0; }
+#edit-tags-form.box { margin: 1px 5px 0 0; }
 
-#edit_tags_form.box label {
+#edit-tags-form.box label {
   margin-right: 5px;
   font-weight: bold;
-}
-
-#edit_tags_form.box #contact_tags {
-  margin-bottom: 10px;
 }
 
 div#tags-data span.contextual {
@@ -126,9 +120,9 @@ div#tags-data span.contextual {
   padding-left: 0;
 }
 
-#edit_tags_link { opacity: 0; }
+#edit-tags-link { opacity: 0; }
 
-#tags-data:hover #edit_tags_link { opacity: 1; }
+#tags-data:hover #edit-tags-link { opacity: 1; }
 
 #sidebar ul.tags-cloud li.letter {
   border-bottom: 1px dotted;
@@ -136,12 +130,12 @@ div#tags-data span.contextual {
   font-weight: bold;
 }
 
-.most_used_tag {
+.most-used-tag {
   cursor: pointer;
   color: #169;
 }
 
-.most_used_tag:hover { text-decoration: underline; }
+.most-used-tag:hover { text-decoration: underline; }
 
 div.wiki-attributes .attribute {
   padding-left: 50px;

@@ -20,8 +20,8 @@ h3.title = @append ? l(:label_add_tags) : l(:label_edit_tags)
                                 url: issue_tags_auto_completes_path(project_id: @project),
                                 placeholder: @is_bulk_editing ? t(:label_no_change_option) : '+ add tag',
                                 tags: User.current.allowed_to?(:create_issue_tags, @project)
-    p.most_used_tags
-      = safe_join @most_used_tags.collect { |t| tag.span t.name, class: 'most_used_tag' }, ', '
+    p.most-used-tags
+      = safe_join @most_used_tags.collect { |t| tag.span t.name, class: 'most-used-tag' }, ', '
 
   .buttons
     = submit_tag l(@append ? :button_add : :button_save), name: nil

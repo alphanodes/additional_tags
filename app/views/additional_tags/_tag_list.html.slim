@@ -15,17 +15,17 @@
         span.contextual
           = link_to l(:label_edit_tags),
                     {},
-                    onclick: "$('#edit_tags_form').show(); $('#tags-data').hide(); return false;",
-                    id: 'edit_tags_link'
+                    onclick: "$('#edit-tags-form').show(); $('#tags-data').hide(); return false;",
+                    id: 'edit-tags-link'
 
-      #edit_tags_form.hidden
+      #edit-tags-form.hidden
         = form_tag update_url, method: :put do
           = render defined?(tags_form) ? tags_form : 'tags_form',
                    css_id: defined?(css_id) ? css_id : nil
           '
           = submit_tag l(:button_save), class: 'button-small'
           '
-          = link_to l(:button_cancel), {}, onclick: "$('#edit_tags_form').hide(); $('#tags-data').show(); return false;"
+          = link_to l(:button_cancel), {}, onclick: "$('#edit-tags-form').hide(); $('#tags-data').show(); return false;"
 
       javascript:
         $(function() {
