@@ -151,3 +151,8 @@ div.wiki-attributes .attribute .label {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Fix for redmine_checklists: without this, context menu of checklist is behind tag input field */
+#checklist-menu {
+  z-index: 1;
+}
