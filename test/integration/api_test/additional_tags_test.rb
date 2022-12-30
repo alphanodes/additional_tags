@@ -1,11 +1,5 @@
 # frozen_string_literal: true
 
-# This file is a part of redmine_db,
-# a Redmine plugin to manage custom database entries.
-#
-# Copyright (c) 2016-2022 AlphaNodes GmbH
-# https://alphanodes.com
-
 require File.expand_path '../../../test_helper', __FILE__
 
 module ApiTest
