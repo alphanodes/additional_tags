@@ -8,9 +8,8 @@ if ENV['COVERAGE']
   end
 end
 
-require File.expand_path "#{File.dirname __FILE__}/../../../test/test_helper"
-require File.expand_path "#{File.dirname __FILE__}/../../additionals/test/global_test_helper"
-require File.expand_path "#{File.dirname __FILE__}/../../additionals/test/crud_controller_base"
+require_relative '../../../test/test_helper'
+require_relative '../../additionals/test/global_test_helper'
 
 module AdditionalTags
   module TestHelper
