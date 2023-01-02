@@ -190,7 +190,7 @@ module AdditionalTagsHelper
   end
 
   def link_to_issue_tags_totals(entries:, project:, open_issues_only:)
-    sum = if entries.blank? || entries.size.zero?
+    sum = if entries.blank? || entries.empty?
             0
           else
             query = IssueQuery.new project: project, name: '_'
