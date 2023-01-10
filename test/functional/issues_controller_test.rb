@@ -218,6 +218,35 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
+  def test_bulk_issue_copy
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      @request.session[:user_id] = 2
+      issue1 = issues :issues_001
+      issue1.tag_list << 'new_for_issue1'
+      issue1.save!
+
+      issue2 = issues :issues_002
+      issue2.fixed_version_id = nil # remove it, because it cannot be saved otherwise
+      issue2.save!
+
+      assert_equal %w[First new_for_issue1], issue1.reload.tag_list
+      assert_empty issue2.tag_list
+
+      post :bulk_update,
+           params: { ids: [issue1.id, issue2.id],
+                     issue: { project_id: '', tracker_id: '', tag_list: ['bulk_tag'] },
+                     copy: '1' }
+
+      assert_response :redirect
+
+      new_issue1 = Issue.where.not(id: 1).find_by subject: 'Cannot print recipes'
+      new_issue2 = Issue.where.not(id: 2).find_by subject: 'Add ingredients categories'
+
+      assert_equal %w[bulk_tag First new_for_issue1], new_issue1.tag_list
+      assert_equal %w[bulk_tag], new_issue2.tag_list
+    end
+  end
+
   def test_post_bulk_edit_with_changed_tags
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2

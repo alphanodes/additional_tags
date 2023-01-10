@@ -115,7 +115,8 @@ module AdditionalTags
 
           copy_from_without_tags arg, **options
           issue = arg.is_a?(Issue) ? arg : Issue.visible.find(arg)
-          self.tag_list = issue.tag_list
+          self.tags = issue.tags           # required for bulk copy
+          self.tag_list = tags.map(&:name) # required for copy
           self
         end
 
