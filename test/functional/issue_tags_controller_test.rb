@@ -281,13 +281,15 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       post :update,
            params: { ids: [2], issue: { tag_list: %w[Second] } }
 
-      post :update,
-           params: { ids: [1, 2], issue: { tag_list: %w[Third] }, append: 'true' }
+      assert_difference 'Journal.count', 2 do
+        post :update,
+             params: { ids: [1, 2], issue: { tag_list: %w[New] }, append: 'true' }
 
-      assert_response :redirect
-      assert_redirected_to action: 'update'
-      assert_equal %w[First Third], Issue.find(1).tag_list.sort
-      assert_equal %w[Second Third], Issue.find(2).tag_list.sort
+        assert_response :redirect
+        assert_redirected_to action: 'update'
+        assert_sorted_equal %w[First New], Issue.find(1).tag_list
+        assert_sorted_equal %w[Second New], Issue.find(2).tag_list
+      end
     end
   end
 

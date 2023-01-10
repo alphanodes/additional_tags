@@ -34,8 +34,11 @@ class IssueTagsController < ApplicationController
 
       Issue.transaction do
         @issues.each do |issue|
+          issue.init_journal User.current
           # add tags added in placeholder for a single/multiple issue or overwrite tags for single issue
           params[:append] == 'true' ? issue.tag_list << tags : issue.tag_list = tags
+
+          issue.tags_to_journal issue.tag_list_was&.to_s, issue.tag_list.to_s
           issue.save!
         end
       end

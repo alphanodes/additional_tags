@@ -84,8 +84,7 @@ module AdditionalTags
       def tags_journal(issue, params)
         return unless params && params[:issue] && params[:issue][:tag_list]
 
-        issue.tags_to_journal Issue.find_by(id: issue.id)&.tag_list&.to_s,
-                              issue.tag_list.to_s
+        issue.tags_to_journal issue.tag_list_was&.to_s, issue.tag_list.to_s
       end
     end
   end

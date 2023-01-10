@@ -53,7 +53,7 @@ class WikiPageTest < AdditionalTags::TestCase
 
         page.reload
 
-        assert_equal %w[First Test1], page.tag_list.sort
+        assert_sorted_equal %w[First Test1], page.tag_list
       end
     end
   end
