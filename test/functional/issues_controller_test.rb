@@ -173,7 +173,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
-  def test_post_bulk_edit_without_tag_list
+  def test_bulk_edit_without_tag_list
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
 
@@ -182,6 +182,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       issue1.save!
 
       issue2 = issues :issues_002
+      issue2.fixed_version_id = nil # remove it, because it cannot be saved otherwise
       issue2.tag_list << 'new_for_issue2'
       issue2.save!
 
@@ -198,7 +199,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
-  def test_post_bulk_edit_with_empty_string_tags
+  def test_bulk_edit_with_empty_string_tags
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 3
       issue1 = issues :issues_001
@@ -218,7 +219,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
-  def test_bulk_issue_copy
+  def test_bulk_copy
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
       issue1 = issues :issues_001
@@ -247,7 +248,39 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
-  def test_post_bulk_edit_with_changed_tags
+  def test_bulk_copy_removal_of_shared_tags
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      @request.session[:user_id] = 1
+      issue1 = issues :issues_001
+      issue1.tag_list << 'a_common_tag'
+      issue1.save!
+
+      issue2 = issues :issues_002
+      issue2.fixed_version_id = nil # remove it, because it cannot be saved otherwise
+      issue2.tag_list << 'a_common_tag'
+      issue2.save!
+
+      assert_equal %w[First a_common_tag], issue1.reload.tag_list
+      assert_equal %w[a_common_tag], issue2.reload.tag_list
+
+      # Removing 'a_common_tag'
+      post :bulk_update,
+           params: { ids: [issue1.id, issue2.id],
+                     common_tags: Issue.common_tag_list_from_issues([issue1.id, issue2.id]).to_s,
+                     issue: { project_id: '', tracker_id: '', tag_list: [''] },
+                     copy: '1' }
+
+      assert_response :redirect
+
+      new_issue1 = Issue.where.not(id: 1).find_by subject: 'Cannot print recipes'
+      new_issue2 = Issue.where.not(id: 2).find_by subject: 'Add ingredients categories'
+
+      assert_equal %w[First], new_issue1.tag_list
+      assert_empty new_issue2.tag_list
+    end
+  end
+
+  def test_bulk_edit_with_changed_tags
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
       issue1 = issues :issues_001
@@ -255,6 +288,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       issue1.save!
 
       issue2 = issues :issues_002
+      issue2.fixed_version_id = nil # remove it, because it cannot be saved otherwise
       issue2.tag_list << 'new_for_issue2'
       issue2.save!
 
@@ -272,7 +306,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
-  def test_post_bulk_edit_removal_of_shared_tags
+  def test_bulk_edit_removal_of_shared_tags
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
       issue1 = issues :issues_001
@@ -280,6 +314,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       issue1.save!
 
       issue2 = issues :issues_002
+      issue2.fixed_version_id = nil # remove it, because it cannot be saved otherwise
       issue2.tag_list << 'a_common_tag'
       issue2.save!
 
@@ -299,11 +334,11 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       issue2.remove_instance_variable :@tag_list
 
       assert_equal %w[First], issue1.tag_list
-      assert_predicate issue2.tag_list, :empty?
+      assert_empty issue2.tag_list
     end
   end
 
-  def test_get_new_with_permission_edit_tags
+  def test_new_with_permission_edit_tags
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 3
       get :new,
@@ -313,7 +348,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
-  def test_get_new_without_permission_edit_tags
+  def test_new_without_permission_edit_tags
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 7
       get :new,
@@ -323,7 +358,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
-  def test_get_new_with_permission_edit_tags_in_other_project
+  def test_new_with_permission_edit_tags_in_other_project
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 2
       get :new,
@@ -333,7 +368,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
-  def test_get_edit_with_permission_edit_tags
+  def test_edit_with_permission_edit_tags
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       # User(id: 2) has role Manager in Project(id: 1) and Project(id: 1) contains Issue(id: 1)
       @request.session[:user_id] = 2
@@ -346,7 +381,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
-  def test_get_edit_without_permission_edit_tags
+  def test_edit_without_permission_edit_tags
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 7
       get :edit,

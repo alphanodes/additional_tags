@@ -101,8 +101,6 @@ module AdditionalTags
           tags = attrs.delete :tag_list
           tags = Array(tags).reject(&:empty?)
 
-          # Additionals.debug "tags: #{tags.inspect} - project: #{project&.id} - access: #{user.allowed_to? :create_issue_tags, project}"
-
           if user.allowed_to?(:create_issue_tags, project) ||
              user.allowed_to?(:edit_issue_tags, project) && Issue.allowed_tags?(tags)
             attrs[:tag_list] = tags # required fix for journal details
