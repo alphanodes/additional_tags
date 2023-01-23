@@ -26,7 +26,4 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'acts-as-taggable-on', '~> 9.0'
   spec.add_runtime_dependency 'redmine_plugin_kit'
-
-  spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'rake'
 end

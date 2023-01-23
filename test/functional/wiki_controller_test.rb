@@ -16,6 +16,7 @@ class WikiControllerTest < AdditionalTags::ControllerTest
 
   def test_update_page_without_changes_should_not_create_content_version
     @request.session[:user_id] = 2
+
     with_plugin_settings 'additional_tags', active_wiki_tags: 1 do
       assert_no_difference 'WikiContentVersion.count' do
         put :update,
@@ -36,6 +37,7 @@ class WikiControllerTest < AdditionalTags::ControllerTest
 
   def test_update_page_with_changes_should_create_content_version
     @request.session[:user_id] = 2
+
     with_plugin_settings 'additional_tags', active_wiki_tags: 1 do
       assert_difference 'WikiContentVersion.count' do
         put :update,
@@ -56,6 +58,7 @@ class WikiControllerTest < AdditionalTags::ControllerTest
 
   def test_update_page_should_not_save_tags_without_permission
     @request.session[:user_id] = 3
+
     with_plugin_settings 'additional_tags', active_wiki_tags: 1 do
       assert_no_difference 'WikiContentVersion.count' do
         put :update,
