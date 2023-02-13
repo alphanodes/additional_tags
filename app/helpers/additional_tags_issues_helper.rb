@@ -10,16 +10,8 @@ module AdditionalTagsIssuesHelper
        AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:view_issue_tags, @project)
 
       api.array :tags do
-        # support tags, which are not saved to database
-        if @issue.tags.present? && @issue.tags.map(&:name) == @issue.tag_list
-          @issue.tags.each do |tag|
-            api.tag id: tag.id, name: tag.name
-          end
-        elsif @issue.tag_list.present?
-          @issue.tag_list.each do |tag_name|
-            # there is no id for unsaved tags
-            api.tag name: tag_name
-          end
+        @issue.tags.each do |tag|
+          api.tag id: tag.id, name: tag.name
         end
       end
     end
