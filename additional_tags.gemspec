@@ -16,8 +16,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/alphanodes/additional_tags'
   spec.license       = 'GPL-2.0'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match %r{^((test|spec|features)/|Gemfile)}
+  spec.files         = Dir['**/*'].reject do |f|
+    f.match %r{^((doc|test)/|Gemfile|package\.json)}
   end
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename f }
