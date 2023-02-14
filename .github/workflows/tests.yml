@@ -135,3 +135,7 @@ jobs:
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
         working-directory: redmine
         run: bundle exec rake redmine:plugins:migrate NAME=additional_tags VERSION=0
+
+      - name: Run build gem file
+        working-directory: redmine/plugins/additional_tags
+        run: gem build additional_tags.gemspec
