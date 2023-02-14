@@ -17,10 +17,8 @@ Gem::Specification.new do |spec|
   spec.license       = 'GPL-2.0'
 
   spec.files         = Dir['**/*'].reject do |f|
-    f.match %r{^((doc|test)/|Gemfile|package\.json)}
+    f.match %r{^((doc|test)/|Rakefile|Gemfile|Gemfile\.lock|additional_tags\.gemspec|package\.json)}
   end
-  spec.bindir        = 'exe'
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename f }
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 2.7'
 
