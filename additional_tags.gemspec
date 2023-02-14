@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'GPL-2.0'
 
   spec.files         = Dir['**/*'].reject do |f|
-    f.match %r{^((doc|test)/|Rakefile|Gemfile|Gemfile\.lock|additional_tags\.gemspec|package\.json)}
+    f.match %r{^((doc|test|node_modules)/|Rakefile|Gemfile|Gemfile\.lock|additional_tags\.gemspec|package\.json|yarn\.lock)}
   end
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 2.7'
