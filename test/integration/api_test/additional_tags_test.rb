@@ -35,7 +35,7 @@ module ApiTest
             headers: credentials('admin')
 
         assert_response :success
-        tags = JSON.parse response.body
+        tags = response.parsed_body
 
         assert_not_empty tags['tags']
         assert_equal 5, tags['tags'].size
