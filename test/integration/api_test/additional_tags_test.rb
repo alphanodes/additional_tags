@@ -48,7 +48,7 @@ module ApiTest
       get '/additional_tags.xml',
           headers: credentials('admin')
 
-      assert_response 500
+      assert_response :internal_server_error
     end
   end
 end
