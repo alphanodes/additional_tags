@@ -24,4 +24,5 @@ linters:
       - Style/FrozenStringLiteralComment
       - Style/IfUnlessModifier
       - Style/Next
+      - Style/RedundantLineContinuation
       - Style/WhileUntilModifier
