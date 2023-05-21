@@ -53,7 +53,7 @@ module AdditionalTagsHelper
     when 'name:desc'
       tags = AdditionalTags::Tags.sort_tag_list(tags).reverse
     when 'count:asc'
-      tags.sort! { |a, b| a.count <=> b.count }
+      tags.sort_by!(&:count)
     when 'count:desc'
       tags.sort! { |a, b| b.count <=> a.count }
     else
