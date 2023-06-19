@@ -3,8 +3,7 @@
 class MigrateExistingQueries < ActiveRecord::Migration[5.2]
   def up
     Query.subclasses.each do |q|
-      query_class = Object.const_get q.class_name
-      query_class.all.each do |query|
+      q.all.each do |query|
         if query.filters.has_key?("issue_tags")
           query.filters["tags"] = query.filters.delete("issue_tags")
         end
