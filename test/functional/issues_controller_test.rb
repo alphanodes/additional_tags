@@ -80,7 +80,10 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
 
     assert_response :success
-    assert_select 'div.tags span.additional-tag-label-color a', 1, text: 'First'
+    assert_select 'div.tags' do
+      assert_select 'span.additional-tag-label-color a', 1
+      assert_select 'span.additional-tag-label-color a', text: 'First'
+    end
   end
 
   def test_show_issue_should_display_multiple_tags

@@ -208,7 +208,7 @@ module AdditionalTags
         if projects_allowed.present?
           "#{Project.table_name}.id IN (#{projects_allowed.join ','})" unless projects_allowed.empty?
         else
-          '1=0'
+          AdditionalsQuery::NO_RESULT_CONDITION
         end
       end
     end
