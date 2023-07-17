@@ -13,6 +13,7 @@ module AdditionalTags
       end
 
       module InstanceMethods
+        include AdditionalTagsHelper
         def column_content_with_tags(column, item)
           if column.name == :issue_tags || item.is_a?(Issue) && column.name == :tags
             tags = if item.instance_variable_defined? :@visible_tags
