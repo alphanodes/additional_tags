@@ -15,7 +15,6 @@ de:
   label_manage_tags: TAGs verwalten
   label_merge_selected_tags: Ausgewählte TAGs zusammenführen
   label_open_issues_only: Zeige nur offene Tickets
-  label_quantity: Anzahl
   label_show_with_count: Zeige Anzahl zu TAG
   label_tag_color_theme: Farbschema %{value}
   label_tags_color_theme: Farbe

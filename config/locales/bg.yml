@@ -15,7 +15,6 @@ bg:
   label_manage_tags: "Управление на маркерите"
   label_merge_selected_tags: "Обединение на избраните маркери"
   label_open_issues_only: "Показване само на отворените задачи"
-  label_quantity: "Количество"
   label_show_with_count: "Показване на брой маркирани обекти"
   label_tag_color_theme: "Тема на цвета %{value}"
   label_tags_color_theme: "Цвят"

@@ -15,7 +15,6 @@ pl:
   label_manage_tags: "Zarządzaj tagami"
   label_merge_selected_tags: "Łączenie wybranych tagów"
   label_open_issues_only: "Wyświetlaj tylko sprawy otwarte"
-  label_quantity: "Ilość"
   label_show_with_count: "Wyświetlanie ilości na etykiecie"
   label_tag_color_theme: "Kolorowy motyw %{value}"
   label_tags_colors: Kolor

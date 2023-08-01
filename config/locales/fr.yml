@@ -15,7 +15,6 @@ fr:
   label_manage_tags: "Gérer les tags"
   label_merge_selected_tags: "Fusionner les tags sélectionnées"
   label_open_issues_only: "Afficher uniquement les demandes ouverts"
-  label_quantity: "Quantité"
   label_show_with_count: "Afficher le montant sur l'tags"
   label_tag_color_theme: "Thème de la couleur %{value}"
   label_tags_colors: "Couleur"

@@ -15,7 +15,6 @@ cs:
   label_manage_tags: "Spravovat štítky"
   label_merge_selected_tags: "Sloučit vybrané značky"
   label_open_issues_only: "Zobrazit pouze otevřené problémy"
-  label_quantity: "Množství"
   label_show_with_count: "Zobrazit částku na značce"
   label_tag_color_theme: "Barevné téma %{value}"
   label_tags_color_theme: "Barva"

@@ -15,7 +15,6 @@ it:
   label_manage_tags: "Gestire i tag"
   label_merge_selected_tags: "Unisci i tag selezionati"
   label_open_issues_only: "Mostra solo i segnalazione"
-  label_quantity: "Numero"
   label_show_with_count: "Visualizzare l'importo sul tag"
   label_tag_color_theme: "Tema colore %{value}"
   label_tags_colors: Colore
