@@ -136,3 +136,6 @@ Rails/RedundantPresenceValidationOnBelongsTo:
 # should be removed and corrected in code, if this bug is fixed
 Rails/ActionControllerFlashBeforeRender:
   Enabled: false
+
+Bundler/DuplicatedGroup:
+  Enabled: false
