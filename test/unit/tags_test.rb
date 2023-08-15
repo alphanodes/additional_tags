@@ -112,7 +112,8 @@ class TagsTest < AdditionalTags::TestCase
 
     assert_difference 'ActsAsTaggableOn::Tag.count', 1 do
       issue.tag_list << 'unused_new_tag'
-      issue.save!
+
+      assert_save issue
     end
 
     tag = ActsAsTaggableOn::Tag.find_by name: 'unused_new_tag'

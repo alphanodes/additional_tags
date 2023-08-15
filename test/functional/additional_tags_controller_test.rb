@@ -113,6 +113,9 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
     issue = Issue.generate! project_id: project.id
     issue.tag_list = tags
     issue.status = IssueStatus.where(is_closed: true).sorted.first if closed
-    issue.save
+
+    assert_save issue
+
+    issue
   end
 end

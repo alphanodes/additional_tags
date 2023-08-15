@@ -182,12 +182,14 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
       issue1 = issues :issues_001
       issue1.tag_list << 'new_for_issue1'
-      issue1.save!
+
+      assert_save issue1
 
       issue2 = issues :issues_002
       issue2.fixed_version_id = nil # remove it, because it cannot be saved otherwise
       issue2.tag_list << 'new_for_issue2'
-      issue2.save!
+
+      assert_save issue2
 
       assert_equal %w[First new_for_issue1], issue1.reload.tag_list
       assert_equal %w[new_for_issue2], issue2.reload.tag_list
@@ -227,11 +229,13 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       @request.session[:user_id] = 2
       issue1 = issues :issues_001
       issue1.tag_list << 'new_for_issue1'
-      issue1.save!
+
+      assert_save issue1
 
       issue2 = issues :issues_002
       issue2.fixed_version_id = nil # remove it, because it cannot be saved otherwise
-      issue2.save!
+
+      assert_save issue2
 
       assert_equal %w[First new_for_issue1], issue1.reload.tag_list
       assert_empty issue2.tag_list
@@ -256,12 +260,14 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       @request.session[:user_id] = 1
       issue1 = issues :issues_001
       issue1.tag_list << 'a_common_tag'
-      issue1.save!
+
+      assert_save issue1
 
       issue2 = issues :issues_002
       issue2.fixed_version_id = nil # remove it, because it cannot be saved otherwise
       issue2.tag_list << 'a_common_tag'
-      issue2.save!
+
+      assert_save issue2
 
       assert_equal %w[First a_common_tag], issue1.reload.tag_list
       assert_equal %w[a_common_tag], issue2.reload.tag_list
@@ -288,12 +294,14 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       @request.session[:user_id] = 2
       issue1 = issues :issues_001
       issue1.tag_list << 'new_for_issue1'
-      issue1.save!
+
+      assert_save issue1
 
       issue2 = issues :issues_002
       issue2.fixed_version_id = nil # remove it, because it cannot be saved otherwise
       issue2.tag_list << 'new_for_issue2'
-      issue2.save!
+
+      assert_save issue2
 
       assert_equal %w[First new_for_issue1], issue1.reload.tag_list
       assert_equal %w[new_for_issue2], issue2.reload.tag_list
@@ -314,12 +322,14 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       @request.session[:user_id] = 2
       issue1 = issues :issues_001
       issue1.tag_list << 'a_common_tag'
-      issue1.save!
+
+      assert_save issue1
 
       issue2 = issues :issues_002
       issue2.fixed_version_id = nil # remove it, because it cannot be saved otherwise
       issue2.tag_list << 'a_common_tag'
-      issue2.save!
+
+      assert_save issue2
 
       assert_equal %w[First a_common_tag], issue1.reload.tag_list
       assert_equal %w[a_common_tag], issue2.reload.tag_list
