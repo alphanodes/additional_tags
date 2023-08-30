@@ -42,7 +42,8 @@ At the moment this are:
 - redmine_passwords (password tagging)
 - redmine_reporting (project tagging)
 - redmine_hrm (holiday tagging)
-- redmine_servicedesk (contact tagging)
+- redmine_servicedesk (tagging of contact, canned responses, invoices, helpdesk issues)
+- redmine_wiki_guide (wiki page tagging)
 
 Start using it, too. The example image shows the centralized tag management in the plugin configuration.
 
@@ -63,7 +64,7 @@ Start using it, too. The example image shows the centralized tag management in t
 
 ## Installing
 
-### 1. Get right plugin version
+### 1. Get correct plugin version
 
 To install stable version of additional_tags, use
 
