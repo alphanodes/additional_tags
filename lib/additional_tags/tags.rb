@@ -39,8 +39,7 @@ module AdditionalTags
       end
 
       def all_type_tags(klass, without_projects: false)
-        ActsAsTaggableOn::Tag.all
-                             .joins(tag_for_joins(klass, without_projects: without_projects))
+        ActsAsTaggableOn::Tag.joins(tag_for_joins(klass, without_projects: without_projects))
                              .distinct
                              .order(:name)
       end

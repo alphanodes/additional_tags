@@ -6,7 +6,7 @@ class MigrateExistingTags < ActiveRecord::Migration[5.2]
 
     excluded_taggable_types = %w[Question Contact DriveEntry]
 
-    MigrateTag.all.each do |old_tag|
+    MigrateTag.find_each do |old_tag|
       ActsAsTaggableOn::Tagging.transaction do
         tag = ActsAsTaggableOn::Tag.find_by name: old_tag.name
         cnt = 0

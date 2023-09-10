@@ -16,17 +16,17 @@ module AdditionalTags
     include Additionals::GlobalTestHelper
 
     def prepare_tests
-      Role.where(id: [1, 2, 3]).each do |r|
+      Role.where(id: [1, 2, 3]).find_each do |r|
         r.permissions << :view_issue_tags
         r.save
       end
 
-      Role.where(id: [1, 2]).each do |r|
+      Role.where(id: [1, 2]).find_each do |r|
         r.permissions << :edit_issue_tags
         r.save
       end
 
-      Role.where(id: [1]).each do |r|
+      Role.where(id: [1]).find_each do |r|
         r.permissions << :create_issue_tags
         r.permissions << :add_wiki_tags
         r.save
