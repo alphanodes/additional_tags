@@ -44,7 +44,7 @@ class IssueTest < AdditionalTags::TestCase
   end
 
   def test_open_issue_tags
-    assert(Issue.available_tags(open_issues_only: true).to_a.size < Issue.available_tags.to_a.size)
+    assert_operator Issue.available_tags(open_issues_only: true).to_a.size, :<, Issue.available_tags.to_a.size
   end
 
   def test_group_by_status_with_tags
