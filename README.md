@@ -1,6 +1,6 @@
 # Additional Tags - Tags for Redmine
 
-[![Rate at redmine.org](https://img.shields.io/badge/rate%20at-redmine.org-blue.svg?style=flat)](https://www.redmine.org/plugins/additional_tags) [![Run Linters](https://github.com/AlphaNodes/additional_tags/workflows/Run%20Linters/badge.svg)](https://github.com/AlphaNodes/additional_tags/actions?query=workflow%3A%22Run+Linters%22) [![Run Tests](https://github.com/AlphaNodes/additional_tags/workflows/Tests/badge.svg)](https://github.com/AlphaNodes/additional_tags/actions?query=workflow%3ATests)
+[![Rate at redmine.org](https://img.shields.io/badge/rate%20at-redmine.org-blue.svg?style=flat)](https://www.redmine.org/plugins/additional_tags) [![Run Linters](https://github.com/alphanodes/additional_tags/workflows/Run%20Linters/badge.svg)](https://github.com/alphanodes/additional_tags/actions?query=workflow%3A%22Run+Linters%22) [![Run Tests](https://github.com/alphanodes/additional_tags/workflows/Tests/badge.svg)](https://github.com/alphanodes/additional_tags/actions?query=workflow%3ATests)
 
 ## Features
 
@@ -8,15 +8,15 @@
   -  *Activate issue tags* in the plugin configuration
   -  and update your role permissions in the Redmine administration *Roles & permissions / Issue tracking*.
 - Tags for wiki pages. To use them  you need to:
-  - *Activate wiki tags* in the plugin configuration 
+  - *Activate wiki tags* in the plugin configuration
   -  and update your role permissions in the Redmine administration *Roles & permissions / Wiki*
-- Available role permissions for issue tags (section *Issue tracking*): 
+- Available role permissions for issue tags (section *Issue tracking*):
   - Add issue tags
   - Edit issue tags
   - Display issue tags
 - Available role permissions wiki tags (section *Wiki*):
   - Add wiki tags
-- Managing tags centrally in the plugin settings (edit, delete, merge)- 
+- Managing tags centrally in the plugin settings (edit, delete, merge)-
 - Grouped tags.
   - Grouping of tags possible, when using a colon in tag (all tags with same base name get the same color). Typo example: ``Plugin:HRM``
 - Scoped tags:
@@ -29,11 +29,11 @@
   used tags or tagging tables for issue or wiki tagging, tags will be migrated automatically there
 - Based on the very popular [acts-as-taggable-on](https://github.com/mbleigh/acts-as-taggable-on)
 
-![screenshot](https://raw.githubusercontent.com/AlphaNodes/additional_tags/master/doc/images/tag-overview.png)
+![screenshot](https://raw.githubusercontent.com/alphanodes/additional_tags/master/doc/images/tag-overview.png)
 
 The screenshot shows: regular tags, grouped tags and scoped tags. The colors are assigned randomly. But you can change the color by choosing a *Color theme* in the plugin settings.
 
-![screenshot](https://raw.githubusercontent.com/AlphaNodes/additional_tags/master/doc/images/additional-tags.gif)
+![screenshot](https://raw.githubusercontent.com/alphanodes/additional_tags/master/doc/images/additional-tags.gif)
 
 Other plugins use additional_tags as framework in order to support tags for their entities.
 At the moment this are:
@@ -47,7 +47,7 @@ At the moment this are:
 
 Start using it, too. The example image shows the centralized tag management in the plugin configuration.
 
-![screenshot](https://raw.githubusercontent.com/AlphaNodes/additional_tags/master/doc/images/additional-tags-framework.png)
+![screenshot](https://raw.githubusercontent.com/alphanodes/additional_tags/master/doc/images/additional-tags-framework.png)
 
 ## Why another Tag plugin?
 
