@@ -54,7 +54,7 @@ module AdditionalTags
 
         pdf.ln
         pdf.SetFontStyle '', 8
-        pdf.RDMCell 190, 5, page.tag_list.to_list
+        pdf.RDMCell 190, 5, page.tag_list.to_comma_list
         pdf.ln
       end
 

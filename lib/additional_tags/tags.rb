@@ -145,7 +145,7 @@ module AdditionalTags
                    "COUNT(DISTINCT #{TAGGING_TABLE_NAME}.taggable_id) AS count"]
 
         columns << "MIN(#{TAGGING_TABLE_NAME}.created_at) AS last_created" if sort_by == 'last_created'
-        columns.to_list
+        columns.to_comma_list
       end
 
       def status_for_tag_value(scope:, tag_id:, group_id: nil, group_id_is_bool: false)
