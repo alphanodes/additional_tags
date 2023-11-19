@@ -28,7 +28,7 @@ module AdditionalTags
           scope = scope.where klass.visible_condition(user)
         end
 
-        # @NOTE: this should be activated and replace next line
+        # @TODO: this should be activated and replace next line
         #        Additionals::EntityMethodsGlobal should be included for this
         #
         # if options[:name_like]
