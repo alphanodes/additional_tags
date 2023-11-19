@@ -27,6 +27,15 @@ module AdditionalTags
         elsif options[:visible_condition]
           scope = scope.where klass.visible_condition(user)
         end
+
+        # @NOTE: this should be activated and replace next line
+        #        Additionals::EntityMethodsGlobal should be included for this
+        #
+        # if options[:name_like]
+        #   scope = scope.like_with_wildcard columns: "#{TAG_TABLE_NAME}.name",
+        #                                    value: options[:name_like],
+        #                                    wildcard: :both
+        # end
         scope = scope.where "LOWER(#{TAG_TABLE_NAME}.name) LIKE ?", "%#{options[:name_like].downcase}%" if options[:name_like]
         scope = scope.where "#{TAG_TABLE_NAME}.name=?", options[:name] if options[:name]
         scope = scope.where "#{TAGGING_TABLE_NAME}.taggable_id!=?", options[:exclude_id] if options[:exclude_id]
