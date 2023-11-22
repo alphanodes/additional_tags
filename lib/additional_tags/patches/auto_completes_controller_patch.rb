@@ -6,25 +6,27 @@ module AdditionalTags
       extend ActiveSupport::Concern
 
       included do
+        include AdditionalTagsHelper
         include InstanceMethods
       end
 
       module InstanceMethods
         def issue_tags
           suggestion_order = AdditionalTags.setting(:tags_suggestion_order) || 'name'
-          @tags = Issue.available_tags name_like: build_search_query_term(params),
-                                       sort_by: suggestion_order,
-                                       order: (suggestion_order == 'name' ? 'ASC' : 'DESC')
+          tags = Issue.available_tags name_like: build_search_query_term(params),
+                                      sort_by: suggestion_order,
+                                      order: (suggestion_order == 'name' ? 'ASC' : 'DESC')
 
-          @tags = AdditionalTags::Tags.sort_tag_list @tags if suggestion_order == 'name'
+          tags = AdditionalTags::Tags.sort_tag_list tags if suggestion_order == 'name'
 
-          render layout: false, partial: 'additional_tag_list', locals: { unsorted: true }
+          render json: format_tags_json(tags)
         end
 
         def wiki_tags
-          @tags = WikiPage.available_tags project: nil,
-                                          name_like: build_search_query_term(params)
-          render layout: false, partial: 'additional_tag_list', locals: { unsorted: true }
+          tags = WikiPage.available_tags project: nil,
+                                         name_like: build_search_query_term(params)
+
+          render json: format_tags_json(tags)
         end
 
         def all_tags
@@ -32,10 +34,10 @@ module AdditionalTags
 
           q = build_search_query_term params
           sql_for_where = "LOWER(#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name) LIKE ?"
-          @tags = ActsAsTaggableOn::Tag.where(sql_for_where, "%#{q.downcase}%")
-                                       .order(name: :asc)
+          tags = ActsAsTaggableOn::Tag.where(sql_for_where, "%#{q.downcase}%")
+                                      .order(name: :asc)
 
-          render layout: false, partial: 'additional_tag_list', locals: { unsorted: true }
+          render json: format_tags_json(tags)
         end
       end
     end

@@ -3,6 +3,15 @@
 module AdditionalTagsHelper
   include ActsAsTaggableOn::TagsHelper
 
+  def format_tags_json(tags)
+    tags.map do |tag|
+      {
+        'id' => tag.name,
+        'text' => tag.name
+      }
+    end
+  end
+
   def manageable_tags
     AdditionalTags::Tags.sort_tag_list ActsAsTaggableOn::Tag.where({})
   end
