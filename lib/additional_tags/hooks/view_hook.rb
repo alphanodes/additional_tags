@@ -19,10 +19,14 @@ module AdditionalTags
       render_on :view_wiki_show_sidebar_bottom, partial: 'wiki/tags_sidebar'
 
       def controller_issues_edit_before_save(context = {})
+        return unless AdditionalTags.setting? :active_issue_tags
+
         tags_journal context[:issue], context[:params]
       end
 
       def controller_issues_bulk_edit_before_save(context = {})
+        return unless AdditionalTags.setting? :active_issue_tags
+
         issue = context[:issue]
         params = context[:params]
 

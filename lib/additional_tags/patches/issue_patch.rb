@@ -10,8 +10,8 @@ module AdditionalTags
         include InstanceMethods
         acts_as_ordered_taggable
 
-        before_save :prepare_save_tag_change
-        before_save :sort_tag_list
+        before_save :prepare_save_tag_change, if: proc { AdditionalTags.setting?(:active_issue_tags) }
+        before_save :sort_tag_list, if: proc { AdditionalTags.setting?(:active_issue_tags) }
 
         validate :validate_tags, if: proc { AdditionalTags.setting?(:active_issue_tags) }
 
