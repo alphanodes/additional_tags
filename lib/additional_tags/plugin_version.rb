@@ -2,6 +2,6 @@
 
 module AdditionalTags
   module PluginVersion
-    VERSION = '3.1.0-main' unless defined? AdditionalTags::PluginVersion::VERSION
+    VERSION = '3.1.0' unless defined? AdditionalTags::PluginVersion::VERSION
   end
 end
