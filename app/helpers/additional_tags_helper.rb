@@ -39,7 +39,7 @@ module AdditionalTagsHelper
 
   def manageable_tag_column_values(tag)
     columns = []
-    manageable_tag_columns.each do |_column, column_values|
+    manageable_tag_columns.each_value do |column_values|
       cnt = column_values[:counts][tag.id]
       cnt = 0 if cnt.blank?
 
