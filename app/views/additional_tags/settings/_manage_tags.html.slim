@@ -9,7 +9,7 @@
                             title: "#{l :button_check_all}/#{l :button_uncheck_all}"
 
           th = l :field_name
-          - manageable_tag_columns.each do |_column, column_values|
+          - manageable_tag_columns.each_value do |column_values|
             th = column_values[:label]
           th
       tbody
