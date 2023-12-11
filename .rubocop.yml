@@ -87,6 +87,9 @@ Style/FrozenStringLiteralComment:
   Exclude:
     - '/**/*.rsb'
 
+Style/SuperWithArgsParentheses:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
