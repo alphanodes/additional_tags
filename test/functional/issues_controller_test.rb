@@ -211,7 +211,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       issue2 = issues :issues_002
 
       assert_equal ['First'], issue1.tag_list
-      assert issue2.tag_list.is_a? Array
+      assert_kind_of Array, issue2.tag_list
       assert_empty issue2.tag_list
 
       post :bulk_update,

@@ -104,7 +104,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       assert_response :redirect
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
-      assert @issue_1.tag_list.is_a? Array
+      assert_kind_of Array, @issue_1.tag_list
       assert_empty @issue_1.tag_list
     end
   end
@@ -118,7 +118,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
 
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_added), flash[:notice]
-      assert @issue_1.tag_list.is_a? Array
+      assert_kind_of Array, @issue_1.tag_list
       assert_empty @issue_1.tag_list
     end
   end

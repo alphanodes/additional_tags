@@ -14,8 +14,8 @@ class I18nTest < AdditionalTags::TestCase
   end
 
   def test_valid_languages
-    assert valid_languages.is_a?(Array)
-    assert valid_languages.first.is_a?(Symbol)
+    assert_kind_of Array, valid_languages
+    assert_kind_of Symbol, valid_languages.first
   end
 
   def test_locales_validness
