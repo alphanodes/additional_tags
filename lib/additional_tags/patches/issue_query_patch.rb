@@ -42,7 +42,8 @@ module AdditionalTags
       end
 
       module InstanceMethods
-        def issues_with_tags(**options)
+        def issues_with_tags(options = nil)
+          options ||= {}
           issues = issues_without_tags(**options)
           return issues unless has_column? :tags
 
