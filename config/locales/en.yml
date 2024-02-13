@@ -15,6 +15,7 @@ en:
   label_manage_tags: "Manage tags"
   label_merge_selected_tags: "Merge selected tags"
   label_open_issues_only: "Display open issues only"
+  label_show_tags_after_queries: "Show tags after queries"
   label_show_with_count: "Display amount on tag"
   label_tag_color_theme: Color theme %{value}
   label_tags_color_theme: Color
