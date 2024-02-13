@@ -10,6 +10,9 @@ fieldset.settings
     = additionals_settings_checkbox :show_with_count
 
   p
+    = additionals_settings_checkbox :show_tags_after_queries
+
+  p
     = additionals_settings_select :tags_sort_by,
                                   options_for_select(%w[name count].collect { |v| [l("tags_sort_by_#{v}"), v] },
                                                      @settings[:tags_sort_by])
