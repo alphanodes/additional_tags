@@ -1,0 +1,44 @@
+fa:
+  activerecord:
+    errors:
+      messages:
+        invalid_mutually_exclusive_tags: از تگ های منحصر به فرد متقابل استفاده شده است
+  field_issue_tags: تگ‌های مسئله
+  field_tag_list: تگ‌ها
+  field_tags: تگ‌ها
+  label_active_issue_tags: "تگ‌های فعال مسئله"
+  label_active_wiki_tags: "تگ‌های فعال ویکی"
+  label_add_tags: "افزودن تگ"
+  label_amount_entities_with_tags: "مقدار %{name} با تگ‌ها"
+  label_amount_tags: "تگ‌های مقدار"
+  label_edit_tags: "ویرایش تگ‌ها"
+  label_manage_tags: "مدیریت تگ‌ها"
+  label_merge_selected_tags: "ادغام تگ‌های انتخابی"
+  label_open_issues_only: "مشاهده مسائل باز"
+  label_show_with_count: "نمایش مقدار روی تگ"
+  label_tag_color_theme: تم رنگی %{value}
+  label_tags_color_theme: رنگ
+  label_tags_sidebar: "نمایش تگ‌ها در حاشیه به عنوان"
+  label_tags_sort_by: "مرتب سازی تگ‌ها بر اساس"
+  label_tags_suggestion_order: "سفارش پیشنهاد"
+  label_tags_tag: "تگ"
+  label_tags_without_color: بدون رنگ
+  label_use_colors: استفاده از رنگ‌ها
+  label_wiki_index_for_tag: "صفحه‌های ویکی با تگ"
+  label_with_chart: "با نمودار"
+  label_with_table_of_values: "با جدول مقادیر"
+  notice_failed_to_add_tags: "ناتوانی در افزودن تگ‌ها"
+  notice_tags_added: "تگ‌ها افزوده شدند"
+  permission_add_wiki_tags: "افزودن تگ‌های ویکی"
+  permission_create_issue_tags: "افزودن تگ‌های مسئله"
+  permission_edit_issue_tags: "ویرایش تگ‌های مسئله"
+  permission_view_issue_tags: "مشاهده تگ‌های مسئله"
+  tags_order_by_count: "بیشتر استفاده‌شده"
+  tags_order_by_last_created: "آخرین ساخته‌شده"
+  tags_order_by_name: "نام"
+  tags_sidebar_cloud: "ابر"
+  tags_sidebar_list: "لیست"
+  tags_sidebar_none: "هیچکدام"
+  tags_sidebar_simple_cloud: "ابر ساده"
+  tags_sort_by_count: "تعداد"
+  tags_sort_by_name: "نام"
