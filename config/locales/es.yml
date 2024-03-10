@@ -15,6 +15,7 @@ es:
   label_manage_tags: "Manejar  tags"
   label_merge_selected_tags: "Fusionar tags seleccionadas"
   label_open_issues_only: "Mostrar sólo las peticiones abiertas"
+  label_show_tags_after_queries: "Show tags after queries"
   label_show_with_count: "Mostrar la cantidad en la tags"
   label_tag_color_theme: "Tema del color %{value}"
   label_tags_colors: "Color"

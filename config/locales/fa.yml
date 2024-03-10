@@ -15,6 +15,7 @@ fa:
   label_manage_tags: "مدیریت تگ‌ها"
   label_merge_selected_tags: "ادغام تگ‌های انتخابی"
   label_open_issues_only: "مشاهده مسائل باز"
+  label_show_tags_after_queries: "Show tags after queries"
   label_show_with_count: "نمایش مقدار روی تگ"
   label_tag_color_theme: تم رنگی %{value}
   label_tags_color_theme: رنگ

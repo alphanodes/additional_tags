@@ -15,6 +15,7 @@ ko:
   label_manage_tags: "태그 관리"
   label_merge_selected_tags: "선택한 태그 병합"
   label_open_issues_only: "미해결 문제 만 표시"
+  label_show_tags_after_queries: "Show tags after queries"
   label_show_with_count: "태그에 금액 표시"
   label_tag_color_theme: "색상 테마 %{value}"
   label_tags_colors: "색깔"
