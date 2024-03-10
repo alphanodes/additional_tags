@@ -1,6 +1,7 @@
 active_issue_tags: '0'
 active_wiki_tags: '0'
 open_issues_only: '0'
+show_tags_after_queries: '0'
 show_with_count: '0'
 tags_color_theme: '1'
 tags_sidebar: 'none'
