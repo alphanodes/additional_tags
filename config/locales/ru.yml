@@ -15,7 +15,7 @@ ru:
   label_manage_tags: "Управление метками"
   label_merge_selected_tags: "Объединить выбранные метки"
   label_open_issues_only: "Отображать только открытые задачи"
-  label_show_tags_after_queries: "Show tags after queries"
+  label_show_tags_after_queries: "Показывать теги после запросов"
   label_show_with_count: "Отображать количество на метке"
   label_tag_color_theme: "Цветовая тема %{value}"
   label_tags_colors: "Цвет"

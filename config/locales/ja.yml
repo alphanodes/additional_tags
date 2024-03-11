@@ -15,7 +15,7 @@ ja:
   label_manage_tags: "タグの管理"
   label_merge_selected_tags: "選択したタグをマージ"
   label_open_issues_only: "開いている問題のみを表示"
-  label_show_tags_after_queries: "Show tags after queries"
+  label_show_tags_after_queries: "クエリーの後にTAGを表示する"
   label_show_with_count: "タグに金額を表示"
   label_tag_color_theme: "カラーテーマ%{value}"
   label_tags_colors: "カラー"

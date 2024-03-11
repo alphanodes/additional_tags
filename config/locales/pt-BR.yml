@@ -15,7 +15,7 @@ pt-BR:
   label_manage_tags: "Gerenciar etiquetas"
   label_merge_selected_tags: "Fundir tags selecionadas"
   label_open_issues_only: "Exibir apenas questões em aberto"
-  label_show_tags_after_queries: "Show tags after queries"
+  label_show_tags_after_queries: "Mostrar TAGs após consultas"
   label_show_with_count: "Mostrar quantidade na etiqueta"
   label_tag_color_theme: "Tema da cor %{value}"
   label_tags_colors: "Cor"
