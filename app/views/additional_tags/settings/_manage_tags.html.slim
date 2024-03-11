@@ -6,7 +6,7 @@
         tr
           th.checkbox.hide-when-print
             = check_box_tag 'ids[]', '', false, class: 'toggle-selection',
-                            title: "#{l :button_check_all}/#{l :button_uncheck_all}"
+                            title: "#{l :button_check_all} / #{l :button_uncheck_all}"
 
           th = l :field_name
           - manageable_tag_columns.each_value do |column_values|
