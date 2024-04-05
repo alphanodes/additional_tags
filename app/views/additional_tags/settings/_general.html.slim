@@ -15,8 +15,7 @@ fieldset.settings
                                                      @settings[:tags_sort_by])
     '
     = select_tag 'settings[tags_sort_order]',
-                 options_for_select([[l(:label_ascending), 'asc'], [l(:label_descending), 'desc']],
-                                    @settings[:tags_sort_order])
+                 options_for_select(values_for_sort_direction, @settings[:tags_sort_order])
 
   p
     = additionals_settings_select :tags_suggestion_order,

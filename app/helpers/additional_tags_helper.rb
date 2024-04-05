@@ -52,6 +52,10 @@ module AdditionalTagsHelper
     columns
   end
 
+  def values_for_sort_direction
+    [[l(:label_ascending), 'asc'], [l(:label_descending), 'desc']]
+  end
+
   def sort_tags_for_list(tags, sort_by: nil, sort_order: nil)
     return tags if tags.size < 2
 
