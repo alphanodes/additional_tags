@@ -5,13 +5,13 @@ require 'additional_tags/plugin_version'
 loader = RedminePluginKit::Loader.new plugin_id: 'additional_tags'
 
 Redmine::Plugin.register :additional_tags do
-  name        'Additional Tags'
-  author      'AlphaNodes GmbH'
+  name 'Additional Tags'
+  author 'AlphaNodes GmbH'
   description 'Redmine tagging support'
-  version     AdditionalTags::PluginVersion::VERSION
-  url         'https://github.com/alphanodes/additional_tags/'
-  author_url  'https://alphanodes.com/'
-  directory __dir__
+  version AdditionalTags::PluginVersion::VERSION
+  url 'https://github.com/alphanodes/additional_tags/'
+  author_url 'https://alphanodes.com/'
+  directory File.dirname(__FILE__)
 
   requires_redmine version_or_higher: '5.0'
 
