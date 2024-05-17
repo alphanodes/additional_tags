@@ -79,7 +79,7 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
       post :destroy,
            params: { ids: tag1.id }
 
-      assert_response 302
+      assert_response :found
     end
   end
 
@@ -103,7 +103,7 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
       post :destroy,
            params: { ids: tag1.id }
 
-      assert_response 302
+      assert_response :found
     end
   end
 
