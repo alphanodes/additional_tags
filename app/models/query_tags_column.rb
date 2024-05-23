@@ -2,6 +2,6 @@
 
 class QueryTagsColumn < QueryRelationsColumn
   def initialize(name = :tags, **options)
-    super name, **options
+    super
   end
 end
