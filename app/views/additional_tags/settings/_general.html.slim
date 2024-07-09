@@ -30,14 +30,14 @@ fieldset.settings
                                                                          [l(:label_tag_color_theme, value: 5), 'd']],
                                                                         @settings['tags_color_theme'])
 
+  p
+    = additionals_settings_checkbox :show_tags_after_queries
+
 fieldset.settings
   legend = l :label_issue_plural
 
   p
     = additionals_settings_checkbox :active_issue_tags
-
-  p
-    = additionals_settings_checkbox :show_tags_after_queries
 
   p
     = additionals_settings_checkbox :open_issues_only
