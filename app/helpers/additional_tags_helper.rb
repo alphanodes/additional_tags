@@ -227,6 +227,10 @@ module AdditionalTagsHelper
     end
   end
 
+  def show_wiki_tags_on_show?
+    AdditionalTags.setting? :active_wiki_tags
+  end
+
   private
 
   def tag_url(tag_name, filter: nil, tag_action: nil, tag_controller: nil, project: nil, display_type: nil)
