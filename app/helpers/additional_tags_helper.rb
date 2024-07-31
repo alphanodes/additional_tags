@@ -227,8 +227,12 @@ module AdditionalTagsHelper
     end
   end
 
-  def show_wiki_tags_on_show?
-    AdditionalTags.setting? :active_wiki_tags
+  def wiki_tags_on_show?
+    options = { enabled: AdditionalTags.setting?(:active_wiki_tags) }
+
+    call_hook :helper_wiki_tags_on_show, options: options
+
+    options[:enabled]
   end
 
   private
