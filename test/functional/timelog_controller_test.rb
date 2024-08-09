@@ -31,7 +31,7 @@ class TimelogControllerTest < AdditionalTags::ControllerTest
 
     get :report,
         params: { criteria: ['tags'],
-                  set_filter: '1',
+                  set_filter: 1,
                   sort: 'spent_on:desc',
                   f: ['spent_on', ''],
                   op: { spent_on: '*' },
