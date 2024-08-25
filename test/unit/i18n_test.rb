@@ -19,7 +19,7 @@ class I18nTest < AdditionalTags::TestCase
   end
 
   def test_locales_validness
-    lang_files_count = Dir[Rails.root.join('plugins/additional_tags/config/locales/*.yml')].size
+    lang_files_count = Rails.root.glob('plugins/additional_tags/config/locales/*.yml').size
 
     assert_equal 13, lang_files_count
     valid_languages.each do |lang|
