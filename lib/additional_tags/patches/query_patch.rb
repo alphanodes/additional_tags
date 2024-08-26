@@ -69,7 +69,7 @@ module AdditionalTags
           when '=', '!'
             ids_list = klass.tagged_with(values, any: true).ids
             # special case: filter with deleted tag
-            return AdditionalsQuery::NO_RESULT_CONDITION if ids_list.blank? && values.present? && operator == '='
+            return Additionals::SQL_NO_RESULT_CONDITION if ids_list.blank? && values.present? && operator == '='
           else
             allowed_projects = Project.where(Project.allowed_to_condition(User.current, permission))
                                       .select(:id)
@@ -90,7 +90,7 @@ module AdditionalTags
               "(#{klass.table_name}.id #{compare} (#{ids_list.join ','}))"
             elsif values.present? && operator == '='
               # special case: filter with deleted tag
-              AdditionalsQuery::NO_RESULT_CONDITION
+              Additionals::SQL_NO_RESULT_CONDITION
             end
           else
             entries = ActsAsTaggableOn::Tagging.where taggable_type: klass.name

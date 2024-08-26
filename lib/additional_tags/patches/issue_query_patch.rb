@@ -6,7 +6,7 @@ module AdditionalTags
       extend ActiveSupport::Concern
 
       included do
-        include AdditionalsQuery
+        include Additionals::Concerns::Query
         prepend InstanceOverwriteMethods
         include InstanceMethods
 
