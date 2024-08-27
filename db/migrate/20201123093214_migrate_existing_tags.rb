@@ -17,16 +17,16 @@ class MigrateExistingTags < ActiveRecord::Migration[5.2]
           context = tagging.respond_to?(:context) && tagging.context.present? ? tagging.context : 'tags'
 
           # old data can include dups
-          next if ActsAsTaggableOn::Tagging.exists? tag_id: tag.id,
+          next if ActsAsTaggableOn::Tagging.exists?(tag_id: tag.id,
                                                     taggable_id: tagging.taggable_id,
                                                     taggable_type: tagging.taggable_type,
-                                                    context: context
+                                                    context:)
 
-          ActsAsTaggableOn::Tagging.create! tag_id: tag.id,
+          ActsAsTaggableOn::Tagging.create!(tag_id: tag.id,
                                             taggable_id: tagging.taggable_id,
                                             taggable_type: tagging.taggable_type,
-                                            context: context,
-                                            created_at: tagging.created_at
+                                            context:,
+                                            created_at: tagging.created_at)
           cnt += 1
         end
 

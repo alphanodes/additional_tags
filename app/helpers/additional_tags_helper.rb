@@ -32,7 +32,7 @@ module AdditionalTagsHelper
                          counts: WikiPage.available_tags.to_h { |tag| [tag.id, tag.count] } }
     end
 
-    call_hook :helper_additional_manageable_tag_columns, columns: columns
+    call_hook(:helper_additional_manageable_tag_columns, columns:)
 
     @manageable_tag_columns = columns
   end
@@ -127,9 +127,9 @@ module AdditionalTagsHelper
     use_colors = AdditionalTags.use_colors? if use_colors.nil?
     color_theme = AdditionalTags.setting :tags_color_theme if color_theme.nil?
 
-    tag_info = AdditionalTag.new name: name.nil? ? tag_object.name : name,
+    tag_info = AdditionalTag.new(name: name.nil? ? tag_object.name : name,
                                  disable_grouping: !use_colors,
-                                 color_theme: color_theme
+                                 color_theme:)
     tag_name = [tag_info.tag_name]
 
     tag_style = "background-color: #{tag_info.tag_bg_color}; color: #{tag_info.tag_fg_color}" if use_colors
@@ -206,7 +206,7 @@ module AdditionalTagsHelper
     sum = if entries.blank? || entries.empty?
             0
           else
-            query = IssueQuery.new project: project, name: '_'
+            query = IssueQuery.new project:, name: '_'
             query.add_filter 'tags', '*'
             query.filters['status_id'][:operator] = '*' if !open_issues_only && query.filters.key?('status_id')
 
@@ -221,7 +221,7 @@ module AdditionalTagsHelper
 
   def issue_tag_status_filter(operator: nil, open_issues_only: false)
     if operator
-      { field: :status_id, operator: operator }
+      { field: :status_id, operator: }
     elsif open_issues_only
       { field: :status_id, operator: 'o' }
     end
@@ -230,7 +230,7 @@ module AdditionalTagsHelper
   def wiki_tags_on_show?
     options = { enabled: AdditionalTags.setting?(:active_wiki_tags) }
 
-    call_hook :helper_wiki_tags_on_show, options: options
+    call_hook(:helper_wiki_tags_on_show, options:)
 
     options[:enabled]
   end
@@ -240,25 +240,25 @@ module AdditionalTagsHelper
   def tag_url(tag_name, filter: nil, tag_action: nil, tag_controller: nil, project: nil, display_type: nil)
     action = tag_action.presence || (controller_name == 'hrm_user_resources' ? 'show' : 'index')
 
-    fields = [:tags]
-    values = { tags: [tag_name] }
-    operators = { tags: '=' }
+    f = [:tags]
+    v = { tags: [tag_name] }
+    op = { tags: '=' }
 
     if filter.present?
       field = filter[:field]
-      fields << field
-      operators[field] = filter[:operator]
-      values[field] = filter[:value] if filter.key? :value
+      f << field
+      op[field] = filter[:operator]
+      v[field] = filter[:value] if filter.key? :value
     end
 
     { controller: tag_controller.presence || controller_name,
-      action: action,
+      action:,
       set_filter: 1,
-      display_type: display_type,
+      display_type:,
       project_id: project,
-      f: fields,
-      v: values,
-      op: operators }
+      f:,
+      v:,
+      op: }
   end
 
   def add_tags(style, tags, content, item_el, options)

@@ -1,4 +1,4 @@
 - if AdditionalTags.setting?(:active_wiki_tags) && User.current.allowed_to?(:add_wiki_tags, @project)
   p#wiki_tags
     = label_tag l(:field_tag_list)
-    = render 'wiki/tags_form', project: project, page: page
+    = render 'wiki/tags_form', project:, page:

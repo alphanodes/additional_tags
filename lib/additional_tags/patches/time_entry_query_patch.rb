@@ -36,7 +36,7 @@ module AdditionalTags
         end
 
         def sql_for_issue_tags_field(_field, operator, values)
-          build_sql_for_tags_field klass: Issue, operator: operator, values: values
+          build_sql_for_tags_field klass: Issue, operator:, values:
         end
       end
     end

@@ -5,11 +5,11 @@
 ## Features
 
 - Tags for issues. To use them you need to:
-  -  *Activate issue tags* in the plugin configuration
-  -  and update your role permissions in the Redmine administration *Roles & permissions / Issue tracking*.
+  - *Activate issue tags* in the plugin configuration
+  - and update your role permissions in the Redmine administration *Roles & permissions / Issue tracking*.
 - Tags for wiki pages. To use them  you need to:
   - *Activate wiki tags* in the plugin configuration
-  -  and update your role permissions in the Redmine administration *Roles & permissions / Wiki*
+  - and update your role permissions in the Redmine administration *Roles & permissions / Wiki*
 - Available role permissions for issue tags (section *Issue tracking*):
   - Add issue tags
   - Edit issue tags
@@ -59,7 +59,7 @@ Start using it, too. The example image shows the centralized tag management in t
 ## Requirements
 
 - Redmine `>= 5.0`
-- Ruby `>= 3.0`
+- Ruby `>= 3.1`
 - Redmine plugins: [additionals](https://www.redmine.org/plugins/additionals)
 
 ## Installing

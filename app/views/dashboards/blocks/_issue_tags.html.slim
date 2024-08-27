@@ -1,18 +1,18 @@
 h3 = block_definition[:label]
 
 - open_issues_only = RedminePluginKit.true? settings[:open_issues_only]
-- tags = Issue.available_tags project: @project, open_issues_only: open_issues_only
-- counts = AdditionalTags::Tags.entity_group_by scope: Issue.group_by_status_with_tags(@project),
-                                                tags: tags,
+- tags = Issue.available_tags(project: @project, open_issues_only:)
+- counts = AdditionalTags::Tags.entity_group_by(scope: Issue.group_by_status_with_tags(@project),
+                                                tags:,
                                                 statuses: { true => :closed, false => :open },
-                                                group_id_is_bool: true
+                                                group_id_is_bool: true)
 
 = render 'common/tag_summary_block',
-         tags: tags,
+         tags:,
          entities_label: l(:label_issue_plural),
          totals_link: link_to_issue_tags_totals(entries: counts,
                                                 project: @project,
-                                                open_issues_only: open_issues_only)
+                                                open_issues_only:)
 
 - if RedminePluginKit.true? settings[:with_table_of_values]
   - if tags.present?
@@ -31,30 +31,30 @@ h3 = block_definition[:label]
         - color_theme = AdditionalTags.setting :tags_color_theme
         - tags.each do |tag|
           tr
-            td.name = additional_tag_link tag,
+            td.name = additional_tag_link(tag,
                                           tag_action: 'index',
                                           tag_controller: 'issues',
-                                          filter: issue_tag_status_filter(open_issues_only: open_issues_only),
+                                          filter: issue_tag_status_filter(open_issues_only:),
                                           use_colors: RedminePluginKit.true?(settings[:use_colors]),
-                                          color_theme: color_theme
+                                          color_theme:)
             - unless open_issues_only
-              td.value = additional_tag_link tag,
+              td.value = additional_tag_link(tag,
                                              tag_action: 'index',
                                              tag_controller: 'issues',
                                              filter: issue_tag_status_filter(operator: 'o'),
                                              use_colors: false,
-                                             name: counts[tag.name][:open]
-              td.value = additional_tag_link tag,
+                                             name: counts[tag.name][:open])
+              td.value = additional_tag_link(tag,
                                              tag_action: 'index',
                                              tag_controller: 'issues',
                                              filter: issue_tag_status_filter(operator: 'c'),
                                              use_colors: false,
-                                             name: counts[tag.name][:closed]
-            td.value = additional_tag_link tag,
+                                             name: counts[tag.name][:closed])
+            td.value = additional_tag_link(tag,
                                            tag_action: 'index',
                                            tag_controller: 'issues',
-                                           filter: issue_tag_status_filter(open_issues_only: open_issues_only),
+                                           filter: issue_tag_status_filter(open_issues_only:),
                                            use_colors: false,
-                                           name: open_issues_only ? counts[tag.name][:open] : counts[tag.name][:total]
+                                           name: open_issues_only ? counts[tag.name][:open] : counts[tag.name][:total])
   - else
     p.nodata = l :label_no_data

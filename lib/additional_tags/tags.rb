@@ -7,7 +7,7 @@ module AdditionalTags
         permission = options[:permission] || :view_issue_tags
         skip_pre_condition = options[:skip_pre_condition] || true
 
-        tag_access permission, user, skip_pre_condition: skip_pre_condition
+        tag_access permission, user, skip_pre_condition:
       end
 
       def available_tags(klass, **options)
@@ -48,7 +48,7 @@ module AdditionalTags
       end
 
       def all_type_tags(klass, without_projects: false)
-        ActsAsTaggableOn::Tag.joins(tag_for_joins(klass, without_projects: without_projects))
+        ActsAsTaggableOn::Tag.joins(tag_for_joins(klass, without_projects:))
                              .distinct
                              .order(:name)
       end
@@ -114,22 +114,22 @@ module AdditionalTags
       def entity_group_by(scope:, tags:, statuses: nil, sub_groups: nil, group_id_is_bool: false)
         counts = {}
         tags.each do |tag|
-          values = { tag: tag, total: 0, total_sub_groups: 0, groups: [] }
+          values = { tag:, total: 0, total_sub_groups: 0, groups: [] }
 
           if statuses
             statuses.each do |status|
               group_id = status.first
               group = status.second
-              values[group] = status_for_tag_value scope: scope,
+              values[group] = status_for_tag_value(scope:,
                                                    tag_id: tag.id,
-                                                   group_id: group_id,
-                                                   group_id_is_bool: group_id_is_bool
-              values[:groups] << { id: group_id, group: group, count: values[group] }
+                                                   group_id:,
+                                                   group_id_is_bool:)
+              values[:groups] << { id: group_id, group:, count: values[group] }
               values[:total] += values[group]
               values[:total_sub_groups] += values[group] if sub_groups&.include? group_id
             end
           else
-            values[:total] += status_for_tag_value scope: scope, tag_id: tag.id
+            values[:total] += status_for_tag_value scope:, tag_id: tag.id
           end
 
           values[:total_without_sub_groups] = values[:total] - values[:total_sub_groups]
@@ -210,7 +210,7 @@ module AdditionalTags
         projects_allowed = if permission.nil?
                              Project.visible.ids
                            else
-                             Project.where(Project.allowed_to_condition(user, permission, skip_pre_condition: skip_pre_condition)).ids
+                             Project.where(Project.allowed_to_condition(user, permission, skip_pre_condition:)).ids
                            end
 
         if projects_allowed.present?

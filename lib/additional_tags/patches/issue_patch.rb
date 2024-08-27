@@ -35,7 +35,7 @@ module AdditionalTags
           scope = if project && Setting.display_subprojects_issues?
                     visible(user).where(AdditionalTags::Tags.subproject_sql(project))
                   else
-                    visible user, project: project
+                    visible user, project:
                   end
 
           scope.joins(:status)

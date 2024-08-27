@@ -189,7 +189,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       user = users :users_002
 
       assert_not_equal @issue_1.tag_list, [tag]
-      assert_includes Issue.available_tags(user: user).map(&:name), tag
+      assert_includes Issue.available_tags(user:).map(&:name), tag
       post :update,
            params: { ids: [1], issue: { tag_list: [tag] } }
 
@@ -201,7 +201,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       @role.remove_permission! :edit_issue_tags
       tag2 = 'Third'
 
-      assert_includes Issue.available_tags(user: user).map(&:name), tag2
+      assert_includes Issue.available_tags(user:).map(&:name), tag2
       post :update,
            params: { ids: [1], issue: { tag_list: [tag2] } }
 

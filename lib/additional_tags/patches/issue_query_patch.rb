@@ -36,7 +36,7 @@ module AdditionalTags
         def sql_for_tags_field(field, _operator, values)
           build_sql_for_tags_field_with_permission klass: queried_class,
                                                    operator: operator_for(field),
-                                                   values: values,
+                                                   values:,
                                                    permission: :view_issue_tags
         end
       end

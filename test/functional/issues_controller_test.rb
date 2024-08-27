@@ -411,7 +411,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       tag = 'First'
 
       assert_not_equal Issue.find(2).tag_list, [tag]
-      assert_includes Issue.available_tags(user: user).map(&:name), tag
+      assert_includes Issue.available_tags(user:).map(&:name), tag
       post :update,
            params: { id: 2, issue: { project_id: 1, tag_list: [tag] } }
 
@@ -429,7 +429,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       issue = issues :issues_001
 
       assert_includes Issue.available_tags(user: users(:users_001)).map(&:name), new_tag
-      assert_not_includes Issue.available_tags(user: user).map(&:name), new_tag
+      assert_not_includes Issue.available_tags(user:).map(&:name), new_tag
       assert_equal 'Unable to print recipes', issue.description
       assert_not issue.tag_list.include?(new_tag)
 
