@@ -110,7 +110,7 @@ class TagsTest < AdditionalTags::TestCase
   def test_add_new_tag_should_increase_count
     issue = issues :issues_002
 
-    assert_difference 'ActsAsTaggableOn::Tag.count', 1 do
+    assert_difference 'ActsAsTaggableOn::Tag.count' do
       issue.tag_list << 'unused_new_tag'
 
       assert_save issue
