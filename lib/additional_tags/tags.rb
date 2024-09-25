@@ -74,7 +74,8 @@ module AdditionalTags
         ActsAsTaggableOn::Tagging.transaction do
           tag = ActsAsTaggableOn::Tag.find_by(name: tag_name) || ActsAsTaggableOn::Tag.create(name: tag_name)
           # Update old tagging with new tag
-          ActsAsTaggableOn::Tagging.where(tag_id: tags_to_merge.map(&:id)).update_all tag_id: tag.id
+          ActsAsTaggableOn::Tagging.where(tag_id: tags_to_merge.map(&:id))
+                                   .update_all tag_id: tag.id
           # remove old (merged) tags
           tags_to_merge.reject { |t| t.id == tag.id }.each(&:destroy)
           # remove duplicate taggings
