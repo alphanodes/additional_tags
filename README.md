@@ -94,6 +94,7 @@ git clone https://github.com/alphanodes/additional_tags.git plugins/additional_t
 ### 2. Install dependencies and migrate database
 
 ```shell
+bundle config set --local without 'development test'
 bundle install
 bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ```
@@ -136,7 +137,7 @@ rm -rf plugins/additional_tags
 ## License
 
 This plugin is licensed under the terms of GNU/GPL v2.
-See LICENSE for details.
+See [LICENSE](LICENSE) for details.
 
 ## Redmine Copyright
 
