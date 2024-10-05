@@ -2,7 +2,7 @@
   - if User.current.allowed_to? :edit_wiki_pages, @project
     = link_to l(:label_wiki_page_new), new_project_wiki_page_path(@project), remote: true, class: 'icon icon-add'
 
-h2 = render_wiki_index_title project: @project, tag: @tag
+h2 = render_wiki_index_title :label_wiki, project: @project, tag: @tag
 
 - if @pages.empty?
   p.nodata = l :label_no_data

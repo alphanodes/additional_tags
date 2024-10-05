@@ -20,7 +20,7 @@ module AdditionalTags
           @page.safe_attributes = [:tag_list]
           @page.tag_list = params[:wiki_page][:tag_list].to_a.reject(&:empty?)
           flash[:notice] = if @page.save
-                             l :notice_successful_update
+                             flash_msg :update
                            else
                              t :notice_failed_to_add_tags
                            end

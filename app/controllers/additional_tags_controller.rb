@@ -36,7 +36,7 @@ class AdditionalTagsController < ApplicationController
   def update
     @tag.name = params[:tag][:name] if params[:tag]
     if @tag.save
-      flash[:notice] = l :notice_successful_update
+      flash[:notice] = flash_msg :update
       respond_to do |format|
         format.html do
           redirect_to @tag_list_path

@@ -16,26 +16,24 @@ module AdditionalTagsWikiHelper
     render_tags_list sidebar_tags, **options
   end
 
-  def render_wiki_index_title(project: nil, name: nil, tag: nil, title: :label_wiki)
+  def render_wiki_index_title(title, project: nil, name: nil, tag: nil)
+    title = l title unless is_a? Symbol
+
     if tag.present?
       tag_object = ActsAsTaggableOn::Tag.new name: tag
 
       if project
         safe_join [l(:label_wiki_index_for_tag), additional_tag_link(tag_object, link: '#')], ' '
       else
-        title = [link_to(l(title), wiki_index_path)]
-        title << Additionals::LIST_SEPARATOR
-        title << l(:label_wiki_index_for_tag)
-        title << additional_tag_link(tag_object, link: '#')
-        safe_join title, ' '
+        items = [link_to(title, wiki_index_path)]
+        items << safe_join([l(:label_wiki_index_for_tag), additional_tag_link(tag_object, link: '#')], ' ')
+        render_breadcrumb items
       end
     elsif name.present?
-      title = [link_to(l(title), wiki_index_path)]
-      title << Additionals::LIST_SEPARATOR
-      title << name
-      safe_join title, ' '
+      render_breadcrumb [link_to(title, wiki_index_path),
+                         name]
     else
-      l title
+      title
     end
   end
 end

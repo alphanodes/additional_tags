@@ -19,21 +19,10 @@ class I18nTest < AdditionalTags::TestCase
   end
 
   def test_locales_validness
-    lang_files_count = Rails.root.glob('plugins/additional_tags/config/locales/*.yml').size
-
-    assert_equal 13, lang_files_count
-    valid_languages.each do |lang|
-      assert set_language_if_valid(lang)
-      case lang.to_s
-      when 'en'
-
-        assert_equal 'Merge selected tags', l(:label_merge_selected_tags)
-      when 'bg', 'cs', 'de', 'es', 'fa', 'fr', 'it', 'ja', 'ko', 'pl', 'pt-BR', 'ru'
-
-        assert_not l(:label_merge_selected_tags) == 'Merge selected tags', lang
-      end
-    end
-
-    set_language_if_valid 'en'
+    assert_locales_validness plugin: 'additional_tags',
+                             file_cnt: 13,
+                             locales: %w[bg cs de es fa fr it ja ko pl pt-BR ru],
+                             control_string: :label_merge_selected_tags,
+                             control_english: 'Merge selected tags'
   end
 end
