@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-require 'redmine_plugin_kit'
 require 'acts-as-taggable-on'
 
 module AdditionalTags
+  VERSION = '4.0.0-main'
+
   TAG_TABLE_NAME = 'additional_tags'
   TAGGING_TABLE_NAME = 'additional_taggings'
 
@@ -22,7 +23,21 @@ module AdditionalTags
     private
 
     def setup
-      raise 'Please install additionals plugin (https://github.com/alphanodes/additionals)' unless Redmine::Plugin.installed? 'additionals'
+      begin
+        Redmine::Plugin.find 'additionals'
+      rescue Redmine::PluginNotFound
+        # rubocop: disable Style/RaiseArgs
+        raise Redmine::PluginRequirementError.new "#{plugin_id} plugin requires the additionals plugin. " \
+                                                  'Please install additionals plugin (https://github.com/alphanodes/additionals)'
+        # rubocop: enable Style/RaiseArgs
+      end
+
+      ActsAsTaggableOn.tags_table = TAG_TABLE_NAME
+      ActsAsTaggableOn.taggings_table = TAGGING_TABLE_NAME
+      # NOTE: remove_unused_tags cannot be used, because tag is deleted before assign for tagging
+      # @see https://github.com/mbleigh/acts-as-taggable-on/issues/946
+      # NOTE2: merging tags is not compatible, too.
+      ActsAsTaggableOn.remove_unused_tags = false
 
       loader.incompatible? %w[redmine_tags
                               redmine_tagging
@@ -63,33 +78,6 @@ module AdditionalTags
 
       # Load view hooks
       loader.load_view_hooks!
-    end
-  end
-
-  # Run the classic redmine plugin initializer after rails boot
-  class Plugin < ::Rails::Engine
-    require 'additional_tags/tags'
-
-    ActsAsTaggableOn.tags_table = TAG_TABLE_NAME
-    ActsAsTaggableOn.taggings_table = TAGGING_TABLE_NAME
-    # NOTE: remove_unused_tags cannot be used, because tag is deleted before assign for tagging
-    # @see https://github.com/mbleigh/acts-as-taggable-on/issues/946
-    # NOTE2: merging tags is not compatible, too.
-    ActsAsTaggableOn.remove_unused_tags = false
-
-    config.after_initialize do
-      # engine_name could be used (additional_tags_plugin), but can
-      # create some side effects
-      plugin_id = 'additional_tags'
-
-      # if plugin is already in plugins directory, use this and leave here
-      next if Redmine::Plugin.installed? plugin_id
-
-      # gem is used as redmine plugin
-      require File.expand_path '../init', __dir__
-      AdditionalTags.setup!
-      Additionals::Gemify.install_assets plugin_id
-      Additionals::Gemify.create_plugin_hint plugin_id
     end
   end
 end

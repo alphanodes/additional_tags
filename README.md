@@ -74,15 +74,6 @@ git clone -b stable https://www.github.com/alphanodes/additionals.git plugins/ad
 git clone -b stable https://www.github.com/alphanodes/additional_tags.git plugins/additional_tags
 ```
 
-It is also possible to use stable version as a gem package as an alternative. If you want it, add this to your $REDMINE_ROOT/Gemfile.local:
-
-```ruby
-gem 'additional_tags'
-```
-
-At the moment, additionals should be installed before using gem method. In later versions
-addtionals plugins is usable as gem, too.
-
 If you want to use the latest development version, use
 
 ```shell

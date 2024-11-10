@@ -5,7 +5,7 @@ require:
 
 AllCops:
   TargetRubyVersion: 3.1
-  TargetRailsVersion: 6.1
+  TargetRailsVersion: 7.2
   NewCops: enable
   ActiveSupportExtensionsEnabled: true
 
@@ -50,7 +50,6 @@ Metrics/PerceivedComplexity:
 Style/ExpandPathArguments:
   Enabled: true
   Exclude:
-    - additional_tags.gemspec
     - test/**/*
 
 Rails/ApplicationJob:

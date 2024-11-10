@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Specify your gem's dependencies in additional_tags.gemspec
-gemspec
+gem 'acts-as-taggable-on'
+gem 'redmine_plugin_kit'
 
 # if you want to use it for linters, do:
 # - create .enable_test file in additionals directory
