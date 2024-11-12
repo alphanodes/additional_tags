@@ -27,7 +27,9 @@ Redmine::Plugin.register :additional_tags do
   menu :admin_menu,
        :additional_tags,
        { controller: 'settings', action: 'plugin', id: 'additional_tags' },
-       caption: :field_tags
+       caption: :field_tags,
+       plugin: 'additionals',
+       icon: 'tags'
 end
 
 RedminePluginKit::Loader.persisting { loader.load_model_hooks! }

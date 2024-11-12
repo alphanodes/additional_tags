@@ -1,20 +1,3 @@
-#admin-menu a.additional-tags::before {
-  font-family: 'Font Awesome 5 Free';
-  font-size: 1.2em;
-  font-weight: 900;
-  content: '\f02c'; /* fas fa-tags */
-  padding-right: 4px;
-}
-
-#admin-menu a.additional-tags {
-  padding-left: 0;
-}
-
-/* Mobile menu style FontAwesome icon */
-.flyout-is-active #admin-menu li a.additional-tags {
-  padding-left: 8px !important;
-}
-
 ul.tags {
   list-style: none;
   padding: 0;
