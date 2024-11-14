@@ -28,7 +28,8 @@
             - manageable_tag_column_values(tag).each do |column|
               td = column
             td.buttons
-              = link_to l(:button_edit), edit_additional_tag_path(tag),
+              = link_to sprite_icon('edit', l(:button_edit)),
+                        edit_additional_tag_path(tag),
                         class: 'icon icon-edit'
               = delete_link additional_tags_path(ids: tag)
 - else

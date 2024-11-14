@@ -1,7 +1,7 @@
 ul
   - if @tag
     li
-      = link_to l(:button_edit),
+      = link_to sprite_icon('edit', l(:button_edit)),
                 edit_additional_tag_path(@tag),
                 class: 'icon icon-edit'
   - else
