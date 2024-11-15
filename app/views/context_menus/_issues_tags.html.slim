@@ -1,7 +1,7 @@
 - if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:edit_issue_tags, @projects || @project)
   li.folder
     a.submenu[href="#"]
-      = l :field_tags
+      = svg_icon_tag 'tags', label: :field_tags, wrapper: :span
     ul
       li
         = context_menu_link sprite_icon('add', l(:button_add)),
