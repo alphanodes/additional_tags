@@ -1,4 +1,5 @@
-h3 = block_definition[:label]
+h3.icon
+  = svg_icon_tag 'tags', label: block_definition[:label]
 
 - open_issues_only = RedminePluginKit.true? settings[:open_issues_only]
 - tags = Issue.available_tags(project: @project, open_issues_only:)
