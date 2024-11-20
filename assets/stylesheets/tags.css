@@ -41,7 +41,7 @@ td.tags span.additional-tag-label-color {
   background: #f1f5fa;
   border-radius: 5px;
   padding: 0 5px;
-  color: #666;
+  color: var(--darkfontcolor);
   border: 1px solid #ddd;
   vertical-align: middle;
 }
@@ -72,7 +72,7 @@ td.tags span.additional-tag-label-color {
   background: #eee;
   border-radius: 5px;
   padding: 0 5px;
-  color: #666;
+  color: var(--darkfontcolor);
   border: 1px solid #ddd;
   vertical-align: middle;
 }
