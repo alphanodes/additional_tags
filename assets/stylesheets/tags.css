@@ -41,7 +41,7 @@ td.tags span.additional-tag-label-color {
   background: #f1f5fa;
   border-radius: 5px;
   padding: 0 5px;
-  color: var(--darkfontcolor);
+  color: var(--a-color-dark);
   border: 1px solid #ddd;
   vertical-align: middle;
 }
@@ -72,7 +72,7 @@ td.tags span.additional-tag-label-color {
   background: #eee;
   border-radius: 5px;
   padding: 0 5px;
-  color: var(--darkfontcolor);
+  color: var(--a-color-dark);
   border: 1px solid #ddd;
   vertical-align: middle;
 }
@@ -115,7 +115,7 @@ div#tags-data span.contextual {
 
 .most-used-tag {
   cursor: pointer;
-  color: #169;
+  color: var(--a-color-default);
 }
 
 .most-used-tag:hover { text-decoration: underline; }
