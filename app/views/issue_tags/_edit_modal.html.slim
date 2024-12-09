@@ -16,7 +16,6 @@ h3.title = @append ? l(:label_add_tags) : l(:label_edit_tags)
       = additionals_select2_tag 'issue[tag_list]',
                                 options_for_select(@append ? {} : @issue_tags.map { |tag| [tag, tag] }, @issue_tags),
                                 multiple: true,
-                                style: 'width: 100%;',
                                 url: issue_tags_auto_completes_path(project_id: @project),
                                 placeholder: @is_bulk_editing ? t(:label_no_change_option) : '+ add tag',
                                 tags: User.current.allowed_to?(:create_issue_tags, @project)
