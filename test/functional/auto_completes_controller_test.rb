@@ -3,25 +3,6 @@
 require File.expand_path '../../test_helper', __FILE__
 
 class AutoCompletesControllerTest < AdditionalTags::ControllerTest
-  fixtures :projects,
-           :users,
-           :roles,
-           :members,
-           :member_roles,
-           :issues,
-           :issue_statuses,
-           :versions,
-           :trackers,
-           :projects_trackers,
-           :issue_categories,
-           :enabled_modules,
-           :enumerations,
-           :attachments,
-           :wikis, :wiki_pages, :wiki_contents, :wiki_content_versions,
-           :workflows,
-           :custom_fields, :custom_values, :custom_fields_projects, :custom_fields_trackers,
-           :additional_tags, :additional_taggings
-
   def setup
     prepare_tests
     @tag = ActsAsTaggableOn::Tag.find_by name: 'First'

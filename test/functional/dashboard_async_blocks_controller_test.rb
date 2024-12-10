@@ -3,23 +3,6 @@
 require File.expand_path '../../test_helper', __FILE__
 
 class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
-  fixtures :projects, :users, :email_addresses, :user_preferences,
-           :roles,
-           :members,
-           :member_roles,
-           :issues,
-           :issue_relations,
-           :issue_statuses,
-           :versions,
-           :trackers,
-           :projects_trackers,
-           :issue_categories,
-           :enabled_modules,
-           :journals, :journal_details,
-           :repositories, :changesets,
-           :queries, :watchers,
-           :additional_tags, :additional_taggings, :dashboards
-
   include Redmine::I18n
 
   def setup

@@ -3,14 +3,6 @@
 require File.expand_path '../../test_helper', __FILE__
 
 class QueryTest < AdditionalTags::TestCase
-  fixtures :projects, :users, :members, :member_roles, :roles,
-           :issue_statuses, :enumerations,
-           :groups_users,
-           :trackers, :projects_trackers,
-           :enabled_modules,
-           :roles,
-           :additional_tags, :additional_taggings
-
   def setup
     Issue.destroy_all
     Issue.generate! project_id: 1, tag_list: ['First Issue'] # eCookBook

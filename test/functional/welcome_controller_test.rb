@@ -3,9 +3,6 @@
 require File.expand_path '../../test_helper', __FILE__
 
 class WelcomeControllerTest < AdditionalTags::ControllerTest
-  fixtures :projects, :news, :users, :members,
-           :dashboards
-
   def setup
     User.current = nil
   end

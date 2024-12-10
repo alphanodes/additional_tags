@@ -3,12 +3,6 @@
 require File.expand_path '../../test_helper', __FILE__
 
 class WikiControllerTest < AdditionalTags::ControllerTest
-  fixtures :projects, :users, :email_addresses, :roles, :members, :member_roles,
-           :enabled_modules, :wikis, :wiki_pages, :wiki_contents,
-           :wiki_content_versions, :attachments,
-           :issues, :issue_statuses, :trackers,
-           :additional_tags, :additional_taggings
-
   def setup
     prepare_tests
     User.current = nil

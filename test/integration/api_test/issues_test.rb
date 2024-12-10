@@ -4,18 +4,6 @@ require File.expand_path '../../../test_helper', __FILE__
 
 module ApiTest
   class IssuesTest < AdditionalTags::ApiTest
-    fixtures :users, :email_addresses, :roles, :user_preferences,
-             :enumerations,
-             :projects, :projects_trackers, :enabled_modules,
-             :members, :member_roles,
-             :issues, :issue_statuses, :issue_categories,
-             :versions, :trackers,
-             :journals, :journal_details,
-             :attachments, :workflows, :time_entries,
-             :additional_tags, :additional_taggings
-
-    include AdditionalTags::TestHelper
-
     def setup
       super
       prepare_tests

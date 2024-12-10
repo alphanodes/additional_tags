@@ -3,28 +3,6 @@
 require File.expand_path '../../test_helper', __FILE__
 
 class TagsTest < AdditionalTags::TestCase
-  fixtures :projects,
-           :users, :email_addresses, :user_preferences,
-           :roles,
-           :members,
-           :member_roles,
-           :issues,
-           :issue_statuses,
-           :issue_relations,
-           :versions,
-           :trackers,
-           :projects_trackers,
-           :issue_categories,
-           :enabled_modules,
-           :enumerations,
-           :attachments,
-           :workflows,
-           :custom_fields, :custom_values, :custom_fields_projects, :custom_fields_trackers,
-           :time_entries,
-           :wikis, :wiki_pages, :wiki_contents, :wiki_content_versions,
-           :journals, :journal_details,
-           :additional_tags, :additional_taggings
-
   def setup
     prepare_tests
     @project = projects :projects_001

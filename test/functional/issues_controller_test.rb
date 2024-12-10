@@ -3,27 +3,6 @@
 require File.expand_path '../../test_helper', __FILE__
 
 class IssuesControllerTest < AdditionalTags::ControllerTest
-  fixtures :projects,
-           :users, :email_addresses, :user_preferences,
-           :roles,
-           :members,
-           :member_roles,
-           :issues,
-           :issue_statuses,
-           :issue_relations,
-           :versions,
-           :trackers,
-           :projects_trackers,
-           :issue_categories,
-           :enabled_modules,
-           :enumerations,
-           :attachments,
-           :workflows,
-           :time_entries,
-           :journals, :journal_details,
-           :queries,
-           :additional_tags, :additional_taggings
-
   include Redmine::I18n
 
   def setup
