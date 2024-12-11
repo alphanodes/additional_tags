@@ -52,9 +52,6 @@ Style/ExpandPathArguments:
   Exclude:
     - test/**/*
 
-Rails/ApplicationJob:
-  Enabled: false
-
 Lint/AmbiguousOperatorPrecedence:
   Enabled: false
 
@@ -62,9 +59,6 @@ Rails/ContentTag:
   Enabled: true
   Exclude:
     - app/helpers/additional_tags_issues_helper.rb
-
-Rails/ApplicationRecord:
-  Enabled: false
 
 Rails/CreateTableWithTimestamps:
   Enabled: false
