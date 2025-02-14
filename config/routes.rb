@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   resources :additional_tags, only: %i[index edit update] do
     collection do
       post :merge
-      get :context_menu, :merge
+      get :context_menu
+      get :merge
       delete :destroy
     end
   end
