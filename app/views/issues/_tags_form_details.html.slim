@@ -2,5 +2,5 @@
 - if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:edit_issue_tags, project)
   div
     p#issue_tags
-      = label_tag l(:field_tag_list)
+      = label_tag :issue_tag_list, l(:field_tag_list)
       = render tags_form, project:

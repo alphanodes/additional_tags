@@ -8,10 +8,10 @@ de:
   field_tags: TAGs
   label_active_issue_tags: Ticket TAGs aktivieren
   label_active_wiki_tags: Wiki TAGs aktivieren
-  label_add_tags: Tags hinzufügen
+  label_add_tags: TAGs hinzufügen
   label_amount_entities_with_tags: Anzahl %{name} mit TAGs
   label_amount_tags: Anzahl TAGs
-  label_edit_tags: Tags bearbeiten
+  label_edit_tags: TAGs bearbeiten
   label_manage_tags: TAGs verwalten
   label_merge_selected_tags: Ausgewählte TAGs zusammenführen
   label_open_issues_only: Zeige nur offene Tickets
@@ -29,7 +29,7 @@ de:
   label_with_chart: Mit Chart
   label_with_table_of_values: Mit Wertetabelle
   notice_failed_to_add_tags: Fehler beim hinzufügen der TAGs
-  notice_tags_added: Tags hinzugefügt
+  notice_tags_added: TAGs hinzugefügt
   permission_add_wiki_tags: Wiki TAGs hinzufügen
   permission_create_issue_tags: Ticket TAGs erstellen
   permission_edit_issue_tags: Ticket TAGs bearbeiten
