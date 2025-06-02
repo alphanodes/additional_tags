@@ -19,8 +19,8 @@ module AdditionalTags
 
       class_methods do
         def project_joins
-          ["JOIN wikis ON wikis.id = #{table_name}.wiki_id",
-           "JOIN #{Project.table_name} ON wikis.project_id = #{Project.table_name}.id"]
+          ["JOIN #{Wiki.table_name} ON #{Wiki.table_name}.id = #{table_name}.wiki_id",
+           "JOIN #{Project.table_name} ON #{Wiki.table_name}.project_id = #{Project.table_name}.id"]
         end
 
         def available_tags(**options)
