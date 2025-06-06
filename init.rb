@@ -29,6 +29,7 @@ Redmine::Plugin.register :additional_tags do
        { controller: 'settings', action: 'plugin', id: 'additional_tags' },
        caption: :field_tags,
        plugin: 'additionals',
+       html: { class: 'icon' },
        icon: 'tags'
 end
 

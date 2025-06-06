@@ -131,7 +131,7 @@ module AdditionalTags
           return if !User.current.allowed_to?(:create_issue_tags, project) &&
                     !(User.current.allowed_to?(:edit_issue_tags, project) && Issue.allowed_tags?(tags))
 
-          errors.add :tag_list, :invalid_mutually_exclusive_tags unless AdditionalTag.valid_mutually_exclusive_tag tag_list
+          errors.add :tag_list, :invalid_mutually_exclusive_tags unless AdditionalTag.mutually_exclusive_tags? tag_list
         end
       end
     end

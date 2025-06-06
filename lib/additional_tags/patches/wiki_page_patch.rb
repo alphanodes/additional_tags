@@ -109,7 +109,7 @@ module AdditionalTags
         end
 
         def validate_tags
-          errors.add :tag_list, :invalid_mutually_exclusive_tags unless AdditionalTag.valid_mutually_exclusive_tag tag_list
+          errors.add :tag_list, :invalid_mutually_exclusive_tags unless AdditionalTag.mutually_exclusive_tags? tag_list
         end
       end
     end

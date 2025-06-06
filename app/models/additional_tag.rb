@@ -5,7 +5,7 @@ class AdditionalTag
   SCOPE_SEP = '::'
 
   class << self
-    def valid_mutually_exclusive_tag(tag_list)
+    def mutually_exclusive_tags?(tag_list)
       return true if tag_list.blank?
 
       tags = tag_list.select { |t| t.include? SCOPE_SEP }

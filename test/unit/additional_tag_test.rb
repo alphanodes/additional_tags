@@ -29,18 +29,18 @@ class AdditionalTagTest < AdditionalTags::TestCase
   end
 
   def test_valid_mutually_exclusive_tag
-    assert AdditionalTag.valid_mutually_exclusive_tag(%w[Foo::1 Bar::2 Test3])
-    assert AdditionalTag.valid_mutually_exclusive_tag(%w[Foo::1 Foo::Bar::2 Test3])
-    assert AdditionalTag.valid_mutually_exclusive_tag(['Foo:: 1', 'Bar::2', 'Test3'])
-    assert AdditionalTag.valid_mutually_exclusive_tag(%w[Test3])
-    assert AdditionalTag.valid_mutually_exclusive_tag(nil)
-    assert AdditionalTag.valid_mutually_exclusive_tag(%w[])
+    assert AdditionalTag.mutually_exclusive_tags?(%w[Foo::1 Bar::2 Test3])
+    assert AdditionalTag.mutually_exclusive_tags?(%w[Foo::1 Foo::Bar::2 Test3])
+    assert AdditionalTag.mutually_exclusive_tags?(['Foo:: 1', 'Bar::2', 'Test3'])
+    assert AdditionalTag.mutually_exclusive_tags?(%w[Test3])
+    assert AdditionalTag.mutually_exclusive_tags?(nil)
+    assert AdditionalTag.mutually_exclusive_tags?(%w[])
   end
 
   def test_invalid_mutually_exclusive_tag
-    assert_not AdditionalTag.valid_mutually_exclusive_tag(%w[Bar::2 Bar::3])
-    assert_not AdditionalTag.valid_mutually_exclusive_tag(%w[Foo::1 Bar::2 Bar::3 Test3])
-    assert_not AdditionalTag.valid_mutually_exclusive_tag(['Bar:: 2', 'Bar::3'])
-    assert_not AdditionalTag.valid_mutually_exclusive_tag(['Bar :: 2', 'Bar::3'])
+    assert_not AdditionalTag.mutually_exclusive_tags?(%w[Bar::2 Bar::3])
+    assert_not AdditionalTag.mutually_exclusive_tags?(%w[Foo::1 Bar::2 Bar::3 Test3])
+    assert_not AdditionalTag.mutually_exclusive_tags?(['Bar:: 2', 'Bar::3'])
+    assert_not AdditionalTag.mutually_exclusive_tags?(['Bar :: 2', 'Bar::3'])
   end
 end
