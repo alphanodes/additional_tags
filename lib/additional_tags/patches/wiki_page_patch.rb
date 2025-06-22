@@ -52,7 +52,7 @@ module AdditionalTags
           tags = Array tag
           tags.map!(&:strip)
           tags.compact_blank!
-          return [] if tags.count.zero?
+          return [] if tags.none?
 
           tags.map!(&:downcase)
 

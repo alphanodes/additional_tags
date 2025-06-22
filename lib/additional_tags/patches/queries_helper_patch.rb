@@ -14,7 +14,8 @@ module AdditionalTags
 
       module InstanceMethods
         def column_content_with_tags(column, item)
-          if column.name == :issue_tags || item.is_a?(Issue) && column.name == :tags
+          if (column.name == :issue_tags || item.is_a?(Issue) && column.name == :tags) &&
+             respond_to?(:additional_tag_links)
             tags = if item.instance_variable_defined? :@visible_tags
                      item.instance_variable_get :@visible_tags
                    elsif Setting.display_subprojects_issues?
