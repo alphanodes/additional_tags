@@ -17,7 +17,7 @@ module AdditionalTagsWikiHelper
   end
 
   def render_wiki_index_title(title, project: nil, name: nil, tag: nil)
-    title = l title unless is_a? Symbol
+    title = l title if title.is_a? Symbol
 
     if tag.present?
       tag_object = ActsAsTaggableOn::Tag.new name: tag
