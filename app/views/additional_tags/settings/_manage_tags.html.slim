@@ -11,7 +11,7 @@
           th = l :field_name
           - manageable_tag_columns.each_value do |column_values|
             th = column_values[:label]
-          th
+          th.buttons.hide-when-print
       tbody
         - use_colors = AdditionalTags.use_colors?
         - color_theme = AdditionalTags.setting :tags_color_theme
@@ -27,7 +27,7 @@
 
             - manageable_tag_column_values(tag).each do |column|
               td = column
-            td.buttons
+            td.buttons.hide-when-print
               = link_to sprite_icon('edit', l(:button_edit)),
                         edit_additional_tag_path(tag),
                         class: 'icon icon-edit'
