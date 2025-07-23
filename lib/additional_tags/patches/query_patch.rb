@@ -72,8 +72,7 @@ module AdditionalTags
           else
             allowed_projects = Project.where(Project.allowed_to_condition(User.current, permission))
                                       .select(:id)
-            ids_list = klass.tagged_with(klass.available_tags(skip_pre_condition: true), any: true)
-                            .where(project_id: allowed_projects).ids
+            ids_list = klass.joins(:tags).where(project_id: allowed_projects).distinct.ids
           end
 
           "(#{klass.arel_table[:id].send(compare, ids_list).to_sql})"
