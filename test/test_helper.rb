@@ -49,18 +49,21 @@ module AdditionalTags
 
   class IntegrationTest < Redmine::IntegrationTest
     extend PluginFixturesLoader
+
     fixtures(*fixtures_list)
   end
 
   class ApiTest < Redmine::ApiTest::Base
     include AdditionalTags::TestHelper
     extend PluginFixturesLoader
+
     fixtures(*fixtures_list)
   end
 
   class ControllerTest < Redmine::ControllerTest
     include AdditionalTags::TestHelper
     extend PluginFixturesLoader
+
     fixtures(*fixtures_list)
 
     def fixture_files_path
@@ -71,6 +74,7 @@ module AdditionalTags
   class TestCase < ActiveSupport::TestCase
     include AdditionalTags::TestHelper
     extend PluginFixturesLoader
+
     fixtures(*fixtures_list)
   end
 end

@@ -8,6 +8,7 @@ module AdditionalTags
       included do
         include Additionals::EntityMethodsGlobal
         include InstanceMethods
+
         acts_as_ordered_taggable
 
         before_save :prepare_save_tag_change, if: proc { AdditionalTags.setting?(:active_issue_tags) }

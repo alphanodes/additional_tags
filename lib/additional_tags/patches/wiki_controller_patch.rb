@@ -7,6 +7,7 @@ module AdditionalTags
 
       included do
         prepend InstanceOverwriteMethods
+
         helper :additional_tags
         helper :additional_tags_wiki
 
