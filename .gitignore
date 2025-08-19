@@ -3,6 +3,8 @@
 coverage/
 tmp/
 Gemfile.lock
+CLAUDE.md
+.claude/
 .project
 .settings/
 .enable_*

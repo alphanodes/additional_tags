@@ -22,7 +22,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:16
+        image: postgres:17
         env:
           POSTGRES_DB: redmine
           POSTGRES_USER: postgres
@@ -56,20 +56,20 @@ jobs:
         if: matrix.db == 'mysql'
 
       - name: Checkout Redmine
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: redmine/redmine
           ref: ${{ matrix.redmine }}
           path: redmine
 
       - name: Checkout additionals
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: AlphaNodes/additionals
           path: redmine/plugins/additionals
 
       - name: Checkout additional_tags
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: redmine/plugins/additional_tags
 
