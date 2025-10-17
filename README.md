@@ -16,13 +16,13 @@
   - Display issue tags
 - Available role permissions wiki tags (section *Wiki*):
   - Add wiki tags
-- Managing tags centrally in the plugin settings (edit, delete, merge)-
+- Managing tags centrally in the plugin settings (edit, delete, merge)
 - Grouped tags.
   - Grouping of tags possible, when using a colon in tag (all tags with same base name get the same color). Typo example: ``Plugin:HRM``
 - Scoped tags:
   - Grouping of tags via *Scoped tags* possible, when using two colons in tag. Typo example: ``Product::Sprint 1``
   - Only one tag of the same base name is allowed for an entity
-  - Base name and tag value are displayed seperatly
+  - Base name and tag value are displayed separately
 - Accented and non-latin characters supported for tag order
 - Color theme selection possible
 - Custom tags and tagging tables (additional_tags and additional_taggings). If another plugin
@@ -52,7 +52,7 @@ Start using it, too. The example image shows the centralized tag management in t
 ## Why another Tag plugin?
 
 1. Main reason: a stable tag solution for a current Redmine version is needed - NOW
-2. Other plugins are no longer maintained or not available on a public community plattform as github or gitlab
+2. Other plugins are no longer maintained or not available on a public community platform as github or gitlab
 3. Redmine (core) does not support tags. A feature request for issue tags exists since 2008, see [#1448](https://www.redmine.org/issues/1448).
 4. Lots of plugins are using its own tag implementation (redmine_knowledgebase, redmine_contacts, redmine_products, redmine_passwords, redmine_db, ....). A common functional base was required. This plugin closes this gap. It would be great, if other plugins would use ``additional_tags`` for it.
 
@@ -113,7 +113,7 @@ If you use [redmine_tags](https://github.com/ixti/redmine_tags) or [redmineup_ta
 To migrate your data to ``additional_tags`` use the following steps (order is important):
 
 1. Remove plugin directory of your old plugin, e.g plugin/redmine_tags
-2. Install ``additional_tags`` as is descript above (this automatically migrate data to new tables)
+2. Install ``additional_tags`` as described above (this automatically migrate data to new tables)
 
 The old database tables are existing after these steps.
 
