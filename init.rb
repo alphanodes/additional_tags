@@ -9,7 +9,7 @@ Redmine::Plugin.register :additional_tags do
   version AdditionalTags::VERSION
   url 'https://github.com/alphanodes/additional_tags/'
   author_url 'https://alphanodes.com/'
-  requires_redmine version_or_higher: '6.0'
+  requires_redmine version_or_higher: '6.1'
 
   settings default: loader.default_settings,
            partial: 'additional_tags/settings/settings'

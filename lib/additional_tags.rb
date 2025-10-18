@@ -3,7 +3,7 @@
 require 'acts-as-taggable-on'
 
 module AdditionalTags
-  VERSION = '4.2.0'
+  VERSION = '4.3.0-main'
 
   TAG_TABLE_NAME = 'additional_tags'
   TAGGING_TABLE_NAME = 'additional_taggings'
