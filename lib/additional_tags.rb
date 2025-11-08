@@ -76,6 +76,9 @@ module AdditionalTags
       # Apply patches and helper
       loader.apply!
 
+      # Macros
+      loader.load_macros!
+
       # Load view hooks
       loader.load_view_hooks!
     end
