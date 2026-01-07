@@ -7,7 +7,7 @@ class WikiPageTest < AdditionalTags::TestCase
     prepare_tests
     User.current = nil
     @wiki = wikis :wikis_001
-    @page = @wiki.pages.first
+    @page = @wiki.pages.order(:id).first
   end
 
   def test_no_change_should_not_update_page

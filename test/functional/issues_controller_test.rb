@@ -126,7 +126,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
                      project_id: project }
     end
 
-    last_issue = Issue.last
+    last_issue = Issue.order(:id).last
 
     assert_redirected_to controller: 'issues', action: 'show', id: last_issue.id
     assert_equal 'test with tags', last_issue.subject
@@ -144,14 +144,14 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       assert_redirected_to action: 'show', id: '3'
 
       issue = Issue.find 3
-      journals = issue.journals
-      journal_details = journals.first.details
+      journal = issue.journals.order(:id).first
+      journal_detail = journal.details.order(:id).first
 
       assert_equal ['First'], issue.tag_list
-      assert_equal 1, journals.count
-      assert_equal 1, journal_details.count
-      assert_equal 'Second', journal_details.first.old_value
-      assert_equal 'First', journal_details.first.value
+      assert_equal 1, issue.journals.count
+      assert_equal 1, journal.details.count
+      assert_equal 'Second', journal_detail.old_value
+      assert_equal 'First', journal_detail.value
     end
   end
 
