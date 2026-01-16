@@ -8,6 +8,8 @@ if ENV['COVERAGE']
   end
 end
 
+$VERBOSE = nil if ENV['SUPPRESS_WARNINGS']
+
 require File.expand_path "#{File.dirname __FILE__}/../../../test/test_helper"
 require File.expand_path "#{File.dirname __FILE__}/../../additionals/test/global_fixtures_helper"
 require File.expand_path "#{File.dirname __FILE__}/../../additionals/test/global_test_helper"
