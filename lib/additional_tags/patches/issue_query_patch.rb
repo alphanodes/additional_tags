@@ -39,6 +39,14 @@ module AdditionalTags
                                                    values:,
                                                    permission: :view_issue_tags
         end
+
+        # Backward compatibility for saved queries migrated from redmineup_tags plugin.
+        # That plugin used 'issue_tags' as filter name, while additional_tags uses 'tags'.
+        # Without this method, saved queries with 'issue_tags' filter cause 500 errors
+        # because ActiveRecord tries to access non-existent column 'issues.issue_tags'.
+        def sql_for_issue_tags_field(_field, operator, values)
+          sql_for_tags_field 'tags', operator, values
+        end
       end
 
       module InstanceMethods
