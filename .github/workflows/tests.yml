@@ -10,9 +10,12 @@ jobs:
 
     strategy:
       matrix:
-        ruby: ['3.2', '3.3', '3.4']
+        ruby: ['3.2', '3.3', '3.4', '4.0']
         redmine: ['6.1-stable', 'master']
         db: ['postgres', 'mysql']
+        exclude:
+          - ruby: '4.0'
+            redmine: 6.1-stable
       fail-fast: false
 
     services:
