@@ -26,7 +26,7 @@ class AdditionalTagsController < ApplicationController
     @tag_type = klass.name
 
     respond_to do |format|
-      format.html { head :not_acceptable }
+      format.html { redirect_to @tag_list_path }
       format.api
     end
   end

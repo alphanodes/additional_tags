@@ -17,12 +17,13 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
     add_issue @project_b, %w[b8 b9], false
   end
 
-  def test_index_only_available_for_api
+  def test_index_html_should_redirect_to_settings
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       get :index,
           params: { type: 'issue' }
 
-      assert_response :not_acceptable
+      assert_response :redirect
+      assert_redirected_to plugin_settings_path(id: 'additional_tags', tab: 'manage_tags')
     end
   end
 
