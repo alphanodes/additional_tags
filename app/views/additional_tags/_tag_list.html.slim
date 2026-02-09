@@ -2,7 +2,7 @@
   .tags.attribute
     - unless defined? hide_label
       span.label
-        = l :field_tag_list
+        = local_assigns.key?(:label) ? l(label) : l(:field_tag_list)
         ' :
     - if defined?(editable) && editable
       #tags-data
