@@ -50,6 +50,6 @@ class IssueTagsController < ApplicationController
     Rails.logger.warn "Failed to add tags: #{e.inspect}"
     flash[:error] = t :notice_failed_to_add_tags
   ensure
-    redirect_to_referer_or { render text: 'Tags updated.', layout: true }
+    redirect_to_referer_or { render plain: 'Tags updated.', layout: true }
   end
 end
