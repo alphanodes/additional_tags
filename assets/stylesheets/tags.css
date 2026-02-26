@@ -21,7 +21,7 @@ td.tags span.additional-tag-label-color {
 .additional-tag-label-color {
   padding: 0 5px;
   line-height: initial;
-  font-size: 0.7rem !important;
+  font-size: var(--a-font-size-xs) !important;
   border: 1px solid rgb(0 0 0 / 20%);
   border-radius: 0.75rem;
 }
@@ -50,7 +50,7 @@ td.tags span.additional-tag-label-color {
 .tag-label .tag-count,
 .additional-tag-label-color .tag-group-value,
 .tag-label .tag-group-value {
-  font-size: 0.7rem;
+  font-size: var(--a-font-size-xs);
   margin-left: 0.5em;
 }
 
