@@ -1,4 +1,4 @@
-/* global mostUsedTags:writable */
+/* global mostUsedTags:writable, sanitizeHTML */
 $(() => {
   $('body').on('click', '.most-used-tags .most-used-tag', (e) => {
     const $tagsSelect = $('select#issue_tag_list');
@@ -10,7 +10,7 @@ $(() => {
 
     mostUsedTags = $.grep(mostUsedTags, (t) => { return t !== tag; });
     const tagsHtml = mostUsedTags.map((tag) => {
-      return `<span class="most-used-tag">${  tag  }</span>`;
+      return `<span class="most-used-tag">${  sanitizeHTML(tag)  }</span>`;
     }).join(', ');
 
     const $mostUsedTagsContainer = $(e.target).parent('.most-used-tags');

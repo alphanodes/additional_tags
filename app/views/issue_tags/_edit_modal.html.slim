@@ -28,4 +28,4 @@ h3.title = @append ? l(:label_add_tags) : l(:label_edit_tags)
     = link_to_function l(:button_cancel), 'hideModal(this)'
 
 javascript:
-  var mostUsedTags = #{raw @most_used_tags.map(&:name)};
+  var mostUsedTags = #{raw @most_used_tags.map(&:name).to_json};
