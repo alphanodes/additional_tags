@@ -6,10 +6,6 @@ class IssueMacrosTest < AdditionalTags::ControllerTest
   include ActionView::Helpers::TextHelper
   include ERB::Util
 
-  fixtures :projects, :users, :email_addresses, :roles, :members, :member_roles,
-           :enabled_modules, :issues, :trackers, :issue_statuses,
-           :workflows, :enumerations
-
   def setup
     prepare_tests
 
