@@ -33,8 +33,8 @@ module AdditionalTags
           return render_403 unless User.current.admin?
 
           q = build_search_query_term params
-          sql_for_where = "LOWER(#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name) LIKE ?"
-          tags = ActsAsTaggableOn::Tag.where(sql_for_where, "%#{q.downcase}%")
+          sql_for_where = Redmine::Database.like "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name", '?'
+          tags = ActsAsTaggableOn::Tag.where(sql_for_where, "%#{q}%")
                                       .order(name: :asc)
 
           render json: format_tags_json(tags)

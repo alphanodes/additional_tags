@@ -36,7 +36,7 @@ module AdditionalTags
         #                                    value: options[:name_like],
         #                                    wildcard: :both
         # end
-        scope = scope.where "LOWER(#{TAG_TABLE_NAME}.name) LIKE ?", "%#{options[:name_like].downcase}%" if options[:name_like]
+        scope = scope.where Redmine::Database.like("#{TAG_TABLE_NAME}.name", '?'), "%#{options[:name_like]}%" if options[:name_like]
         scope = scope.where "#{TAG_TABLE_NAME}.name=?", options[:name] if options[:name]
         scope = scope.where "#{TAGGING_TABLE_NAME}.taggable_id!=?", options[:exclude_id] if options[:exclude_id]
         scope = scope.where options[:where_field] => options[:where_value] if options[:where_field].present? && options[:where_value]
