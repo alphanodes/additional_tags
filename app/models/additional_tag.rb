@@ -173,21 +173,13 @@ class AdditionalTag < ApplicationRecord
       end
     end
 
-    # Sorts an array of tag name strings alphabetically, using transliteration for special characters.
+    # Sorts tags alphabetically with transliteration for special characters.
+    # Works with arrays, tag name strings, AdditionalTag objects, and ActiveRecord relations.
     #
-    # tags - array of tag name strings (sorted in place)
+    # tags - array, relation, or collection of strings or AdditionalTag objects
     def sort_tags(tags)
-      tags.sort! do |a, b|
-        ActiveSupport::Inflector.transliterate(a.downcase) <=> ActiveSupport::Inflector.transliterate(b.downcase)
-      end
-    end
-
-    # Sorts a tag_list (collection of tag objects) alphabetically by name with transliteration.
-    #
-    # tag_list - a tag list (e.g. from a taggable record's `tag_list`)
-    def sort_tag_list(tag_list)
-      tag_list.to_a.sort! do |a, b|
-        ActiveSupport::Inflector.transliterate(a.name.downcase) <=> ActiveSupport::Inflector.transliterate(b.name.downcase)
+      tags.to_a.sort! do |a, b|
+        ActiveSupport::Inflector.transliterate(a.to_s.downcase) <=> ActiveSupport::Inflector.transliterate(b.to_s.downcase)
       end
     end
 

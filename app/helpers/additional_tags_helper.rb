@@ -11,7 +11,7 @@ module AdditionalTagsHelper
   end
 
   def manageable_tags
-    AdditionalTag.sort_tag_list AdditionalTag.where({})
+    AdditionalTag.sort_tags AdditionalTag.where({})
   end
 
   def manageable_tag_columns
@@ -62,13 +62,13 @@ module AdditionalTagsHelper
 
     case "#{sort_by}:#{sort_order}"
     when 'name:desc'
-      tags = AdditionalTag.sort_tag_list(tags).reverse
+      tags = AdditionalTag.sort_tags(tags).reverse
     when 'count:asc'
       tags.sort_by!(&:count)
     when 'count:desc'
       tags.sort! { |a, b| b.count <=> a.count }
     else
-      tags = AdditionalTag.sort_tag_list tags
+      tags = AdditionalTag.sort_tags tags
     end
 
     tags
@@ -190,7 +190,7 @@ module AdditionalTagsHelper
     return if tag_list.blank?
 
     unsorted = options.delete :unsorted
-    tag_list = AdditionalTag.sort_tag_list tag_list unless unsorted
+    tag_list = AdditionalTag.sort_tags tag_list unless unsorted
 
     # set defaults if not defined
     options[:use_colors] = AdditionalTags.use_colors? unless options.key? :use_colors

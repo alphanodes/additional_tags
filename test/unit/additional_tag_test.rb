@@ -175,10 +175,10 @@ class AdditionalTagTest < AdditionalTags::TestCase
     assert_equal %w[Apple banana cherry], result
   end
 
-  def test_sort_tag_list_by_name
+  def test_sort_tags_with_tag_objects
     tag_a = AdditionalTag.new name: 'Zebra'
     tag_b = AdditionalTag.new name: 'apple'
-    result = AdditionalTag.sort_tag_list [tag_a, tag_b]
+    result = AdditionalTag.sort_tags [tag_a, tag_b]
 
     assert_equal 'apple', result.first.name
     assert_equal 'Zebra', result.last.name
