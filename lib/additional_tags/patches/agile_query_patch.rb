@@ -23,7 +23,7 @@ module AdditionalTags
                    when '!*'
                      Issue.joins(:tags).uniq
                    else
-                     Issue.tagged_with(ActsAsTaggableOn::Tag.all.map(&:to_s), any: true)
+                     Issue.tagged_with(AdditionalTag.all.map(&:to_s), any: true)
                    end
 
           compare   = operator.include?('!') ? 'NOT IN' : 'IN'

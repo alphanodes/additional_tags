@@ -19,8 +19,8 @@ module AdditionalTags
           return @load_available_criteria_with_tags if @load_available_criteria_with_tags
 
           @load_available_criteria_with_tags = load_available_criteria_without_tags
-          @load_available_criteria_with_tags['tags'] = { sql: "#{ActsAsTaggableOn.tags_table}.id",
-                                                         klass: ActsAsTaggableOn::Tag,
+          @load_available_criteria_with_tags['tags'] = { sql: "#{AdditionalTag.table_name}.id",
+                                                         klass: AdditionalTag,
                                                          joins: additional_tags_join,
                                                          label: :field_tags }
           @load_available_criteria_with_tags
@@ -31,8 +31,8 @@ module AdditionalTags
         def additional_tags_join
           time_entry_table = Arel::Table.new TimeEntry.table_name
           issues_table = Arel::Table.new Issue.table_name, as: :issues_time_entries
-          taggings_table = Arel::Table.new ActsAsTaggableOn.taggings_table
-          tags_table = Arel::Table.new ActsAsTaggableOn.tags_table
+          taggings_table = Arel::Table.new AdditionalTagging.table_name
+          tags_table = Arel::Table.new AdditionalTag.table_name
 
           time_entry_table.join(issues_table)
                           .on(issues_table[:id].eq(time_entry_table[:issue_id]))

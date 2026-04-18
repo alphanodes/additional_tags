@@ -69,12 +69,12 @@ module AdditionalTags
         return unless params && params[:issue]
 
         common_tags = if params[:common_tags].present?
-                        params[:common_tags].split(ActsAsTaggableOn.delimiter).map(&:strip)
+                        params[:common_tags].split(AdditionalTags::DefaultParser::DELIMITER).map(&:strip)
                       else
                         []
                       end
 
-        current_tags = ActsAsTaggableOn::TagList.new issue.tags.to_a
+        current_tags = AdditionalTags::TagList.new issue.tags.to_a
         new_tags = Array(params[:issue][:tag_list]).compact_blank
 
         tags_to_add = new_tags - common_tags

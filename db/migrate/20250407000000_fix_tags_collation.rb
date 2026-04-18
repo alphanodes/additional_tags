@@ -4,7 +4,7 @@ class FixTagsCollation < ActiveRecord::Migration[7.2]
   def up
     return unless Redmine::Database.mysql?
 
-    table = ActsAsTaggableOn.tags_table
+    table = AdditionalTag.table_name
     result = ActiveRecord::Base.connection.select_one(
       'SELECT COLLATION_NAME FROM information_schema.COLUMNS ' \
       "WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = '#{table}' AND COLUMN_NAME = 'name'"

@@ -42,7 +42,7 @@ class TagsTest < AdditionalTags::TestCase
   def test_merge_with_new_tag_name
     tag_name = 'not_existing_tag'
 
-    tags = ActsAsTaggableOn::Tag.where name: %w[First Second]
+    tags = AdditionalTag.where name: %w[First Second]
 
     issue3 = issues :issues_003
     issue6 = issues :issues_006
@@ -50,7 +50,7 @@ class TagsTest < AdditionalTags::TestCase
     assert_equal %w[Second], issue3.tag_list
     assert_equal %w[Four Second], issue6.tag_list
 
-    assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
+    assert_difference 'AdditionalTag.count', -1 do
       AdditionalTags::Tags.merge tag_name, tags
     end
 
@@ -61,7 +61,7 @@ class TagsTest < AdditionalTags::TestCase
   def test_merge_with_exiting_tag_name
     tag_name = 'Four'
 
-    tags = ActsAsTaggableOn::Tag.where name: %w[First Second]
+    tags = AdditionalTag.where name: %w[First Second]
 
     issue3 = issues :issues_003
     issue6 = issues :issues_006
@@ -69,7 +69,7 @@ class TagsTest < AdditionalTags::TestCase
     assert_equal %w[Second], issue3.tag_list
     assert_equal %w[Four Second], issue6.tag_list
 
-    assert_difference 'ActsAsTaggableOn::Tag.count', -2 do
+    assert_difference 'AdditionalTag.count', -2 do
       AdditionalTags::Tags.merge tag_name, tags
     end
 
@@ -78,9 +78,9 @@ class TagsTest < AdditionalTags::TestCase
   end
 
   def test_remove_unused_tags
-    ActsAsTaggableOn::Tag.create! name: 'unused_new_tag'
+    AdditionalTag.create! name: 'unused_new_tag'
 
-    assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
+    assert_difference 'AdditionalTag.count', -1 do
       AdditionalTags::Tags.remove_unused_tags
     end
   end
@@ -88,13 +88,13 @@ class TagsTest < AdditionalTags::TestCase
   def test_add_new_tag_should_increase_count
     issue = issues :issues_002
 
-    assert_difference 'ActsAsTaggableOn::Tag.count' do
+    assert_difference 'AdditionalTag.count' do
       issue.tag_list << 'unused_new_tag'
 
       assert_save issue
     end
 
-    tag = ActsAsTaggableOn::Tag.find_by name: 'unused_new_tag'
+    tag = AdditionalTag.find_by name: 'unused_new_tag'
 
     assert_equal 1, tag.taggings_count
   end

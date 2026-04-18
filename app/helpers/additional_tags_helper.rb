@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module AdditionalTagsHelper
-  include ActsAsTaggableOn::TagsHelper
-
   def format_tags_json(tags)
     tags.map do |tag|
       {
@@ -13,7 +11,7 @@ module AdditionalTagsHelper
   end
 
   def manageable_tags
-    AdditionalTags::Tags.sort_tag_list ActsAsTaggableOn::Tag.where({})
+    AdditionalTags::Tags.sort_tag_list AdditionalTag.where({})
   end
 
   def manageable_tag_columns
@@ -267,6 +265,16 @@ module AdditionalTagsHelper
                                              additional_tag_link(tag, **options),
                                              class: "tag-nube-#{weight}",
                                              style: (style == :simple_cloud ? 'font-size: 1em;' : '')) + ' '.html_safe
+    end
+  end
+
+  def tag_cloud(tags, classes)
+    return if tags.empty?
+
+    max_count = tags.max_by(&:taggings_count).taggings_count.to_f
+    tags.each do |tag_entry|
+      index = ((tag_entry.taggings_count / max_count) * (classes.size - 1))
+      yield tag_entry, classes[index.nan? ? 0 : index.round]
     end
   end
 end

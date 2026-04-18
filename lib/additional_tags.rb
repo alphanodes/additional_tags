@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
-require 'acts-as-taggable-on'
-
 module AdditionalTags
   VERSION = '4.4.0-main'
-
-  TAG_TABLE_NAME = 'additional_tags'
-  TAGGING_TABLE_NAME = 'additional_taggings'
 
   include RedminePluginKit::PluginBase
 
@@ -32,12 +27,7 @@ module AdditionalTags
         # rubocop: enable Style/RaiseArgs
       end
 
-      ActsAsTaggableOn.tags_table = TAG_TABLE_NAME
-      ActsAsTaggableOn.taggings_table = TAGGING_TABLE_NAME
-      # NOTE: remove_unused_tags cannot be used, because tag is deleted before assign for tagging
-      # @see https://github.com/mbleigh/acts-as-taggable-on/issues/946
-      # NOTE2: merging tags is not compatible, too.
-      ActsAsTaggableOn.remove_unused_tags = false
+      ActiveSupport.on_load(:active_record) { include AdditionalTags::Taggable }
 
       loader.incompatible? %w[redmine_tags
                               redmine_tagging

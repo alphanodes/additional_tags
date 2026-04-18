@@ -42,12 +42,12 @@ module AdditionalTags
           quoted_joined_field = self.class.connection.quote_column_name joined_field
           quoted_source_field = self.class.connection.quote_column_name source_field
           quoted_target_field = self.class.connection.quote_column_name target_field
-          subsql = ActsAsTaggableOn::Tagging.joins("INNER JOIN #{quoted_joined_table}" \
-                                                   " ON additional_taggings.taggable_id = #{quoted_joined_table}.#{quoted_target_field}")
-                                            .where(taggable_type: klass.name)
-                                            .where("#{self.class.connection.quote_table_name queried_table_name}.#{quoted_source_field} =" \
-                                                   " #{quoted_joined_table}.#{quoted_joined_field}")
-                                            .select(1)
+          subsql = AdditionalTagging.joins("INNER JOIN #{quoted_joined_table}" \
+                                           " ON additional_taggings.taggable_id = #{quoted_joined_table}.#{quoted_target_field}")
+                                    .where(taggable_type: klass.name)
+                                    .where("#{self.class.connection.quote_table_name queried_table_name}.#{quoted_source_field} =" \
+                                           " #{quoted_joined_table}.#{quoted_joined_field}")
+                                    .select(1)
 
           if %w[= !].include? operator
             ids_list = klass.tagged_with(values, any: true).pluck :id
@@ -91,7 +91,7 @@ module AdditionalTags
               Additionals::SQL_NO_RESULT_CONDITION
             end
           else
-            entries = ActsAsTaggableOn::Tagging.where taggable_type: klass.name
+            entries = AdditionalTagging.where taggable_type: klass.name
             id_table = klass.table_name
             "(#{id_table}.id #{compare} (#{entries.select(:taggable_id).to_sql}))"
           end

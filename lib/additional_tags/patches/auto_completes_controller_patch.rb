@@ -33,9 +33,10 @@ module AdditionalTags
           return render_403 unless User.current.admin?
 
           q = build_search_query_term params
-          sql_for_where = Redmine::Database.like "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name", '?'
-          tags = ActsAsTaggableOn::Tag.where(sql_for_where, "%#{q}%")
-                                      .order(name: :asc)
+          sql_for_where = Redmine::Database.like "#{ActiveRecord::Base.connection.quote_table_name AdditionalTag.table_name}.name",
+                                                 '?'
+          tags = AdditionalTag.where(sql_for_where, "%#{q}%")
+                              .order(name: :asc)
 
           render json: format_tags_json(tags)
         end

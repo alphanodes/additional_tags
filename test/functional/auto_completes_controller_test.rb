@@ -5,7 +5,7 @@ require File.expand_path '../../test_helper', __FILE__
 class AutoCompletesControllerTest < AdditionalTags::ControllerTest
   def setup
     prepare_tests
-    @tag = ActsAsTaggableOn::Tag.find_by name: 'First'
+    @tag = AdditionalTag.find_by name: 'First'
 
     @request.session[:user_id] = 2
   end

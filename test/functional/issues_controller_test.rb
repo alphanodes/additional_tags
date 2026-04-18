@@ -248,7 +248,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
       assert_save issue2
 
-      assert_equal %w[First a_common_tag], issue1.reload.tag_list
+      assert_sorted_equal %w[First a_common_tag], issue1.reload.tag_list.to_a
       assert_equal %w[a_common_tag], issue2.reload.tag_list
 
       # Removing 'a_common_tag'
@@ -310,7 +310,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
       assert_save issue2
 
-      assert_equal %w[First a_common_tag], issue1.reload.tag_list
+      assert_sorted_equal %w[First a_common_tag], issue1.reload.tag_list.to_a
       assert_equal %w[a_common_tag], issue2.reload.tag_list
 
       # Removing 'a_common_tag'
@@ -321,7 +321,7 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
       assert_response :redirect
 
-      # Reset ActsAsTaggableOn::TagList cache
+      # Reset AdditionalTags::TagList cache
       issue1.remove_instance_variable :@tag_list
       issue2.remove_instance_variable :@tag_list
 

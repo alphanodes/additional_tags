@@ -8,7 +8,7 @@ module AdditionalTags
       included do
         include InstanceMethods
 
-        acts_as_ordered_taggable
+        acts_as_additional_taggable
 
         alias_method :safe_attributes_without_tags=, :safe_attributes=
         alias_method :safe_attributes=, :safe_attributes_with_tags=

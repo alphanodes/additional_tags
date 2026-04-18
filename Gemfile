@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-gem 'acts-as-taggable-on'
 gem 'redmine_plugin_kit'
 
 # if you want to use it for linters, do:

@@ -9,7 +9,7 @@ module AdditionalTags
         include Additionals::EntityMethodsGlobal
         include InstanceMethods
 
-        acts_as_ordered_taggable
+        acts_as_additional_taggable
 
         before_save :prepare_save_tag_change, if: proc { AdditionalTags.setting?(:active_issue_tags) }
         before_save :sort_tag_list, if: proc { AdditionalTags.setting?(:active_issue_tags) }
@@ -55,19 +55,19 @@ module AdditionalTags
         end
 
         def common_tag_list_from_issues(ids)
-          common_tags = ActsAsTaggableOn::Tag.joins(:taggings)
-                                             .select(
-                                               "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id",
-                                               "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name"
-                                             )
-                                             .where(taggings: { taggable_type: 'Issue', taggable_id: ids })
-                                             .group(
-                                               "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.id",
-                                               "#{ActiveRecord::Base.connection.quote_table_name ActsAsTaggableOn.tags_table}.name"
-                                             )
-                                             .having('count(*) = ?', ids.count).to_a
+          common_tags = AdditionalTag.joins(:taggings)
+                                     .select(
+                                       "#{ActiveRecord::Base.connection.quote_table_name AdditionalTag.table_name}.id",
+                                       "#{ActiveRecord::Base.connection.quote_table_name AdditionalTag.table_name}.name"
+                                     )
+                                     .where(taggings: { taggable_type: 'Issue', taggable_id: ids })
+                                     .group(
+                                       "#{ActiveRecord::Base.connection.quote_table_name AdditionalTag.table_name}.id",
+                                       "#{ActiveRecord::Base.connection.quote_table_name AdditionalTag.table_name}.name"
+                                     )
+                                     .having('count(*) = ?', ids.count).to_a
 
-          ActsAsTaggableOn::TagList.new common_tags
+          AdditionalTags::TagList.new common_tags
         end
 
         def load_visible_tags(issues, user = User.current)

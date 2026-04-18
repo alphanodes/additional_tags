@@ -97,7 +97,7 @@ class IssueTest < AdditionalTags::TestCase
     issue = issues :issues_005
 
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
-      assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
+      assert_difference 'AdditionalTag.count', -1 do
         issue.tag_list = []
 
         assert_save issue
@@ -112,7 +112,7 @@ class IssueTest < AdditionalTags::TestCase
     assert_save issue
 
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
-      assert_difference 'ActsAsTaggableOn::Tag.count', -1 do
+      assert_difference 'AdditionalTag.count', -1 do
         issue.destroy!
       end
     end
@@ -122,7 +122,7 @@ class IssueTest < AdditionalTags::TestCase
     # tag exists only in subproject
     Issue.generate! project: @project_b, tag_list: 'im not exist in parent project'
 
-    new_tag = ActsAsTaggableOn::Tag.find_by name: 'im not exist in parent project'
+    new_tag = AdditionalTag.find_by name: 'im not exist in parent project'
 
     assert_not_nil new_tag
 
@@ -138,7 +138,7 @@ class IssueTest < AdditionalTags::TestCase
     # tag exists only in subproject
     Issue.generate! project: @project_b, tag_list: 'im not exist in parent project'
 
-    new_tag = ActsAsTaggableOn::Tag.find_by name: 'im not exist in parent project'
+    new_tag = AdditionalTag.find_by name: 'im not exist in parent project'
 
     assert_not_nil new_tag
 

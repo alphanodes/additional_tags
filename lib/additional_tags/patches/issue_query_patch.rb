@@ -28,7 +28,7 @@ module AdditionalTags
 
           add_filter 'tags',
                      '=',
-                     [ActsAsTaggableOn::Tag.find_by(id: params[:tag_id]).try(:name)]
+                     [AdditionalTag.find_by(id: params[:tag_id]).try(:name)]
 
           self
         end

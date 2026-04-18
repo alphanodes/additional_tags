@@ -13,7 +13,7 @@ module AdditionalTags
       def available_tags(klass, **options)
         user = options[:user].presence || User.current
 
-        scope = ActsAsTaggableOn::Tag.where({})
+        scope = AdditionalTag.where({})
         if options[:project]
           scope = if Setting.display_subprojects_issues?
                     scope.where subproject_sql(options[:project])
@@ -32,59 +32,64 @@ module AdditionalTags
         #        Additionals::EntityMethodsGlobal should be included for this
         #
         # if options[:name_like]
-        #   scope = scope.like_with_wildcard columns: "#{TAG_TABLE_NAME}.name",
+        #   scope = scope.like_with_wildcard columns: "#{AdditionalTag.table_name}.name",
         #                                    value: options[:name_like],
         #                                    wildcard: :both
         # end
-        scope = scope.where Redmine::Database.like("#{TAG_TABLE_NAME}.name", '?'), "%#{options[:name_like]}%" if options[:name_like]
-        scope = scope.where "#{TAG_TABLE_NAME}.name=?", options[:name] if options[:name]
-        scope = scope.where "#{TAGGING_TABLE_NAME}.taggable_id!=?", options[:exclude_id] if options[:exclude_id]
+        if options[:name_like]
+          scope = scope.where Redmine::Database.like("#{AdditionalTag.table_name}.name", '?'),
+                              "%#{options[:name_like]}%"
+        end
+        scope = scope.where "#{AdditionalTag.table_name}.name=?", options[:name] if options[:name]
+        scope = scope.where "#{AdditionalTagging.table_name}.taggable_id!=?", options[:exclude_id] if options[:exclude_id]
         scope = scope.where options[:where_field] => options[:where_value] if options[:where_field].present? && options[:where_value]
 
         scope.select(table_columns(options[:sort_by]))
              .joins(tag_for_joins(klass, **options.slice(:project_join, :project, :without_projects)))
-             .group("#{TAG_TABLE_NAME}.id, #{TAG_TABLE_NAME}.name, #{TAG_TABLE_NAME}.taggings_count").having('COUNT(*) > 0')
+             .group("#{AdditionalTag.table_name}.id, #{AdditionalTag.table_name}.name," \
+                    " #{AdditionalTag.table_name}.taggings_count")
+             .having('COUNT(*) > 0')
              .order(build_order_sql(options[:sort_by], options[:order]))
       end
 
       def all_type_tags(klass, without_projects: false)
-        ActsAsTaggableOn::Tag.joins(tag_for_joins(klass, without_projects:))
-                             .distinct
-                             .order(:name)
+        AdditionalTag.joins(tag_for_joins(klass, without_projects:))
+                     .distinct
+                     .order(:name)
       end
 
       def tag_to_joins(klass)
         table_name = klass.table_name
 
-        joins = ["JOIN #{TAGGING_TABLE_NAME} ON #{TAGGING_TABLE_NAME}.taggable_id = #{table_name}.id" \
-                 " AND #{TAGGING_TABLE_NAME}.taggable_type = '#{klass}'"]
-        joins << "JOIN #{TAG_TABLE_NAME} ON #{TAGGING_TABLE_NAME}.tag_id = #{TAG_TABLE_NAME}.id"
+        joins = ["JOIN #{AdditionalTagging.table_name} ON #{AdditionalTagging.table_name}.taggable_id = #{table_name}.id" \
+                 " AND #{AdditionalTagging.table_name}.taggable_type = '#{klass}'"]
+        joins << "JOIN #{AdditionalTag.table_name} ON #{AdditionalTagging.table_name}.tag_id = #{AdditionalTag.table_name}.id"
 
         joins
       end
 
       def remove_unused_tags
-        ActsAsTaggableOn::Tag.where.missing(:taggings)
-                             .each(&:destroy)
+        AdditionalTag.where.missing(:taggings)
+                     .each(&:destroy)
       end
 
       def merge(tag_name, tags_to_merge)
         return if tag_name.blank? || tags_to_merge.none?
 
-        ActsAsTaggableOn::Tagging.transaction do
-          tag = ActsAsTaggableOn::Tag.find_by(name: tag_name) || ActsAsTaggableOn::Tag.create(name: tag_name)
+        AdditionalTagging.transaction do
+          tag = AdditionalTag.find_by(name: tag_name) || AdditionalTag.create(name: tag_name)
           # Update old tagging with new tag
-          ActsAsTaggableOn::Tagging.where(tag_id: tags_to_merge.map(&:id))
-                                   .update_all tag_id: tag.id
+          AdditionalTagging.where(tag_id: tags_to_merge.map(&:id))
+                           .update_all tag_id: tag.id
           # remove old (merged) tags
           tags_to_merge.reject { |t| t.id == tag.id }.each(&:destroy)
           # remove duplicate taggings
-          dup_scope = ActsAsTaggableOn::Tagging.where tag_id: tag.id
+          dup_scope = AdditionalTagging.where tag_id: tag.id
           valid_ids = dup_scope.group(:tag_id, :taggable_id, :taggable_type, :tagger_id, :tagger_type, :context)
                                .pluck(Arel.sql('MIN(id)'))
           dup_scope.where.not(id: valid_ids).destroy_all if valid_ids.any?
           # recalc count for new tag
-          ActsAsTaggableOn::Tag.reset_counters tag.id, :taggings
+          AdditionalTag.reset_counters tag.id, :taggings
         end
       end
 
@@ -149,12 +154,12 @@ module AdditionalTags
       private
 
       def table_columns(sort_by)
-        columns = ["#{TAG_TABLE_NAME}.id",
-                   "#{TAG_TABLE_NAME}.name",
-                   "#{TAG_TABLE_NAME}.taggings_count",
-                   "COUNT(DISTINCT #{TAGGING_TABLE_NAME}.taggable_id) AS count"]
+        columns = ["#{AdditionalTag.table_name}.id",
+                   "#{AdditionalTag.table_name}.name",
+                   "#{AdditionalTag.table_name}.taggings_count",
+                   "COUNT(DISTINCT #{AdditionalTagging.table_name}.taggable_id) AS count"]
 
-        columns << "MIN(#{TAGGING_TABLE_NAME}.created_at) AS last_created" if sort_by == 'last_created'
+        columns << "MIN(#{AdditionalTagging.table_name}.created_at) AS last_created" if sort_by == 'last_created'
         columns.to_comma_list
       end
 
@@ -181,11 +186,11 @@ module AdditionalTags
 
         sql = case sort_by
               when 'last_created'
-                "last_created #{order}, #{TAG_TABLE_NAME}.name ASC"
+                "last_created #{order}, #{AdditionalTag.table_name}.name ASC"
               when 'count'
-                "count #{order}, #{TAG_TABLE_NAME}.name ASC"
+                "count #{order}, #{AdditionalTag.table_name}.name ASC"
               else
-                "#{TAG_TABLE_NAME}.name #{order}"
+                "#{AdditionalTag.table_name}.name #{order}"
               end
 
         Arel.sql sql
@@ -194,9 +199,10 @@ module AdditionalTags
       def tag_for_joins(klass, project_join: nil, project: nil, without_projects: false)
         table_name = klass.table_name
 
-        joins = ["JOIN #{TAGGING_TABLE_NAME} ON #{TAGGING_TABLE_NAME}.tag_id = #{TAG_TABLE_NAME}.id"]
-        joins << "JOIN #{table_name} " \
-                 "ON #{table_name}.id = #{TAGGING_TABLE_NAME}.taggable_id AND #{TAGGING_TABLE_NAME}.taggable_type = '#{klass}'"
+        joins = ["JOIN #{AdditionalTagging.table_name} ON #{AdditionalTagging.table_name}.tag_id = #{AdditionalTag.table_name}.id"]
+        joins << "JOIN #{table_name}" \
+                 " ON #{table_name}.id = #{AdditionalTagging.table_name}.taggable_id" \
+                 " AND #{AdditionalTagging.table_name}.taggable_type = '#{klass}'"
 
         if project_join
           joins << project_join

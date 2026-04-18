@@ -20,7 +20,7 @@ module AdditionalTagsWikiHelper
     title = l title if title.is_a? Symbol
 
     if tag.present?
-      tag_object = ActsAsTaggableOn::Tag.new name: tag
+      tag_object = AdditionalTag.new name: tag
 
       if project
         safe_join [l(:label_wiki_index_for_tag), additional_tag_link(tag_object, link: '#')], ' '
