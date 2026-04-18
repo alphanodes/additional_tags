@@ -19,7 +19,7 @@ module AdditionalTags
                  class_name: 'AdditionalTag'
 
         has_many :tag_taggings,
-                 -> { includes(:tag).where(context: AdditionalTagging::DEFAULT_CONTEXT) },
+                 -> { includes(:tag) },
                  as: :taggable,
                  class_name: 'AdditionalTagging',
                  dependent: :destroy
@@ -54,35 +54,32 @@ module AdditionalTags
 
         tagging_table = AdditionalTagging.arel_table
         tag_table = AdditionalTag.arel_table
-        context = AdditionalTagging::DEFAULT_CONTEXT
 
         if any
-          tagged_with_any tag_list, tagging_table, tag_table, context
+          tagged_with_any tag_list, tagging_table, tag_table
         else
-          tagged_with_all tag_list, tagging_table, tag_table, context
+          tagged_with_all tag_list, tagging_table, tag_table
         end
       end
 
       private
 
-      def tagged_with_any(tag_list, tagging_table, tag_table, context)
+      def tagged_with_any(tag_list, tagging_table, tag_table)
         subquery = tagging_table
                    .project(Arel.sql('1'))
                    .join(tag_table).on(tagging_table[:tag_id].eq(tag_table[:id]))
                    .where(tagging_table[:taggable_id].eq(arel_table[primary_key]))
                    .where(tagging_table[:taggable_type].eq(base_class.name))
-                   .where(tagging_table[:context].eq(context))
                    .where(tag_table[:name].lower.in(tag_list.map(&:downcase)))
 
         where "EXISTS (#{subquery.to_sql})"
       end
 
-      def tagged_with_all(tag_list, tagging_table, tag_table, context)
+      def tagged_with_all(tag_list, tagging_table, tag_table)
         subquery = tagging_table
                    .project(tagging_table[:taggable_id])
                    .join(tag_table).on(tagging_table[:tag_id].eq(tag_table[:id]))
                    .where(tagging_table[:taggable_type].eq(base_class.name))
-                   .where(tagging_table[:context].eq(context))
                    .where(tag_table[:name].lower.in(tag_list.map(&:downcase)))
                    .group(tagging_table[:taggable_id])
                    .having(tagging_table[:tag_id].count(true).eq(tag_list.size))
@@ -94,7 +91,7 @@ module AdditionalTags
     module InstanceMethods
       def tag_list
         unless @tag_list
-          @tag_list = AdditionalTags::TagList.new(*tags.order(:name).pluck(:name))
+          @tag_list = AdditionalTags::TagList.new(*tags.order(Arel.sql("LOWER(#{AdditionalTag.table_name}.name)")).pluck(:name))
           @tag_list_original = @tag_list.dup
         end
         @tag_list
@@ -147,9 +144,8 @@ module AdditionalTags
         return if !@tag_list_changed_explicitly && @tag_list.sort == @tag_list_original&.sort
 
         new_tag_names = @tag_list.to_a
-        context = AdditionalTagging::DEFAULT_CONTEXT
 
-        current_taggings = taggings.by_context(context).not_owned.includes(:tag)
+        current_taggings = taggings.not_owned.includes :tag
         current_tag_ids = current_taggings.pluck :tag_id
         current_tag_names = current_taggings.map { |t| t.tag.name }
 
@@ -159,11 +155,11 @@ module AdditionalTags
         new_tag_ids = new_tags.map(&:id)
 
         ids_to_remove = current_tag_ids - new_tag_ids
-        taggings.where(tag_id: ids_to_remove, context: context).destroy_all if ids_to_remove.any?
+        taggings.where(tag_id: ids_to_remove).destroy_all if ids_to_remove.any?
 
         ids_to_add = new_tag_ids - current_tag_ids
         ids_to_add.each do |tag_id|
-          taggings.create! tag_id: tag_id, context: context
+          taggings.create! tag_id: tag_id
         end
 
         @tag_list_changed_explicitly = false

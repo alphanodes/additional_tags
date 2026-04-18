@@ -3,7 +3,7 @@ h3.icon
 
 - open_issues_only = RedminePluginKit.true? settings[:open_issues_only]
 - tags = Issue.available_tags(project: @project, open_issues_only:)
-- counts = AdditionalTags::Tags.entity_group_by(scope: Issue.group_by_status_with_tags(@project),
+- counts = AdditionalTag.entity_group_by(scope: Issue.group_by_status_with_tags(@project),
                                                 tags:,
                                                 statuses: { true => :closed, false => :open },
                                                 group_id_is_bool: true)

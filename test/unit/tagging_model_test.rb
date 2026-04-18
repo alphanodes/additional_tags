@@ -7,10 +7,6 @@ class TaggingModelTest < AdditionalTags::TestCase
     assert_equal 'additional_taggings', AdditionalTagging.table_name
   end
 
-  def test_default_context_constant
-    assert_equal 'tags', AdditionalTagging::DEFAULT_CONTEXT
-  end
-
   def test_belongs_to_tag
     reflection = AdditionalTagging.reflect_on_association :tag
 
@@ -26,21 +22,8 @@ class TaggingModelTest < AdditionalTags::TestCase
     assert reflection.options[:polymorphic]
   end
 
-  def test_validates_presence_of_context
-    tagging = AdditionalTagging.new tag_id: 1,
-                                    taggable_id: 1,
-                                    taggable_type: 'Issue',
-                                    context: nil
-
-    assert_not tagging.valid?
-    assert_includes tagging.errors[:context], 'cannot be blank'
-  end
-
   def test_validates_presence_of_tag_id
-    tagging = AdditionalTagging.new taggable_id: 1,
-                                    taggable_type: 'Issue',
-                                    context: 'tags',
-                                    tag_id: nil
+    tagging = AdditionalTagging.new tag_id: nil
 
     assert_not tagging.valid?
     assert_includes tagging.errors[:tag_id], 'cannot be blank'
@@ -51,11 +34,9 @@ class TaggingModelTest < AdditionalTags::TestCase
     tag = AdditionalTag.first
 
     original = AdditionalTagging.create! tag_id: tag.id,
-                                         taggable: issue,
-                                         context: 'tags'
+                                         taggable: issue
     duplicate = AdditionalTagging.new tag_id: tag.id,
-                                      taggable: issue,
-                                      context: 'tags'
+                                      taggable: issue
 
     assert_not duplicate.valid?
     assert_includes duplicate.errors[:tag_id], 'has already been taken'
@@ -63,56 +44,17 @@ class TaggingModelTest < AdditionalTags::TestCase
     original&.destroy
   end
 
-  def test_uniqueness_allows_different_context
-    issue = issues :issues_002
-    tag = AdditionalTag.first
-
-    tagging_a = AdditionalTagging.create! tag_id: tag.id,
-                                          taggable: issue,
-                                          context: 'tags'
-    tagging_b = AdditionalTagging.new tag_id: tag.id,
-                                      taggable: issue,
-                                      context: 'other'
-
-    assert tagging_b.valid?
-  ensure
-    tagging_a&.destroy
-  end
-
   def test_uniqueness_allows_different_taggable
     tag = AdditionalTag.first
 
     tagging_a = AdditionalTagging.create! tag_id: tag.id,
-                                          taggable: issues(:issues_002),
-                                          context: 'tags'
+                                          taggable: issues(:issues_002)
     tagging_b = AdditionalTagging.new tag_id: tag.id,
-                                      taggable: issues(:issues_003),
-                                      context: 'tags'
+                                      taggable: issues(:issues_003)
 
     assert tagging_b.valid?
   ensure
     tagging_a&.destroy
-  end
-
-  def test_scope_by_context
-    result = AdditionalTagging.by_context 'tags'
-
-    assert_kind_of ActiveRecord::Relation, result
-    assert(result.all? { |t| t.context == 'tags' })
-  end
-
-  def test_scope_by_context_excludes_other
-    issue = issues :issues_002
-    tag = AdditionalTag.first
-    other = AdditionalTagging.create! tag_id: tag.id,
-                                      taggable: issue,
-                                      context: 'skills'
-
-    result = AdditionalTagging.by_context 'tags'
-
-    assert_not_includes result.to_a, other
-  ensure
-    other&.destroy
   end
 
   def test_scope_not_owned
@@ -127,7 +69,6 @@ class TaggingModelTest < AdditionalTags::TestCase
     tag = AdditionalTag.first
     owned = AdditionalTagging.create! tag_id: tag.id,
                                       taggable: issue,
-                                      context: 'tags',
                                       tagger_id: 1,
                                       tagger_type: 'User'
 

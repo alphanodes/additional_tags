@@ -34,7 +34,7 @@ module AdditionalTags
 
         def group_by_status_with_tags(project = nil, user = User.current)
           scope = if project && Setting.display_subprojects_issues?
-                    visible(user).where(AdditionalTags::Tags.subproject_sql(project))
+                    visible(user).where(AdditionalTag.subproject_sql(project))
                   else
                     visible user, project:
                   end
@@ -47,7 +47,7 @@ module AdditionalTags
 
         def available_tags(**options)
           options[:permission] ||= :view_issue_tags
-          tags = AdditionalTags::Tags.available_tags self, **options
+          tags = AdditionalTag.available_tags self, **options
           return tags unless options[:open_issues_only]
 
           tags.joins("JOIN #{IssueStatus.table_name} ON #{IssueStatus.table_name}.id = #{table_name}.status_id")
@@ -73,7 +73,7 @@ module AdditionalTags
         def load_visible_tags(issues, user = User.current)
           return if issues.blank?
 
-          available_projects = Project.where(AdditionalTags::Tags.visible_condition(user)).ids
+          available_projects = Project.where(AdditionalTag.visible_condition(user)).ids
 
           issues.each do |issue|
             tags = if available_projects.include? issue.project_id
@@ -125,7 +125,7 @@ module AdditionalTags
           tags = tag_list.reject(&:empty?)
           return unless tags.present? && tag_list_changed?
 
-          self.tag_list = AdditionalTags::Tags.sort_tags tags
+          self.tag_list = AdditionalTag.sort_tags tags
         end
 
         def validate_tags

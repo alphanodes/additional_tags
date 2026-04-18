@@ -126,7 +126,7 @@ class TaggableTest < AdditionalTags::TestCase
     cleanup_tags 'assoc_tag'
   end
 
-  def test_taggings_association_returns_tagging_objects_with_context
+  def test_taggings_association_returns_tagging_objects
     @issue.tag_list = %w[ctx_tag]
 
     assert_save @issue
@@ -135,8 +135,7 @@ class TaggableTest < AdditionalTags::TestCase
     taggings = @issue.taggings
 
     assert_not_empty taggings
-
-    assert(taggings.all? { |t| t.context == 'tags' })
+    assert_equal 'Issue', taggings.first.taggable_type
   ensure
     cleanup_tags 'ctx_tag'
   end

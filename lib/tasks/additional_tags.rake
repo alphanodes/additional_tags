@@ -9,7 +9,7 @@ namespace :redmine do
       bundle exec rake redmine:additional_tags:remove_unused_tags RAILS_ENV=production
     DESCRIPTION
     task remove_unused_tags: :environment do
-      AdditionalTags::Tags.remove_unused_tags
+      AdditionalTag.remove_unused_tags
 
       puts 'Unused tags has been removed.'
       exit 0

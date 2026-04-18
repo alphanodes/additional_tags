@@ -14,18 +14,15 @@ class MigrateExistingTags < ActiveRecord::Migration[5.2]
           next if excluded_taggable_types.include? tagging.taggable_type
 
           tag = AdditionalTag.create! name: old_tag.name if cnt.zero? && tag.nil?
-          context = tagging.respond_to?(:context) && tagging.context.present? ? tagging.context : 'tags'
 
           # old data can include dups
           next if AdditionalTagging.exists?(tag_id: tag.id,
                                             taggable_id: tagging.taggable_id,
-                                            taggable_type: tagging.taggable_type,
-                                            context:)
+                                            taggable_type: tagging.taggable_type)
 
           AdditionalTagging.create!(tag_id: tag.id,
                                     taggable_id: tagging.taggable_id,
                                     taggable_type: tagging.taggable_type,
-                                    context:,
                                     created_at: tagging.created_at)
           cnt += 1
         end

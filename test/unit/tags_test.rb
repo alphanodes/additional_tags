@@ -10,31 +10,31 @@ class TagsTest < AdditionalTags::TestCase
   end
 
   def test_available_tags_for_issue
-    tags = AdditionalTags::Tags.available_tags Issue
+    tags = AdditionalTag.available_tags Issue
 
     assert_equal 5, tags.to_a.size
   end
 
   def test_available_tags_for_issue_with_permission
-    tags = AdditionalTags::Tags.available_tags Issue,
-                                               user: users(:users_002),
-                                               permission: :non_existing
+    tags = AdditionalTag.available_tags Issue,
+                                        user: users(:users_002),
+                                        permission: :non_existing
 
     assert_equal 0, tags.to_a.size
   end
 
   def test_available_tags_for_wiki_page
-    tags = AdditionalTags::Tags.available_tags WikiPage,
-                                               project_join: WikiPage.project_joins
+    tags = AdditionalTag.available_tags WikiPage,
+                                        project_join: WikiPage.project_joins
 
     assert_equal 2, tags.to_a.size
   end
 
   def test_available_tags_for_wiki_page_with_permission
-    tags = AdditionalTags::Tags.available_tags WikiPage,
-                                               user: users(:users_003),
-                                               permission: :view_wiki_pages,
-                                               project_join: WikiPage.project_joins
+    tags = AdditionalTag.available_tags WikiPage,
+                                        user: users(:users_003),
+                                        permission: :view_wiki_pages,
+                                        project_join: WikiPage.project_joins
 
     assert_equal 2, tags.to_a.size
   end
@@ -51,7 +51,7 @@ class TagsTest < AdditionalTags::TestCase
     assert_equal %w[Four Second], issue6.tag_list
 
     assert_difference 'AdditionalTag.count', -1 do
-      AdditionalTags::Tags.merge tag_name, tags
+      AdditionalTag.merge tag_name, tags
     end
 
     assert_equal [tag_name], Issue.find(3).tag_list
@@ -70,7 +70,7 @@ class TagsTest < AdditionalTags::TestCase
     assert_equal %w[Four Second], issue6.tag_list
 
     assert_difference 'AdditionalTag.count', -2 do
-      AdditionalTags::Tags.merge tag_name, tags
+      AdditionalTag.merge tag_name, tags
     end
 
     assert_equal [tag_name], Issue.find(3).tag_list
@@ -81,7 +81,7 @@ class TagsTest < AdditionalTags::TestCase
     AdditionalTag.create! name: 'unused_new_tag'
 
     assert_difference 'AdditionalTag.count', -1 do
-      AdditionalTags::Tags.remove_unused_tags
+      AdditionalTag.remove_unused_tags
     end
   end
 
@@ -100,9 +100,9 @@ class TagsTest < AdditionalTags::TestCase
   end
 
   def test_entity_group_by_with_statuses
-    counts = AdditionalTags::Tags.entity_group_by scope: { [1, 1] => 1, [2, 1] => 1, [2, 2] => 5, [3, 3] => 10 },
-                                                  tags: Issue.available_tags(user: @user),
-                                                  statuses: { 1 => :test1, 2 => :test2 }
+    counts = AdditionalTag.entity_group_by scope: { [1, 1] => 1, [2, 1] => 1, [2, 2] => 5, [3, 3] => 10 },
+                                           tags: Issue.available_tags(user: @user),
+                                           statuses: { 1 => :test1, 2 => :test2 }
 
     assert_equal 4, counts.size
     first = counts['First']
@@ -127,10 +127,10 @@ class TagsTest < AdditionalTags::TestCase
   end
 
   def test_entity_group_by_with_statuses_and_bool
-    counts = AdditionalTags::Tags.entity_group_by scope: Issue.group_by_status_with_tags,
-                                                  tags: Issue.available_tags(user: @user),
-                                                  statuses: { true => :closed, false => :open },
-                                                  group_id_is_bool: true
+    counts = AdditionalTag.entity_group_by scope: Issue.group_by_status_with_tags,
+                                           tags: Issue.available_tags(user: @user),
+                                           statuses: { true => :closed, false => :open },
+                                           group_id_is_bool: true
 
     assert_equal 4, counts.size
     first = counts['First']
@@ -144,8 +144,8 @@ class TagsTest < AdditionalTags::TestCase
   end
 
   def test_entity_group_by_without_statuses
-    counts = AdditionalTags::Tags.entity_group_by scope: Issue.group_by_status_with_tags,
-                                                  tags: Issue.available_tags(user: @user)
+    counts = AdditionalTag.entity_group_by scope: Issue.group_by_status_with_tags,
+                                           tags: Issue.available_tags(user: @user)
 
     assert_equal 4, counts.size
 

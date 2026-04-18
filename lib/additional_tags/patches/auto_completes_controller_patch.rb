@@ -17,7 +17,7 @@ module AdditionalTags
                                       sort_by: suggestion_order,
                                       order: (suggestion_order == 'name' ? 'ASC' : 'DESC')
 
-          tags = AdditionalTags::Tags.sort_tag_list tags if suggestion_order == 'name'
+          tags = AdditionalTag.sort_tag_list tags if suggestion_order == 'name'
 
           render json: format_tags_json(tags)
         end

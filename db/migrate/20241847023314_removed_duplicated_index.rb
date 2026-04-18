@@ -2,6 +2,6 @@
 
 class RemovedDuplicatedIndex < ActiveRecord::Migration[7.2]
   def change
-    remove_index :additional_taggings, name: 'index_additional_taggings_on_taggable_type', column: :taggable_type
+    remove_index :additional_taggings, name: 'index_additional_taggings_on_taggable_type', column: :taggable_type, if_exists: true
   end
 end

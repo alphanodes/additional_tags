@@ -70,7 +70,7 @@ class AdditionalTagsController < ApplicationController
                   params[:tag].present? &&
                   params[:tag][:name].present?
 
-    AdditionalTags::Tags.merge params[:tag][:name], @tags
+    AdditionalTag.merge params[:tag][:name], @tags
     redirect_to @tag_list_path
   end
 
