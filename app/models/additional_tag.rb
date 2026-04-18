@@ -58,7 +58,7 @@ class AdditionalTag < ApplicationRecord
     # options - :permission (default :view_issue_tags), :skip_pre_condition (default true)
     def visible_condition(user, **options)
       permission = options[:permission] || :view_issue_tags
-      skip_pre_condition = options[:skip_pre_condition] || true
+      skip_pre_condition = options.fetch :skip_pre_condition, true
 
       tag_access permission, user, skip_pre_condition:
     end
@@ -139,7 +139,7 @@ class AdditionalTag < ApplicationRecord
     # Deletes all tags that have no associated taggings.
     def remove_unused_tags
       where.missing(:taggings)
-           .each(&:destroy)
+           .destroy_all
     end
 
     # Merges multiple tags into one, reassigning all taggings and removing duplicates.
@@ -311,7 +311,7 @@ class AdditionalTag < ApplicationRecord
                          end
 
       if projects_allowed.present?
-        "#{Project.table_name}.id IN (#{projects_allowed.join ','})" unless projects_allowed.empty?
+        "#{Project.table_name}.id IN (#{projects_allowed.join ','})"
       else
         Additionals::SQL_NO_RESULT_CONDITION
       end
