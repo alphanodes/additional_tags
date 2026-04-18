@@ -45,6 +45,14 @@ module AdditionalTags
                      .distinct
       end
 
+      # Returns an array of tag name strings used by records in the current scope.
+      #
+      # Issue.tag_names                # => all tag names on any issue
+      # AiModel.active.tag_names       # => tag names on active models only
+      def tag_names
+        joins(:tags).distinct.pluck Arel.sql("#{AdditionalTag.table_name}.name")
+      end
+
       def tagged_with(tags, any: false)
         tag_list = Array(tags).flatten
         tag_list.compact!
