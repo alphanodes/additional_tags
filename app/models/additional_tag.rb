@@ -152,17 +152,23 @@ class AdditionalTag < ApplicationRecord
 
       AdditionalTagging.transaction do
         tag = find_by(name: tag_name) || create(name: tag_name)
-        # Update old tagging with new tag
-        AdditionalTagging.where(tag_id: tags_to_merge.map(&:id))
-                         .update_all tag_id: tag.id
-        # remove old (merged) tags
+        source_ids = tags_to_merge.map(&:id) - [tag.id]
+
+        # Reassign source taggings one by one, skipping duplicates
+        AdditionalTagging.where(tag_id: source_ids).find_each do |tagging|
+          if AdditionalTagging.exists?(tag_id: tag.id,
+                                       taggable_id: tagging.taggable_id,
+                                       taggable_type: tagging.taggable_type)
+            tagging.destroy
+          else
+            tagging.update_column :tag_id, tag.id
+          end
+        end
+
+        # Remove old (merged) tags
         tags_to_merge.reject { |t| t.id == tag.id }.each(&:destroy)
-        # remove duplicate taggings
-        dup_scope = AdditionalTagging.where tag_id: tag.id
-        valid_ids = dup_scope.group(:tag_id, :taggable_id, :taggable_type, :tagger_id, :tagger_type)
-                             .pluck(Arel.sql('MIN(id)'))
-        dup_scope.where.not(id: valid_ids).destroy_all if valid_ids.any?
-        # recalc count for new tag
+
+        # Recalc counter cache
         reset_counters tag.id, :taggings
       end
     end

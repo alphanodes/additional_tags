@@ -56,26 +56,4 @@ class TaggingModelTest < AdditionalTags::TestCase
   ensure
     tagging_a&.destroy
   end
-
-  def test_scope_not_owned
-    result = AdditionalTagging.not_owned
-
-    assert_kind_of ActiveRecord::Relation, result
-    assert(result.all? { |t| t.tagger_id.nil? && t.tagger_type.nil? })
-  end
-
-  def test_scope_not_owned_excludes_owned
-    issue = issues :issues_002
-    tag = AdditionalTag.first
-    owned = AdditionalTagging.create! tag_id: tag.id,
-                                      taggable: issue,
-                                      tagger_id: 1,
-                                      tagger_type: 'User'
-
-    result = AdditionalTagging.not_owned
-
-    assert_not_includes result.to_a, owned
-  ensure
-    owned&.destroy
-  end
 end

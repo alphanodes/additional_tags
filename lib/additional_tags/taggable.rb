@@ -145,7 +145,7 @@ module AdditionalTags
 
         new_tag_names = @tag_list.to_a
 
-        current_taggings = taggings.not_owned.includes :tag
+        current_taggings = taggings.includes :tag
         current_tag_ids = current_taggings.pluck :tag_id
         current_tag_names = current_taggings.map { |t| t.tag.name }
 
