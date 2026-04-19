@@ -355,24 +355,8 @@ class AdditionalTag < ApplicationRecord
     end
   end
 
-  def sep
-    scoped? ? SCOPE_SEP : GROUP_SEP
-  end
-
   def tag_name
     scoped? ? group_name : name.to_s
-  end
-
-  def labels
-    @labels ||= scoped? ? scope_labels : group_labels
-  end
-
-  def scope_labels
-    @scope_labels ||= name.to_s.split(SCOPE_SEP).map(&:strip)
-  end
-
-  def group_labels
-    @group_labels ||= name.to_s.split(GROUP_SEP).map(&:strip)
   end
 
   def group_name
@@ -393,5 +377,23 @@ class AdditionalTag < ApplicationRecord
 
   def grouped?
     !disable_grouping && group_labels.length > 1
+  end
+
+  private
+
+  def sep
+    scoped? ? SCOPE_SEP : GROUP_SEP
+  end
+
+  def labels
+    @labels ||= scoped? ? scope_labels : group_labels
+  end
+
+  def scope_labels
+    @scope_labels ||= name.to_s.split(SCOPE_SEP).map(&:strip)
+  end
+
+  def group_labels
+    @group_labels ||= name.to_s.split(GROUP_SEP).map(&:strip)
   end
 end
