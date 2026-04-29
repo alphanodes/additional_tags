@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'default_parser'
-
 module AdditionalTags
   class TagList < Array
     def initialize(*args)
