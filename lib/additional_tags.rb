@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AdditionalTags
-  VERSION = '4.4.0-main'
+  VERSION = '4.4.0'
 
   include RedminePluginKit::PluginBase
 
