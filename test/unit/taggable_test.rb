@@ -4,7 +4,7 @@ require File.expand_path '../../test_helper', __FILE__
 
 class TaggableTest < AdditionalTags::TestCase
   def setup
-    User.stubs(:current).returns(users(:users_001))
+    User.current = users :users_001
     @issue = issues :issues_001
     @issue.tag_list = []
     @issue.save!

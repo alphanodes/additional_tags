@@ -5,7 +5,7 @@ require File.expand_path '../../test_helper', __FILE__
 class IssueTest < AdditionalTags::TestCase
   def setup
     # run as the admin
-    User.stubs(:current).returns(users(:users_001))
+    User.current = users :users_001
 
     @project_a = projects :projects_001
     @project_b = projects :projects_003
