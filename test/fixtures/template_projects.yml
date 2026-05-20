@@ -1,0 +1,4 @@
+# Intentionally empty. Loaded when `redmine_templates` is installed to
+# clear any TemplateProject rows leftover from a prior `redmine_templates`
+# test run, so plugin tests get a clean baseline (no template projects).
+# Tests that need template-project state should create rows explicitly.

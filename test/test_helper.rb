@@ -45,7 +45,12 @@ module AdditionalTags
     end
 
     def plugin_fixtures_list
-      %i[dashboards additional_tags additional_taggings]
+      custom = %i[dashboards additional_tags additional_taggings]
+      # Clears any TemplateProject rows leftover from prior redmine_templates
+      # test runs so visibility-dependent assertions get a clean baseline.
+      custom += %i[template_projects] if Redmine::Plugin.installed? 'redmine_templates'
+
+      custom
     end
   end
 
