@@ -74,13 +74,15 @@ module AdditionalTags
           return if issues.blank?
 
           available_projects = Project.where(AdditionalTag.visible_condition(user)).ids
+          visible_issues = issues.select { |i| available_projects.include? i.project_id }
 
+          # Batch-preload the :tags association so the per-issue read below does
+          # not trigger one taggings/tags query per issue (N+1 on list views).
+          ActiveRecord::Associations::Preloader.new(records: visible_issues, associations: :tags).call if visible_issues.any?
+
+          visible_issue_ids = visible_issues.to_set(&:id)
           issues.each do |issue|
-            tags = if available_projects.include? issue.project_id
-                     issue.tags
-                   else
-                     []
-                   end
+            tags = visible_issue_ids.include?(issue.id) ? issue.tags : []
             issue.instance_variable_set :@visible_tags, tags
           end
         end

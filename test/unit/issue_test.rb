@@ -149,4 +149,39 @@ class IssueTest < AdditionalTags::TestCase
       assert_includes Issue.available_tags(project: @project_b).to_a, new_tag
     end
   end
+
+  def test_load_visible_tags_returns_early_for_blank_input
+    assert_nil Issue.load_visible_tags([])
+    assert_nil Issue.load_visible_tags(nil)
+  end
+
+  def test_load_visible_tags_assigns_tags_for_visible_projects
+    issue = issues :issues_001 # tagged in project_id 1 (visible to admin)
+    Issue.load_visible_tags [issue]
+
+    assert issue.instance_variable_defined?(:@visible_tags)
+    assert_includes issue.instance_variable_get(:@visible_tags).map(&:name), 'First'
+  end
+
+  def test_load_visible_tags_assigns_empty_for_invisible_projects
+    # Drop to anonymous user; their visible projects exclude private project 2.
+    User.current = User.anonymous
+    issue_in_private_project = issues :issues_004 # project_id 2 (private)
+    Issue.load_visible_tags [issue_in_private_project]
+
+    assert_equal [], issue_in_private_project.instance_variable_get(:@visible_tags)
+  end
+
+  def test_load_visible_tags_preloads_tags_association_to_avoid_n_plus_one
+    # After the batch preload, the :tags association must be marked loaded on
+    # every visible issue - otherwise the per-issue read in the loop below
+    # would re-introduce an N+1 query.
+    issues_with_tags = Issue.where(id: [1, 3, 6]).to_a # all in projects visible to admin
+
+    Issue.load_visible_tags issues_with_tags
+
+    issues_with_tags.each do |issue|
+      assert issue.tags.loaded?, "tags association should be preloaded for issue ##{issue.id}"
+    end
+  end
 end
