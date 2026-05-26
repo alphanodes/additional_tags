@@ -22,11 +22,46 @@ class TaggingModelTest < AdditionalTags::TestCase
     assert reflection.options[:polymorphic]
   end
 
+  def test_taggable_belongs_to_is_required
+    # Guards against accidental removal of `optional: false` on the polymorphic
+    # belongs_to. The option must be explicitly present and false, because
+    # Redmine sets belongs_to_required_by_default to false - so an absent
+    # :optional key would silently make the validation disappear.
+    reflection = AdditionalTagging.reflect_on_association :taggable
+
+    assert reflection.options.key?(:optional), ':optional must be set explicitly'
+    assert_not reflection.options[:optional]
+  end
+
   def test_validates_presence_of_tag_id
-    tagging = AdditionalTagging.new tag_id: nil
+    tagging = AdditionalTagging.new tag_id: nil, taggable: issues(:issues_002)
 
     assert_not tagging.valid?
     assert_includes tagging.errors[:tag_id], 'cannot be blank'
+  end
+
+  def test_validates_presence_of_taggable
+    tag = AdditionalTag.first
+    tagging = AdditionalTagging.new tag_id: tag.id
+
+    assert_not tagging.valid?
+    assert_includes tagging.errors[:taggable], 'must exist'
+  end
+
+  def test_validates_presence_of_taggable_id_only
+    tag = AdditionalTag.first
+    tagging = AdditionalTagging.new tag_id: tag.id, taggable_type: 'Issue', taggable_id: nil
+
+    assert_not tagging.valid?
+    assert_includes tagging.errors[:taggable], 'must exist'
+  end
+
+  def test_validates_presence_of_taggable_type_only
+    tag = AdditionalTag.first
+    tagging = AdditionalTagging.new tag_id: tag.id, taggable_type: nil, taggable_id: 1
+
+    assert_not tagging.valid?
+    assert_includes tagging.errors[:taggable], 'must exist'
   end
 
   def test_validates_uniqueness_of_tag_id

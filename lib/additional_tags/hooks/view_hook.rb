@@ -74,7 +74,17 @@ module AdditionalTags
                         []
                       end
 
-        current_tags = AdditionalTags::TagList.new issue.tags.to_a
+        # For bulk-copy, `issue` is an unsaved new record and safe_attributes=
+        # has already overwritten its @tag_list with the params value. The
+        # source tags are kept on `bulk_copy_source_tag_list` by copy_from.
+        # For normal bulk-edit on a persisted issue, fall back to the tags
+        # association which still holds the pre-update DB state.
+        existing_tags = if issue.respond_to?(:bulk_copy_source_tag_list) && issue.bulk_copy_source_tag_list
+                          issue.bulk_copy_source_tag_list
+                        else
+                          issue.tags.to_a
+                        end
+        current_tags = AdditionalTags::TagList.new existing_tags
         new_tags = Array(params[:issue][:tag_list]).compact_blank
 
         tags_to_add = new_tags - common_tags

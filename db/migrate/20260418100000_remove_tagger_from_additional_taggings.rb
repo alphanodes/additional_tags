@@ -19,6 +19,17 @@ class RemoveTaggerFromAdditionalTaggings < ActiveRecord::Migration[7.2]
       t.remove :tagger_type
     end
 
+    # Defensive: brownfield rows with NULL key columns make the unique index
+    # break under MariaDB 11.x (NULLs are treated as duplicates there).
+    execute 'DELETE FROM additional_taggings ' \
+            'WHERE tag_id IS NULL OR taggable_id IS NULL ' \
+            "OR taggable_type IS NULL OR taggable_type = ''"
+
+    # Brownfield data: rows that were distinct only by tagger_id/tagger_type now
+    # collide with the upcoming unique index on (tag_id, taggable_id,
+    # taggable_type). Keep the row with the lowest id per group, drop the rest.
+    execute deduplicate_taggings_sql
+
     unless index_exists? :additional_taggings, %i[tag_id taggable_id taggable_type], name: 'ataggings_idx'
       add_index :additional_taggings,
                 %i[tag_id taggable_id taggable_type],
@@ -31,5 +42,29 @@ class RemoveTaggerFromAdditionalTaggings < ActiveRecord::Migration[7.2]
 
   def down
     # tagger columns are no longer used - nothing to restore
+  end
+
+  private
+
+  def deduplicate_taggings_sql
+    if Redmine::Database.postgresql?
+      <<~SQL.squish
+        DELETE FROM additional_taggings t1
+        USING additional_taggings t2
+        WHERE t1.tag_id = t2.tag_id
+          AND t1.taggable_id = t2.taggable_id
+          AND t1.taggable_type = t2.taggable_type
+          AND t1.id > t2.id
+      SQL
+    else
+      <<~SQL.squish
+        DELETE t1 FROM additional_taggings t1
+        INNER JOIN additional_taggings t2
+          ON t1.tag_id = t2.tag_id
+         AND t1.taggable_id = t2.taggable_id
+         AND t1.taggable_type = t2.taggable_type
+         AND t1.id > t2.id
+      SQL
+    end
   end
 end

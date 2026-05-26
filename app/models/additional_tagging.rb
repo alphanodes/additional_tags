@@ -2,7 +2,7 @@
 
 class AdditionalTagging < ApplicationRecord
   belongs_to :tag, class_name: 'AdditionalTag', counter_cache: :taggings_count
-  belongs_to :taggable, polymorphic: true
+  belongs_to :taggable, polymorphic: true, optional: false
 
   validates :tag_id,
             presence: true,

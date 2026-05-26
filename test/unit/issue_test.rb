@@ -184,4 +184,62 @@ class IssueTest < AdditionalTags::TestCase
       assert issue.tags.loaded?, "tags association should be preloaded for issue ##{issue.id}"
     end
   end
+
+  def test_copy_from_preserves_source_tag_list
+    source = issues :issues_001 # fixture has tag "First"
+
+    copy = Issue.new
+    copy.copy_from source
+
+    assert_equal ['First'], copy.tag_list.to_a
+  end
+
+  def test_copy_from_sets_bulk_copy_source_tag_list_accessor
+    source = issues :issues_001
+
+    copy = Issue.new
+    copy.copy_from source
+
+    # The accessor must mirror the source tags exactly so the bulk-edit hook
+    # can diff against them after safe_attributes= overwrites @tag_list.
+    assert_equal ['First'], copy.bulk_copy_source_tag_list
+  end
+
+  def test_copy_from_source_without_tags_leaves_lists_empty
+    source = issues :issues_002 # fixture has no taggings
+
+    copy = Issue.new
+    copy.copy_from source
+
+    assert_empty copy.tag_list.to_a
+    # Important: bulk_copy_source_tag_list must be set (and empty), not nil.
+    # The hook treats nil as "not a copy" and falls back to tags.to_a; an empty
+    # array correctly signals "this was a copy from an untagged source".
+    assert_equal [], copy.bulk_copy_source_tag_list
+  end
+
+  def test_copy_from_does_not_create_phantom_taggings_on_unsaved_record
+    # Regression guard for the old `self.tags = source.tags` pattern, which
+    # populated the taggings association in memory with taggable_id=nil rows.
+    # With the tag_list-based copy_from, the new (unsaved) record must not
+    # carry any in-memory tagging instances - they would otherwise either
+    # trigger validation errors (taggable optional: false) on save, or end up
+    # persisted with the wrong taggable wiring.
+    source = issues :issues_001
+    copy = Issue.new
+    copy.copy_from source
+
+    assert copy.new_record?
+    assert_empty copy.taggings.to_a, 'unsaved copy must not have in-memory taggings'
+  end
+
+  def test_copy_from_does_not_modify_source_tagging_count
+    source = issues :issues_001
+    first_tag = additional_tags :tag_one
+    count_before = first_tag.taggings_count
+
+    Issue.new.copy_from source
+
+    assert_equal count_before, first_tag.reload.taggings_count
+  end
 end

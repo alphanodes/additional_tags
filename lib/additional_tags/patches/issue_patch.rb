@@ -11,6 +11,10 @@ module AdditionalTags
 
         acts_as_additional_taggable
 
+        # Remembered by copy_from_with_tags so the bulk-edit hook can recover
+        # the source issue's tags even after safe_attributes overwrites @tag_list.
+        attr_accessor :bulk_copy_source_tag_list
+
         before_save :prepare_save_tag_change, if: proc { AdditionalTags.setting?(:active_issue_tags) }
         before_save :sort_tag_list, if: proc { AdditionalTags.setting?(:active_issue_tags) }
 
@@ -116,8 +120,15 @@ module AdditionalTags
 
           copy_from_without_tags arg, **options
           issue = arg.is_a?(Issue) ? arg : Issue.visible.find(arg)
-          self.tags = issue.tags           # required for bulk copy
-          self.tag_list = tags.map(&:name) # required for copy
+          # Use tag_list (virtual attribute, persisted via after_save) instead of
+          # assigning the tags association on this unsaved record: the latter
+          # would create AdditionalTagging instances with taggable_id=nil and
+          # trigger validation errors before the new issue has an id.
+          source_tag_names = issue.tag_list.to_a
+          self.tag_list = source_tag_names
+          # safe_attributes= will overwrite @tag_list afterwards; remember the
+          # source tags here so the bulk-edit hook can still diff against them.
+          self.bulk_copy_source_tag_list = source_tag_names
           self
         end
 

@@ -208,4 +208,112 @@ class AdditionalTagTest < AdditionalTags::TestCase
 
     assert_kind_of String, result
   end
+
+  def test_consolidate_case_duplicates_merges_taggings_onto_canonical
+    # Setup requires case-sensitive tag-name uniqueness so "Foo" and "foo" can
+    # coexist before the merge. MySQL uses utf8mb4_unicode_ci after
+    # FixTagsCollation, which makes the setup impossible there.
+    skip 'requires case-sensitive name uniqueness' if Redmine::Database.mysql?
+
+    canonical = AdditionalTag.create! name: 'Foo'
+    duplicate = AdditionalTag.create! name: 'foo'
+    keep_tagging = AdditionalTagging.create! tag_id: canonical.id, taggable_id: 1, taggable_type: 'Issue'
+    AdditionalTagging.create! tag_id: duplicate.id, taggable_id: 1, taggable_type: 'Issue'
+    AdditionalTagging.create! tag_id: duplicate.id, taggable_id: 2, taggable_type: 'Issue'
+
+    AdditionalTag.consolidate_case_duplicates!
+
+    assert_nil AdditionalTag.find_by(id: duplicate.id)
+    assert AdditionalTag.exists?(id: canonical.id)
+
+    canonical_taggings = AdditionalTagging.where tag_id: canonical.id, taggable_type: 'Issue'
+
+    assert_equal [1, 2], canonical_taggings.order(:taggable_id).pluck(:taggable_id)
+    assert AdditionalTagging.exists?(id: keep_tagging.id)
+    assert_equal 2, canonical.reload.taggings_count
+  end
+
+  def test_consolidate_case_duplicates_is_noop_without_duplicates
+    before_tags = AdditionalTag.pluck(:id).sort
+    before_taggings = AdditionalTagging.pluck(:id).sort
+
+    AdditionalTag.consolidate_case_duplicates!
+
+    assert_equal before_tags, AdditionalTag.pluck(:id).sort
+    assert_equal before_taggings, AdditionalTagging.pluck(:id).sort
+  end
+
+  def test_consolidate_case_duplicates_with_three_variant_casings
+    # Three tags with the same LOWER(name) - must all collapse onto the one
+    # with the lowest id, with all distinct taggings preserved.
+    skip 'requires case-sensitive name uniqueness' if Redmine::Database.mysql?
+
+    canonical = AdditionalTag.create! name: 'Foo'
+    dup_lower = AdditionalTag.create! name: 'foo'
+    dup_upper = AdditionalTag.create! name: 'FOO'
+
+    AdditionalTagging.create! tag_id: canonical.id, taggable_id: 1, taggable_type: 'Issue'
+    AdditionalTagging.create! tag_id: dup_lower.id, taggable_id: 2, taggable_type: 'Issue'
+    AdditionalTagging.create! tag_id: dup_upper.id, taggable_id: 3, taggable_type: 'Issue'
+
+    AdditionalTag.consolidate_case_duplicates!
+
+    # Only the canonical tag survives.
+    assert AdditionalTag.exists?(id: canonical.id)
+    assert_nil AdditionalTag.find_by(id: dup_lower.id)
+    assert_nil AdditionalTag.find_by(id: dup_upper.id)
+
+    canonical_taggings = AdditionalTagging.where(tag_id: canonical.id, taggable_type: 'Issue')
+                                          .order(:taggable_id)
+                                          .pluck(:taggable_id)
+
+    assert_equal [1, 2, 3], canonical_taggings
+    assert_equal 3, canonical.reload.taggings_count
+  end
+
+  def test_consolidate_case_duplicates_resets_counter_cache_after_dropping_conflicting_taggings
+    # When several duplicate-tags share the same taggable_id (so the conflicting
+    # taggings get dropped instead of reassigned), the counter cache on the
+    # canonical tag must still reflect the actual remaining tagging count.
+    skip 'requires case-sensitive name uniqueness' if Redmine::Database.mysql?
+
+    canonical = AdditionalTag.create! name: 'Bar'
+    duplicate = AdditionalTag.create! name: 'BAR'
+
+    # Both tagged on issue 1 (conflict - the duplicate's tagging will be dropped).
+    AdditionalTagging.create! tag_id: canonical.id, taggable_id: 1, taggable_type: 'Issue'
+    AdditionalTagging.create! tag_id: duplicate.id, taggable_id: 1, taggable_type: 'Issue'
+    # Only duplicate tagged on issue 2 (no conflict - tagging will be reassigned).
+    AdditionalTagging.create! tag_id: duplicate.id, taggable_id: 2, taggable_type: 'Issue'
+
+    AdditionalTag.consolidate_case_duplicates!
+
+    # 2 unique (tag_id, taggable_id) combinations remain - issue 1 and issue 2.
+    canonical.reload
+
+    assert_equal 2, canonical.taggings.count, 'real count'
+    assert_equal 2, canonical.taggings_count, 'counter cache must match real count'
+  end
+
+  def test_consolidate_case_duplicates_skips_null_and_empty_names
+    # Tags with NULL or empty names must not be merged with each other (their
+    # LOWER(name) is NULL or '', the model never produces them legitimately,
+    # and they are cleaned up by the migration's defensive DELETE pass).
+    canonical = AdditionalTag.create! name: 'Baz'
+
+    # Bypass model validation to create rows that the model would reject.
+    # We then verify consolidate_case_duplicates! does not touch them.
+    empty_tag = AdditionalTag.new name: ''
+    empty_tag.save validate: false
+
+    before_canonical_id = canonical.id
+    before_empty_id = empty_tag.id
+
+    AdditionalTag.consolidate_case_duplicates!
+
+    assert AdditionalTag.exists?(id: before_canonical_id), 'canonical must survive'
+    assert AdditionalTag.exists?(id: before_empty_id), 'empty-name tag must not be merged'
+  ensure
+    empty_tag&.destroy
+  end
 end

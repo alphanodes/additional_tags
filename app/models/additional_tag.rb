@@ -142,6 +142,22 @@ class AdditionalTag < ApplicationRecord
            .destroy_all
     end
 
+    # Merges tags whose names match case-insensitively into a single canonical
+    # tag (the one with the lowest id). Used by FixTagsCollation to clear
+    # case-insensitive duplicates before tightening the column collation.
+    def consolidate_case_duplicates!
+      duplicate_lowered_names = unscoped.where.not(name: [nil, ''])
+                                        .group(Arel.sql('LOWER(name)'))
+                                        .having('COUNT(*) > 1')
+                                        .pluck(Arel.sql('LOWER(name)'))
+
+      duplicate_lowered_names.each do |lowered|
+        tags = unscoped.where('LOWER(name) = ?', lowered).order(:id).to_a
+        canonical = tags.first
+        merge canonical.name, tags
+      end
+    end
+
     # Merges multiple tags into one, reassigning all taggings and removing duplicates.
     # If the target tag does not exist, it is created.
     #
