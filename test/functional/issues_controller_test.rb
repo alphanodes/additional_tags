@@ -7,7 +7,6 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
   def setup
     prepare_tests
-    User.current = nil
   end
 
   def test_index_displays_tags_as_html_in_the_correct_column

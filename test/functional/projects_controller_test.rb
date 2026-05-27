@@ -3,10 +3,6 @@
 require File.expand_path '../../test_helper', __FILE__
 
 class ProjectsControllerTest < AdditionalTags::ControllerTest
-  def setup
-    User.current = nil
-  end
-
   def test_show_with_blocks
     @request.session[:user_id] = 4
     get :show,

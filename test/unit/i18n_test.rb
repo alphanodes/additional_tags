@@ -5,14 +5,6 @@ require File.expand_path '../../test_helper', __FILE__
 class I18nTest < AdditionalTags::TestCase
   include Redmine::I18n
 
-  def setup
-    User.current = nil
-  end
-
-  def teardown
-    set_language_if_valid 'en'
-  end
-
   def test_valid_languages
     assert_kind_of Array, valid_languages
     assert_kind_of Symbol, valid_languages.first

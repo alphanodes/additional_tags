@@ -5,7 +5,6 @@ require File.expand_path '../../test_helper', __FILE__
 class WikiControllerTest < AdditionalTags::ControllerTest
   def setup
     prepare_tests
-    User.current = nil
   end
 
   def test_update_page_without_changes_should_not_create_content_version

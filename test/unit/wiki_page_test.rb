@@ -5,7 +5,6 @@ require File.expand_path '../../test_helper', __FILE__
 class WikiPageTest < AdditionalTags::TestCase
   def setup
     prepare_tests
-    User.current = nil
     @wiki = wikis :wikis_001
     @page = @wiki.pages.order(:id).first
   end
