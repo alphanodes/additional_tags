@@ -18,7 +18,7 @@ ru:
   label_show_tags_after_queries: "Показывать теги после запросов"
   label_show_with_count: "Отображать количество на метке"
   label_tag_color_theme: "Цветовая тема %{value}"
-  label_tags_colors: "Цвет"
+  label_tags_color_theme: "Цвет"
   label_tags_sidebar: "Способ отображения меток на боковой панели"
   label_tags_sort_by: "Сортировать метки по"
   label_tags_suggestion_order: "Порядок предложения при вводе"

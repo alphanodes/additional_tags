@@ -18,7 +18,7 @@ pl:
   label_show_tags_after_queries: "Pokaż TAGi po zapytaniach"
   label_show_with_count: "Wyświetlanie ilości na etykiecie"
   label_tag_color_theme: "Kolorowy motyw %{value}"
-  label_tags_colors: Kolor
+  label_tags_color_theme: Kolor
   label_tags_sidebar: "Wyświetlać znaczniki na pasku bocznym jako"
   label_tags_sort_by: "Sortuj znaczniki według"
   label_tags_suggestion_order: "Zamówienie ofertowe"

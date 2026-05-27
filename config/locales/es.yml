@@ -18,7 +18,7 @@ es:
   label_show_tags_after_queries: "Mostrar TAGs tras las consultas"
   label_show_with_count: "Mostrar la cantidad en la tags"
   label_tag_color_theme: "Tema del color %{value}"
-  label_tags_colors: "Color"
+  label_tags_color_theme: "Color"
   label_tags_sidebar: "Mostrar las tags en la barra lateral como"
   label_tags_sort_by: "Ordenar las tags por"
   label_tags_suggestion_order: "Orden de sugerencia"
