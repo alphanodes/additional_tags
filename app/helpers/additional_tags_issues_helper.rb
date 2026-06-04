@@ -4,6 +4,7 @@ module AdditionalTagsIssuesHelper
   # Hacked render_api_custom_values to add plugin values to issue api
   def render_api_custom_values(custom_values, api)
     rc = super
+    return '' unless project.module_enabled?(:additional_tags)
 
     if @issue.present? &&
        (defined?(controller_name) && controller_name == 'issues' && action_name == 'show' || !defined?(controller_name)) &&
