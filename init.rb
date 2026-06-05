@@ -21,10 +21,9 @@ Redmine::Plugin.register :additional_tags do
   end
 
   project_module :additional_tags do
-    permission :view_project_tags, { tags: [:index, :show] }
-    permission :manage_project_tags, { tags: [:new, :create, :edit, :destroy] }
+    permission :view_project_tags, { tags: %i[index, show] }
+    permission :manage_project_tags, { tags: %i[new, create, edit, destroy] }
   end
-
 
   project_module :wiki do
     permission :add_wiki_tags, wiki: %i[update_tags]

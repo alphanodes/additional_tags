@@ -15,7 +15,7 @@ class AdditionalTagsController < ApplicationController
 
   # used by api calls
   def index
-    return render_403 unless allow_tags?
+    raise 'tags are not enabled for project' unless allow_tags?
     raise 'type is not provided' if params[:type].blank?
 
     type_info = manageable_tag_columns.detect { |m| m.first.to_s == params[:type] }
@@ -104,9 +104,8 @@ class AdditionalTagsController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     render_404
   end
-  
-  def allow_tags?
-    @project && @project.module_enabled?(:additional_tags)
-  end
 
+  def allow_tags?
+    @project.nil? || @project.module_enabled?(:additional_tags)
+  end
 end
