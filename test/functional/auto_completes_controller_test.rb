@@ -8,6 +8,22 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
     @tag = AdditionalTag.find_by name: 'First'
 
     @request.session[:user_id] = 2
+    # Frontend callers (select2, jQuery autocomplete) ask for JSON, so do the tests.
+    @request.headers['Accept'] = 'application/json'
+  end
+
+  def test_issue_tags_should_respond_to_accept_json
+    get :issue_tags, params: { project_id: 'ecookbook', q: 'fir' }
+
+    assert_response :success
+    assert_equal 'application/json', response.media_type
+  end
+
+  def test_wiki_tags_should_respond_to_accept_json
+    get :wiki_tags, params: { q: 'fir' }
+
+    assert_response :success
+    assert_equal 'application/json', response.media_type
   end
 
   def test_issue_tags_should_not_be_case_sensitive

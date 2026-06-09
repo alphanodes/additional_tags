@@ -12,6 +12,10 @@ class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
     @project = projects :projects_001
     @welcome_dashboard = dashboards :system_default_welcome
     @project_dashboard = dashboards :system_default_project
+
+    # Stimulus render_async controller sends XHR with Accept: text/html
+    @request.headers['Accept'] = 'text/html'
+    @request.headers['X-Requested-With'] = 'XMLHttpRequest'
   end
 
   def test_issue_tags_block_on_welcome
@@ -19,8 +23,7 @@ class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       get :show,
           params: { dashboard_id: @welcome_dashboard.id,
-                    block: 'issue_tags',
-                    format: 'js' }
+                    block: 'issue_tags' }
 
       assert_response :success
       assert_select 'ul.tag-summary'
@@ -36,8 +39,7 @@ class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
       get :show,
           params: { dashboard_id: @project_dashboard.id,
                     block: 'issue_tags',
-                    project_id: projects(:projects_002),
-                    format: 'js' }
+                    project_id: projects(:projects_002) }
 
       assert_response :success
       assert_select 'ul.tag-summary'
@@ -52,8 +54,7 @@ class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
     with_plugin_settings 'additional_tags', active_issue_tags: 0 do
       get :show,
           params: { dashboard_id: @welcome_dashboard.id,
-                    block: 'issue_tags',
-                    format: 'js' }
+                    block: 'issue_tags' }
 
       assert_response :forbidden
     end
@@ -65,8 +66,7 @@ class DashboardAsyncBlocksControllerTest < AdditionalTags::ControllerTest
       get :show,
           params: { dashboard_id: @project_dashboard.id,
                     block: 'issue_tags',
-                    project_id: projects(:projects_002),
-                    format: 'js' }
+                    project_id: projects(:projects_002) }
 
       assert_response :forbidden
     end
