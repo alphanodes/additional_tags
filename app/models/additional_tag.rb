@@ -175,14 +175,14 @@ class AdditionalTag < ApplicationRecord
           if AdditionalTagging.exists?(tag_id: tag.id,
                                        taggable_id: tagging.taggable_id,
                                        taggable_type: tagging.taggable_type)
-            tagging.destroy
+            tagging.destroy!
           else
             tagging.update_column :tag_id, tag.id
           end
         end
 
         # Remove old (merged) tags
-        tags_to_merge.reject { |t| t.id == tag.id }.each(&:destroy)
+        tags_to_merge.reject { |t| t.id == tag.id }.each(&:destroy!)
 
         # Recalc counter cache
         reset_counters tag.id, :taggings
