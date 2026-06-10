@@ -13,6 +13,7 @@ class RoutingTest < Redmine::RoutingTest
     should_route 'GET /additional_tags' => 'additional_tags#index'
     should_route 'GET /additional_tags/1/edit' => 'additional_tags#edit', id: '1'
     should_route 'PUT /additional_tags/2' => 'additional_tags#update', id: '2'
+    should_route 'GET /additional_tags/merge' => 'additional_tags#merge'
     should_route 'POST /additional_tags/merge' => 'additional_tags#merge'
     should_route 'GET /additional_tags/context_menu' => 'additional_tags#context_menu'
     should_route 'DELETE /additional_tags' => 'additional_tags#destroy'
