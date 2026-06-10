@@ -41,6 +41,7 @@ module AdditionalTags
                           GanttsController
                           MyController
                           Issue
+                          IssueImport
                           DashboardContent
                           Journal
                           Query

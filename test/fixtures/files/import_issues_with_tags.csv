@@ -1,0 +1,4 @@
+priority;subject;description;tracker;status;tag_list
+High;First import;First description;bug;new;"First, Second"
+Normal;Second import;Second description;bug;new;Third
+Normal;Third import;Third description;feature request;new;"First, Third"

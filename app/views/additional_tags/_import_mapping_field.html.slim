@@ -1,0 +1,4 @@
+- local_import = local_assigns[:import] || @import
+p
+  = label_tag :import_mapping_tag_list, l(:field_tags)
+  = mapping_select_tag local_import, 'tag_list'
