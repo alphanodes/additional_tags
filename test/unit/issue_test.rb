@@ -11,14 +11,14 @@ class IssueTest < AdditionalTags::TestCase
     @project_b = projects :projects_003
   end
 
-  test 'patch was applied' do
+  def test_patch_was_applied
     assert_respond_to Issue, :available_tags, 'Issue has available_tags getter'
     assert_respond_to Issue.new, :tags, 'Issue instance has tags getter'
     assert_respond_to Issue.new, :tags=, 'Issue instance has tags setter'
     assert_respond_to Issue.new, :tag_list=, 'Issue instance has tag_list setter'
   end
 
-  test 'available tags should return list of distinct tags' do
+  def test_available_tags_should_return_list_of_distinct_tags
     assert_equal 5, Issue.available_tags.to_a.size
   end
 
@@ -42,7 +42,7 @@ class IssueTest < AdditionalTags::TestCase
     end
   end
 
-  test 'available tags should allow list tags of specific project only' do
+  def test_available_tags_should_allow_list_tags_of_specific_project_only
     with_settings display_subprojects_issues: '1' do
       assert_equal 5, Issue.available_tags(project: @project_a).to_a.size
       assert_equal 1, Issue.available_tags(project: @project_b).to_a.size
@@ -52,7 +52,7 @@ class IssueTest < AdditionalTags::TestCase
     end
   end
 
-  test 'available tags should allow list tags of specific without subprojects' do
+  def test_available_tags_should_allow_list_tags_of_specific_without_subprojects
     with_settings display_subprojects_issues: '0' do
       assert_equal 4, Issue.available_tags(project: @project_a).to_a.size
       assert_equal 1, Issue.available_tags(project: @project_b).to_a.size
@@ -62,14 +62,14 @@ class IssueTest < AdditionalTags::TestCase
     end
   end
 
-  test 'available tags should allow list tags found by name' do
+  def test_available_tags_should_allow_list_tags_found_by_name
     assert_equal 3, Issue.available_tags(name_like: 'i').to_a.size
     assert_equal 1, Issue.available_tags(name_like: 'rd').to_a.size
     assert_equal 2, Issue.available_tags(name_like: 's').to_a.size
     assert_equal 2, Issue.available_tags(name_like: 'e').to_a.size
   end
 
-  test 'available tags should allow list tags found by name with project' do
+  def test_available_tags_should_allow_list_tags_found_by_name_with_project
     with_settings display_subprojects_issues: '1' do
       assert_equal 3, Issue.available_tags(name_like: 'f', project: @project_a).to_a.size
       assert_equal 0, Issue.available_tags(name_like: 'b', project: @project_a).to_a.size
@@ -78,7 +78,7 @@ class IssueTest < AdditionalTags::TestCase
     end
   end
 
-  test 'available tags should allow list tags found by name without subprojects' do
+  def test_available_tags_should_allow_list_tags_found_by_name_without_subprojects
     with_settings display_subprojects_issues: '0' do
       assert_equal 2, Issue.available_tags(name_like: 'f', project: @project_a).to_a.size
       assert_equal 0, Issue.available_tags(name_like: 'b', project: @project_a).to_a.size
@@ -87,7 +87,7 @@ class IssueTest < AdditionalTags::TestCase
     end
   end
 
-  test 'Issue.all_tags should return all tags kind of Issue' do
+  def test_issue_all_tags_should_return_all_tags_kind_of_issue
     tags = Issue.available_tags.map(&:name)
 
     assert_equal %w[First Four Second Third five], tags.sort

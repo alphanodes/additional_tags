@@ -9,7 +9,7 @@ module ApiTest
       prepare_tests
     end
 
-    test 'GET /issues.xml should contain metadata' do
+    def test_get_issues_xml_should_contain_metadata
       with_plugin_settings 'additional_tags', active_issue_tags: 1 do
         get '/issues.xml', headers: credentials('jsmith')
 
@@ -17,7 +17,7 @@ module ApiTest
       end
     end
 
-    test 'GET /issues/:id.xml with tags' do
+    def test_get_issue_xml_with_tags
       with_plugin_settings 'additional_tags', active_issue_tags: 1 do
         get '/issues/1.xml', headers: credentials('jsmith')
 
@@ -26,7 +26,7 @@ module ApiTest
       end
     end
 
-    test 'GET /issues/:id.xml without tags if issue tags disabled' do
+    def test_get_issue_xml_without_tags_if_issue_tags_disabled
       with_plugin_settings 'additional_tags', active_issue_tags: 0 do
         get '/issues/1.xml', headers: credentials('jsmith')
 
@@ -34,7 +34,7 @@ module ApiTest
       end
     end
 
-    test 'POST /issues.json should create an issue with the tags' do
+    def test_post_issues_json_should_create_an_issue_with_the_tags
       payload = <<~JSON
         {
           "issue": {
@@ -62,7 +62,7 @@ module ApiTest
       end
     end
 
-    test 'PUT /issues/:id.xml with tags' do
+    def test_put_issue_xml_with_tags
       with_plugin_settings 'additional_tags', active_issue_tags: 1 do
         assert_difference 'Journal.count' do
           put '/issues/6.xml',
@@ -79,7 +79,7 @@ module ApiTest
       end
     end
 
-    test 'PUT /issues/:id.xml with existing tags' do
+    def test_put_issue_xml_with_existing_tags
       with_plugin_settings 'additional_tags', active_issue_tags: 1 do
         assert_difference 'Journal.count' do
           put '/issues/1.xml',

@@ -7,11 +7,11 @@ class IssueImportTest < AdditionalTags::TestCase
     User.current = users :users_001
   end
 
-  test 'tag_list is registered in AUTO_MAPPABLE_FIELDS' do
+  def test_tag_list_is_registered_in_auto_mappable_fields
     assert_equal 'field_tags', IssueImport::AUTO_MAPPABLE_FIELDS['tag_list']
   end
 
-  test 'import sets tag_list on resulting issues' do
+  def test_import_sets_tag_list_on_resulting_issues
     with_plugin_settings 'additional_tags', active_issue_tags: '1' do
       import = build_import_with_tags
       assert_difference 'Issue.count', 3 do
@@ -27,7 +27,7 @@ class IssueImportTest < AdditionalTags::TestCase
     end
   end
 
-  test 'import skips blank tag_list values' do
+  def test_import_skips_blank_tag_list_values
     with_plugin_settings 'additional_tags', active_issue_tags: '1' do
       import = build_import_with_tags
       import.settings['mapping'].delete 'tag_list'

@@ -8,7 +8,7 @@ module ApiTest
       prepare_tests
     end
 
-    test 'GET /additional_tags.xml should contain metadata' do
+    def test_get_additional_tags_xml_should_contain_metadata
       with_plugin_settings 'additional_tags', active_issue_tags: 1 do
         get '/additional_tags.xml',
             params: { type: 'issue' },
@@ -19,7 +19,7 @@ module ApiTest
       end
     end
 
-    test 'GET /additional_tags.json should list tags' do
+    def test_get_additional_tags_json_should_list_tags
       with_plugin_settings 'additional_tags', active_issue_tags: 1 do
         get '/additional_tags.json',
             params: { type: 'issue' },
@@ -35,7 +35,7 @@ module ApiTest
       end
     end
 
-    test 'GET /additional_tags.xml should require type' do
+    def test_get_additional_tags_xml_should_require_type
       get '/additional_tags.xml',
           headers: credentials('admin')
 
