@@ -9,6 +9,7 @@ fr:
   label_active_issue_tags: "Activer les tags demandes"
   label_active_wiki_tags: "Activer les tags wiki"
   label_add_tags: "Gérer les tags"
+  label_additional_tag: "Tag"
   label_amount_entities_with_tags: "Montant %{name} avec tags"
   label_amount_tags: "Montant tags"
   label_edit_tags: "Modifier les tags"

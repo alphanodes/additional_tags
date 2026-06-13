@@ -9,6 +9,7 @@ ja:
   label_active_issue_tags: "チケットタグを有効にする"
   label_active_wiki_tags: "Wikiタグを有効にする"
   label_add_tags: "タグを追加"
+  label_additional_tag: "タグ"
   label_amount_entities_with_tags: "タグ付き%{name}数"
   label_amount_tags: "タグ数"
   label_edit_tags: "タグを編集"

@@ -9,6 +9,7 @@ fa:
   label_active_issue_tags: "تگ‌های فعال مسئله"
   label_active_wiki_tags: "تگ‌های فعال ویکی"
   label_add_tags: "افزودن تگ"
+  label_additional_tag: "تگ"
   label_amount_entities_with_tags: "مقدار %{name} با تگ‌ها"
   label_amount_tags: "تگ‌های مقدار"
   label_edit_tags: "ویرایش تگ‌ها"

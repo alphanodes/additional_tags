@@ -9,6 +9,7 @@ ko:
   label_active_issue_tags: "이슈 태그 활성화"
   label_active_wiki_tags: "Wiki 태그 활성화"
   label_add_tags: "태그 추가"
+  label_additional_tag: "Tag"
   label_amount_entities_with_tags: "TAG가 있는 금액 %{name}"
   label_amount_tags: "금액 태그"
   label_edit_tags: "태그 편집"

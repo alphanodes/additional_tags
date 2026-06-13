@@ -9,6 +9,7 @@ it:
   label_active_issue_tags: "Attivare i tag di segnalazione"
   label_active_wiki_tags: "Attivare i tag wiki"
   label_add_tags: "Aggiungi tag"
+  label_additional_tag: "Tag"
   label_amount_entities_with_tags: Amount %{name} with tags
   label_amount_tags: Amount tags
   label_edit_tags: "Modifica i tag"

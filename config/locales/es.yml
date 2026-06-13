@@ -9,6 +9,7 @@ es:
   label_active_issue_tags: "Activar tags de peticiones"
   label_active_wiki_tags: "Activar tags wiki"
   label_add_tags: "Agregar etiquetas"
+  label_additional_tag: "Tag"
   label_amount_entities_with_tags: "Cantidad %{name} con tags"
   label_amount_tags: "Valor tags"
   label_edit_tags: "Tratar tags"

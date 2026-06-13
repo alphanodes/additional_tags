@@ -9,6 +9,7 @@ ru:
   label_active_issue_tags: "Активировать метки задач"
   label_active_wiki_tags: "Активировать метки вики"
   label_add_tags: "Добавьте метки"
+  label_additional_tag: "Метка"
   label_amount_entities_with_tags: "Сумма %{name} с метками"
   label_amount_tags: "Метки Сумма"
   label_edit_tags: "Редактировать метки"

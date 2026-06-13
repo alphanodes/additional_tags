@@ -9,6 +9,7 @@ en:
   label_active_issue_tags: "Activate issue tags"
   label_active_wiki_tags: "Activate wiki tags"
   label_add_tags: "Add tags"
+  label_additional_tag: "Tag"
   label_amount_entities_with_tags: "Amount %{name} with tags"
   label_amount_tags: "Amount tags"
   label_edit_tags: "Edit tags"

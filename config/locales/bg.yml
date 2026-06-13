@@ -9,6 +9,7 @@ bg:
   label_active_issue_tags: "Активиране на маркерите за задачи"
   label_active_wiki_tags: "Активиране на маркерите за wiki страници"
   label_add_tags: "Добавяне на маркери"
+  label_additional_tag: "Маркер"
   label_amount_entities_with_tags: "Сумма %{name} с тегами"
   label_amount_tags: "Теги Сумма"
   label_edit_tags: "Редактиране на маркери"

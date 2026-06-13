@@ -9,6 +9,7 @@ cs:
   label_active_issue_tags: "Aktivujte značky problému"
   label_active_wiki_tags: "Aktivujte značky wiki"
   label_add_tags: "Přidat štítky"
+  label_additional_tag: "Tag"
   label_amount_entities_with_tags: "Částka %{name} s TAGy"
   label_amount_tags: "Částka TAGy"
   label_edit_tags: "Upravit značky"

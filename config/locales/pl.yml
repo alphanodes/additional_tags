@@ -9,6 +9,7 @@ pl:
   label_active_issue_tags: "Aktywacja znaczników emisji"
   label_active_wiki_tags: "Aktywacja tagów wiki"
   label_add_tags: "Dodaj znaczniki"
+  label_additional_tag: "Tag"
   label_amount_entities_with_tags: "Kwota %{name} z Tags"
   label_amount_tags: "Kwota Tags"
   label_edit_tags: "Edycja tagów"

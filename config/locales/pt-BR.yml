@@ -9,6 +9,7 @@ pt-BR:
   label_active_issue_tags: "Ativar as etiquetas de emissão"
   label_active_wiki_tags: "Ativar as etiquetas wiki"
   label_add_tags: "Adicionar etiquetas"
+  label_additional_tag: "Tag"
   label_amount_entities_with_tags: "Quantidade %{name} com etiquetas"
   label_amount_tags: "Valor Etiquetas"
   label_edit_tags: "Editar etiquetas"

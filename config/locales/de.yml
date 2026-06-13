@@ -9,6 +9,7 @@ de:
   label_active_issue_tags: Ticket TAGs aktivieren
   label_active_wiki_tags: Wiki TAGs aktivieren
   label_add_tags: TAGs hinzufügen
+  label_additional_tag: TAG
   label_amount_entities_with_tags: Anzahl %{name} mit TAGs
   label_amount_tags: Anzahl TAGs
   label_edit_tags: TAGs bearbeiten
