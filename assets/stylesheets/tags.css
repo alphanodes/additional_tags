@@ -14,7 +14,6 @@ span.additional-tag-label-color {
 td.tags span.additional-tag-label-color {
   display: inline-block;
   line-height: normal;
-  white-space: nowrap;
   margin: 2px !important;
 }
 
@@ -24,6 +23,12 @@ td.tags span.additional-tag-label-color {
   font-size: var(--a-font-size-xs) !important;
   border: 1px solid rgb(0 0 0 / 20%);
   border-radius: 0.75rem;
+  white-space: nowrap;
+}
+
+/* keep a tag pill on one line, e.g. scoped tags (type + value), with or without colors */
+.tag-label {
+  white-space: nowrap;
 }
 
 .additional-tag-label-color .tag-count {
