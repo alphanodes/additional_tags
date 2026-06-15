@@ -32,7 +32,7 @@ fa:
   notice_failed_to_add_tags: "ناتوانی در افزودن تگ‌ها"
   notice_tags_added: "تگ‌ها افزوده شدند"
   permission_add_wiki_tags: "افزودن تگ‌های ویکی"
-  permission_create_issue_tags: "افزودن تگ‌های مسئله"
+  permission_create_issue_tags: "ایجاد تگ‌های مسئله"
   permission_edit_issue_tags: "ویرایش تگ‌های مسئله"
   permission_view_issue_tags: "مشاهده تگ‌های مسئله"
   tags_order_by_count: "بیشتر استفاده‌شده"

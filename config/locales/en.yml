@@ -32,7 +32,7 @@ en:
   notice_failed_to_add_tags: "Failed to add tags"
   notice_tags_added: "Tags added"
   permission_add_wiki_tags: "Add wiki tags"
-  permission_create_issue_tags: "Add issue tags"
+  permission_create_issue_tags: "Create issue tags"
   permission_edit_issue_tags: "Edit issue tags"
   permission_view_issue_tags: "Display issue tags"
   tags_order_by_count: "Most used"

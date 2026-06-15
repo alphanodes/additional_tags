@@ -32,7 +32,7 @@ es:
   notice_failed_to_add_tags: "No se han añadido tags"
   notice_tags_added: "Tags añadidas"
   permission_add_wiki_tags: "Añadir tags wiki"
-  permission_create_issue_tags: "Agregar tags de peticiones"
+  permission_create_issue_tags: "Crear tags de peticiones"
   permission_edit_issue_tags: "Editar tags de peticiones"
   permission_view_issue_tags: "Mostrar las tags de peticiones"
   tags_order_by_count: "La más usada"

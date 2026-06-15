@@ -32,7 +32,7 @@ fr:
   notice_failed_to_add_tags: "Omission d'ajouter des tags"
   notice_tags_added: "Tags ajoutés"
   permission_add_wiki_tags: "Ajouter des tags wiki"
-  permission_create_issue_tags: "Ajouter des tags de demandes"
+  permission_create_issue_tags: "Créer des tags de demandes"
   permission_edit_issue_tags: "Éditer les tags de demandes"
   permission_view_issue_tags: "Afficher les tags des demandes"
   tags_order_by_count: "Les plus utilisés"

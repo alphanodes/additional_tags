@@ -32,7 +32,7 @@ ja:
   notice_failed_to_add_tags: "タグの追加に失敗しました"
   notice_tags_added: "タグを追加しました"
   permission_add_wiki_tags: "Wikiタグの追加"
-  permission_create_issue_tags: "チケットタグの追加"
+  permission_create_issue_tags: "チケットタグの作成"
   permission_edit_issue_tags: "チケットタグの編集"
   permission_view_issue_tags: "チケットタグの表示"
   tags_order_by_count: "使用数順"

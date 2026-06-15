@@ -32,7 +32,7 @@ cs:
   notice_failed_to_add_tags: "Přidání značek se nezdařilo"
   notice_tags_added: "Přidány značky"
   permission_add_wiki_tags: "Přidejte značky wiki"
-  permission_create_issue_tags: "Přidejte značky problému"
+  permission_create_issue_tags: "Vytvořte značky problému"
   permission_edit_issue_tags: "Upravte značky problému"
   permission_view_issue_tags: "Zobrazit značky problémů"
   tags_order_by_count: "Nejvíc používaný"

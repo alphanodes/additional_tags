@@ -32,7 +32,7 @@ pl:
   notice_failed_to_add_tags: "Nie dodano znaczników"
   notice_tags_added: "Tagi dodane"
   permission_add_wiki_tags: "Dodaj znaczniki wiki"
-  permission_create_issue_tags: "Dodaj znaczniki wydania"
+  permission_create_issue_tags: "Utwórz znaczniki wydania"
   permission_edit_issue_tags: "Edycja znaczników wydania"
   permission_view_issue_tags: "Wyświetlanie znaczników emisji"
   tags_order_by_count: "Najczęściej używany"

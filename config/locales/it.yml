@@ -32,7 +32,7 @@ it:
   notice_failed_to_add_tags: "Non è stato possibile aggiungere tag"
   notice_tags_added: "Tag aggiunti"
   permission_add_wiki_tags: "Aggiungi tag wiki"
-  permission_create_issue_tags: "Aggiungi i tag di segnalazione"
+  permission_create_issue_tags: "Crea i tag di segnalazione"
   permission_edit_issue_tags: "Modifica i tag di segnalazione"
   permission_view_issue_tags: "Visualizzare i tag di segnalazione"
   tags_order_by_count: "I più usati"

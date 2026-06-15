@@ -32,7 +32,7 @@ pt-BR:
   notice_failed_to_add_tags: "Falha em adicionar tags"
   notice_tags_added: "Tags adicionadas"
   permission_add_wiki_tags: "Adicionar etiquetas wiki"
-  permission_create_issue_tags: "Adicionar etiquetas de edição"
+  permission_create_issue_tags: "Criar etiquetas de edição"
   permission_edit_issue_tags: "Editar etiquetas de edição"
   permission_view_issue_tags: "Exibir etiquetas de edição"
   tags_order_by_count: "Mais utilizados"

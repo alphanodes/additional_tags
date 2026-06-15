@@ -32,7 +32,7 @@ bg:
   notice_failed_to_add_tags: "Добавянето на маркери е неуспешно"
   notice_tags_added: "Маркерите са добавени"
   permission_add_wiki_tags: "Добавяне на маркери за wiki страници"
-  permission_create_issue_tags: "Добавяне на маркери за задачи"
+  permission_create_issue_tags: "Създаване на маркери за задачи"
   permission_edit_issue_tags: "Редактиране на маркери за задачи"
   permission_view_issue_tags: "Показване на маркерите за задачи"
   tags_order_by_count: "Най-често използвани"

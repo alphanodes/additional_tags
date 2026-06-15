@@ -32,7 +32,7 @@ ru:
   notice_failed_to_add_tags: "Не удалось добавить метки"
   notice_tags_added: "Метки добавлены"
   permission_add_wiki_tags: "Добавление меток вики"
-  permission_create_issue_tags: "Добавление меток задач"
+  permission_create_issue_tags: "Создание меток задач"
   permission_edit_issue_tags: "Редактирование меток задач"
   permission_view_issue_tags: "Просмотр меток задач"
   tags_order_by_count: "Наиболее часто используемые"
