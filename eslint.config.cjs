@@ -21,7 +21,7 @@ module.exports = [
       'no-jquery': noJquery,
     },
     languageOptions: {
-      ecmaVersion: 2019,
+      ecmaVersion: 2022,
       sourceType: 'script',
       globals: {
         ...globals.browser,
