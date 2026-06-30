@@ -15,6 +15,17 @@ module AdditionalTags
       setting(:tags_color_theme).to_s != '0'
     end
 
+    # Returns 'black' or 'white' -- whichever contrasts better on the given
+    # hex background color (#rrggbb) -- using the YIQ brightness formula.
+    # Shared so other plugins (e.g. redmine_reporting counter boxes) can pick a
+    # readable text color for an arbitrary user-configured background.
+    def fg_color(bg_hex)
+      r = bg_hex[1..2].hex
+      g = bg_hex[3..4].hex
+      b = bg_hex[5..6].hex
+      (r * 299 + g * 587 + b * 114) >= 128_000 ? 'black' : 'white'
+    end
+
     private
 
     def setup

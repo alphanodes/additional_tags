@@ -38,4 +38,14 @@ class AdditionalTagsTest < AdditionalTags::TestCase
       assert_not AdditionalTags.use_colors?
     end
   end
+
+  def test_fg_color_returns_black_on_light_background
+    assert_equal 'black', AdditionalTags.fg_color('#ffffff')
+    assert_equal 'black', AdditionalTags.fg_color('#ffff00')
+  end
+
+  def test_fg_color_returns_white_on_dark_background
+    assert_equal 'white', AdditionalTags.fg_color('#000000')
+    assert_equal 'white', AdditionalTags.fg_color('#cb2525')
+  end
 end

@@ -363,12 +363,7 @@ class AdditionalTag < ApplicationRecord
   end
 
   def tag_fg_color
-    @tag_fg_color ||= begin
-      r = tag_bg_color[1..2].hex
-      g = tag_bg_color[3..4].hex
-      b = tag_bg_color[5..6].hex
-      (r * 299 + g * 587 + b * 114) >= 128_000 ? 'black' : 'white'
-    end
+    @tag_fg_color ||= AdditionalTags.fg_color tag_bg_color
   end
 
   def tag_name
