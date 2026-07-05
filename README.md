@@ -58,7 +58,7 @@ Start using it, too. The example image shows the centralized tag management in t
 
 ## Requirements
 
-- Redmine `>= 6.1`
+- Redmine `>= 7.0`
 - Ruby `>= 3.2`
 - Redmine plugins: [additionals](https://www.redmine.org/plugins/additionals)
 
