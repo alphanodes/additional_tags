@@ -11,6 +11,12 @@ Redmine::Plugin.register :additional_tags do
   author_url 'https://alphanodes.com/'
   requires_redmine version_or_higher: '7.0'
 
+  begin
+    requires_redmine_plugin :additionals, version: AdditionalTags::VERSION
+  rescue Redmine::PluginNotFound
+    raise 'Please install additionals plugin (https://github.com/alphanodes/additionals)'
+  end
+
   settings default: loader.default_settings,
            partial: 'additional_tags/settings/settings'
 
