@@ -160,7 +160,5 @@ Special thanks to the original author and contributors for making this awesome h
 
 Thanks to:
 
-- Font Awesome Free Icons (<https://fontawesome.com/license/free>) licenced under - Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License.
-  Copyright (c) 2018- Fonticons, Inc.
 - Tabler Icons - Free and open source icons (<https://tabler.io/icons>) licensed under MIT License.
   Copyright (c) 2020- Paweł Kuna
