@@ -5,9 +5,15 @@ ul.tags {
 
 ul.tags li { margin: 0.25em 0; }
 
+/* vertical-align keeps the pill centred on the surrounding text instead of
+   sitting on its baseline. The tag font is much smaller than its context, so on
+   the baseline it visibly hangs below the line wherever it is rendered inline
+   with larger text (e.g. a tag inside a page heading). In table cells and tag
+   clouds the tag stands alone in its line, so nothing changes there. */
 span.additional-tag-label-color {
   display: inline-block;
   margin-bottom: 3px !important;
+  vertical-align: middle;
   border-radius: 0.75rem !important;
 }
 
