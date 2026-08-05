@@ -6,7 +6,6 @@ module AdditionalTags
       extend ActiveSupport::Concern
 
       included do
-        include Additionals::EntityMethodsGlobal
         include InstanceMethods
 
         acts_as_additional_taggable
