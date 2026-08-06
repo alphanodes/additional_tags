@@ -6,6 +6,7 @@ module AdditionalTags
       extend ActiveSupport::Concern
 
       included do
+        prepend InstanceOverwriteMethods
         include InstanceMethods
 
         acts_as_additional_taggable
@@ -21,9 +22,6 @@ module AdditionalTags
 
         after_commit :add_remove_unused_tags_job, on: %i[update destroy],
                                                   if: proc { AdditionalTags.setting?(:active_issue_tags) }
-
-        alias_method :safe_attributes_without_tags=, :safe_attributes=
-        alias_method :safe_attributes=, :safe_attributes_with_tags=
 
         alias_method :copy_from_without_tags, :copy_from
         alias_method :copy_from, :copy_from_with_tags
@@ -91,17 +89,9 @@ module AdditionalTags
         end
       end
 
-      module InstanceMethods
-        # tag_list_changed? is broken for after_save
-        # tag_list_changed? is not working here, too!
-        def prepare_save_tag_change
-          return unless defined?(tag_list) && defined?(tag_list_was) && !tag_list_was.nil?
-
-          @prepare_save_tag_change ||= tag_list != tag_list_was
-        end
-
-        def safe_attributes_with_tags=(attrs, user = User.current)
-          send :safe_attributes_without_tags=, attrs, user # required to fire first to get loaded project
+      module InstanceOverwriteMethods
+        def safe_attributes=(attrs, user = User.current)
+          super # required to fire first to get loaded project
           return unless attrs && attrs[:tag_list]
 
           tags = attrs.delete :tag_list
@@ -112,6 +102,16 @@ module AdditionalTags
             attrs[:tag_list] = tags # required fix for journal details
             self.tag_list = tags    # required fix for tags
           end
+        end
+      end
+
+      module InstanceMethods
+        # tag_list_changed? is broken for after_save
+        # tag_list_changed? is not working here, too!
+        def prepare_save_tag_change
+          return unless defined?(tag_list) && defined?(tag_list_was) && !tag_list_was.nil?
+
+          @prepare_save_tag_change ||= tag_list != tag_list_was
         end
 
         def copy_from_with_tags(arg, options = nil)

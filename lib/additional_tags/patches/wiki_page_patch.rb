@@ -6,12 +6,10 @@ module AdditionalTags
       extend ActiveSupport::Concern
 
       included do
+        prepend InstanceOverwriteMethods
         include InstanceMethods
 
         acts_as_additional_taggable
-
-        alias_method :safe_attributes_without_tags=, :safe_attributes=
-        alias_method :safe_attributes=, :safe_attributes_with_tags=
 
         validate :validate_tags
         before_save :sort_tag_list
@@ -80,8 +78,8 @@ module AdditionalTags
         end
       end
 
-      module InstanceMethods
-        def safe_attributes_with_tags=(attrs, user = User.current)
+      module InstanceOverwriteMethods
+        def safe_attributes=(attrs, user = User.current)
           if !attrs.is_a?(Array) && attrs && attrs[:tag_list]
             tags = attrs[:tag_list]
             tags = Array(tags).reject(&:empty?)
@@ -97,9 +95,11 @@ module AdditionalTags
             end
           end
 
-          send :safe_attributes_without_tags=, attrs, user
+          super
         end
+      end
 
+      module InstanceMethods
         private
 
         def sort_tag_list

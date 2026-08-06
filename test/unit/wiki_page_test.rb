@@ -37,6 +37,35 @@ class WikiPageTest < AdditionalTags::TestCase
     end
   end
 
+  # safe_attributes= is the mass assignment gate: our patch has to pass the
+  # attributes on to core, not just consume the tag_list.
+  def test_safe_attributes_assigns_core_attributes
+    User.current = users :users_002
+
+    with_plugin_settings 'additional_tags', active_wiki_tags: 1 do
+      page = WikiPage.find_by title: 'Another_page'
+      page.safe_attributes = { 'title' => 'Renamed_page' }
+
+      assert_equal 'Renamed_page', page.title
+    end
+  end
+
+  # Tags reach the page through the same call, and an unchanged list must not
+  # be handed to core as an attribute.
+  def test_safe_attributes_assigns_tags_alongside_core_attributes
+    User.current = users :users_002
+    Role.find(1).add_permission! :add_wiki_tags
+
+    with_plugin_settings 'additional_tags', active_wiki_tags: 1 do
+      page = WikiPage.find_by title: 'Another_page'
+      # params arrive as HashWithIndifferentAccess, and the patch looks up :tag_list
+      page.safe_attributes = { title: 'Tagged_page', tag_list: %w[First Second] }.with_indifferent_access
+
+      assert_equal 'Tagged_page', page.title
+      assert_sorted_equal %w[First Second], page.tag_list
+    end
+  end
+
   def test_with_tags_with_nil
     assert_empty WikiPage.with_tags(nil)
   end
