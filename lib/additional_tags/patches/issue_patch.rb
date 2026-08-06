@@ -90,6 +90,9 @@ module AdditionalTags
       end
 
       module InstanceOverwriteMethods
+        # prepend and not alias_method: redmineup_tags is the only other plugin
+        # touching this, and it cannot be installed alongside us anyway - both
+        # provide issue tags.
         def safe_attributes=(attrs, user = User.current)
           super # required to fire first to get loaded project
           return unless attrs && attrs[:tag_list]
