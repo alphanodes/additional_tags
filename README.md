@@ -60,6 +60,7 @@ Start using it, too. The example image shows the centralized tag management in t
 
 - Redmine `>= 7.0`
 - Ruby `>= 3.2`
+- Database: MySQL `>= 8.4`, MariaDB `>= 11.8` or PostgreSQL `>= 16`
 - Redmine plugins: [additionals](https://www.redmine.org/plugins/additionals)
 
 ## Installing
