@@ -21,6 +21,12 @@ class FixTagsCollation < ActiveRecord::Migration[7.2]
     execute "DELETE FROM #{table} WHERE name IS NULL OR name = ''"
     AdditionalTag.consolidate_case_duplicates!
 
+    # The collation is pinned rather than inherited from the server default,
+    # because case insensitive tag names are the whole point of this migration
+    # and a server running utf8mb4_bin or general_ci would silently take that
+    # away again. utf8mb4_unicode_ci is the choice because the modern defaults
+    # are vendor specific (MySQL 8: utf8mb4_0900_ai_ci, MariaDB 11:
+    # utf8mb4_uca1400_ai_ci), while this one exists on both.
     execute "ALTER TABLE #{table} MODIFY name varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
   end
 
