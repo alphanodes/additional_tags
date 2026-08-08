@@ -5,6 +5,8 @@ class AdditionalTagsController < ApplicationController
   before_action :find_tag, only: %i[edit update]
   before_action :bulk_find_tags, only: %i[context_menu merge destroy]
   before_action :set_tag_list_path
+  before_action :find_project_by_project_id, if: -> { params[:project_id] }
+  before_action :authorize, if: -> { @project.present? }
 
   helper :additional_tags_issues
   include AdditionalTagsHelper
@@ -13,6 +15,7 @@ class AdditionalTagsController < ApplicationController
 
   # used by api calls
   def index
+    raise 'tags are not enabled for project' unless allow_tags?
     raise 'type is not provided' if params[:type].blank?
 
     type_info = manageable_tag_columns.detect { |m| m.first.to_s == params[:type] }
@@ -100,5 +103,9 @@ class AdditionalTagsController < ApplicationController
     @tag = AdditionalTag.find params[:id]
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+
+  def allow_tags?
+    @project.nil? || @project.module_enabled?(:additional_tags)
   end
 end
