@@ -1,9 +1,8 @@
 - if defined?(show_always) && show_always || entry.tag_list.present?
   .tags.attribute
     - unless defined? hide_label
-      span.label
-        = local_assigns.key?(:label) ? l(label) : l(:field_tag_list)
-        ' :
+      = attribute_label local_assigns.fetch(:label, :field_tag_list)
+      '
     - if defined?(editable) && editable
       #tags-data
         = additional_tag_links entry.tags,
