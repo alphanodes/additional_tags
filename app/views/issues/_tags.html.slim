@@ -1,4 +1,4 @@
-- if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:view_issue_tags, issue.project)
+- if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:view_issue_tags, issue.project) && @project && project.module_enabled?(:additional_tags)
   = render 'additional_tags/tag_list',
            entry: issue,
            show_always: true,
