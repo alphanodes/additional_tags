@@ -39,7 +39,7 @@ module ApiTest
       get '/additional_tags.xml',
           headers: credentials('admin')
 
-      assert_response :internal_server_error
+      assert_response :unprocessable_content
     end
   end
 end

@@ -35,6 +35,19 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
     assert_response :forbidden
   end
 
+  def test_index_without_type_responds_with_unprocessable_content
+    get :index
+
+    assert_response :unprocessable_content
+  end
+
+  def test_index_with_unsupported_type_responds_with_unprocessable_content
+    get :index,
+        params: { type: 'does_not_exist' }
+
+    assert_response :unprocessable_content
+  end
+
   def test_should_get_edit
     tag = AdditionalTag.find_by name: 'a1'
     get :edit,

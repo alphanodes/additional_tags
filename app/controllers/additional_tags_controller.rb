@@ -13,13 +13,11 @@ class AdditionalTagsController < ApplicationController
 
   # used by api calls
   def index
-    raise 'type is not provided' if params[:type].blank?
-
-    type_info = manageable_tag_columns.detect { |m| m.first.to_s == params[:type] }
-    raise 'type is not supported' unless type_info
+    type_info = manageable_tag_columns.detect { |m| m.first.to_s == params[:type] } if params[:type].present?
+    return render_invalid_tag_type if type_info.nil?
 
     klass = type_info.first.to_s.camelize.constantize
-    raise "#{klass.name} does not support tags" unless klass.respond_to? :available_tags
+    return render_invalid_tag_type unless klass.respond_to? :available_tags
 
     @tags = klass.available_tags.to_a
     @count = @tags.count
@@ -75,6 +73,16 @@ class AdditionalTagsController < ApplicationController
   end
 
   private
+
+  # A missing or unknown type is a client error, not a server error: respond
+  # with 422 for both html and api instead of raising an unhandled exception.
+  def render_invalid_tag_type
+    message = 'Tag type is not provided or not supported'
+    respond_to do |format|
+      format.html { render_error message:, status: 422 }
+      format.api { render_api_errors message }
+    end
+  end
 
   def set_tag_list_path
     @tag_list_path = plugin_settings_path id: 'additional_tags', tab: 'manage_tags'
