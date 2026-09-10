@@ -172,6 +172,19 @@ class IssueTest < AdditionalTags::TestCase
     assert_equal [], issue_in_private_project.instance_variable_get(:@visible_tags)
   end
 
+  # Core defines reload in the Issue class body and freezes an alias to the
+  # version present at that point, so an included reload would never run.
+  # The tag state must still be dropped, which is why the override is prepended.
+  def test_reload_drops_unsaved_tag_list_on_issue
+    issue = issues :issues_001
+    saved_tags = issue.tag_list.dup
+    issue.tag_list = ['zzz-unsaved']
+
+    issue.reload
+
+    assert_equal saved_tags, issue.tag_list
+  end
+
   def test_load_visible_tags_preloads_tags_association_to_avoid_n_plus_one
     # After the batch preload, the :tags association must be marked loaded on
     # every visible issue - otherwise the per-issue read in the loop below
@@ -183,6 +196,21 @@ class IssueTest < AdditionalTags::TestCase
     issues_with_tags.each do |issue|
       assert issue.tags.loaded?, "tags association should be preloaded for issue ##{issue.id}"
     end
+  end
+
+  # The patch has to keep core's copy_from working: without the super call the
+  # copy would carry the tags but none of the issue attributes.
+  def test_copy_from_still_copies_core_attributes
+    source = issues :issues_001
+
+    copy = Issue.new
+    copy.copy_from source
+
+    assert_equal source.subject, copy.subject
+    assert_equal source.description, copy.description
+    assert_equal source.tracker_id, copy.tracker_id
+    assert_equal source.project_id, copy.project_id
+    assert_equal source.priority_id, copy.priority_id
   end
 
   def test_copy_from_preserves_source_tag_list

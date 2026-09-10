@@ -15,3 +15,4 @@ CLAUDE.md
 /node_modules
 /yarn.lock
 rails_best_practices_output.html
+.playwright-mcp/

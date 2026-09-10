@@ -67,6 +67,13 @@ module AdditionalTags
     fixtures(*fixtures_list)
   end
 
+  class HelperTest < Redmine::HelperTest
+    include AdditionalTags::TestHelper
+    extend PluginFixturesLoader
+
+    fixtures(*fixtures_list)
+  end
+
   class ControllerTest < Redmine::ControllerTest
     include AdditionalTags::TestHelper
     extend PluginFixturesLoader

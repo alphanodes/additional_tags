@@ -33,6 +33,12 @@ module AdditionalTags
 
         after_save :save_tags
 
+        # Every taggable model has to drop its tag state on reload. reload is
+        # prepended rather than included because a model may define reload in its
+        # own class body - core does so in Issue (here) and Project (taggable
+        # through redmine_reporting), each with an alias frozen at that point, so
+        # an included version would never be reached and the stale tags survive.
+        prepend AdditionalTags::Taggable::InstanceOverwriteMethods
         include AdditionalTags::Taggable::InstanceMethods
         extend AdditionalTags::Taggable::TaggableClassMethods
       end
@@ -96,6 +102,16 @@ module AdditionalTags
       end
     end
 
+    module InstanceOverwriteMethods
+      def reload(*)
+        @tag_list = nil
+        @tag_list_was = nil
+        @tag_list_original = nil
+        @tag_list_changed_explicitly = false
+        super
+      end
+    end
+
     module InstanceMethods
       def tag_list
         unless @tag_list
@@ -135,14 +151,6 @@ module AdditionalTags
         else
           tag_list.dup
         end
-      end
-
-      def reload(*args)
-        @tag_list = nil
-        @tag_list_was = nil
-        @tag_list_original = nil
-        @tag_list_changed_explicitly = false
-        super
       end
 
       private

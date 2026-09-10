@@ -6,14 +6,11 @@ module AdditionalTags
       extend ActiveSupport::Concern
 
       included do
-        include InstanceMethods
-
-        alias_method :column_content_without_tags, :column_content
-        alias_method :column_content, :column_content_with_tags
+        prepend InstanceOverwriteMethods
       end
 
-      module InstanceMethods
-        def column_content_with_tags(column, item)
+      module InstanceOverwriteMethods
+        def column_content(column, item)
           if (column.name == :issue_tags || item.is_a?(Issue) && column.name == :tags) &&
              respond_to?(:additional_tag_links)
             tags = if item.instance_variable_defined? :@visible_tags
@@ -30,7 +27,7 @@ module AdditionalTags
 
             additional_tag_links tags, tag_controller: 'issues'
           else
-            column_content_without_tags column, item
+            super
           end
         end
       end

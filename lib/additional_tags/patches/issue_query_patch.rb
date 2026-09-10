@@ -8,19 +8,39 @@ module AdditionalTags
       included do
         include Additionals::Concerns::Query
         prepend InstanceOverwriteMethods
-        include InstanceMethods
-
-        alias_method :initialize_available_filters_without_tags, :initialize_available_filters
-        alias_method :initialize_available_filters, :initialize_available_filters_with_tags
-
-        alias_method :available_columns_without_tags, :available_columns
-        alias_method :available_columns, :available_columns_with_tags
-
-        alias_method :issues_without_tags, :issues
-        alias_method :issues, :issues_with_tags
       end
 
       module InstanceOverwriteMethods
+        def issues(options = nil)
+          options ||= {}
+          issues = super(**options)
+          return issues unless has_column? :tags
+
+          Issue.load_visible_tags issues
+          issues
+        end
+
+        def initialize_available_filters
+          super
+
+          initialize_tags_filter if !available_filters.key?('tags') &&
+                                    AdditionalTags.setting?(:active_issue_tags) &&
+                                    User.current.allowed_to?(:view_issue_tags, project, global: true)
+        end
+
+        def available_columns
+          if @available_columns.nil?
+            @available_columns = super
+
+            if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:view_issue_tags, project, global: true)
+              @available_columns << ::QueryTagsColumn.new
+            end
+          else
+            super
+          end
+          @available_columns
+        end
+
         def build_from_params(params, defaults = {})
           super
 
@@ -46,38 +66,6 @@ module AdditionalTags
         # because ActiveRecord tries to access non-existent column 'issues.issue_tags'.
         def sql_for_issue_tags_field(_field, operator, values)
           sql_for_tags_field 'tags', operator, values
-        end
-      end
-
-      module InstanceMethods
-        def issues_with_tags(options = nil)
-          options ||= {}
-          issues = issues_without_tags(**options)
-          return issues unless has_column? :tags
-
-          Issue.load_visible_tags issues
-          issues
-        end
-
-        def initialize_available_filters_with_tags
-          initialize_available_filters_without_tags
-
-          initialize_tags_filter if !available_filters.key?('tags') &&
-                                    AdditionalTags.setting?(:active_issue_tags) &&
-                                    User.current.allowed_to?(:view_issue_tags, project, global: true)
-        end
-
-        def available_columns_with_tags
-          if @available_columns.nil?
-            @available_columns = available_columns_without_tags
-
-            if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:view_issue_tags, project, global: true)
-              @available_columns << ::QueryTagsColumn.new
-            end
-          else
-            available_columns_without_tags
-          end
-          @available_columns
         end
       end
     end

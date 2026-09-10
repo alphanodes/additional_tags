@@ -22,9 +22,6 @@ module AdditionalTags
 
         after_commit :add_remove_unused_tags_job, on: %i[update destroy],
                                                   if: proc { AdditionalTags.setting?(:active_issue_tags) }
-
-        alias_method :copy_from_without_tags, :copy_from
-        alias_method :copy_from, :copy_from_with_tags
       end
 
       class_methods do
@@ -90,9 +87,23 @@ module AdditionalTags
       end
 
       module InstanceOverwriteMethods
-        # prepend and not alias_method: redmineup_tags is the only other plugin
-        # touching this, and it cannot be installed alongside us anyway - both
-        # provide issue tags.
+        def copy_from(arg, options = nil)
+          options ||= {} # works with Ruby 3
+
+          super arg, **options
+          issue = arg.is_a?(Issue) ? arg : Issue.visible.find(arg)
+          # Use tag_list (virtual attribute, persisted via after_save) instead of
+          # assigning the tags association on this unsaved record: the latter
+          # would create AdditionalTagging instances with taggable_id=nil and
+          # trigger validation errors before the new issue has an id.
+          source_tag_names = issue.tag_list.to_a
+          self.tag_list = source_tag_names
+          # safe_attributes= will overwrite @tag_list afterwards; remember the
+          # source tags here so the bulk-edit hook can still diff against them.
+          self.bulk_copy_source_tag_list = source_tag_names
+          self
+        end
+
         def safe_attributes=(attrs, user = User.current)
           super # required to fire first to get loaded project
           return unless attrs && attrs[:tag_list]
@@ -115,23 +126,6 @@ module AdditionalTags
           return unless defined?(tag_list) && defined?(tag_list_was) && !tag_list_was.nil?
 
           @prepare_save_tag_change ||= tag_list != tag_list_was
-        end
-
-        def copy_from_with_tags(arg, options = nil)
-          options ||= {} # works with Ruby 3
-
-          copy_from_without_tags arg, **options
-          issue = arg.is_a?(Issue) ? arg : Issue.visible.find(arg)
-          # Use tag_list (virtual attribute, persisted via after_save) instead of
-          # assigning the tags association on this unsaved record: the latter
-          # would create AdditionalTagging instances with taggable_id=nil and
-          # trigger validation errors before the new issue has an id.
-          source_tag_names = issue.tag_list.to_a
-          self.tag_list = source_tag_names
-          # safe_attributes= will overwrite @tag_list afterwards; remember the
-          # source tags here so the bulk-edit hook can still diff against them.
-          self.bulk_copy_source_tag_list = source_tag_names
-          self
         end
 
         private

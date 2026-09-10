@@ -8,24 +8,26 @@ module AdditionalTags
       extend ActiveSupport::Concern
 
       included do
+        prepend InstanceOverwriteMethods
         include InstanceMethods
-
-        alias_method :load_available_criteria_without_tags, :load_available_criteria
-        alias_method :load_available_criteria, :load_available_criteria_with_tags
       end
 
-      module InstanceMethods
-        def load_available_criteria_with_tags
+      module InstanceOverwriteMethods
+        private
+
+        def load_available_criteria
           return @load_available_criteria_with_tags if @load_available_criteria_with_tags
 
-          @load_available_criteria_with_tags = load_available_criteria_without_tags
+          @load_available_criteria_with_tags = super
           @load_available_criteria_with_tags['tags'] = { sql: "#{AdditionalTag.table_name}.id",
                                                          klass: AdditionalTag,
                                                          joins: additional_tags_join,
                                                          label: :field_tags }
           @load_available_criteria_with_tags
         end
+      end
 
+      module InstanceMethods
         private
 
         def additional_tags_join

@@ -103,4 +103,17 @@ class WikiPageTest < AdditionalTags::TestCase
 
     assert_equal 4, WikiPage.with_tags_scope(project: projects(:projects_002)).count
   end
+
+  # Unlike Issue, WikiPage does not define reload itself - the override would be
+  # reached through include as well. The tag state must be dropped all the same,
+  # so this pins the behaviour for the second entity additional_tags makes
+  # taggable on its own.
+  def test_reload_drops_unsaved_tag_list_on_wiki_page
+    saved_tags = @page.tag_list.dup
+    @page.tag_list = ['zzz-unsaved']
+
+    @page.reload
+
+    assert_equal saved_tags, @page.tag_list
+  end
 end
