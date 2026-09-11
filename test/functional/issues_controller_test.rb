@@ -557,4 +557,25 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       end
     end
   end
+
+  # column_content is prepended onto core's QueriesHelper. The tag column is
+  # rendered by the plugin and links into the filtered issue list, every other
+  # column has to reach core through super. The list preloads the visible tags,
+  # so this covers the preloaded path as well.
+  def test_index_renders_tag_links_and_leaves_the_other_columns_to_core
+    @request.session[:user_id] = 2
+    issue = issues :issues_001
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      get :index, params: { project_id: issue.project_id,
+                            set_filter: 1,
+                            status_id: '*',
+                            c: %w[subject tags] }
+    end
+
+    assert_response :success
+    assert_select 'table.issues td.tags a[href*=?]', '/issues?', text: additional_tags(:tag_one).name
+    # rendered by core, reached through super
+    assert_select 'table.issues td.subject a[href*=?]', '/issues/'
+  end
 end
