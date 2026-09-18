@@ -64,6 +64,16 @@ class IssueMacrosTest < AdditionalTags::ControllerTest
     assert_select 'div.wiki', /1/ # should show count of 1
   end
 
+  def test_issue_tag_count_macro_with_surrounding_whitespace
+    save_content '{{issue_tag_count( TestTag )}}', 2
+    @request.session[:user_id] = 2
+    get :show,
+        params: { project_id: 1, id: @page_name }
+
+    assert_response :success
+    assert_select 'div.wiki', /1/
+  end
+
   def test_issue_tag_count_macro_all_projects
     text = '{{issue_tag_count(TestTag, all_projects=true)}}'
 

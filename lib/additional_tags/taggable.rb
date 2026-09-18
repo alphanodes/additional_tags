@@ -62,7 +62,7 @@ module AdditionalTags
       def tagged_with(tags, any: false)
         tag_list = Array(tags).flatten
         tag_list.compact!
-        tag_list.map!(&:to_s)
+        tag_list.map! { |tag| tag.to_s.strip }
         tag_list.reject!(&:blank?)
         return none if tag_list.empty?
 

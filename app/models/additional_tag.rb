@@ -12,6 +12,10 @@ class AdditionalTag < ApplicationRecord
            foreign_key: :tag_id,
            inverse_of: :tag
 
+  # Every input path strips tag names; this also covers rename and merge,
+  # which take the name as entered.
+  normalizes :name, with: ->(name) { name.strip }
+
   validates :name, presence: true,
                    uniqueness: { case_sensitive: true },
                    length: { maximum: 255 }

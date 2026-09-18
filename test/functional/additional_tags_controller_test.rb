@@ -69,6 +69,15 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
     assert_equal new_name, tag1.name
   end
 
+  def test_update_strips_surrounding_whitespace
+    tag1 = AdditionalTag.find_by name: 'a1'
+    put :update,
+        params: { id: tag1.id, tag: { name: ' updated main ' } }
+
+    assert_redirected_to controller: 'settings', action: 'plugin', id: 'additional_tags', tab: 'manage_tags'
+    assert_equal 'updated main', tag1.reload.name
+  end
+
   def test_should_post_destroy
     tag1 = AdditionalTag.find_by name: 'a1'
     assert_difference 'AdditionalTag.count', -1 do
@@ -91,6 +100,30 @@ class AdditionalTagsControllerTest < AdditionalTags::ControllerTest
 
     assert_equal 0, Issue.tagged_with('b8').count
     assert_equal 2, Issue.tagged_with('a1').count
+  end
+
+  def test_merge_into_existing_tag_with_surrounding_whitespace
+    tag1 = AdditionalTag.find_by name: 'a1'
+    tag2 = AdditionalTag.find_by name: 'b8'
+    assert_difference 'AdditionalTag.count', -1 do
+      post :merge,
+           params: { ids: [tag1.id, tag2.id], tag: { name: ' a1 ' } }
+    end
+
+    assert_equal tag1.id, AdditionalTag.find_by(name: 'a1')&.id
+    assert_equal 2, Issue.tagged_with('a1').count
+  end
+
+  def test_merge_into_new_tag_with_surrounding_whitespace
+    tag1 = AdditionalTag.find_by name: 'a1'
+    tag2 = AdditionalTag.find_by name: 'b8'
+    assert_difference 'AdditionalTag.count', -1 do
+      post :merge,
+           params: { ids: [tag1.id, tag2.id], tag: { name: ' merged ' } }
+    end
+
+    assert_equal 2, Issue.tagged_with('merged').count
+    assert_equal 1, AdditionalTag.where(name: 'merged').count
   end
 
   def test_should_destroy_tags_without_relations

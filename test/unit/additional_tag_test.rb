@@ -16,6 +16,12 @@ class AdditionalTagTest < AdditionalTags::TestCase
     assert_equal 'scoped::sub', AdditionalTag.new(name: 'scoped::sub::2').tag_name
   end
 
+  def test_name_is_stored_without_surrounding_whitespace
+    assert_equal 'Test1', AdditionalTag.new(name: " Test1 \t").name
+    assert_equal 'Test 1', AdditionalTag.new(name: 'Test 1').name
+    assert_not AdditionalTag.new(name: '   ').valid?
+  end
+
   def test_name_for_color
     assert_equal 'Test1', AdditionalTag.new(name: 'Test1', color_theme: nil).name_for_color
     assert_equal 'Test2', AdditionalTag.new(name: 'Test2', color_theme: '0').name_for_color

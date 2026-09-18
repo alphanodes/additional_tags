@@ -152,6 +152,18 @@ class TaggableTest < AdditionalTags::TestCase
     cleanup_tags 'findme'
   end
 
+  def test_tagged_with_ignores_surrounding_whitespace
+    @issue.tag_list = %w[findme]
+
+    assert_save @issue
+
+    assert_includes Issue.tagged_with(" findme\t").to_a, @issue
+    assert_includes Issue.tagged_with([' findme ', ' '], any: true).to_a, @issue
+    assert_empty Issue.tagged_with(' ')
+  ensure
+    cleanup_tags 'findme'
+  end
+
   def test_tagged_with_any_option
     issue_a = issues :issues_002
     issue_b = issues :issues_003
