@@ -88,8 +88,14 @@ module AdditionalTags
         # put every tagged entry into the SQL string. An empty subquery matches
         # nothing, so a filter on a deleted tag needs no special case.
         def sql_for_tagged_ids(klass, operator, id_scope)
-          compare = %w[= *].include?(operator) ? 'IN' : 'NOT IN'
-          "(#{klass.quoted_table_name}.#{klass.quoted_primary_key} #{compare} (#{id_scope.to_sql}))"
+          column = "#{klass.quoted_table_name}.#{klass.quoted_primary_key}"
+          return "(#{column} IN (#{id_scope.to_sql}))" if %w[= *].include? operator
+
+          # The tagged table can hang off the queried one from outside - a time entry without
+          # an issue - and NULL NOT IN (...) is NULL, not true. Such a row would answer "has
+          # no tags" with no while answering "is not <tag>" with yes. Core writes its own
+          # negations the same way, see Query#sql_for_field.
+          "(#{column} NOT IN (#{id_scope.to_sql}) OR #{column} IS NULL)"
         end
       end
     end

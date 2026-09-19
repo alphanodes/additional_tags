@@ -37,7 +37,7 @@ class AgileQueryTest < AdditionalTags::TestCase
     assert_includes names, :tags
   end
 
-  # Issue 1 is tagged First, issue 3 Second, issue 2 carries no tag.
+  # Issues 1 and 8 are tagged First, issue 3 Second, issue 2 carries no tag.
   def test_tags_filter
     User.current = users :users_001
 
@@ -49,6 +49,17 @@ class AgileQueryTest < AdditionalTags::TestCase
     assert_includes issue_ids_for('!*'), 2
     assert_not_includes issue_ids_for('!*'), 3
     assert_empty issue_ids_for('=', ['deleted tag'])
+  end
+
+  # The condition alone says nothing about the query carrying it: an agile query brings a
+  # scope of its own, which is why issue 8 stays out here although it carries the tag.
+  def test_tags_filter_narrows_the_query_itself
+    User.current = users :users_001
+    query = AgileQuery.new project: @project, name: '_'
+    query.filters = {}
+    query.add_filter 'tags', '=', ['First']
+
+    assert_equal [1], query.issues.ids
   end
 
   private

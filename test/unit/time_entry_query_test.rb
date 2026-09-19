@@ -64,9 +64,10 @@ class TimeEntryQueryTest < AdditionalTags::TestCase
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       assert_equal [1, 2], time_entry_ids_for('=', ['First'])
       assert_equal [1, 2, 3], time_entry_ids_for('=', %w[First Second])
-      assert_equal [3], time_entry_ids_for('!', ['First'])
+      # Entry 4 has no issue and therefore no issue tag: it belongs to every negation
+      assert_equal [3, 4], time_entry_ids_for('!', ['First'])
       assert_equal [1, 2, 3], time_entry_ids_for('*')
-      assert_empty time_entry_ids_for('!*')
+      assert_equal [4], time_entry_ids_for('!*')
       assert_empty time_entry_ids_for('=', ['deleted tag'])
       # nothing carries a deleted tag, so the negation keeps every entry
       assert_equal [1, 2, 3, 4], time_entry_ids_for('!', ['deleted tag'])
@@ -83,6 +84,8 @@ class TimeEntryQueryTest < AdditionalTags::TestCase
     assert_equal [1, 2, 3], time_entry_ids_for_subquery(query, '*')
     assert_equal [4, 5], time_entry_ids_for_subquery(query, '!*')
     assert_empty time_entry_ids_for_subquery(query, '=', ['deleted tag'])
+    # nothing carries a deleted tag, so the negation keeps every entry
+    assert_equal [1, 2, 3, 4, 5], time_entry_ids_for_subquery(query, '!', ['deleted tag'])
   end
 
   private
