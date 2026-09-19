@@ -36,4 +36,28 @@ class AgileQueryTest < AdditionalTags::TestCase
 
     assert_includes names, :tags
   end
+
+  # Issue 1 is tagged First, issue 3 Second, issue 2 carries no tag.
+  def test_tags_filter
+    User.current = users :users_001
+
+    assert_equal [1, 8], issue_ids_for('=', ['First'])
+    assert_not_includes issue_ids_for('!', ['First']), 1
+    assert_includes issue_ids_for('!', ['First']), 2
+    assert_includes issue_ids_for('*'), 3
+    assert_not_includes issue_ids_for('*'), 2
+    assert_includes issue_ids_for('!*'), 2
+    assert_not_includes issue_ids_for('!*'), 3
+    assert_empty issue_ids_for('=', ['deleted tag'])
+  end
+
+  private
+
+  def issue_ids_for(operator, values = [''])
+    query = AgileQuery.new project: @project, name: '_'
+    query.filters = {}
+    query.add_filter 'tags', operator, values
+
+    Issue.where(query.sql_for_tags_field('tags', operator, values)).ids.sort
+  end
 end

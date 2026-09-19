@@ -23,19 +23,11 @@ module AdditionalTags
       end
 
       module InstanceMethods
-        def sql_for_tags_field(_field, operator, value)
-          issues = case operator
-                   when '=', '!'
-                     Issue.tagged_with value.clone, any: true
-                   when '!*'
-                     Issue.joins(:tags).uniq
-                   else
-                     Issue.tagged_with(AdditionalTag.all.map(&:to_s), any: true)
-                   end
-
-          compare   = operator.include?('!') ? 'NOT IN' : 'IN'
-          ids_list  = issues.collect(&:id).push(0).join(',')
-          "( #{Issue.table_name}.id #{compare} (#{ids_list}) ) "
+        def sql_for_tags_field(field, _operator, values)
+          build_sql_for_tags_field_with_permission klass: queried_class,
+                                                   operator: operator_for(field),
+                                                   values:,
+                                                   permission: :view_issue_tags
         end
       end
     end

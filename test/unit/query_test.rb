@@ -40,4 +40,20 @@ class QueryTest < AdditionalTags::TestCase
       end
     end
   end
+
+  # Tagged ids stay in the database as a subquery. Loading them first would
+  # grow the SQL string with every tagged entry.
+  def test_tags_filters_keep_tagged_ids_in_a_subquery
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      issue_query = IssueQuery.new project: @project, name: '_'
+      issue_query.add_filter 'tags', '=', ['First Issue']
+
+      assert_match(/ IN \(SELECT /, issue_query.statement)
+
+      time_entry_query = TimeEntryQuery.new project: @project, name: '_'
+      time_entry_query.add_filter 'issue.tags', '!', ['First Issue']
+
+      assert_match(/ NOT IN \(SELECT /, time_entry_query.statement)
+    end
+  end
 end

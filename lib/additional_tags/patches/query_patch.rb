@@ -49,10 +49,7 @@ module AdditionalTags
                                            " #{quoted_joined_table}.#{quoted_joined_field}")
                                     .select(1)
 
-          if %w[= !].include? operator
-            ids_list = klass.tagged_with(values, any: true).pluck :id
-            subsql = subsql.where taggable_id: ids_list
-          end
+          subsql = subsql.where taggable_id: klass.tagged_with(values, any: true).select(:id) if %w[= !].include? operator
 
           if %w[= *].include? operator
             " EXISTS(#{subsql.to_sql})"
@@ -63,38 +60,36 @@ module AdditionalTags
 
         # NOTE: should be used, if tags required permission check
         def build_sql_for_tags_field_with_permission(klass:, operator:, values:, permission:)
-          compare = ['=', '*'].include?(operator) ? 'in' : 'not_in'
-          case operator
-          when '=', '!'
-            ids_list = klass.tagged_with(values, any: true).ids
-            # special case: filter with deleted tag
-            return Additionals::SQL_NO_RESULT_CONDITION if ids_list.blank? && values.present? && operator == '='
-          else
-            allowed_projects = Project.where(Project.allowed_to_condition(User.current, permission))
-                                      .select(:id)
-            ids_list = klass.joins(:tags).where(project_id: allowed_projects).distinct.ids
-          end
+          entries = if %w[= !].include? operator
+                      klass.tagged_with values, any: true
+                    else
+                      allowed_projects = Project.where(Project.allowed_to_condition(User.current, permission))
+                                                .select(:id)
+                      klass.joins(:tags).where project_id: allowed_projects
+                    end
 
-          "(#{klass.arel_table[:id].send(compare, ids_list).to_sql})"
+          sql_for_tagged_ids klass, operator, entries.select(:id)
         end
 
         # NOTE: should be used, if tags do not require permission check
         def build_sql_for_tags_field(klass:, operator:, values:)
-          compare = ['=', '*'].include?(operator) ? 'IN' : 'NOT IN'
-          case operator
-          when '=', '!'
-            ids_list = klass.tagged_with(values, any: true).pluck :id
-            if ids_list.present?
-              "(#{klass.table_name}.id #{compare} (#{ids_list.join ','}))"
-            elsif values.present? && operator == '='
-              # special case: filter with deleted tag
-              Additionals::SQL_NO_RESULT_CONDITION
-            end
-          else
-            entries = AdditionalTagging.where taggable_type: klass.name
-            id_table = klass.table_name
-            "(#{id_table}.id #{compare} (#{entries.select(:taggable_id).to_sql}))"
-          end
+          entries = if %w[= !].include? operator
+                      klass.tagged_with(values, any: true).select :id
+                    else
+                      AdditionalTagging.where(taggable_type: klass.name).select :taggable_id
+                    end
+
+          sql_for_tagged_ids klass, operator, entries
+        end
+
+        private
+
+        # The ids stay in the database as a subquery: loading them first would
+        # put every tagged entry into the SQL string. An empty subquery matches
+        # nothing, so a filter on a deleted tag needs no special case.
+        def sql_for_tagged_ids(klass, operator, id_scope)
+          compare = %w[= *].include?(operator) ? 'IN' : 'NOT IN'
+          "(#{klass.quoted_table_name}.#{klass.quoted_primary_key} #{compare} (#{id_scope.to_sql}))"
         end
       end
     end

@@ -520,6 +520,21 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
+  def test_filter_by_deleted_tag_finds_nothing
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      @request.session[:user_id] = 1
+      get :index,
+          params: { project_id: 1,
+                    set_filter: 1,
+                    f: ['tags'],
+                    op: { 'tags' => '=' },
+                    v: { 'tags' => ['deleted tag'] } }
+
+      assert_response :success
+      assert_select 'table.issues', count: 0
+    end
+  end
+
   def test_filter_by_tag_with_all
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 1
