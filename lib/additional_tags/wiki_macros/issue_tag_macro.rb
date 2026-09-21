@@ -50,7 +50,7 @@ module AdditionalTags
 
           s << if issues.any?
                  tag.ul class: "wiki-flat issue_tag issue_tag_#{tag_name}" do
-                   issues.map { |issue| concat(tag.li(link_to("##{issue.id} #{issue.subject}", issue_path(issue)))) }
+                   issues.map { |issue| concat(tag.li(link_to_issue_with_subject(issue))) }
                  end
                else
                  tag.div l(:label_no_data), class: 'no_entries'

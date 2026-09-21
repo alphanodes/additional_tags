@@ -24,7 +24,11 @@ class IssueMacrosTest < AdditionalTags::ControllerTest
         params: { project_id: 1, id: @page_name }
 
     assert_response :success
-    assert_select 'ul.issue_tag'
+    assert_select 'ul.issue_tag li', count: 1 do
+      issue = issues :issues_001
+
+      assert_select 'a.issue[href=?]', "/issues/#{issue.id}", text: "##{issue.id}: #{issue.subject}"
+    end
   end
 
   def test_issue_tag_macro_with_title
