@@ -6,19 +6,26 @@ module AdditionalTags
     module IssueTagCountMacro
       Redmine::WikiFormatting::Macros.register do
         desc <<-DESCRIPTION
-    Show the number of issues for a tag.
+    Show the number of issues with a tag.
+
+    Only issues visible to the current user are counted. By default only issues
+    of the current project are counted (without subprojects). Without a current
+    project (e.g. in a global issue list) N/A is shown, unless all_projects=true
+    is set. Tag names are not case sensitive.
 
     Syntax:
 
-      {{issue_tag_count(TAG, all_projects=BOOL)}}
+      {{issue_tag_count(TAG [, all_projects=BOOL])}}
+
+      all_projects: count issues of all projects (default: false)
 
     Examples:
 
       {{issue_tag_count(Bug)}}
-      ...Show the number of issues for the tag 'Bug' of the current project
+      ...Show the number of issues with the tag 'Bug' in the current project
 
       {{issue_tag_count(Bug, all_projects=true)}}
-      ...Show the number of issues for the tag 'Bug' of all projects
+      ...Show the number of issues with the tag 'Bug' in all projects
         DESCRIPTION
 
         macro :issue_tag_count do |_obj, args|
