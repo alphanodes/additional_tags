@@ -64,9 +64,9 @@ module AdditionalTagsHelper
     when 'name:desc'
       tags = AdditionalTag.sort_tags(tags).reverse
     when 'count:asc'
-      tags.sort_by!(&:count)
+      tags.sort_by! { |tag| [tag.count, Additionals.name_sort_key(tag)] }
     when 'count:desc'
-      tags.sort! { |a, b| b.count <=> a.count }
+      tags.sort_by! { |tag| [-tag.count, Additionals.name_sort_key(tag)] }
     else
       tags = AdditionalTag.sort_tags tags
     end
