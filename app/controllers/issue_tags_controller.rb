@@ -17,7 +17,7 @@ class IssueTagsController < ApplicationController
                     @issues.first.tag_list
                   end
 
-    @issue_tags.sort!
+    @issue_tags = AdditionalTag.sort_tags @issue_tags
     @most_used_tags = Issue.available_tags.most_used 10
     @append = params[:append] == 'true'
   end

@@ -63,6 +63,22 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
     end
   end
 
+  # Tags of several issues are merged, so they need sorting again - like everywhere else,
+  # independent of case and accents, not by character code ("Zebra" before "äpfel")
+  def test_edit_several_issues_lists_their_tags_alphabetically
+    @issue_1.update! tag_list: %w[Zebra]
+    @issue_2.update! tag_list: %w[äpfel Birne]
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      get :edit, params: { ids: [1, 2] }, xhr: true
+
+      html_form = response.body[/<form.+form>/].delete('\\')
+      options = assert_select_in html_form, 'select#issue_tag_list option'
+
+      assert_equal %w[äpfel Birne Zebra], options.map(&:text)
+    end
+  end
+
   # The tags of all chosen issues are loaded at once, not per issue
   def test_edit_several_issues_loads_their_tags_with_a_constant_number_of_queries
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
