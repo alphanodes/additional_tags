@@ -204,6 +204,32 @@ class TaggableTest < AdditionalTags::TestCase
     cleanup_tags 'x_all', 'y_all'
   end
 
+  # Lists preload the tags; reading them again per entry is an N+1
+  def test_tag_list_reads_preloaded_tags_without_a_query
+    issue = Issue.preload(:tags).find @issue.id
+
+    assert_equal(0, count_sql_queries { issue.tag_list })
+  end
+
+  # The order must not depend on the database collation or on whether the tags were preloaded
+  def test_tag_list_sorts_the_tags_alphabetically
+    @issue.tag_list = %w[Zebra äpfel Birne]
+    @issue.save!
+
+    assert_equal %w[äpfel Birne Zebra], Issue.find(@issue.id).tag_list.to_a
+  ensure
+    cleanup_tags 'Zebra', 'äpfel', 'Birne'
+  end
+
+  def test_tag_list_sorts_preloaded_tags_alphabetically
+    @issue.tag_list = %w[Zebra äpfel Birne]
+    @issue.save!
+
+    assert_equal %w[äpfel Birne Zebra], Issue.preload(:tags).find(@issue.id).tag_list.to_a
+  ensure
+    cleanup_tags 'Zebra', 'äpfel', 'Birne'
+  end
+
   def test_tagged_with_returns_active_record_relation
     result = Issue.tagged_with 'nonexistent_tag'
 

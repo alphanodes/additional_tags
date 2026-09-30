@@ -113,9 +113,12 @@ module AdditionalTags
     end
 
     module InstanceMethods
+      # Uses preloaded tags, so lists do not query per entry, and sorts in Ruby,
+      # so the order does not depend on how the tags were loaded or on the database collation
       def tag_list
         unless @tag_list
-          @tag_list = AdditionalTags::TagList.new(*tags.order(Arel.sql("LOWER(#{AdditionalTag.table_name}.name)")).pluck(:name))
+          names = association(:tags).loaded? ? tags.map(&:name) : tags.pluck(:name)
+          @tag_list = AdditionalTags::TagList.new(*AdditionalTag.sort_tags(names))
           @tag_list_original = @tag_list.dup
         end
         @tag_list

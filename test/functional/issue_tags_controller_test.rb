@@ -63,6 +63,16 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
     end
   end
 
+  # The tags of all chosen issues are loaded at once, not per issue
+  def test_edit_several_issues_loads_their_tags_with_a_constant_number_of_queries
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      two_issues = count_sql_queries(matching: /additional_taggings/) { get :edit, params: { ids: [1, 2] }, xhr: true }
+      three_issues = count_sql_queries(matching: /additional_taggings/) { get :edit, params: { ids: @ids }, xhr: true }
+
+      assert_equal two_issues, three_issues
+    end
+  end
+
   def test_should_get_not_found_when_no_ids
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       get :edit,

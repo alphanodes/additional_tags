@@ -193,14 +193,12 @@ class AdditionalTag < ApplicationRecord
       end
     end
 
-    # Sorts tags alphabetically with transliteration for special characters.
+    # Sorts tags alphabetically in any script, see Additionals.name_sort_key.
     # Works with arrays, tag name strings, AdditionalTag objects, and ActiveRecord relations.
     #
     # tags - array, relation, or collection of strings or AdditionalTag objects
     def sort_tags(tags)
-      tags.to_a.sort! do |a, b|
-        ActiveSupport::Inflector.transliterate(a.to_s.downcase) <=> ActiveSupport::Inflector.transliterate(b.to_s.downcase)
-      end
+      tags.to_a.sort_by! { |tag| Additionals.name_sort_key tag }
     end
 
     # Extracts unique tags from a collection of tagged entries.

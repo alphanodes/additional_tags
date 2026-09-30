@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class IssueTagsController < ApplicationController
-  before_action :find_issues, only: %i[edit update]
+  before_action :find_issues, :preload_tags, only: %i[edit update]
 
   def edit
     return unless AdditionalTags.setting?(:active_issue_tags) &&
@@ -51,5 +51,12 @@ class IssueTagsController < ApplicationController
     flash[:error] = t :notice_failed_to_add_tags
   ensure
     redirect_to_referer_or { render plain: 'Tags updated.', layout: true }
+  end
+
+  private
+
+  # Every chosen issue reads its tag_list, which would be one query per issue otherwise
+  def preload_tags
+    ActiveRecord::Associations::Preloader.new(records: @issues, associations: :tags).call
   end
 end

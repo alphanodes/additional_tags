@@ -181,6 +181,13 @@ class AdditionalTagTest < AdditionalTags::TestCase
     assert_equal %w[Apple banana cherry], result
   end
 
+  # Cyrillic or Japanese tags must not end up in random order before the latin ones
+  def test_sort_tags_with_names_in_other_scripts
+    tags = %w[東京 Яблоко Zebra Арбуз äpfel]
+
+    assert_equal %w[äpfel Zebra Арбуз Яблоко 東京], AdditionalTag.sort_tags(tags)
+  end
+
   def test_sort_tags_with_tag_objects
     tag_a = AdditionalTag.new name: 'Zebra'
     tag_b = AdditionalTag.new name: 'apple'
