@@ -71,7 +71,7 @@ module AdditionalTags
         def load_visible_tags(issues, user = User.current)
           return if issues.blank?
 
-          available_projects = Project.where(AdditionalTag.visible_condition(user)).ids
+          available_projects = Project.where(AdditionalTag.visible_condition(user)).ids.to_set
           visible_issues = issues.select { |i| available_projects.include? i.project_id }
 
           # Batch-preload the :tags association so the per-issue read below does

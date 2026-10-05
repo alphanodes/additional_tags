@@ -56,6 +56,7 @@ module AdditionalTags
                           Journal
                           Query
                           IssuesController
+                          IssuesHelper
                           ImportsController
                           QueriesHelper
                           SettingsController

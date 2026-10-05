@@ -593,4 +593,78 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     # rendered by core, reached through super
     assert_select 'table.issues td.subject a[href*=?]', '/issues/'
   end
+
+  def test_show_issue_displays_tags_of_subtasks
+    parent = Issue.generate! project_id: 1
+    parent.generate_child! tag_list: %w[First]
+    @request.session[:user_id] = 2
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      with_settings related_issues_default_columns: %w[status tags] do
+        get :show, params: { id: parent.id }
+      end
+    end
+
+    assert_select '#issue_tree td.tags a', text: 'First'
+  end
+
+  # The tags of all subtasks are loaded at once, not per subtask
+  def test_show_issue_loads_tags_of_subtasks_with_a_constant_number_of_queries
+    two_subtasks = Issue.generate! project_id: 1
+    three_subtasks = Issue.generate! project_id: 1
+    2.times { two_subtasks.generate_child! tag_list: %w[First] }
+    3.times { three_subtasks.generate_child! tag_list: %w[First] }
+    @request.session[:user_id] = 2
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      with_settings related_issues_default_columns: %w[status tags] do
+        two = count_sql_queries(matching: /additional_taggings/) { get :show, params: { id: two_subtasks.id } }
+        three = count_sql_queries(matching: /additional_taggings/) { get :show, params: { id: three_subtasks.id } }
+
+        assert_equal two, three
+      end
+    end
+  end
+
+  def test_show_issue_displays_tags_of_related_issues
+    issue = Issue.generate! project_id: 1
+    relate_issue_with_tagged_issues issue, 1
+    @request.session[:user_id] = 2
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      with_settings related_issues_default_columns: %w[status tags] do
+        get :show, params: { id: issue.id }
+      end
+    end
+
+    assert_select '#relations td.tags a', text: 'First'
+  end
+
+  # The tags of all related issues are loaded at once, not per related issue
+  def test_show_issue_loads_tags_of_related_issues_with_a_constant_number_of_queries
+    two_relations = Issue.generate! project_id: 1
+    three_relations = Issue.generate! project_id: 1
+    relate_issue_with_tagged_issues two_relations, 2
+    relate_issue_with_tagged_issues three_relations, 3
+    @request.session[:user_id] = 2
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      with_settings related_issues_default_columns: %w[status tags] do
+        two = count_sql_queries(matching: /additional_taggings/) { get :show, params: { id: two_relations.id } }
+        three = count_sql_queries(matching: /additional_taggings/) { get :show, params: { id: three_relations.id } }
+
+        assert_equal two, three
+      end
+    end
+  end
+
+  private
+
+  def relate_issue_with_tagged_issues(issue, count)
+    count.times do
+      IssueRelation.create! issue_from: issue,
+                            issue_to: Issue.generate!(project_id: 1, tag_list: %w[First]),
+                            relation_type: IssueRelation::TYPE_RELATES
+    end
+  end
 end

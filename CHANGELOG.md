@@ -4,7 +4,7 @@
 
 - Requires Redmine 7.0.2 or higher, which fixes two security issues of Redmine core
 - Tags are sorted alphabetically in any script (Cyrillic, Chinese, Japanese, ...) independent of the database, also in the issue tag dialog. Tags with the same count are sorted by name when a list is sorted by count
-- Editing several issues at once and tag lists load their tags in one query instead of one per entry
+- Editing several issues at once, tag lists and the subtask and related issue tables load their tags in one query instead of one per entry
 - The `issue_tag` macro renders each issue as one link with its state classes, so closed issues are struck through including the subject
 - The descriptions of the issue tag macros explain visibility, project scope and defaults
 
