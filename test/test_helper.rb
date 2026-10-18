@@ -55,6 +55,7 @@ module AdditionalTags
   end
 
   class IntegrationTest < Redmine::IntegrationTest
+    include AdditionalTags::TestHelper
     extend PluginFixturesLoader
 
     fixtures(*fixtures_list)

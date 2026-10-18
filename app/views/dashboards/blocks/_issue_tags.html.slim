@@ -1,5 +1,5 @@
 h3.icon
-  = svg_icon_tag 'tags', label: block_definition[:label]
+  = svg_icon_tag 'tags', label: dashboard_block.label
 
 - open_issues_only = dashboard_block.open_issues_only
 - tags = Issue.available_tags(project: @project, open_issues_only:)
