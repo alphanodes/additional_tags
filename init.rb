@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 loader = RedminePluginKit::Loader.new plugin_id: 'additional_tags'
+# Blocks for the dashboards of additionals
+loader.extends %w[dashboard_blocks]
 
 Redmine::Plugin.register :additional_tags do
   name 'Additional Tags'

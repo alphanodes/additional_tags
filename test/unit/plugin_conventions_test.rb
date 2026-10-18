@@ -27,4 +27,10 @@ class PluginConventionsTest < AdditionalTags::TestCase
   def test_all_deface_overrides_have_valid_hashes
     assert_deface_overrides_valid name_prefix: 'additional-tags'
   end
+
+  # The CI of a plugin may lack a host, so the check at boot cannot notice a
+  # lib/ directory of another plugin without loader.extends in init.rb
+  def test_lib_directories_of_other_plugins_are_declared
+    assert_empty RedminePluginKit::Extensions.undeclared_dirs(Redmine::Plugin.find(:additional_tags).directory)
+  end
 end

@@ -52,7 +52,6 @@ module AdditionalTags
                           MyController
                           Issue
                           IssueImport
-                          DashboardContent
                           Journal
                           Query
                           IssuesController
