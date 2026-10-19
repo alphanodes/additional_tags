@@ -1,0 +1,32 @@
+/ The tags of an entity, dashboard_block: a DashboardBlocks::TagsBlock,
+/ totals_url: the list of all entries with a tag (the number shows without
+/ link otherwise)
+- summary = dashboard_block.data
+h3.icon
+  = svg_icon_tag 'tags', label: dashboard_block.label
+
+= render 'common/tag_summary_block',
+         tags: summary.tags,
+         entities_label: dashboard_block.entities_label,
+         totals_link: local_assigns[:totals_url] ? link_to(summary.count, totals_url) : summary.count
+
+- if dashboard_block.with_table_of_values
+  - if summary.rows.any?
+    - color_theme = AdditionalTags.setting :tags_color_theme
+    table.list.tags
+      thead
+        tr
+          th = l :field_name
+          - summary.columns.each do |caption|
+            th = caption
+      tbody
+        - summary.rows.each do |row|
+          tr
+            td.name = additional_tag_link(row.tag, **dashboard_block.tag_link_options,
+                                          use_colors: dashboard_block.use_colors, color_theme:)
+            - row.cells.each do |cell|
+              td.value = additional_tag_link(row.tag, **dashboard_block.tag_link_options(cell.status_id),
+                                             use_colors: false, name: cell.count)
+            td.value = additional_tag_link(row.tag, **dashboard_block.tag_link_options, use_colors: false, name: row.total)
+  - else
+    p.nodata = l :label_no_data

@@ -196,9 +196,29 @@ class AdditionalTag < ApplicationRecord
     # Sorts tags alphabetically in any script, see Additionals.name_sort_key.
     # Works with arrays, tag name strings, AdditionalTag objects, and ActiveRecord relations.
     #
-    # tags - array, relation, or collection of strings or AdditionalTag objects
+    # tags - array, relation, or collection of strings or AdditionalTag objects,
+    #        left unchanged
     def sort_tags(tags)
-      tags.to_a.sort_by! { |tag| Additionals.name_sort_key tag }
+      tags.sort_by { |tag| Additionals.name_sort_key tag }
+    end
+
+    # Tags in the order of the settings, by name or count
+    def sort_for_list(tags, sort_by: nil, sort_order: nil)
+      return tags if tags.size < 2
+
+      sort_by = AdditionalTags.setting :tags_sort_by if sort_by.blank?
+      sort_order = AdditionalTags.setting :tags_sort_order if sort_order.blank?
+
+      case "#{sort_by}:#{sort_order}"
+      when 'name:desc'
+        sort_tags(tags).reverse
+      when 'count:asc'
+        tags.sort_by { |tag| [tag.count, Additionals.name_sort_key(tag)] }
+      when 'count:desc'
+        tags.sort_by { |tag| [-tag.count, Additionals.name_sort_key(tag)] }
+      else
+        sort_tags tags
+      end
     end
 
     # Extracts unique tags from a collection of tagged entries.

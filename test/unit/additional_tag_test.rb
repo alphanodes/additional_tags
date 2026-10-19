@@ -197,6 +197,61 @@ class AdditionalTagTest < AdditionalTags::TestCase
     assert_equal 'Zebra', result.last.name
   end
 
+  # Tags with the same count are sorted by name, like the SQL order in available_tags
+  def test_sort_for_list_by_count_desc_sorts_equal_counts_by_name
+    tags = tags_with_counts 'Zebra' => 1, 'äpfel' => 1, 'Birne' => 1, 'Mango' => 2, 'kiwi' => 1
+
+    assert_equal %w[Mango äpfel Birne kiwi Zebra],
+                 AdditionalTag.sort_for_list(tags, sort_by: 'count', sort_order: 'desc').map(&:name)
+  end
+
+  def test_sort_for_list_by_count_asc_sorts_equal_counts_by_name
+    tags = tags_with_counts 'Zebra' => 1, 'Mango' => 2, 'äpfel' => 1, 'kiwi' => 2, 'Birne' => 1
+
+    assert_equal %w[äpfel Birne Zebra kiwi Mango],
+                 AdditionalTag.sort_for_list(tags, sort_by: 'count', sort_order: 'asc').map(&:name)
+  end
+
+  def test_sort_for_list_by_name_desc
+    tags = tags_with_counts 'äpfel' => 1, 'Zebra' => 2, 'Birne' => 3
+
+    assert_equal %w[Zebra Birne äpfel], AdditionalTag.sort_for_list(tags, sort_by: 'name', sort_order: 'desc').map(&:name)
+  end
+
+  def test_sort_for_list_by_name_asc
+    tags = tags_with_counts 'Zebra' => 1, 'äpfel' => 2, 'Birne' => 3
+
+    assert_equal %w[äpfel Birne Zebra], AdditionalTag.sort_for_list(tags, sort_by: 'name', sort_order: 'asc').map(&:name)
+  end
+
+  def test_sort_for_list_follows_the_settings
+    tags = tags_with_counts 'Zebra' => 1, 'äpfel' => 2, 'Birne' => 3
+
+    with_plugin_settings 'additional_tags', tags_sort_by: 'count', tags_sort_order: 'desc' do
+      assert_equal %w[Birne äpfel Zebra], AdditionalTag.sort_for_list(tags).map(&:name)
+    end
+  end
+
+  def test_sort_for_list_keeps_a_single_tag
+    tags = tags_with_counts 'Zebra' => 1
+
+    assert_same tags, AdditionalTag.sort_for_list(tags, sort_by: 'name', sort_order: 'desc')
+  end
+
+  # Callers keep their own order, e.g. a list sorted the other way round
+  def test_sort_tags_leaves_the_given_tags_unchanged
+    tags = %w[Zebra Apfel Birne]
+    AdditionalTag.sort_tags tags
+
+    assert_equal %w[Zebra Apfel Birne], tags
+  end
+
+  def test_sort_tags_with_a_relation
+    tags = AdditionalTag.where(id: additional_tags(:tag_two, :tag_three, :tag_four)).order :id
+
+    assert_equal %w[Four Second Third], AdditionalTag.sort_tags(tags).map(&:name)
+  end
+
   def test_subproject_sql
     sql = AdditionalTag.subproject_sql @project
 
@@ -328,5 +383,12 @@ class AdditionalTagTest < AdditionalTags::TestCase
     assert AdditionalTag.exists?(id: before_empty_id), 'empty-name tag must not be merged'
   ensure
     empty_tag&.destroy
+  end
+
+  private
+
+  # Tags as available_tags returns them, with the count as selected column
+  def tags_with_counts(counts)
+    counts.map { |name, count| AdditionalTag.instantiate 'name' => name, 'count' => count }
   end
 end

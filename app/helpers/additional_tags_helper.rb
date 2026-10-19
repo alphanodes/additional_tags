@@ -55,23 +55,7 @@ module AdditionalTagsHelper
   end
 
   def sort_tags_for_list(tags, sort_by: nil, sort_order: nil)
-    return tags if tags.size < 2
-
-    sort_by = AdditionalTags.setting :tags_sort_by if sort_by.blank?
-    sort_order = AdditionalTags.setting :tags_sort_order if sort_order.blank?
-
-    case "#{sort_by}:#{sort_order}"
-    when 'name:desc'
-      tags = AdditionalTag.sort_tags(tags).reverse
-    when 'count:asc'
-      tags.sort_by! { |tag| [tag.count, Additionals.name_sort_key(tag)] }
-    when 'count:desc'
-      tags.sort_by! { |tag| [-tag.count, Additionals.name_sort_key(tag)] }
-    else
-      tags = AdditionalTag.sort_tags tags
-    end
-
-    tags
+    AdditionalTag.sort_for_list tags, sort_by:, sort_order:
   end
 
   def render_tags_list(tags, **options)
@@ -198,31 +182,6 @@ module AdditionalTagsHelper
 
     safe_join tag_list.map { |tag| additional_tag_link tag, **options },
               additional_tag_sep(use_colors: options[:use_colors])
-  end
-
-  def link_to_issue_tags_totals(entries:, project:, open_issues_only:)
-    sum = if entries.blank? || entries.empty?
-            0
-          else
-            query = IssueQuery.new project:, name: '_'
-            query.add_filter 'tags', '*'
-            query.filters['status_id'][:operator] = '*' if !open_issues_only && query.filters.key?('status_id')
-
-            query.issue_count
-          end
-
-    link_to sum, _project_issues_path(project,
-                                      set_filter: 1,
-                                      tags: '*',
-                                      status_id: open_issues_only ? 'o' : '*')
-  end
-
-  def issue_tag_status_filter(operator: nil, open_issues_only: false)
-    if operator
-      { field: :status_id, operator: }
-    elsif open_issues_only
-      { field: :status_id, operator: 'o' }
-    end
   end
 
   def wiki_tags_on_show?

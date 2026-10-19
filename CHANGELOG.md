@@ -7,6 +7,8 @@
 - Editing several issues at once, tag lists and the subtask and related issue tables load their tags in one query instead of one per entry
 - The `issue_tag` macro renders each issue as one link with its state classes, so closed issues are struck through including the subject
 - The descriptions of the issue tag macros explain visibility, project scope and defaults
+- Tag dashboard blocks of other plugins share `DashboardBlocks::TagsBlock` and the partial `dashboards/blocks/tags`, which also export their table of values to programs. `link_to_issue_tags_totals` and `issue_tag_status_filter` are removed, `sort_tags_for_list` uses `AdditionalTag.sort_for_list`
+- `AdditionalTag.sort_tags` returns a sorted copy and leaves a given array unchanged
 
 ## 4.6.0
 
