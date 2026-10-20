@@ -25,11 +25,11 @@ module DashboardBlocks
     private
 
     def available_tags
-      Issue.available_tags project:, open_issues_only:, user:
+      Issue.available_tags project:, open_issues_only:, user: User.current
     end
 
     def count_scope
-      Issue.group_by_status_with_tags project, user
+      Issue.group_by_status_with_tags project, User.current
     end
 
     def tag_controller
