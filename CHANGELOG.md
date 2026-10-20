@@ -2,13 +2,13 @@
 
 ## 4.7.0
 
-- Requires Redmine 7.0.2 or higher, which fixes two security issues of Redmine core
-- Tags are sorted alphabetically in any script (Cyrillic, Chinese, Japanese, ...) independent of the database, also in the issue tag dialog. Tags with the same count are sorted by name when a list is sorted by count
-- Editing several issues at once, tag lists and the subtask and related issue tables load their tags in one query instead of one per entry
-- The `issue_tag` macro renders each issue as one link with its state classes, so closed issues are struck through including the subject
-- The descriptions of the issue tag macros explain visibility, project scope and defaults
-- Tag dashboard blocks of other plugins share `DashboardBlocks::TagsBlock` and the partial `dashboards/blocks/tags`, which also export their table of values to programs. `link_to_issue_tags_totals` and `issue_tag_status_filter` are removed, `sort_tags_for_list` uses `AdditionalTag.sort_for_list`
-- `AdditionalTag.sort_tags` returns a sorted copy and leaves a given array unchanged
+- Requires Redmine 7.0.2 or higher
+- Tags are sorted alphabetically in any script, independent of the database
+- Tags of bulk edit, tag lists and issue tables are loaded in one query
+- `issue_tag` macro strikes through closed issues including the subject
+- Improved descriptions of the issue tag macros
+- Add `DashboardBlocks::TagsBlock` as shared base of tag dashboard blocks
+- `AdditionalTag.sort_tags` no longer changes the given array
 
 ## 4.6.0
 
