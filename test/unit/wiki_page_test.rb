@@ -86,10 +86,28 @@ class WikiPageTest < AdditionalTags::TestCase
     assert_equal 3, WikiPage.with_tags(%w[First Second]).count
   end
 
+  def test_with_tags_order_by_title
+    User.current = users :users_002
+    ascending = tagged_pages('title_asc').map(&:title)
+
+    assert_equal 2, ascending.size
+    assert_equal ascending.reverse, tagged_pages('title_desc').map(&:title)
+  end
+
   def test_with_tags_order_by_date
     User.current = users :users_002
 
-    assert_equal 3, WikiPage.with_tags('First', order: 'date_desc').count
+    ascending = tagged_pages('date_asc').map { |page| page.content.updated_on }
+    descending = tagged_pages('date_desc').map { |page| page.content.updated_on }
+
+    assert_equal 2, ascending.size
+    assert_equal ascending.sort, ascending
+    assert_equal descending.sort.reverse!, descending
+  end
+
+  # The field decides, the direction is ascending unless desc
+  def test_with_tags_rejects_an_unknown_order_field
+    assert_raises(RuntimeError) { tagged_pages 'name_asc' }
   end
 
   def test_with_tags_scope
@@ -115,5 +133,11 @@ class WikiPageTest < AdditionalTags::TestCase
     @page.reload
 
     assert_equal saved_tags, @page.tag_list
+  end
+
+  private
+
+  def tagged_pages(order)
+    WikiPage.with_tags('First', project: projects(:projects_001), order:).to_a
   end
 end

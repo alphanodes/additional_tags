@@ -60,7 +60,7 @@ module AdditionalTags
           return scope if order.nil?
 
           sorted = order.split '_'
-          raise 'unsupported sort order' if sorted != 2 && %w[title date].exclude?(sorted.first)
+          raise 'unsupported sort order' if %w[title date].exclude? sorted.first
 
           order_dir = sorted.second == 'desc' ? 'DESC' : 'ASC'
 
@@ -72,7 +72,8 @@ module AdditionalTags
             if wiki.nil?
               scope.order "#{Project.table_name}.name, #{WikiPage.table_name}.title #{order_dir}"
             else
-              scope.includes(:parent).order "#{WikiPage.table_name}.title #{order_dir}"
+              # The pages of a wiki are ordered by title already
+              scope.includes(:parent).reorder "#{WikiPage.table_name}.title #{order_dir}"
             end
           end
         end

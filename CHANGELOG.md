@@ -9,6 +9,7 @@
 - Improved descriptions of the issue tag macros
 - Add `DashboardBlocks::TagsBlock` as shared base of tag dashboard blocks
 - `AdditionalTag.sort_tags` no longer changes the given array
+- Fixed descending title order of tagged wiki pages of a project
 
 ## 4.6.0
 
