@@ -326,4 +326,17 @@ class IssueTest < AdditionalTags::TestCase
       assert_predicate issue, :valid?
     end
   end
+
+  # Scripts and jobs set tags without a user who may edit them, one tag per group applies to them as well
+  def test_mutually_exclusive_tags_are_invalid_without_current_user
+    User.current = User.anonymous
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      issue = issues(:issues_001).reload
+      issue.tag_list = %w[Bar::2 Bar::3]
+
+      assert_not issue.valid?
+      assert_includes issue.errors.attribute_names, :tag_list
+    end
+  end
 end

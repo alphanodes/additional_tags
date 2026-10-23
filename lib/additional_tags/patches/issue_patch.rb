@@ -143,8 +143,9 @@ module AdditionalTags
         end
 
         def validate_tags
-          # Unchanged tags are not checked, so existing conflicts do not block saving other changes
-          return unless tag_list_changed? && tags_allowed_for?(User.current, tag_list)
+          # Unchanged tags are not checked, so existing conflicts do not block saving other changes.
+          # Tags of users without permission never get here, safe_attributes= has already dropped them.
+          return unless tag_list_changed?
 
           errors.add :tag_list, :invalid_mutually_exclusive_tags unless AdditionalTag.mutually_exclusive_tags? tag_list
         end
