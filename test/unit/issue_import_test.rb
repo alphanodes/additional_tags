@@ -27,6 +27,19 @@ class IssueImportTest < AdditionalTags::TestCase
     end
   end
 
+  # The CSV value holds several tags, each of them has to be found among the existing tags
+  def test_import_sets_existing_tags_with_permission_to_edit_tags_only
+    prepare_tests
+    roles(:roles_001).remove_permission! :create_issue_tags
+
+    with_plugin_settings 'additional_tags', active_issue_tags: '1' do
+      import = build_import_with_tags user_id: 2
+      import.run
+
+      assert_equal [%w[First Second], %w[Third], %w[First Third]], import.saved_objects.map(&:tag_list)
+    end
+  end
+
   def test_import_skips_blank_tag_list_values
     with_plugin_settings 'additional_tags', active_issue_tags: '1' do
       import = build_import_with_tags
@@ -43,10 +56,10 @@ class IssueImportTest < AdditionalTags::TestCase
 
   private
 
-  def build_import_with_tags
+  def build_import_with_tags(user_id: 1)
     csv_path = File.expand_path '../../fixtures/files/import_issues_with_tags.csv', __FILE__
     import = IssueImport.new
-    import.user_id = 1
+    import.user_id = user_id
     import.file = Rack::Test::UploadedFile.new csv_path, 'text/csv', true
     import.save!
     import.settings = {

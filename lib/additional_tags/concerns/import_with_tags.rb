@@ -31,7 +31,9 @@ module AdditionalTags
           tag_value = row_value row, 'tag_list'
           return object if tag_value.blank?
 
-          object.send :safe_attributes=, { tag_list: tag_value }.with_indifferent_access, user
+          # The CSV cell holds all tags as one string, the permission check needs them one by one
+          tags = AdditionalTags::DefaultParser.parse tag_value
+          object.send :safe_attributes=, { tag_list: tags }.with_indifferent_access, user
           object
         end
       end

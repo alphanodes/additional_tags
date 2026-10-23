@@ -89,6 +89,16 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
     end
   end
 
+  def test_should_get_forbidden_without_permission
+    @role.remove_permission! :edit_issue_tags
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      get :edit, params: { ids: [1] }, xhr: true
+
+      assert_response :forbidden
+    end
+  end
+
   def test_should_get_not_found_when_no_ids
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       get :edit,

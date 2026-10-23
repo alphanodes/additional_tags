@@ -9,8 +9,8 @@ class IssueTagsController < ApplicationController
 
   def edit
     # The chosen issues may belong to several projects, every one of them has to allow it
-    return unless AdditionalTags.setting?(:active_issue_tags) &&
-                  User.current.allowed_to?(:edit_issue_tags, @projects)
+    return deny_access unless AdditionalTags.setting?(:active_issue_tags) &&
+                              User.current.allowed_to?(:edit_issue_tags, @projects)
 
     @issue_ids = params[:ids]
     @mode = tags_mode
