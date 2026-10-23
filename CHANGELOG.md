@@ -12,6 +12,7 @@
 - Fixed descending title order of tagged wiki pages of a project
 - Tags can be removed from several issues at once via the context menu of the issue list
 - The tags icon in the context menu of the issue list has the same color as the other icons
+- Changing tags of issues from several projects requires the permissions in every project, new tags can be entered there as well
 
 ## 4.6.0
 

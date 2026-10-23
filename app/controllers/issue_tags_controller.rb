@@ -8,8 +8,9 @@ class IssueTagsController < ApplicationController
   before_action :find_issues, :preload_tags, only: %i[edit update]
 
   def edit
+    # The chosen issues may belong to several projects, every one of them has to allow it
     return unless AdditionalTags.setting?(:active_issue_tags) &&
-                  User.current.allowed_to?(:edit_issue_tags, @projects.first)
+                  User.current.allowed_to?(:edit_issue_tags, @projects)
 
     @issue_ids = params[:ids]
     @mode = tags_mode
@@ -32,11 +33,13 @@ class IssueTagsController < ApplicationController
     failed_notice = mode == 'remove' ? :notice_failed_to_remove_tags : :notice_failed_to_add_tags
 
     if AdditionalTags.setting?(:active_issue_tags) &&
-       User.current.allowed_to?(:edit_issue_tags, @projects.first)
+       User.current.allowed_to?(:edit_issue_tags, @projects)
       tags = params[:issue] && params[:issue][:tag_list] ? params[:issue][:tag_list].reject(&:empty?) : []
+      # Adding or removing no tag changes nothing, only editing clears the tags with an empty list
+      return if mode && tags.empty?
 
       # Removing creates no tag, so only adding and editing need the permission to create tags
-      unless mode == 'remove' || User.current.allowed_to?(:create_issue_tags, @projects.first) || Issue.allowed_tags?(tags)
+      unless mode == 'remove' || User.current.allowed_to?(:create_issue_tags, @projects) || Issue.allowed_tags?(tags)
         flash[:error] = t failed_notice
         return
       end

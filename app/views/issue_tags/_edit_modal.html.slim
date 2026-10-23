@@ -25,7 +25,7 @@ h3.title = l @title
                                   multiple: true,
                                   url: issue_tags_auto_completes_path(project_id: @project),
                                   placeholder: @is_bulk_editing ? t(:label_no_change_option) : '+ add tag',
-                                  tags: User.current.allowed_to?(:create_issue_tags, @project)
+                                  tags: User.current.allowed_to?(:create_issue_tags, @projects)
         p.most-used-tags
           = safe_join @most_used_tags.collect { |t| tag.span t.name, class: 'most-used-tag' }, ', '
 

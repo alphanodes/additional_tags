@@ -253,6 +253,45 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
     end
   end
 
+  # Issue 1 is in project 1 (Manager), issue 4 in project 2 (Developer), both roles of user 2
+  def test_bulk_change_across_projects_needs_permission_in_every_project
+    issue_4_tags = issues(:issues_004).tag_list.to_a
+
+    { edit_issue_tags: %w[First], create_issue_tags: %w[brand_new_tag] }.each do |permission, tags|
+      roles(:roles_002).remove_permission! permission
+
+      with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+        post :update, params: { ids: [1, 4], issue: { tag_list: tags } }
+
+        assert_equal I18n.t(:notice_failed_to_add_tags), flash[:error], permission
+        assert_equal issue_4_tags, issues(:issues_004).reload.tag_list, permission
+      end
+
+      roles(:roles_002).add_permission! permission
+    end
+  end
+
+  # The Developer role of project 2 must not create tags, existing ones can still be added there
+  def test_bulk_change_across_projects_with_existing_tags_without_permission_to_create_tags
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      post :update, params: { ids: [1, 4], issue: { tag_list: %w[First] }, mode: 'append' }
+
+      assert_equal I18n.t(:notice_tags_added), flash[:notice]
+      assert_includes issues(:issues_004).reload.tag_list, 'First'
+    end
+  end
+
+  def test_edit_across_projects_offers_new_tags_with_permission_in_every_project
+    roles(:roles_002).add_permission! :create_issue_tags
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      get :edit, params: { ids: [1, 4], mode: 'append' }, xhr: true
+
+      assert_response :success
+      assert_includes response.body.delete('\\'), '"tags":true'
+    end
+  end
+
   def test_create_tags_permission
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       new_tag = 'enable_create_tags_permission'
@@ -356,9 +395,9 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
 
       assert_redirected_to action: 'update'
       assert_equal I18n.t(:notice_tags_removed), flash[:notice]
-      assert_empty Issue.find(1).tag_list
-      assert_equal %w[Third], Issue.find(2).tag_list
-      assert_equal %w[Third], Issue.find(8).tag_list
+      assert_empty @issue_1.reload.tag_list
+      assert_equal %w[Third], @issue_2.reload.tag_list
+      assert_equal %w[Third], @issue_8.reload.tag_list
     end
   end
 
@@ -371,7 +410,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       post :update, params: { ids: [1], issue: { tag_list: %w[First unknown_tag] }, mode: 'remove' }
 
       assert_equal I18n.t(:notice_tags_removed), flash[:notice]
-      assert_empty Issue.find(1).tag_list
+      assert_empty @issue_1.reload.tag_list
     end
   end
 
@@ -383,7 +422,24 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       post :update, params: { ids: [1], issue: { tag_list: %w[First] }, mode: 'remove' }
 
       assert_equal I18n.t(:notice_failed_to_remove_tags), flash[:error]
-      assert_equal %w[First], Issue.find(1).tag_list
+      assert_equal %w[First], @issue_1.reload.tag_list
+    end
+  end
+
+  # Without a chosen tag nothing is added or removed, so no issue is saved and no success is reported
+  def test_add_or_remove_without_tags_changes_nothing
+    @issue_1.update! tag_list: %w[First]
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      %w[append remove].each do |mode|
+        assert_no_difference 'Journal.count', mode do
+          post :update, params: { ids: [1, 2], issue: { tag_list: [''] }, mode: }
+        end
+
+        assert_redirected_to action: 'update'
+        assert_nil flash[:notice], mode
+        assert_equal %w[First], @issue_1.reload.tag_list, mode
+      end
     end
   end
 end
