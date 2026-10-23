@@ -16,6 +16,7 @@ de:
   label_manage_tags: TAGs verwalten
   label_merge_selected_tags: Ausgewählte TAGs zusammenführen
   label_open_issues_only: Zeige nur offene Tickets
+  label_remove_tags: TAGs entfernen
   label_show_tags_after_queries: "Zeige TAGs nach Abfragen"
   label_show_with_count: Zeige Anzahl zu TAG
   label_tag_color_theme: Farbschema %{value}
@@ -30,7 +31,9 @@ de:
   label_with_chart: Mit Chart
   label_with_table_of_values: Mit Wertetabelle
   notice_failed_to_add_tags: Fehler beim hinzufügen der TAGs
+  notice_failed_to_remove_tags: Fehler beim Entfernen der TAGs
   notice_tags_added: TAGs hinzugefügt
+  notice_tags_removed: TAGs entfernt
   permission_add_wiki_tags: Wiki TAGs hinzufügen
   permission_create_issue_tags: Ticket TAGs erstellen
   permission_edit_issue_tags: Ticket TAGs bearbeiten

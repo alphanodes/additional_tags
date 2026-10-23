@@ -1,4 +1,4 @@
-h3.title = @append ? l(:label_add_tags) : l(:label_edit_tags)
+h3.title = l @title
 
 - if @is_bulk_editing
   h3 = l :label_bulk_edit_selected_issues
@@ -9,21 +9,28 @@ h3.title = @append ? l(:label_add_tags) : l(:label_edit_tags)
   h3
     span = link_to_issue @issues.first
 
-= form_tag issue_tags_path(ids: @issue_ids, search: params[:search], append: @append.to_s) do
+= form_tag issue_tags_path(ids: @issue_ids, search: params[:search], mode: @mode) do
   fieldset.box
     legend = l :field_tags
     #issue_tags
-      = additionals_select2_tag 'issue[tag_list]',
-                                options_for_select(@append ? {} : @issue_tags.map { |tag| [tag, tag] }, @issue_tags),
-                                multiple: true,
-                                url: issue_tags_auto_completes_path(project_id: @project),
-                                placeholder: @is_bulk_editing ? t(:label_no_change_option) : '+ add tag',
-                                tags: User.current.allowed_to?(:create_issue_tags, @project)
-    p.most-used-tags
-      = safe_join @most_used_tags.collect { |t| tag.span t.name, class: 'most-used-tag' }, ', '
+      - if @mode == 'remove'
+        / Only the tags of the chosen issues can be removed, so no search for others
+        = additionals_select2_tag 'issue[tag_list]',
+                                  options_for_select(@issue_tags.map { |tag| [tag, tag] }),
+                                  multiple: true,
+                                  placeholder: l(:label_remove_tags)
+      - else
+        = additionals_select2_tag 'issue[tag_list]',
+                                  options_for_select(@mode == 'append' ? {} : @issue_tags.map { |tag| [tag, tag] }, @issue_tags),
+                                  multiple: true,
+                                  url: issue_tags_auto_completes_path(project_id: @project),
+                                  placeholder: @is_bulk_editing ? t(:label_no_change_option) : '+ add tag',
+                                  tags: User.current.allowed_to?(:create_issue_tags, @project)
+        p.most-used-tags
+          = safe_join @most_used_tags.collect { |t| tag.span t.name, class: 'most-used-tag' }, ', '
 
   .buttons
-    = submit_tag l(@append ? :button_add : :button_save), name: nil
+    = submit_tag l(@submit_label), name: nil
     '
     = link_to_function l(:button_cancel), 'hideModal(this)'
 

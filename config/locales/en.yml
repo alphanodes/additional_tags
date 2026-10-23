@@ -16,6 +16,7 @@ en:
   label_manage_tags: "Manage tags"
   label_merge_selected_tags: "Merge selected tags"
   label_open_issues_only: "Display open issues only"
+  label_remove_tags: "Remove tags"
   label_show_tags_after_queries: "Show tags after queries"
   label_show_with_count: "Display amount on tag"
   label_tag_color_theme: Color theme %{value}
@@ -30,7 +31,9 @@ en:
   label_with_chart: "With chart"
   label_with_table_of_values: "With table of values"
   notice_failed_to_add_tags: "Failed to add tags"
+  notice_failed_to_remove_tags: "Failed to remove tags"
   notice_tags_added: "Tags added"
+  notice_tags_removed: "Tags removed"
   permission_add_wiki_tags: "Add wiki tags"
   permission_create_issue_tags: "Create issue tags"
   permission_edit_issue_tags: "Edit issue tags"

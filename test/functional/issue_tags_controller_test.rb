@@ -291,7 +291,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
 
       assert_difference 'Journal.count', 2 do
         post :update,
-             params: { ids: [1, 2], issue: { tag_list: %w[New] }, append: 'true' }
+             params: { ids: [1, 2], issue: { tag_list: %w[New] }, mode: 'append' }
 
         assert_response :redirect
         assert_redirected_to action: 'update'
@@ -310,7 +310,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
            params: { ids: [2], issue: { tag_list: ['Second'] } }
 
       get :edit,
-          params: { ids: [1, 2], append: 'true' },
+          params: { ids: [1, 2], mode: 'append' },
           xhr: true
 
       assert_response :success
@@ -320,6 +320,70 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       assert_select_in html_form, 'select#issue_tag_list', 1 do
         assert_select 'option[selected="selected"]', 0
       end
+    end
+  end
+
+  # Removing offers every tag of the chosen issues, not only the shared ones, and none is preselected
+  def test_edit_for_removal_lists_tags_of_all_issues_unselected
+    @issue_1.update! tag_list: %w[First Second]
+    @issue_2.update! tag_list: %w[Third]
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      get :edit, params: { ids: [1, 2], mode: 'remove' }, xhr: true
+
+      assert_response :success
+
+      html_form = response.body[/<form.+form>/].delete('\\')
+      options = assert_select_in html_form, 'select#issue_tag_list option'
+
+      assert_equal %w[First Second Third], options.map(&:text)
+      assert_select_in html_form, 'select#issue_tag_list option[selected]', 0
+      assert_select_in html_form, '.most-used-tags', 0
+      assert_select_in html_form, 'input[type=submit][value=?]', I18n.t(:button_remove)
+    end
+  end
+
+  def test_should_remove_tags_from_multiple_issues
+    @issue_1.update! tag_list: %w[First Second]
+    @issue_2.update! tag_list: %w[Second Third]
+    @issue_8.update! tag_list: %w[Third]
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      # issue 8 has none of the removed tags and gets no journal
+      assert_difference 'Journal.count', 2 do
+        post :update, params: { ids: @ids, issue: { tag_list: %w[First Second] }, mode: 'remove' }
+      end
+
+      assert_redirected_to action: 'update'
+      assert_equal I18n.t(:notice_tags_removed), flash[:notice]
+      assert_empty Issue.find(1).tag_list
+      assert_equal %w[Third], Issue.find(2).tag_list
+      assert_equal %w[Third], Issue.find(8).tag_list
+    end
+  end
+
+  # Removing creates no tag, so it does not need the permission to create tags
+  def test_remove_tags_without_permission_to_create_tags
+    @issue_1.update! tag_list: %w[First]
+    @role.remove_permission! :create_issue_tags
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      post :update, params: { ids: [1], issue: { tag_list: %w[First unknown_tag] }, mode: 'remove' }
+
+      assert_equal I18n.t(:notice_tags_removed), flash[:notice]
+      assert_empty Issue.find(1).tag_list
+    end
+  end
+
+  def test_remove_tags_without_permission
+    @issue_1.update! tag_list: %w[First]
+    @role.remove_permission! :edit_issue_tags
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      post :update, params: { ids: [1], issue: { tag_list: %w[First] }, mode: 'remove' }
+
+      assert_equal I18n.t(:notice_failed_to_remove_tags), flash[:error]
+      assert_equal %w[First], Issue.find(1).tag_list
     end
   end
 end

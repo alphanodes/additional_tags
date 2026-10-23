@@ -10,6 +10,8 @@
 - Add `DashboardBlocks::TagsBlock` as shared base of tag dashboard blocks
 - `AdditionalTag.sort_tags` no longer changes the given array
 - Fixed descending title order of tagged wiki pages of a project
+- Tags can be removed from several issues at once via the context menu of the issue list
+- The tags icon in the context menu of the issue list has the same color as the other icons
 
 ## 4.6.0
 

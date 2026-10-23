@@ -1,11 +1,10 @@
 - if AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:edit_issue_tags, @projects || @project)
   li.folder
-    a.submenu[href="#"]
-      = svg_icon_tag 'tags', label: :field_tags, wrapper: :span
+    = link_to svg_icon_tag('tags', label: :field_tags), '#', class: 'submenu icon icon-tags'
     ul
       li
         = context_menu_link sprite_icon('add', l(:button_add)),
-                            edit_issue_tags_path(ids: @issue_ids, search: params[:search], append: 'true'),
+                            edit_issue_tags_path(ids: @issue_ids, search: params[:search], mode: 'append'),
                             remote: true,
                             class: 'icon icon-add'
       - if @issue_ids.size == 1
@@ -14,3 +13,9 @@
                               edit_issue_tags_path(ids: @issue_ids, search: params[:search]),
                               remote: true,
                               class: 'icon icon-edit'
+      - else
+        li
+          = context_menu_link sprite_icon('del', l(:button_remove)),
+                              edit_issue_tags_path(ids: @issue_ids, search: params[:search], mode: 'remove'),
+                              remote: true,
+                              class: 'icon icon-del'

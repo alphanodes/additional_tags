@@ -16,6 +16,7 @@ fa:
   label_manage_tags: "مدیریت تگ‌ها"
   label_merge_selected_tags: "ادغام تگ‌های انتخابی"
   label_open_issues_only: "مشاهده مسائل باز"
+  label_remove_tags: "حذف تگ‌ها"
   label_show_tags_after_queries: "Show tags after queries"
   label_show_with_count: "نمایش مقدار روی تگ"
   label_tag_color_theme: تم رنگی %{value}
@@ -30,7 +31,9 @@ fa:
   label_with_chart: "با نمودار"
   label_with_table_of_values: "با جدول مقادیر"
   notice_failed_to_add_tags: "ناتوانی در افزودن تگ‌ها"
+  notice_failed_to_remove_tags: "ناتوانی در حذف تگ‌ها"
   notice_tags_added: "تگ‌ها افزوده شدند"
+  notice_tags_removed: "تگ‌ها حذف شدند"
   permission_add_wiki_tags: "افزودن تگ‌های ویکی"
   permission_create_issue_tags: "ایجاد تگ‌های مسئله"
   permission_edit_issue_tags: "ویرایش تگ‌های مسئله"
