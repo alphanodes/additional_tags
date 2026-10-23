@@ -111,11 +111,10 @@ module AdditionalTags
           tags = attrs.delete :tag_list
           tags = Array(tags).reject(&:empty?)
 
-          if user.allowed_to?(:create_issue_tags, project) ||
-             user.allowed_to?(:edit_issue_tags, project) && Issue.allowed_tags?(tags)
-            attrs[:tag_list] = tags # required fix for journal details
-            self.tag_list = tags    # required fix for tags
-          end
+          return unless tags_allowed_for? user, tags
+
+          attrs[:tag_list] = tags # required fix for journal details
+          self.tag_list = tags    # required fix for tags
         end
       end
 
@@ -130,6 +129,12 @@ module AdditionalTags
 
         private
 
+        # Editing tags allows existing ones, creating tags additionally allows new ones
+        def tags_allowed_for?(user, tag_names)
+          user.allowed_to?(:edit_issue_tags, project) &&
+            (user.allowed_to?(:create_issue_tags, project) || Issue.allowed_tags?(tag_names))
+        end
+
         def sort_tag_list
           tags = tag_list.reject(&:empty?)
           return unless tags.present? && tag_list_changed?
@@ -138,8 +143,7 @@ module AdditionalTags
         end
 
         def validate_tags
-          return if !User.current.allowed_to?(:create_issue_tags, project) &&
-                    !(User.current.allowed_to?(:edit_issue_tags, project) && Issue.allowed_tags?(tags))
+          return unless tags_allowed_for? User.current, tag_list
 
           errors.add :tag_list, :invalid_mutually_exclusive_tags unless AdditionalTag.mutually_exclusive_tags? tag_list
         end
