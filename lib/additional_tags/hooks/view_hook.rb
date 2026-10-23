@@ -89,6 +89,8 @@ module AdditionalTags
 
         tags_to_add = new_tags - common_tags
         tags_to_remove = common_tags - new_tags
+        # Core has already applied the safe attributes, the tags must follow the same permissions
+        return unless issue.tags_allowed_for? User.current, tags_to_add
 
         current_tags.add tags_to_add
         current_tags.remove tags_to_remove

@@ -25,8 +25,8 @@ module AdditionalTags
       end
 
       class_methods do
-        def allowed_tags?(tags)
-          allowed_tags = available_tags.map(&:name)
+        def allowed_tags?(tags, user: User.current)
+          allowed_tags = available_tags(user:).map(&:name)
           tags.all? { |tag| allowed_tags.include? tag }
         end
 
@@ -127,13 +127,13 @@ module AdditionalTags
           @prepare_save_tag_change ||= tag_list != tag_list_was
         end
 
-        private
-
         # Editing tags allows existing ones, creating tags additionally allows new ones
         def tags_allowed_for?(user, tag_names)
           user.allowed_to?(:edit_issue_tags, project) &&
-            (user.allowed_to?(:create_issue_tags, project) || Issue.allowed_tags?(tag_names))
+            (user.allowed_to?(:create_issue_tags, project) || Issue.allowed_tags?(tag_names, user:))
         end
+
+        private
 
         def sort_tag_list
           tags = tag_list.reject(&:empty?)
@@ -143,7 +143,8 @@ module AdditionalTags
         end
 
         def validate_tags
-          return unless tags_allowed_for? User.current, tag_list
+          # Unchanged tags are not checked, so existing conflicts do not block saving other changes
+          return unless tag_list_changed? && tags_allowed_for?(User.current, tag_list)
 
           errors.add :tag_list, :invalid_mutually_exclusive_tags unless AdditionalTag.mutually_exclusive_tags? tag_list
         end

@@ -4,5 +4,5 @@
                            multiple: true,
                            url: issue_tags_auto_completes_path,
                            placeholder: l(:label_add_tags),
-                           tags: true
+                           tags: User.current.allowed_to?(:create_issue_tags, project)
 = hidden_field_tag 'common_tags', tags.to_s

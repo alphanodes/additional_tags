@@ -13,7 +13,7 @@ class ViewHookTest < AdditionalTags::TestCase
     # bulk_copy_source_tag_list, then safe_attributes= has overwritten
     # @tag_list with the user's params value. The hook must recover the
     # source tags from the accessor, not from the overwritten @tag_list.
-    issue = Issue.new
+    issue = Issue.new project: projects(:projects_001)
     issue.bulk_copy_source_tag_list = %w[Alpha Beta]
     issue.tag_list = ['bulk_tag']
 
@@ -36,7 +36,7 @@ class ViewHookTest < AdditionalTags::TestCase
   end
 
   def test_bulk_tags_fix_removes_common_tags_and_adds_new
-    issue = Issue.new
+    issue = Issue.new project: projects(:projects_001)
     issue.bulk_copy_source_tag_list = %w[A B C]
 
     params = { issue: { tag_list: ['D'] }, common_tags: 'A,C' }
@@ -49,7 +49,7 @@ class ViewHookTest < AdditionalTags::TestCase
   end
 
   def test_bulk_tags_fix_handles_blank_common_tags_param
-    issue = Issue.new
+    issue = Issue.new project: projects(:projects_001)
     issue.bulk_copy_source_tag_list = %w[Source]
 
     params = { issue: { tag_list: ['Added'] } } # no :common_tags key
@@ -59,7 +59,7 @@ class ViewHookTest < AdditionalTags::TestCase
   end
 
   def test_bulk_tags_fix_is_noop_when_params_is_nil
-    issue = Issue.new
+    issue = Issue.new project: projects(:projects_001)
     issue.tag_list = ['unchanged']
 
     @hook.send :issues_bulk_tags_fix, issue, nil
@@ -68,7 +68,7 @@ class ViewHookTest < AdditionalTags::TestCase
   end
 
   def test_bulk_tags_fix_is_noop_when_params_lacks_issue_key
-    issue = Issue.new
+    issue = Issue.new project: projects(:projects_001)
     issue.tag_list = ['unchanged']
 
     @hook.send :issues_bulk_tags_fix, issue, { other_key: 'foo' }
@@ -80,7 +80,7 @@ class ViewHookTest < AdditionalTags::TestCase
     # An empty array on bulk_copy_source_tag_list is not the same as nil:
     # it means "this is a copy, source had zero tags". The hook must use
     # the empty list, not fall back to issue.tags.to_a.
-    issue = Issue.new
+    issue = Issue.new project: projects(:projects_001)
     issue.bulk_copy_source_tag_list = []
     issue.tag_list = []
 

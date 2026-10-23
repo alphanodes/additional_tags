@@ -13,8 +13,9 @@
 - Tags can be removed from several issues at once via the context menu of the issue list
 - The tags icon in the context menu of the issue list has the same color as the other icons
 - Changing tags of issues from several projects requires the permissions in every project, new tags can be entered there as well
-- Setting issue tags always requires the permission to edit tags, the permission to create tags only adds new ones, also via REST API
-- Mutually exclusive tags are rejected for users who may only use existing tags
+- Setting issue tags always requires the permission to edit tags, the permission to create tags only adds new ones, also via bulk edit and REST API
+- New tags can only be entered with the permission to create tags
+- Mutually exclusive tags are checked for every user who may set tags and only when the tags change
 
 ## 4.6.0
 

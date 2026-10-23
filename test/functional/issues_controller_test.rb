@@ -329,6 +329,50 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
+  # Bulk edit follows the tag permissions of the issue form: editing allows existing tags, creating tags new ones
+  def test_bulk_edit_tags_by_permissions
+    role = roles :roles_001
+    issue = issues :issues_001 # has tag "First"
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      @request.session[:user_id] = 2
+      {
+        [] => [[%w[Second], '', %w[First]],
+               [[''], 'First', %w[First]]],
+        %i[edit_issue_tags] => [[%w[brand_new_bulk_tag], '', %w[First]],
+                                [%w[Second], '', %w[First Second]],
+                                [[''], 'First', %w[Second]]]
+      }.each do |permissions, cases|
+        role.remove_permission! :edit_issue_tags, :create_issue_tags
+        role.add_permission!(*permissions)
+
+        cases.each do |tags, common_tags, expected|
+          post :bulk_update, params: { ids: [issue.id], common_tags:, issue: { tag_list: tags } }
+
+          assert_response :redirect
+          assert_equal expected, issue.reload.tag_list, "#{permissions} #{tags} #{common_tags}"
+        end
+      end
+    end
+  end
+
+  # Only users who may create tags can enter new ones, the others choose from existing tags
+  def test_tags_field_offers_new_tags_with_permission_to_create_tags
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      { 2 => true, 3 => false }.each do |user_id, allowed|
+        @request.session[:user_id] = user_id
+
+        get :new, params: { issue: { project_id: 1 } }
+
+        assert_includes response.body, %("tags":#{allowed}), "new, user #{user_id}"
+
+        get :bulk_edit, params: { ids: [1, 2] }
+
+        assert_includes response.body, %("tags":#{allowed}), "bulk edit, user #{user_id}"
+      end
+    end
+  end
+
   def test_new_with_permission_edit_tags
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       @request.session[:user_id] = 3

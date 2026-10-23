@@ -274,6 +274,8 @@ class IssueTest < AdditionalTags::TestCase
   # Editing allows existing tags, creating tags additionally allows new ones and is no permission on its own
   def test_safe_attributes_sets_tags_by_permissions
     prepare_tests
+    # Existing tags are the ones the given user sees, not the current user
+    User.current = User.anonymous
     role = roles :roles_001
     {
       %i[edit_issue_tags create_issue_tags] => { %w[Second] => true, %w[brand_new_tag] => true },
@@ -305,6 +307,23 @@ class IssueTest < AdditionalTags::TestCase
 
       assert_not issue.valid?
       assert_includes issue.errors.attribute_names, :tag_list
+    end
+  end
+
+  # Existing conflicting tags do not block saving other changes, they are only checked when the tags change
+  def test_mutually_exclusive_tags_are_only_checked_when_tags_change
+    prepare_tests
+    roles(:roles_001).remove_permission! :create_issue_tags
+    issue = issues :issues_001
+    issue.tag_list = %w[Bar::2 Bar::3]
+    issue.save validate: false
+    User.current = users :users_002
+
+    with_plugin_settings 'additional_tags', active_issue_tags: 1 do
+      issue = Issue.find issue.id
+      issue.safe_attributes = { 'subject' => 'Changed subject' }
+
+      assert_predicate issue, :valid?
     end
   end
 end
