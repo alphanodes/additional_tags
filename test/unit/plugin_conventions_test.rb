@@ -10,7 +10,9 @@ class PluginConventionsTest < AdditionalTags::TestCase
   Additionals.define_i18n_tests self,
                                 plugin: 'additional_tags',
                                 control_string: :label_merge_selected_tags,
-                                control_english: 'Merge selected tags'
+                                control_english: 'Merge selected tags',
+                                # contributed by the community
+                                extra_locales: %w[bg fa]
 
   # A patch that no add_patch names, or whose target class was renamed, simply
   # does nothing - and every other test still passes. This is the only place that
