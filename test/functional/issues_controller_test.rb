@@ -86,6 +86,25 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
   end
 
+  # tag-label is styled by other plugins and gems, so tags without colors need an own class
+  def test_show_issue_should_display_tags_without_colors_with_own_class
+    with_plugin_settings 'additional_tags', active_issue_tags: 1,
+                                            tags_color_theme: '0' do
+      @request.session[:user_id] = 2
+      get :show, params: {
+        id: 6
+      }
+    end
+
+    assert_response :success
+
+    assert_select 'div#tags-data' do
+      assert_select 'span.additional-tag-label a', 2
+      assert_select 'span.additional-tag-label-color', 0
+      assert_select 'span.tag-label', 0
+    end
+  end
+
   def test_show_issue_should_display_contrast_tag_colors
     with_plugin_settings 'additional_tags', active_issue_tags: 1,
                                             use_colors: 1 do

@@ -146,7 +146,7 @@ module AdditionalTagsHelper
     style = if use_colors
               { class: 'additional-tag-label-color', style: tag_style }
             else
-              { class: 'tag-label' }
+              { class: 'additional-tag-label' }
             end
 
     tag.span content, **style

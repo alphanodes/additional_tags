@@ -33,7 +33,7 @@ td.tags span.additional-tag-label-color {
 }
 
 /* keep a tag pill on one line, e.g. scoped tags (type + value), with or without colors */
-.tag-label {
+.additional-tag-label {
   white-space: nowrap;
 }
 
@@ -48,7 +48,7 @@ td.tags span.additional-tag-label-color {
   padding-left: 3px;
 }
 
-.tag-label .tag-count {
+.additional-tag-label .tag-count {
   background: #f1f5fa;
   border-radius: 5px;
   padding: 0 5px;
@@ -58,9 +58,9 @@ td.tags span.additional-tag-label-color {
 }
 
 .additional-tag-label-color .tag-count,
-.tag-label .tag-count,
+.additional-tag-label .tag-count,
 .additional-tag-label-color .tag-group-value,
-.tag-label .tag-group-value {
+.additional-tag-label .tag-group-value {
   font-size: var(--a-font-size-xs);
   margin-left: 0.5em;
 }
@@ -79,7 +79,7 @@ td.tags span.additional-tag-label-color {
   border-bottom-right-radius: 0.7rem;
 }
 
-.tag-label .tag-group-value {
+.additional-tag-label .tag-group-value {
   background: #eee;
   border-radius: 5px;
   padding: 0 5px;
@@ -89,7 +89,7 @@ td.tags span.additional-tag-label-color {
 }
 
 span.additional-tag-label-color:hover a,
-.tag-label .tag-count:hover a {
+.additional-tag-label .tag-count:hover a {
   text-decoration: none !important;
 }
 

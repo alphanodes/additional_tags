@@ -17,6 +17,7 @@
 - New tags can only be entered with the permission to create tags
 - Mutually exclusive tags are checked whenever the tags change, independent of the user
 - Issue import keeps existing tags for users who may only use existing tags
+- Tags without colors use the CSS class `additional-tag-label` instead of `tag-label`, which other plugins style with their own pill design
 
 ## 4.6.0
 
