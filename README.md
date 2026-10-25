@@ -29,11 +29,11 @@
   used tags or tagging tables for issue or wiki tagging, tags will be migrated automatically there
 - Based on the very popular [acts-as-taggable-on](https://github.com/mbleigh/acts-as-taggable-on)
 
-![screenshot](https://raw.githubusercontent.com/alphanodes/additional_tags/master/doc/images/tag-overview.png)
+![screenshot](https://raw.githubusercontent.com/alphanodes/additional_tags/main/docs/images/tag-overview.png)
 
 The screenshot shows: regular tags, grouped tags and scoped tags. The colors are assigned randomly. But you can change the color by choosing a *Color theme* in the plugin settings.
 
-![screenshot](https://raw.githubusercontent.com/alphanodes/additional_tags/master/doc/images/additional-tags.gif)
+![screenshot](https://raw.githubusercontent.com/alphanodes/additional_tags/main/docs/images/additional-tags.gif)
 
 Other plugins use additional_tags as framework in order to support tags for their entities.
 At the moment this are:
@@ -47,7 +47,7 @@ At the moment this are:
 
 Start using it, too. The example image shows the centralized tag management in the plugin configuration.
 
-![screenshot](https://raw.githubusercontent.com/alphanodes/additional_tags/master/doc/images/additional-tags-framework.png)
+![screenshot](https://raw.githubusercontent.com/alphanodes/additional_tags/main/docs/images/additional-tags-framework.png)
 
 ## Why another Tag plugin?
 
@@ -106,6 +106,10 @@ Run the following command to start tests:
 ```shell
 bundle exec rake redmine:plugins:test NAME=additional_tags RAILS_ENV=test
 ```
+
+## Translations
+
+Translations use one term for "tag" per language, also in other plugins that show tags. See the [translation glossary](docs/translation-glossary.md) before changing a locale.
 
 ## Migrate from other plugin
 

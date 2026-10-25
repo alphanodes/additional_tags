@@ -3,11 +3,11 @@ de:
     errors:
       messages:
         invalid_mutually_exclusive_tags: verwendet sich gegenseitig ausschließende TAGs
-  field_issue_tags: Ticket TAGs
+  field_issue_tags: "Ticket-TAGs"
   field_tag_list: TAGs
   field_tags: TAGs
-  label_active_issue_tags: Ticket TAGs aktivieren
-  label_active_wiki_tags: Wiki TAGs aktivieren
+  label_active_issue_tags: "Ticket-TAGs aktivieren"
+  label_active_wiki_tags: "Wiki-TAGs aktivieren"
   label_add_tags: TAGs hinzufügen
   label_additional_tag: TAG
   label_amount_entities_with_tags: Anzahl %{name} mit TAGs
@@ -27,17 +27,17 @@ de:
   label_tags_tag: TAG
   label_tags_without_color: Ohne
   label_use_colors: Farbe verwenden
-  label_wiki_index_for_tag: Wiki Seiten mit TAG
+  label_wiki_index_for_tag: "Wiki-Seiten mit TAG"
   label_with_chart: Mit Chart
   label_with_table_of_values: Mit Wertetabelle
-  notice_failed_to_add_tags: Fehler beim hinzufügen der TAGs
+  notice_failed_to_add_tags: "Fehler beim Hinzufügen der TAGs"
   notice_failed_to_remove_tags: Fehler beim Entfernen der TAGs
   notice_tags_added: TAGs hinzugefügt
   notice_tags_removed: TAGs entfernt
-  permission_add_wiki_tags: Wiki TAGs hinzufügen
-  permission_create_issue_tags: Ticket TAGs erstellen
-  permission_edit_issue_tags: Ticket TAGs bearbeiten
-  permission_view_issue_tags: Ticket TAGs anzeigen
+  permission_add_wiki_tags: "Wiki-TAGs hinzufügen"
+  permission_create_issue_tags: "Ticket-TAGs erstellen"
+  permission_edit_issue_tags: "Ticket-TAGs bearbeiten"
+  permission_view_issue_tags: "Ticket-TAGs anzeigen"
   tags_order_by_count: am meisten benutzt
   tags_order_by_last_created: zuletzt angelegt
   tags_order_by_name: Name

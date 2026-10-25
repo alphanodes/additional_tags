@@ -3,6 +3,7 @@
 ## 4.7.0
 
 - Requires Redmine 7.0.2 or higher
+- Translations use one term for tags per language (see `docs/translation-glossary.md`) and no longer contain English or mistranslated texts
 - Tags are sorted alphabetically in any script, independent of the database
 - Tags of bulk edit, tag lists and issue tables are loaded in one query
 - `issue_tag` macro strikes through closed issues including the subject
