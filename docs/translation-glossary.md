@@ -30,6 +30,7 @@ Each term follows the majority of four translation projects with the same concep
 - Inside a sentence, the term follows the normal capitalization and inflection of the language. Only German writes it in capitals.
 - Field labels and headings start with a capital letter as usual (`Étiquettes`, `Etykiety`, `Метки`).
 - A locale that is added later gets its term in this table first, checked against the same references.
+- Tags of an external product that a plugin shows or filters by (for example the host tags of a monitoring system) use the term of that product's user interface in the respective locale, because users look up the values there. The table above applies to Redmine tags.
 
 ## Common mistakes
 
