@@ -10,7 +10,7 @@ pl:
   label_active_wiki_tags: "Aktywacja etykiet wiki"
   label_add_tags: "Dodaj etykiety"
   label_additional_tag: "Etykieta"
-  label_amount_entities_with_tags: "Liczba %{name} z etykietami"
+  label_amount_entities_with_tags: "Liczba wpisów z etykietami: %{name}"
   label_amount_tags: "Liczba etykiet"
   label_edit_tags: "Edycja etykiet"
   label_manage_tags: "Zarządzaj etykietami"

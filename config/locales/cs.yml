@@ -10,7 +10,7 @@ cs:
   label_active_wiki_tags: "Aktivovat štítky wiki"
   label_add_tags: "Přidat štítky"
   label_additional_tag: "Štítek"
-  label_amount_entities_with_tags: "Počet %{name} se štítky"
+  label_amount_entities_with_tags: "Počet položek se štítky: %{name}"
   label_amount_tags: "Počet štítků"
   label_edit_tags: "Upravit štítky"
   label_manage_tags: "Spravovat štítky"
