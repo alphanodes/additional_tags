@@ -388,6 +388,11 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
         get :bulk_edit, params: { ids: [1, 2] }
 
         assert_includes response.body, %("tags":#{allowed}), "bulk edit, user #{user_id}"
+
+        # The field to edit the tags on the issue page gets no project passed
+        get :show, params: { id: 1 }
+
+        assert_match(/select2Tag\('issue_tag_list_show', \{[^}]*"tags":#{allowed}/, response.body, "show, user #{user_id}")
       end
     end
   end

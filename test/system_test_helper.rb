@@ -36,12 +36,20 @@ module AdditionalTags
     # +text+ the server returns for it
     def choose_tag_suggestion(container, search, text)
       tag_field_search(container).send_keys search
-      find('.select2-results__option', text:, exact_text: true).click
+      # The suggestions open at the end of the body, also for a field inside a
+      # dialog, so they are searched outside any within block
+      page.document.find('.select2-results__option', text:, exact_text: true).click
+    end
+
+    # Types a tag nobody has used yet into the tag field inside +container+
+    # and takes it as a new tag
+    def add_new_tag(container, name)
+      choose_tag_suggestion container, name, name
     end
 
     def tag_field_search(container)
       within(container) { find('.select2-selection').click }
-      find '.select2-container--open .select2-search__field'
+      page.document.find '.select2-container--open .select2-search__field'
     end
   end
 end
