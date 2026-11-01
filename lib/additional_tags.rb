@@ -69,7 +69,7 @@ module AdditionalTags
 
       loader.add_patch %w[IssueQuery TimeEntryQuery]
 
-      if Redmine::Plugin.installed? 'redmine_agile'
+      if AdditionalsPlugin.active_agile? force: true
         loader.add_patch %w[AgileQuery AgileBoardsController]
         loader.add_patch %w[AgileVersionsController AgileVersionsQuery] if AGILE_VERSION_TYPE == 'PRO version'
       end

@@ -35,4 +35,10 @@ class PluginConventionsTest < AdditionalTags::TestCase
   def test_lib_directories_of_other_plugins_are_declared
     assert_empty RedminePluginKit::Extensions.undeclared_dirs(Redmine::Plugin.find(:additional_tags).directory)
   end
+
+  # Whether another plugin is there is asked through AdditionalsPlugin, at load
+  # time with force: true
+  def test_plugin_checks_go_through_additionals
+    assert_plugin_checks_through_additionals 'additional_tags'
+  end
 end
