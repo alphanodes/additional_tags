@@ -15,9 +15,10 @@ require File.expand_path "#{File.dirname __FILE__}/../../additionals/test/global
 require File.expand_path "#{File.dirname __FILE__}/../../additionals/test/global_test_helper"
 
 module AdditionalTags
-  module TestHelper
-    include Additionals::GlobalTestHelper
-
+  # Kept apart from TestHelper so browser tests can grant the permissions
+  # without additionals' GlobalTestHelper, which makes Bullet raise on a
+  # whole rendered page
+  module TestPermissions
     def prepare_tests
       Role.where(id: [1, 2, 3]).find_each do |r|
         r.permissions << :view_issue_tags
@@ -35,6 +36,11 @@ module AdditionalTags
         r.save
       end
     end
+  end
+
+  module TestHelper
+    include Additionals::GlobalTestHelper
+    include TestPermissions
   end
 
   module PluginFixturesLoader

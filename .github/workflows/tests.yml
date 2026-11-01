@@ -204,3 +204,106 @@ jobs:
           POSTGRES16_PORT: ${{ job.services.postgres16.ports[5432] }}
         working-directory: redmine
         run: bundle exec rake redmine:plugins:migrate NAME=additional_tags VERSION=0
+
+  # Browser tests need one combination only: they check the tag fields in the
+  # page, not adapter or ruby differences. Chrome and ChromeDriver come with
+  # the GitHub Actions Ubuntu image, as in Redmine core's system test job.
+  browser:
+    name: browser tests 7.0-stable postgres ruby-3.4
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout Redmine
+        uses: actions/checkout@v5
+        with:
+          repository: redmine/redmine
+          ref: 7.0-stable
+          path: redmine
+
+      - name: Checkout additionals
+        uses: actions/checkout@v5
+        with:
+          repository: alphanodes/additionals
+          path: redmine/plugins/additionals
+
+      - name: Checkout additional_tags
+        uses: actions/checkout@v5
+        with:
+          path: redmine/plugins/additional_tags
+
+      - name: Update package archives
+        run: sudo apt-get update --yes --quiet
+
+      - name: Install package dependencies
+        run: >
+          sudo apt-get install --yes --quiet
+          build-essential
+          cmake
+          libicu-dev
+          libpq-dev
+
+      - name: Setup Gemfile
+        run: |
+          touch redmine/plugins/additionals/.enable_test
+          touch redmine/plugins/additional_tags/.enable_test
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+
+      - name: Prepare Redmine source
+        working-directory: redmine
+        run: |
+          cp plugins/additional_tags/test/support/database-postgres.yml config/database.yml
+          cp plugins/additional_tags/test/support/configuration.yml config/configuration.yml
+          cp plugins/additionals/test/support/additional_environment.rb config/additional_environment.rb
+
+      - name: Install Ruby dependencies
+        working-directory: redmine
+        run: |
+          bundle config set --local without 'development'
+          bundle install --jobs=4 --retry=3
+
+      - name: Prepare database and assets
+        env:
+          RAILS_ENV: test
+        working-directory: redmine
+        run: |
+          bundle exec rake generate_secret_token
+          bundle exec rake db:create db:migrate redmine:plugins:migrate
+          bundle exec rails assets:precompile
+
+      - name: Display Chrome version
+        run: google-chrome --version
+
+      - name: Run browser tests
+        env:
+          RAILS_ENV: test
+          GOOGLE_CHROME_OPTS_ARGS: headless,disable-gpu,no-sandbox,disable-dev-shm-usage
+        working-directory: redmine
+        run: bundle exec rails test plugins/additional_tags/test/system_browser
+
+      - name: Upload screenshots of failed tests
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: browser-test-screenshots
+          path: redmine/tmp/screenshots
+          if-no-files-found: ignore
