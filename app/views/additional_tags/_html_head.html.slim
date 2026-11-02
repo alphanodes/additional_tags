@@ -1,3 +1,4 @@
 = stylesheet_link_tag 'tags', plugin: 'additional_tags'
 = javascript_include_tag 'tags', plugin: 'additional_tags'
-= additionals_library_load :select2
+- if additionals_select_fields?
+  = additionals_library_load :select2
