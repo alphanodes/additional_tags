@@ -41,4 +41,10 @@ class PluginConventionsTest < AdditionalTags::TestCase
   def test_plugin_checks_go_through_additionals
     assert_plugin_checks_through_additionals 'additional_tags'
   end
+
+  # Select fields go through additionals, so only additionals knows the
+  # library behind them
+  def test_select_fields_go_through_additionals
+    assert_select_fields_through_additionals 'additional_tags'
+  end
 end

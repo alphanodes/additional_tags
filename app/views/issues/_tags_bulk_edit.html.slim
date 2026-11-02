@@ -1,8 +1,8 @@
 - tags = Issue.common_tag_list_from_issues(@issues.map(&:id))
-= additionals_select2_tag 'issue[tag_list]',
-                           options_for_select(tags.map { |tag| [tag, tag] }, tags),
-                           multiple: true,
-                           url: issue_tags_auto_completes_path,
-                           placeholder: l(:label_add_tags),
-                           tags: User.current.allowed_to?(:create_issue_tags, project)
+= additionals_select_tag 'issue[tag_list]',
+                         options_for_select(tags.map { |tag| [tag, tag] }, tags),
+                         multiple: true,
+                         url: issue_tags_auto_completes_path,
+                         placeholder: l(:label_add_tags),
+                         tags: User.current.allowed_to?(:create_issue_tags, project)
 = hidden_field_tag 'common_tags', tags.to_s

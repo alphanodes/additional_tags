@@ -26,12 +26,6 @@
           '
           = link_to_function l(:button_cancel), "$('#edit-tags-form').hide(); $('#tags-data').show()"
 
-      javascript:
-        $(function() {
-          var eventSelect = $('#issue_tag_list');
-          eventSelect.on('select2:close', function(e) { fixScopedTags(e, eventSelect); });
-        })
-
     - else
       = additional_tag_links entry.tags,
                              project: @project,

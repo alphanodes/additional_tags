@@ -298,7 +298,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       get :edit, params: { ids: [1, 4], mode: 'append' }, xhr: true
 
       assert_response :success
-      assert_includes response.body.delete('\\'), '"tags":true'
+      assert_includes response.body.delete('\\'), 'data-additionals-select-tags-value="true"'
     end
   end
 

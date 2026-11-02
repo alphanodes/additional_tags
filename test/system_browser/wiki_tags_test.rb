@@ -12,7 +12,7 @@ module AdditionalTags
     def test_wiki_page_creates_a_tag_typed_in
       with_tags_settings active_wiki_tags: '1' do
         visit '/projects/ecookbook/wiki/Another_page/edit'
-        add_new_tag '#wiki_tags', 'Wiki fresh'
+        add_select_tag '#wiki_tags', 'Wiki fresh'
         find('#wiki_form input[name=commit]').click
 
         # Saving a wiki page shows no notice, it returns to the page

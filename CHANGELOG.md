@@ -3,6 +3,7 @@
 ## 4.7.0
 
 - Requires Redmine 7.0.2 or higher
+- A tag with a group (`group::value`) replaces the tag of the same group in the issue form too, not only when editing the tags on the issue page
 - Translations use one term for tags per language (see `docs/translation-glossary.md`) and no longer contain English or mistranslated texts
 - Tags are sorted alphabetically in any script, independent of the database
 - Tags of bulk edit, tag lists and issue tables are loaded in one query

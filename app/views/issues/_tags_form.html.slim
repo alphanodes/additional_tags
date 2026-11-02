@@ -3,9 +3,10 @@
               width: '95%',
               url: issue_tags_auto_completes_path(project_id: project),
               placeholder: l(:label_add_tags),
-              tags: User.current.allowed_to?(:create_issue_tags, project) }
+              tags: User.current.allowed_to?(:create_issue_tags, project),
+              scoped_tags: true }
 - options[:id] = css_id if local_assigns.key? :css_id
 
-= additionals_select2_tag 'issue[tag_list]',
-                           options_for_select(@issue.tag_list.map { |tag| [tag, tag] }, @issue.tag_list),
-                           options
+= additionals_select_tag 'issue[tag_list]',
+                         options_for_select(@issue.tag_list.map { |tag| [tag, tag] }, @issue.tag_list),
+                         **options

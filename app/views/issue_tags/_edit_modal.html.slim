@@ -15,17 +15,17 @@ h3.title = l @title
     #issue_tags
       - if @mode == 'remove'
         / Only the tags of the chosen issues can be removed, so no search for others
-        = additionals_select2_tag 'issue[tag_list]',
-                                  options_for_select(@issue_tags.map { |tag| [tag, tag] }),
-                                  multiple: true,
-                                  placeholder: l(:label_remove_tags)
+        = additionals_select_tag 'issue[tag_list]',
+                                 options_for_select(@issue_tags.map { |tag| [tag, tag] }),
+                                 multiple: true,
+                                 placeholder: l(:label_remove_tags)
       - else
-        = additionals_select2_tag 'issue[tag_list]',
-                                  options_for_select(@mode == 'append' ? {} : @issue_tags.map { |tag| [tag, tag] }, @issue_tags),
-                                  multiple: true,
-                                  url: issue_tags_auto_completes_path(project_id: @project),
-                                  placeholder: @is_bulk_editing ? t(:label_no_change_option) : '+ add tag',
-                                  tags: User.current.allowed_to?(:create_issue_tags, @projects)
+        = additionals_select_tag 'issue[tag_list]',
+                                 options_for_select(@mode == 'append' ? {} : @issue_tags.map { |tag| [tag, tag] }, @issue_tags),
+                                 multiple: true,
+                                 url: issue_tags_auto_completes_path(project_id: @project),
+                                 placeholder: @is_bulk_editing ? t(:label_no_change_option) : '+ add tag',
+                                 tags: User.current.allowed_to?(:create_issue_tags, @projects)
         p.most-used-tags
           = safe_join @most_used_tags.collect { |t| tag.span t.name, class: 'most-used-tag' }, ', '
 

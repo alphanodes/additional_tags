@@ -383,16 +383,17 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
 
         get :new, params: { issue: { project_id: 1 } }
 
-        assert_includes response.body, %("tags":#{allowed}), "new, user #{user_id}"
+        assert_select 'select#issue_tag_list[data-additionals-select-tags-value]', allowed ? 1 : 0, "new, user #{user_id}"
 
         get :bulk_edit, params: { ids: [1, 2] }
 
-        assert_includes response.body, %("tags":#{allowed}), "bulk edit, user #{user_id}"
+        assert_select 'select#issue_tag_list[data-additionals-select-tags-value]', allowed ? 1 : 0, "bulk edit, user #{user_id}"
 
         # The field to edit the tags on the issue page gets no project passed
         get :show, params: { id: 1 }
 
-        assert_match(/select2Tag\('issue_tag_list_show', \{[^}]*"tags":#{allowed}/, response.body, "show, user #{user_id}")
+        assert_select 'select#issue_tag_list_show[data-additionals-select-tags-value]', allowed ? 1 : 0,
+                      "show, user #{user_id}"
       end
     end
   end

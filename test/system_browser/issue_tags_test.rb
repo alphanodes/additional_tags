@@ -13,7 +13,7 @@ module AdditionalTags
       with_tags_settings active_issue_tags: '1' do
         visit '/projects/ecookbook/issues/new'
         fill_in 'issue_subject', with: 'Tagged from the suggestions'
-        choose_tag_suggestion '#issue_tags', 'Sec', 'Second'
+        choose_select_entry '#issue_tags', 'Second', search: 'Sec'
         find('#issue-form input[name=commit]').click
 
         assert_selector '#flash_notice'
@@ -25,7 +25,7 @@ module AdditionalTags
       with_tags_settings active_issue_tags: '1' do
         visit '/projects/ecookbook/issues/new'
         fill_in 'issue_subject', with: 'Tagged with a new tag'
-        add_new_tag '#issue_tags', 'Brand new'
+        add_select_tag '#issue_tags', 'Brand new'
         find('#issue-form input[name=commit]').click
 
         assert_selector '#flash_notice'
@@ -44,7 +44,7 @@ module AdditionalTags
         # The edit link only shows while the pointer is over the tags
         find('#tags-data').hover
         find('#edit-tags-link').click
-        add_new_tag '#edit-tags-form', 'Prio::High'
+        add_select_tag '#edit-tags-form', 'Prio::High'
         find('#edit-tags-form input[type=submit]').click
 
         assert_selector '#flash_notice'
@@ -55,7 +55,7 @@ module AdditionalTags
     def test_bulk_edit_adds_a_tag_to_all_issues
       with_tags_settings active_issue_tags: '1' do
         visit '/issues/bulk_edit?ids[]=1&ids[]=2'
-        add_new_tag '#issue_tags', 'Bulk tag'
+        add_select_tag '#issue_tags', 'Bulk tag'
         find('#bulk_edit_form input[name=commit]').click
 
         assert_selector '#flash_notice'
@@ -72,7 +72,7 @@ module AdditionalTags
         find('#context-menu a[href*="mode=append"]').click
 
         within '#ajax-modal' do
-          choose_tag_suggestion '#issue_tags', 'Thi', 'Third'
+          choose_select_entry '#issue_tags', 'Third', search: 'Thi'
           find('input[type=submit]').click
         end
 
