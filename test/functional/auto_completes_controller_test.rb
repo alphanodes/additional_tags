@@ -8,7 +8,7 @@ class AutoCompletesControllerTest < AdditionalTags::ControllerTest
     @tag = AdditionalTag.find_by name: 'First'
 
     @request.session[:user_id] = 2
-    # Frontend callers (select2, jQuery autocomplete) ask for JSON, so do the tests.
+    # Frontend callers (select fields, jQuery autocomplete) ask for JSON, so do the tests.
     @request.headers['Accept'] = 'application/json'
   end
 
