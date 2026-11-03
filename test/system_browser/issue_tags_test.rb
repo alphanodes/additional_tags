@@ -21,15 +21,22 @@ module AdditionalTags
       end
     end
 
+    # Backspace in the empty search removes the last tag again
     def test_new_issue_creates_a_tag_typed_in
       with_tags_settings active_issue_tags: '1' do
         visit '/projects/ecookbook/issues/new'
         fill_in 'issue_subject', with: 'Tagged with a new tag'
         add_select_tag '#issue_tags', 'Brand new'
+        add_select_tag '#issue_tags', 'Typo'
+        open_select_field '#issue_tags'
+        type_into_open_select :backspace
+
+        assert_select_chosen '#issue_tags', 'Brand new'
+
         find('#issue-form input[name=commit]').click
 
         assert_selector '#flash_notice'
-        within('.issue .tags') { assert_text 'Brand new' }
+        assert_equal ['Brand new'], Issue.last.tag_list
       end
     end
 
