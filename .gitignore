@@ -16,3 +16,4 @@ CLAUDE.md
 /yarn.lock
 rails_best_practices_output.html
 .playwright-mcp/
+test-results/

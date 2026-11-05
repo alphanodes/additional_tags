@@ -1,4 +1,6 @@
 = stylesheet_link_tag 'tags', plugin: 'additional_tags'
 = javascript_include_tag 'tags', plugin: 'additional_tags'
+/ Color theme of tags in select fields (renderer tag of tags.js)
+= javascript_tag "var ADDITIONAL_TAGS_COLOR_THEME = #{AdditionalTags.setting(:tags_color_theme).to_s.to_json};"
 - if additionals_select_fields?
   = additionals_library_load :select_fields

@@ -3,5 +3,6 @@
                             url: grouped_users_auto_completes_path(project_id: @project, with_ano: true, with_me: true)
 = additionals_select_filter type: 'user_with_me', url: grouped_users_auto_completes_path(project_id: @project, with_me: true)
 = additionals_select_filter type: 'user', url: grouped_users_auto_completes_path(project_id: @project)
-/ Tag filters (add_tags_filter) choose from their values, no free input
-= additionals_select_filter field_format: 'tags'
+/ Tag filters (add_tags_filter) choose from their values, no free input; tags
+/ show in their colors
+= additionals_select_filter field_format: 'tags', renderer: 'tag'

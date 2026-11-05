@@ -18,11 +18,13 @@ h3.title = l @title
         = additionals_select_tag 'issue[tag_list]',
                                  options_for_select(@issue_tags.map { |tag| [tag, tag] }),
                                  multiple: true,
+                                 renderer: 'tag',
                                  placeholder: l(:label_remove_tags)
       - else
         = additionals_select_tag 'issue[tag_list]',
                                  options_for_select(@mode == 'append' ? {} : @issue_tags.map { |tag| [tag, tag] }, @issue_tags),
                                  multiple: true,
+                                 renderer: 'tag',
                                  url: issue_tags_auto_completes_path(project_id: @project),
                                  placeholder: @is_bulk_editing ? t(:label_no_change_option) : '+ add tag',
                                  tags: User.current.allowed_to?(:create_issue_tags, @projects)

@@ -74,16 +74,22 @@ class AdditionalTagTest < AdditionalTags::TestCase
     assert_not tag.grouped?
   end
 
-  def test_tag_bg_color_returns_hex
-    tag = AdditionalTag.new name: 'test'
+  # Select fields compute colors and labels of tags in the browser
+  # (assets/javascripts/tags.js). Both are tested against the same table: a
+  # change of the computation here fails until the table is renewed, which
+  # then fails the tests of the browser until it computes the same.
+  def test_colors_and_labels_match_the_table_shared_with_the_browser
+    table = JSON.parse File.read(File.expand_path('../../fixtures/tag_colors.json', __FILE__))
+    computed = table.map do |example|
+      use_colors = example['theme'] != '0'
+      tag = AdditionalTag.new name: example['name'], disable_grouping: !use_colors, color_theme: example['theme']
+      example.merge 'bg' => (tag.tag_bg_color if use_colors),
+                    'fg' => (tag.tag_fg_color if use_colors),
+                    'label' => tag.tag_name,
+                    'value' => (tag.group_value if tag.scoped?)
+    end
 
-    assert_match(/\A#[0-9a-f]{6}\z/, tag.tag_bg_color)
-  end
-
-  def test_tag_fg_color_returns_black_or_white
-    tag = AdditionalTag.new name: 'test'
-
-    assert_includes %w[black white], tag.tag_fg_color
+    assert_equal table, computed
   end
 
   def test_tag_bg_color_with_custom_color

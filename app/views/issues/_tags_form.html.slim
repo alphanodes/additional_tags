@@ -1,5 +1,6 @@
 - project = local_assigns.fetch :project, @project
 - options = { multiple: true,
+              renderer: 'tag',
               width: '95%',
               url: issue_tags_auto_completes_path(project_id: project),
               placeholder: l(:label_add_tags),

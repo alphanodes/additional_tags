@@ -7,6 +7,7 @@
 - Translations use one term for tags per language (see `docs/translation-glossary.md`) and no longer contain English or mistranslated texts
 - Tags are sorted alphabetically in any script, independent of the database
 - Tag filters of all lists offer a search and take several tags without switching to a multiple select
+- Tags show in their colors in tag filters and when tags are chosen, as in tag lists
 - Tags of bulk edit, tag lists and issue tables are loaded in one query
 - `issue_tag` macro strikes through closed issues including the subject
 - Improved descriptions of the issue tag macros

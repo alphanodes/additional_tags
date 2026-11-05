@@ -2,6 +2,7 @@
 = additionals_select_tag 'issue[tag_list]',
                          options_for_select(tags.map { |tag| [tag, tag] }, tags),
                          multiple: true,
+                         renderer: 'tag',
                          url: issue_tags_auto_completes_path,
                          placeholder: l(:label_add_tags),
                          tags: User.current.allowed_to?(:create_issue_tags, project)

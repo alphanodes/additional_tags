@@ -17,6 +17,14 @@ span.additional-tag-label-color {
   border-radius: 0.75rem !important;
 }
 
+/* a tag in a select field (renderer tag of tags.js) sits in the middle of its
+   line: without the gap below of wrapping tag lists, at the top of its line,
+   so a line of the list keeps the height it has without the pill */
+span.additional-tag-label-color.additionals-select-pill {
+  margin: 0 !important;
+  vertical-align: top;
+}
+
 td.tags span.additional-tag-label-color {
   display: inline-block;
   line-height: normal;

@@ -36,6 +36,23 @@ module AdditionalTags
       end
     end
 
+    # The chosen tag of the filter has the color of the tag in the list, which
+    # the server computes; the field computes it in the browser
+    def test_tag_filter_shows_the_tag_in_the_color_of_the_list
+      with_tags_settings active_issue_tags: '1', tags_color_theme: 'a' do
+        visit '/projects/ecookbook/issues?set_filter=1&f[]=tags&op[tags]=%3D&v[tags][]=Second&c[]=subject&c[]=tags'
+
+        assert_select_chosen '#tr_tags', 'Second'
+        colors = page.evaluate_script <<~JS
+          [document.querySelector('#tr_tags .additionals-select-pill'),
+           document.querySelector('tr#issue-3 td.tags .additional-tag-label-color')]
+            .map((pill) => [pill.style.backgroundColor, pill.style.color])
+        JS
+
+        assert_equal colors.first, colors.last
+      end
+    end
+
     # Backspace in the empty search removes the last tag again
     def test_new_issue_creates_a_tag_typed_in
       with_tags_settings active_issue_tags: '1' do

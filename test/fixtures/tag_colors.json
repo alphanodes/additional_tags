@@ -1,0 +1,546 @@
+[
+  {
+    "name": "Bug",
+    "theme": "1",
+    "bg": "#703a50",
+    "fg": "white",
+    "label": "Bug",
+    "value": null
+  },
+  {
+    "name": "Größe",
+    "theme": "1",
+    "bg": "#aedc3f",
+    "fg": "black",
+    "label": "Größe",
+    "value": null
+  },
+  {
+    "name": "Plugin: AI",
+    "theme": "1",
+    "bg": "#f14b59",
+    "fg": "white",
+    "label": "Plugin: AI",
+    "value": null
+  },
+  {
+    "name": "Plugin: HRM",
+    "theme": "1",
+    "bg": "#f14b59",
+    "fg": "white",
+    "label": "Plugin: HRM",
+    "value": null
+  },
+  {
+    "name": "Prio::High",
+    "theme": "1",
+    "bg": "#979704",
+    "fg": "black",
+    "label": "Prio",
+    "value": "High"
+  },
+  {
+    "name": "scope::zwei",
+    "theme": "1",
+    "bg": "#a3d80e",
+    "fg": "black",
+    "label": "scope",
+    "value": "zwei"
+  },
+  {
+    "name": "a::b::c",
+    "theme": "1",
+    "bg": "#f8ef6d",
+    "fg": "black",
+    "label": "a::b",
+    "value": "c"
+  },
+  {
+    "name": "a:b:c",
+    "theme": "1",
+    "bg": "#b8c7be",
+    "fg": "black",
+    "label": "a:b:c",
+    "value": null
+  },
+  {
+    "name": "Foo:",
+    "theme": "1",
+    "bg": "#551f0e",
+    "fg": "white",
+    "label": "Foo:",
+    "value": null
+  },
+  {
+    "name": "a::",
+    "theme": "1",
+    "bg": "#a21cc6",
+    "fg": "white",
+    "label": "a::",
+    "value": null
+  },
+  {
+    "name": ":Foo",
+    "theme": "1",
+    "bg": "#e7ac07",
+    "fg": "black",
+    "label": ":Foo",
+    "value": null
+  },
+  {
+    "name": "::Foo",
+    "theme": "1",
+    "bg": "#715468",
+    "fg": "white",
+    "label": "",
+    "value": "Foo"
+  },
+  {
+    "name": "::",
+    "theme": "1",
+    "bg": "#715468",
+    "fg": "white",
+    "label": "::",
+    "value": null
+  },
+  {
+    "name": "a:: ",
+    "theme": "1",
+    "bg": "#a21cc6",
+    "fg": "white",
+    "label": "a::",
+    "value": null
+  },
+  {
+    "name": " Space ",
+    "theme": "1",
+    "bg": "#20eac5",
+    "fg": "black",
+    "label": "Space",
+    "value": null
+  },
+  {
+    "name": "nbsp ",
+    "theme": "1",
+    "bg": "#9f9d70",
+    "fg": "black",
+    "label": "nbsp ",
+    "value": null
+  },
+  {
+    "name": "\tTab\t",
+    "theme": "1",
+    "bg": "#90ddf1",
+    "fg": "black",
+    "label": "Tab",
+    "value": null
+  },
+  {
+    "name": "Bug",
+    "theme": "a",
+    "bg": "#ed964e",
+    "fg": "black",
+    "label": "Bug",
+    "value": null
+  },
+  {
+    "name": "Größe",
+    "theme": "a",
+    "bg": "#4c5c62",
+    "fg": "white",
+    "label": "Größe",
+    "value": null
+  },
+  {
+    "name": "Plugin: AI",
+    "theme": "a",
+    "bg": "#9b21d3",
+    "fg": "white",
+    "label": "Plugin: AI",
+    "value": null
+  },
+  {
+    "name": "Plugin: HRM",
+    "theme": "a",
+    "bg": "#9b21d3",
+    "fg": "white",
+    "label": "Plugin: HRM",
+    "value": null
+  },
+  {
+    "name": "Prio::High",
+    "theme": "a",
+    "bg": "#9f4e11",
+    "fg": "white",
+    "label": "Prio",
+    "value": "High"
+  },
+  {
+    "name": "scope::zwei",
+    "theme": "a",
+    "bg": "#7d0170",
+    "fg": "white",
+    "label": "scope",
+    "value": "zwei"
+  },
+  {
+    "name": "a::b::c",
+    "theme": "a",
+    "bg": "#51a613",
+    "fg": "white",
+    "label": "a::b",
+    "value": "c"
+  },
+  {
+    "name": "a:b:c",
+    "theme": "a",
+    "bg": "#913686",
+    "fg": "white",
+    "label": "a:b:c",
+    "value": null
+  },
+  {
+    "name": "Foo:",
+    "theme": "a",
+    "bg": "#3c9040",
+    "fg": "white",
+    "label": "Foo:",
+    "value": null
+  },
+  {
+    "name": "a::",
+    "theme": "a",
+    "bg": "#06fd1e",
+    "fg": "black",
+    "label": "a::",
+    "value": null
+  },
+  {
+    "name": ":Foo",
+    "theme": "a",
+    "bg": "#b5c5cc",
+    "fg": "black",
+    "label": ":Foo",
+    "value": null
+  },
+  {
+    "name": "::Foo",
+    "theme": "a",
+    "bg": "#1e980b",
+    "fg": "white",
+    "label": "",
+    "value": "Foo"
+  },
+  {
+    "name": "::",
+    "theme": "a",
+    "bg": "#1e980b",
+    "fg": "white",
+    "label": "::",
+    "value": null
+  },
+  {
+    "name": "a:: ",
+    "theme": "a",
+    "bg": "#06fd1e",
+    "fg": "black",
+    "label": "a::",
+    "value": null
+  },
+  {
+    "name": " Space ",
+    "theme": "a",
+    "bg": "#8ecd17",
+    "fg": "black",
+    "label": "Space",
+    "value": null
+  },
+  {
+    "name": "nbsp ",
+    "theme": "a",
+    "bg": "#d995c0",
+    "fg": "black",
+    "label": "nbsp ",
+    "value": null
+  },
+  {
+    "name": "\tTab\t",
+    "theme": "a",
+    "bg": "#49d277",
+    "fg": "black",
+    "label": "Tab",
+    "value": null
+  },
+  {
+    "name": "Bug",
+    "theme": "d",
+    "bg": "#005787",
+    "fg": "white",
+    "label": "Bug",
+    "value": null
+  },
+  {
+    "name": "Größe",
+    "theme": "d",
+    "bg": "#c36c19",
+    "fg": "white",
+    "label": "Größe",
+    "value": null
+  },
+  {
+    "name": "Plugin: AI",
+    "theme": "d",
+    "bg": "#deb77c",
+    "fg": "black",
+    "label": "Plugin: AI",
+    "value": null
+  },
+  {
+    "name": "Plugin: HRM",
+    "theme": "d",
+    "bg": "#deb77c",
+    "fg": "black",
+    "label": "Plugin: HRM",
+    "value": null
+  },
+  {
+    "name": "Prio::High",
+    "theme": "d",
+    "bg": "#09c181",
+    "fg": "black",
+    "label": "Prio",
+    "value": "High"
+  },
+  {
+    "name": "scope::zwei",
+    "theme": "d",
+    "bg": "#b9cb4f",
+    "fg": "black",
+    "label": "scope",
+    "value": "zwei"
+  },
+  {
+    "name": "a::b::c",
+    "theme": "d",
+    "bg": "#44b7cb",
+    "fg": "black",
+    "label": "a::b",
+    "value": "c"
+  },
+  {
+    "name": "a:b:c",
+    "theme": "d",
+    "bg": "#ddf34d",
+    "fg": "black",
+    "label": "a:b:c",
+    "value": null
+  },
+  {
+    "name": "Foo:",
+    "theme": "d",
+    "bg": "#f8f001",
+    "fg": "black",
+    "label": "Foo:",
+    "value": null
+  },
+  {
+    "name": "a::",
+    "theme": "d",
+    "bg": "#5b221e",
+    "fg": "white",
+    "label": "a::",
+    "value": null
+  },
+  {
+    "name": ":Foo",
+    "theme": "d",
+    "bg": "#d470b6",
+    "fg": "black",
+    "label": ":Foo",
+    "value": null
+  },
+  {
+    "name": "::Foo",
+    "theme": "d",
+    "bg": "#697267",
+    "fg": "white",
+    "label": "",
+    "value": "Foo"
+  },
+  {
+    "name": "::",
+    "theme": "d",
+    "bg": "#697267",
+    "fg": "white",
+    "label": "::",
+    "value": null
+  },
+  {
+    "name": "a:: ",
+    "theme": "d",
+    "bg": "#5b221e",
+    "fg": "white",
+    "label": "a::",
+    "value": null
+  },
+  {
+    "name": " Space ",
+    "theme": "d",
+    "bg": "#27aed5",
+    "fg": "black",
+    "label": "Space",
+    "value": null
+  },
+  {
+    "name": "nbsp ",
+    "theme": "d",
+    "bg": "#f80a35",
+    "fg": "white",
+    "label": "nbsp ",
+    "value": null
+  },
+  {
+    "name": "\tTab\t",
+    "theme": "d",
+    "bg": "#9175da",
+    "fg": "black",
+    "label": "Tab",
+    "value": null
+  },
+  {
+    "name": "Bug",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "Bug",
+    "value": null
+  },
+  {
+    "name": "Größe",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "Größe",
+    "value": null
+  },
+  {
+    "name": "Plugin: AI",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "Plugin: AI",
+    "value": null
+  },
+  {
+    "name": "Plugin: HRM",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "Plugin: HRM",
+    "value": null
+  },
+  {
+    "name": "Prio::High",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "Prio::High",
+    "value": null
+  },
+  {
+    "name": "scope::zwei",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "scope::zwei",
+    "value": null
+  },
+  {
+    "name": "a::b::c",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "a::b::c",
+    "value": null
+  },
+  {
+    "name": "a:b:c",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "a:b:c",
+    "value": null
+  },
+  {
+    "name": "Foo:",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "Foo:",
+    "value": null
+  },
+  {
+    "name": "a::",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "a::",
+    "value": null
+  },
+  {
+    "name": ":Foo",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": ":Foo",
+    "value": null
+  },
+  {
+    "name": "::Foo",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "::Foo",
+    "value": null
+  },
+  {
+    "name": "::",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "::",
+    "value": null
+  },
+  {
+    "name": "a:: ",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "a::",
+    "value": null
+  },
+  {
+    "name": " Space ",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "Space",
+    "value": null
+  },
+  {
+    "name": "nbsp ",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "nbsp ",
+    "value": null
+  },
+  {
+    "name": "\tTab\t",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "Tab",
+    "value": null
+  }
+]
