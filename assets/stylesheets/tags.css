@@ -21,7 +21,11 @@ span.additional-tag-label-color {
    line: without the gap below of wrapping tag lists, at the top of its line,
    so a line of the list keeps the height it has without the pill */
 span.additional-tag-label-color.additionals-select-pill {
+  box-sizing: border-box;
   margin: 0 !important;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   vertical-align: top;
 }
 

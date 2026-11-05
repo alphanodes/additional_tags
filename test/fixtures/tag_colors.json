@@ -136,6 +136,22 @@
     "value": null
   },
   {
+    "name": "Emoji 😀",
+    "theme": "1",
+    "bg": "#422942",
+    "fg": "white",
+    "label": "Emoji 😀",
+    "value": null
+  },
+  {
+    "name": "Rakete 🚀::Start",
+    "theme": "1",
+    "bg": "#542471",
+    "fg": "white",
+    "label": "Rakete 🚀",
+    "value": "Start"
+  },
+  {
     "name": "Bug",
     "theme": "a",
     "bg": "#ed964e",
@@ -270,6 +286,22 @@
     "fg": "black",
     "label": "Tab",
     "value": null
+  },
+  {
+    "name": "Emoji 😀",
+    "theme": "a",
+    "bg": "#917e66",
+    "fg": "black",
+    "label": "Emoji 😀",
+    "value": null
+  },
+  {
+    "name": "Rakete 🚀::Start",
+    "theme": "a",
+    "bg": "#3b451f",
+    "fg": "white",
+    "label": "Rakete 🚀",
+    "value": "Start"
   },
   {
     "name": "Bug",
@@ -408,6 +440,22 @@
     "value": null
   },
   {
+    "name": "Emoji 😀",
+    "theme": "d",
+    "bg": "#8bd3af",
+    "fg": "black",
+    "label": "Emoji 😀",
+    "value": null
+  },
+  {
+    "name": "Rakete 🚀::Start",
+    "theme": "d",
+    "bg": "#d3a385",
+    "fg": "black",
+    "label": "Rakete 🚀",
+    "value": "Start"
+  },
+  {
     "name": "Bug",
     "theme": "0",
     "bg": null,
@@ -542,5 +590,173 @@
     "fg": null,
     "label": "Tab",
     "value": null
+  },
+  {
+    "name": "Emoji 😀",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "Emoji 😀",
+    "value": null
+  },
+  {
+    "name": "Rakete 🚀::Start",
+    "theme": "0",
+    "bg": null,
+    "fg": null,
+    "label": "Rakete 🚀::Start",
+    "value": null
+  },
+  {
+    "name": "Bug",
+    "theme": "",
+    "bg": "#703a50",
+    "fg": "white",
+    "label": "Bug",
+    "value": null
+  },
+  {
+    "name": "Größe",
+    "theme": "",
+    "bg": "#aedc3f",
+    "fg": "black",
+    "label": "Größe",
+    "value": null
+  },
+  {
+    "name": "Plugin: AI",
+    "theme": "",
+    "bg": "#f14b59",
+    "fg": "white",
+    "label": "Plugin: AI",
+    "value": null
+  },
+  {
+    "name": "Plugin: HRM",
+    "theme": "",
+    "bg": "#f14b59",
+    "fg": "white",
+    "label": "Plugin: HRM",
+    "value": null
+  },
+  {
+    "name": "Prio::High",
+    "theme": "",
+    "bg": "#979704",
+    "fg": "black",
+    "label": "Prio",
+    "value": "High"
+  },
+  {
+    "name": "scope::zwei",
+    "theme": "",
+    "bg": "#a3d80e",
+    "fg": "black",
+    "label": "scope",
+    "value": "zwei"
+  },
+  {
+    "name": "a::b::c",
+    "theme": "",
+    "bg": "#f8ef6d",
+    "fg": "black",
+    "label": "a::b",
+    "value": "c"
+  },
+  {
+    "name": "a:b:c",
+    "theme": "",
+    "bg": "#b8c7be",
+    "fg": "black",
+    "label": "a:b:c",
+    "value": null
+  },
+  {
+    "name": "Foo:",
+    "theme": "",
+    "bg": "#551f0e",
+    "fg": "white",
+    "label": "Foo:",
+    "value": null
+  },
+  {
+    "name": "a::",
+    "theme": "",
+    "bg": "#a21cc6",
+    "fg": "white",
+    "label": "a::",
+    "value": null
+  },
+  {
+    "name": ":Foo",
+    "theme": "",
+    "bg": "#e7ac07",
+    "fg": "black",
+    "label": ":Foo",
+    "value": null
+  },
+  {
+    "name": "::Foo",
+    "theme": "",
+    "bg": "#715468",
+    "fg": "white",
+    "label": "",
+    "value": "Foo"
+  },
+  {
+    "name": "::",
+    "theme": "",
+    "bg": "#715468",
+    "fg": "white",
+    "label": "::",
+    "value": null
+  },
+  {
+    "name": "a:: ",
+    "theme": "",
+    "bg": "#a21cc6",
+    "fg": "white",
+    "label": "a::",
+    "value": null
+  },
+  {
+    "name": " Space ",
+    "theme": "",
+    "bg": "#20eac5",
+    "fg": "black",
+    "label": "Space",
+    "value": null
+  },
+  {
+    "name": "nbsp ",
+    "theme": "",
+    "bg": "#9f9d70",
+    "fg": "black",
+    "label": "nbsp ",
+    "value": null
+  },
+  {
+    "name": "\tTab\t",
+    "theme": "",
+    "bg": "#90ddf1",
+    "fg": "black",
+    "label": "Tab",
+    "value": null
+  },
+  {
+    "name": "Emoji 😀",
+    "theme": "",
+    "bg": "#422942",
+    "fg": "white",
+    "label": "Emoji 😀",
+    "value": null
+  },
+  {
+    "name": "Rakete 🚀::Start",
+    "theme": "",
+    "bg": "#542471",
+    "fg": "white",
+    "label": "Rakete 🚀",
+    "value": "Start"
   }
 ]
