@@ -21,6 +21,21 @@ module AdditionalTags
       end
     end
 
+    # The tag filter is a select field with search: issue 3 carries Second,
+    # issues 1 and 8 carry First
+    def test_tag_filter_of_the_issue_list_searches_tags
+      with_tags_settings active_issue_tags: '1' do
+        visit '/projects/ecookbook/issues?set_filter=1&f[]='
+        find('#add_filter_select').find('option[value="tags"]').select_option
+        choose_select_entry '#tr_tags', 'Second', search: 'Sec'
+        find('#query_form a.icon-checked').click
+
+        assert_selector 'tr#issue-3'
+        assert_no_selector 'tr#issue-1'
+        assert_select_chosen '#tr_tags', 'Second'
+      end
+    end
+
     # Backspace in the empty search removes the last tag again
     def test_new_issue_creates_a_tag_typed_in
       with_tags_settings active_issue_tags: '1' do

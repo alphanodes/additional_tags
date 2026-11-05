@@ -17,17 +17,22 @@ module AdditionalTags
         end
 
         def initialize_tags_filter
-          add_available_filter 'tags', type: :list_optional,
-                                       values: -> { available_tag_values queried_class }
+          add_tags_filter 'tags', queried_class
         end
 
         def initialize_issue_tags_filter
           return unless AdditionalTags.setting?(:active_issue_tags) && User.current.allowed_to?(:view_issue_tags, project, global: true)
 
-          add_available_filter 'issue.tags',
-                               type: :list_optional,
-                               name: l('label_attribute_of_issue', name: l(:field_tags)),
-                               values: -> { available_tag_values Issue }
+          add_tags_filter 'issue.tags', Issue, name: l('label_attribute_of_issue', name: l(:field_tags))
+        end
+
+        # Filter on the tags of +klass+. The field format registers the select
+        # field with search for every tag filter (view additional_tags/_body_bottom).
+        def add_tags_filter(field, klass, **)
+          add_available_filter(field, type: :list_optional,
+                                      field_format: 'tags',
+                                      values: -> { available_tag_values klass },
+                                      **)
         end
 
         def available_tag_values(klass)

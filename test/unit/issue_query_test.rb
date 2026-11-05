@@ -55,7 +55,8 @@ class IssueQueryTest < AdditionalTags::TestCase
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       filters = IssueQuery.new(project: @project, name: '_').available_filters
 
-      assert filters.key?('tags')
+      # the select field of the filter is registered by this field format
+      assert_equal 'tags', filters['tags'][:field_format]
       assert filters.key?('status_id')
     end
   end

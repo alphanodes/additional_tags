@@ -6,6 +6,7 @@
 - A tag with a group (`group::value`) replaces the tag of the same group in the issue form too, not only when editing the tags on the issue page
 - Translations use one term for tags per language (see `docs/translation-glossary.md`) and no longer contain English or mistranslated texts
 - Tags are sorted alphabetically in any script, independent of the database
+- Tag filters of all lists offer a search and take several tags without switching to a multiple select
 - Tags of bulk edit, tag lists and issue tables are loaded in one query
 - `issue_tag` macro strikes through closed issues including the subject
 - Improved descriptions of the issue tag macros

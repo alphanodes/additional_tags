@@ -44,7 +44,7 @@ class TimeEntryQueryTest < AdditionalTags::TestCase
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do
       filters = TimeEntryQuery.new(project: @project, name: '_').available_filters
 
-      assert filters.key?('issue.tags')
+      assert_equal 'tags', filters['issue.tags'][:field_format]
       assert filters.key?('spent_on')
     end
   end
