@@ -29,6 +29,14 @@ span.additional-tag-label-color.additionals-select-pill {
   vertical-align: top;
 }
 
+/* Firefox can replace the entire inline value with an ellipsis even when
+   the scoped tag fits. Flex layout keeps both parts visible; plain tags
+   retain their text-overflow behavior. */
+span.additional-tag-label-color.additionals-select-pill:has(> .tag-group-value) {
+  display: inline-flex;
+  align-items: center;
+}
+
 td.tags span.additional-tag-label-color {
   display: inline-block;
   line-height: normal;
