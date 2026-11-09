@@ -62,6 +62,18 @@ class AdditionalTagTest < AdditionalTags::TestCase
     end
   end
 
+  # Default tags of a record, which other records receive later on
+  TagDefaults = Struct.new :default_tags do
+    include ActiveModel::Validations
+  end
+
+  def test_validate_scoped_tags_checks_another_tag_attribute
+    defaults = TagDefaults.new %w[Foo::1 Foo::2]
+    AdditionalTag.validate_scoped_tags defaults, :default_tags
+
+    assert_equal [:default_tags], defaults.errors.attribute_names
+  end
+
   def test_group_value
     assert_equal '2', AdditionalTag.new(name: 'scoped::2').group_value
     assert_equal '1', AdditionalTag.new(name: 'grouped: 1').group_value

@@ -55,11 +55,12 @@ class AdditionalTag < ApplicationRecord
       scopes.values.filter_map { |scope_tags| scope_tags.map(&:name) if scope_tags.size > 1 }
     end
 
-    # Adds an error on tag_list of +record+ for every scope with more than one
-    # value, naming its tags
-    def validate_scoped_tags(record)
-      conflicting_scoped_tags(record.tag_list).each do |names|
-        record.errors.add :tag_list, :invalid_mutually_exclusive_tags, tags: names.to_comma_list
+    # Adds an error on the tag +attribute+ of +record+ for every scope with
+    # more than one value, naming its tags. The tag names are not escaped:
+    # whoever puts the message into HTML has to escape it.
+    def validate_scoped_tags(record, attribute = :tag_list)
+      conflicting_scoped_tags(record.public_send(attribute)).each do |names|
+        record.errors.add attribute, :invalid_mutually_exclusive_tags, tags: names.to_comma_list
       end
     end
 
