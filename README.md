@@ -17,12 +17,13 @@
 - Available role permissions wiki tags (section *Wiki*):
   - Add wiki tags
 - Managing tags centrally in the plugin settings (edit, delete, merge)
-- Grouped tags.
+- Grouped tags:
   - Grouping of tags possible, when using a colon in tag (all tags with same base name get the same color). Typo example: ``Plugin:HRM``
-- Scoped tags:
+- Scoped tags (in other languages "exclusive tags"):
   - Grouping of tags via *Scoped tags* possible, when using two colons in tag. Typo example: ``Product::Sprint 1``
-  - Only one tag of the same base name is allowed for an entity
+  - Only one tag of the same base name is allowed for an entity, the error message names the conflicting tags
   - Base name and tag value are displayed separately
+- Tag fields explain scoped and grouped tags on hovering their label, scoped and grouped tags name their kind and group on hovering them
 - Accented and non-latin characters supported for tag order
 - Color theme selection possible
 - Custom tags and tagging tables (additional_tags and additional_taggings). If another plugin

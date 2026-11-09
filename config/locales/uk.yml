@@ -2,7 +2,7 @@ uk:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: "використовує взаємовиключні мітки"
+        invalid_mutually_exclusive_tags: "%{tags} виключають одна одну, ексклюзивна мітка дозволяє лише одне значення"
   field_issue_tags: "Мітки задач"
   field_tag_list: "Мітки"
   field_tags: "Мітки"
@@ -13,10 +13,12 @@ uk:
   label_amount_entities_with_tags: "Кількість %{name} з мітками"
   label_amount_tags: "Кількість міток"
   label_edit_tags: "Редагувати мітки"
+  label_grouped_tag_title: "Згрупована мітка, група: %{name}"
   label_manage_tags: "Керування мітками"
   label_merge_selected_tags: "Об'єднати вибрані мітки"
   label_open_issues_only: "Показувати лише відкриті задачі"
   label_remove_tags: "Видалити мітки"
+  label_scoped_tag_title: "Ексклюзивна мітка, лише одне значення для: %{name}"
   label_show_tags_after_queries: "Показувати мітки після запитів"
   label_show_with_count: "Показувати кількість на мітці"
   label_tag_color_theme: "Колірна тема %{value}"
@@ -47,3 +49,5 @@ uk:
   tags_sidebar_simple_cloud: "Проста хмара"
   tags_sort_by_count: "Кількістю"
   tags_sort_by_name: "Назвою"
+  text_grouped_tags_hint: "Назва:значення означає згруповану мітку: усі мітки з однаковою назвою мають один колір."
+  text_scoped_tags_hint: "Назва::значення означає ексклюзивну мітку: для однієї назви дозволено лише одне значення."

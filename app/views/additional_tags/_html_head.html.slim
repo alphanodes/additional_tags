@@ -2,5 +2,7 @@
 = javascript_include_tag 'tags', plugin: 'additional_tags'
 / Color theme of tags in select fields (renderer tag of tags.js)
 = javascript_tag "var ADDITIONAL_TAGS_COLOR_THEME = #{AdditionalTags.setting(:tags_color_theme).to_s.to_json};"
+/ Titles of scoped and grouped tags in select fields, %{name} is their group
+= javascript_tag "var ADDITIONAL_TAGS_TITLES = #{{ scoped: l(:label_scoped_tag_title), grouped: l(:label_grouped_tag_title) }.to_json};"
 - if additionals_select_fields?
   = additionals_library_load :select_fields

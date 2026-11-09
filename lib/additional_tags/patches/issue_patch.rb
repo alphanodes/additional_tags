@@ -147,7 +147,7 @@ module AdditionalTags
           # Tags of users without permission never get here, safe_attributes= has already dropped them.
           return unless tag_list_changed?
 
-          errors.add :tag_list, :invalid_mutually_exclusive_tags unless AdditionalTag.mutually_exclusive_tags? tag_list
+          AdditionalTag.validate_scoped_tags self
         end
       end
     end

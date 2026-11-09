@@ -74,6 +74,8 @@ module AdditionalTags
         loader.add_patch %w[AgileVersionsController AgileVersionsQuery] if AGILE_VERSION_TYPE == 'PRO version'
       end
 
+      loader.add_global_helper AdditionalTags::Helpers
+
       # Apply patches and helper
       loader.apply!
 

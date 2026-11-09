@@ -149,7 +149,16 @@ module AdditionalTagsHelper
               { class: 'additional-tag-label' }
             end
 
-    tag.span content, **style
+    tag.span content, title: additional_tag_title(tag_info), **style
+  end
+
+  # Title of a scoped or grouped tag: its kind and its group, nil for other
+  # tags. Tags in select fields show the same text below their name (tags.js).
+  def additional_tag_title(tag_info)
+    group = tag_info.title_group
+    return if group.nil?
+
+    l tag_info.scoped? ? :label_scoped_tag_title : :label_grouped_tag_title, name: group
   end
 
   # plain list of tags

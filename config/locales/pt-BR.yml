@@ -2,7 +2,7 @@ pt-BR:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: "utiliza etiquetas mutuamente exclusivas"
+        invalid_mutually_exclusive_tags: "%{tags} são mutuamente exclusivas, uma etiqueta exclusiva permite apenas um valor"
   field_issue_tags: "Etiquetas de tarefas"
   field_tag_list: "Etiquetas"
   field_tags: "Etiquetas"
@@ -13,10 +13,12 @@ pt-BR:
   label_amount_entities_with_tags: "Quantidade de %{name} com etiquetas"
   label_amount_tags: "Quantidade de etiquetas"
   label_edit_tags: "Editar etiquetas"
+  label_grouped_tag_title: "Etiqueta agrupada, grupo: %{name}"
   label_manage_tags: "Gerenciar etiquetas"
   label_merge_selected_tags: "Mesclar etiquetas selecionadas"
   label_open_issues_only: "Exibir apenas tarefas em aberto"
   label_remove_tags: "Remover etiquetas"
+  label_scoped_tag_title: "Etiqueta exclusiva, apenas um valor para: %{name}"
   label_show_tags_after_queries: "Mostrar etiquetas após consultas"
   label_show_with_count: "Mostrar quantidade na etiqueta"
   label_tag_color_theme: "Tema da cor %{value}"
@@ -47,3 +49,5 @@ pt-BR:
   tags_sidebar_simple_cloud: "Nuvem simples"
   tags_sort_by_count: "Quantidade"
   tags_sort_by_name: "Nome"
+  text_grouped_tags_hint: "Nome:valor é uma etiqueta agrupada: todas as etiquetas com o mesmo nome têm a mesma cor."
+  text_scoped_tags_hint: "Nome::valor é uma etiqueta exclusiva: só é permitido um valor por nome."

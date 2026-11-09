@@ -110,7 +110,7 @@ module AdditionalTags
         end
 
         def validate_tags
-          errors.add :tag_list, :invalid_mutually_exclusive_tags unless AdditionalTag.mutually_exclusive_tags? tag_list
+          AdditionalTag.validate_scoped_tags self
         end
       end
     end

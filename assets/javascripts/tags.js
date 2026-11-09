@@ -116,11 +116,22 @@ window.AdditionalTagColors = (() => {
     return { bg, fg: (r * 299) + (g * 587) + (b * 114) >= 128000 ? 'black' : 'white' };
   }
 
-  return { sha256, labelOf, colorOf, useColors };
+  // the group of a scoped or grouped tag as AdditionalTag#title_group, null
+  // for other tags and for a group without name
+  function groupOf(tagName, theme) {
+    const parts = partsOf(strip(tagName), theme);
+    if (!(parts.scoped || parts.grouped) || parts.groupName === '') { return null; }
+
+    return { scoped: parts.scoped, name: parts.groupName };
+  }
+
+  return { sha256, labelOf, colorOf, groupOf, useColors };
 })();
 
 // A tag in a select field as in tag lists: a pill in its color, a scoped tag
-// with its value; without colors only its name
+// with its value, a scoped or grouped tag with its title
+// (ADDITIONAL_TAGS_TITLES, AdditionalTagsHelper#additional_tag_title); without
+// colors only its name
 window.additionalsSelectRenderers = window.additionalsSelectRenderers || {};
 window.additionalsSelectRenderers.tag = (() => {
   function tagPill(item) {
@@ -140,6 +151,13 @@ window.additionalsSelectRenderers.tag = (() => {
       valueSpan.className = 'tag-group-value tag-group-nocount';
       valueSpan.textContent = value;
       pill.append(valueSpan);
+    }
+    const group = window.AdditionalTagColors.groupOf(name, theme);
+    const titles = window.ADDITIONAL_TAGS_TITLES;
+    // the name comes first: the select field cuts long names and otherwise
+    // shows them in full as title of the entry, which this title covers
+    if (group !== null && titles) {
+      pill.title = `${name}\n${titles[group.scoped ? 'scoped' : 'grouped'].replace('%{name}', () => group.name)}`;
     }
     return pill;
   }

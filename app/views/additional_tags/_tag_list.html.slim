@@ -1,7 +1,9 @@
 - if defined?(show_always) && show_always || entry.tag_list.present?
   .tags.attribute
     - unless defined? hide_label
-      = attribute_label local_assigns.fetch(:label, :field_tag_list)
+      / Where tags are entered, the label explains scoped and grouped tags
+      = attribute_label local_assigns.fetch(:label, :field_tag_list),
+                        title: (additional_tags_field_hint if defined?(editable) && editable)
       '
     - if defined?(editable) && editable
       #tags-data

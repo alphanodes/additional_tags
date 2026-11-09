@@ -2,7 +2,7 @@ en:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: uses mutually exclusive tags
+        invalid_mutually_exclusive_tags: "%{tags} exclude each other, a scoped tag allows only one value"
   field_issue_tags: Issue tags
   field_tag_list: Tags
   field_tags: Tags
@@ -13,10 +13,12 @@ en:
   label_amount_entities_with_tags: "Amount %{name} with tags"
   label_amount_tags: "Amount tags"
   label_edit_tags: "Edit tags"
+  label_grouped_tag_title: "Grouped tag, group: %{name}"
   label_manage_tags: "Manage tags"
   label_merge_selected_tags: "Merge selected tags"
   label_open_issues_only: "Display open issues only"
   label_remove_tags: "Remove tags"
+  label_scoped_tag_title: "Scoped tag, only one value for: %{name}"
   label_show_tags_after_queries: "Show tags after queries"
   label_show_with_count: "Display amount on tag"
   label_tag_color_theme: Color theme %{value}
@@ -47,3 +49,5 @@ en:
   tags_sidebar_simple_cloud: "Simple cloud"
   tags_sort_by_count: "Count"
   tags_sort_by_name: "Name"
+  text_grouped_tags_hint: "Name:value is a grouped tag: all tags with the same name share one color."
+  text_scoped_tags_hint: "Name::value is a scoped tag: only one value per name is allowed."

@@ -2,7 +2,7 @@ cs:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: "používá vzájemně se vylučující štítky"
+        invalid_mutually_exclusive_tags: "%{tags} se vzájemně vylučují, exkluzivní štítek povoluje jen jednu hodnotu"
   field_issue_tags: "Štítky úkolů"
   field_tag_list: "Štítky"
   field_tags: "Štítky"
@@ -13,10 +13,12 @@ cs:
   label_amount_entities_with_tags: "Počet položek se štítky: %{name}"
   label_amount_tags: "Počet štítků"
   label_edit_tags: "Upravit štítky"
+  label_grouped_tag_title: "Seskupený štítek, skupina: %{name}"
   label_manage_tags: "Spravovat štítky"
   label_merge_selected_tags: "Sloučit vybrané štítky"
   label_open_issues_only: "Zobrazit pouze otevřené úkoly"
   label_remove_tags: "Odebrat štítky"
+  label_scoped_tag_title: "Exkluzivní štítek, jen jedna hodnota pro: %{name}"
   label_show_tags_after_queries: "Zobrazit štítky za dotazy"
   label_show_with_count: "Zobrazit počet u štítku"
   label_tag_color_theme: "Barevné téma %{value}"
@@ -47,3 +49,5 @@ cs:
   tags_sidebar_simple_cloud: "Jednoduchý oblak"
   tags_sort_by_count: "Počet"
   tags_sort_by_name: "Název"
+  text_grouped_tags_hint: "Název:hodnota je seskupený štítek: všechny štítky se stejným názvem mají stejnou barvu."
+  text_scoped_tags_hint: "Název::hodnota je exkluzivní štítek: pro každý název je povolena jen jedna hodnota."

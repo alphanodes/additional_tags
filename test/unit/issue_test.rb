@@ -294,8 +294,8 @@ class IssueTest < AdditionalTags::TestCase
     end
   end
 
-  # Mutually exclusive tags are rejected for everyone who may set them, not only for those who may create tags
-  def test_mutually_exclusive_tags_are_invalid_with_permission_to_edit_tags_only
+  # Scoped tags of the same scope are rejected for everyone who may set them, not only for those who may create tags
+  def test_scoped_tags_of_the_same_scope_are_invalid_with_permission_to_edit_tags_only
     prepare_tests
     roles(:roles_001).remove_permission! :create_issue_tags
     issues(:issues_002).update! tag_list: %w[Bar::2 Bar::3]
@@ -310,8 +310,8 @@ class IssueTest < AdditionalTags::TestCase
     end
   end
 
-  # Existing conflicting tags do not block saving other changes, they are only checked when the tags change
-  def test_mutually_exclusive_tags_are_only_checked_when_tags_change
+  # Existing conflicting scoped tags do not block saving other changes, they are only checked when the tags change
+  def test_scoped_tags_of_the_same_scope_are_only_checked_when_tags_change
     prepare_tests
     roles(:roles_001).remove_permission! :create_issue_tags
     issue = issues :issues_001
@@ -327,8 +327,8 @@ class IssueTest < AdditionalTags::TestCase
     end
   end
 
-  # Scripts and jobs set tags without a user who may edit them, one tag per group applies to them as well
-  def test_mutually_exclusive_tags_are_invalid_without_current_user
+  # Scripts and jobs set tags without a user who may edit them, one value per scope applies to them as well
+  def test_scoped_tags_of_the_same_scope_are_invalid_without_current_user
     User.current = User.anonymous
 
     with_plugin_settings 'additional_tags', active_issue_tags: 1 do

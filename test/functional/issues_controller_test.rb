@@ -73,6 +73,8 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
     end
 
     assert_response :success
+    # Editable, so the label explains scoped and grouped tags
+    assert_select 'div.tags > span.label > span.field-description[title]'
 
     assert_select 'div#tags-data' do
       assert_select 'span.additional-tag-label-color', 2, :text
@@ -437,7 +439,9 @@ class IssuesControllerTest < AdditionalTags::ControllerTest
       get :edit,
           params: { id: 1, issue: { project_id: 1 } }
 
-      assert_select '#issue_tags'
+      # The texts are tested with AdditionalTagsHelper
+      assert_select '#issue_tags label[for=issue_tag_list] span.field-description[title]'
+      assert_select 'script', text: /ADDITIONAL_TAGS_TITLES = \{"scoped":".+%\{name\}","grouped":".+%\{name\}"\}/
     end
   end
 

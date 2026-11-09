@@ -18,9 +18,11 @@
 - The tags icon in the context menu of the issue list has the same color as the other icons
 - Fixed creating new tags when editing the tags on the issue page, which also replaces a tag of the same scope (`group::value`) again
 - Changing tags of issues from several projects requires the permissions in every project, new tags can be entered there as well
+- Tag fields explain scoped and grouped tags on hovering their label, scoped and grouped tags name their kind and group on hovering them
+- The error message for scoped tags of the same scope names the conflicting tags
 - Setting issue tags always requires the permission to edit tags, the permission to create tags only adds new ones, also via bulk edit and REST API
 - New tags can only be entered with the permission to create tags
-- Mutually exclusive tags are checked whenever the tags change, independent of the user
+- Scoped tags of the same scope are checked whenever the tags change, independent of the user
 - Issue import keeps existing tags for users who may only use existing tags
 - Tags without colors use the CSS class `additional-tag-label` instead of `tag-label`, which other plugins style with their own pill design
 - Add Ukrainian, Simplified Chinese and Traditional Chinese translations

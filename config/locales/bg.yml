@@ -2,7 +2,7 @@ bg:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: "използва взаимно изключващи се етикети"
+        invalid_mutually_exclusive_tags: "%{tags} се изключват взаимно, ексклузивният етикет позволява само една стойност"
   field_issue_tags: "Етикети на задачи"
   field_tag_list: "Етикети"
   field_tags: "Етикети"
@@ -13,10 +13,12 @@ bg:
   label_amount_entities_with_tags: "Брой %{name} с етикети"
   label_amount_tags: "Брой етикети"
   label_edit_tags: "Редактиране на етикети"
+  label_grouped_tag_title: "Групиран етикет, група: %{name}"
   label_manage_tags: "Управление на етикетите"
   label_merge_selected_tags: "Обединение на избраните етикети"
   label_open_issues_only: "Показване само на отворените задачи"
   label_remove_tags: "Премахване на етикети"
+  label_scoped_tag_title: "Ексклузивен етикет, само една стойност за: %{name}"
   label_show_tags_after_queries: "Показване на етикетите след справките"
   label_show_with_count: "Показване на броя при етикета"
   label_tag_color_theme: "Тема на цвета %{value}"
@@ -47,3 +49,5 @@ bg:
   tags_sidebar_simple_cloud: "Обикновен облак"
   tags_sort_by_count: "Брой"
   tags_sort_by_name: "Име"
+  text_grouped_tags_hint: "Име:стойност означава групиран етикет: всички етикети с едно и също име са в един цвят."
+  text_scoped_tags_hint: "Име::стойност означава ексклузивен етикет: за едно име е позволена само една стойност."

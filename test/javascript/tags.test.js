@@ -13,7 +13,10 @@ beforeAll(() => {
   globalEval(readFileSync(resolve('assets/javascripts/tags.js'), 'utf8'));
 });
 
-afterEach(() => { delete window.ADDITIONAL_TAGS_COLOR_THEME; });
+afterEach(() => {
+  delete window.ADDITIONAL_TAGS_COLOR_THEME;
+  delete window.ADDITIONAL_TAGS_TITLES;
+});
 
 describe('colors of tags', () => {
   // The same table the colors of the server are tested against
@@ -22,8 +25,9 @@ describe('colors of tags', () => {
     const computed = table.map((example) => {
       const { label, value } = window.AdditionalTagColors.labelOf(example.name, example.theme);
       const color = window.AdditionalTagColors.colorOf(example.name, example.theme);
+      const group = window.AdditionalTagColors.groupOf(example.name, example.theme);
 
-      return { ...example, bg: color?.bg ?? null, fg: color?.fg ?? null, label, value };
+      return { ...example, bg: color?.bg ?? null, fg: color?.fg ?? null, label, value, group: group?.name ?? null };
     });
 
     expect(computed).toEqual(table);
@@ -53,6 +57,15 @@ describe('select fields of tags', () => {
       scoped.firstChild.textContent, scoped.querySelector('.tag-group-value').textContent])
       .toEqual(['additional-tag-label-color additionals-select-pill', 'Bug', hexToRgb(expected('Bug').bg),
         expected('Bug').fg, 'Prio', 'High']);
+  });
+
+  it('title scoped and grouped tags with their group, other tags not', () => {
+    window.ADDITIONAL_TAGS_COLOR_THEME = '1';
+    window.ADDITIONAL_TAGS_TITLES = { scoped: 'Scoped tag, only one value for: %{name}', grouped: 'Grouped tag, group: %{name}' };
+
+    expect(['Prio::High', 'Plugin: HRM', 'Bug', ':Foo', '$&::x'].map((text) => renderer().result({ text }).title))
+      .toEqual(['Prio::High\nScoped tag, only one value for: Prio', 'Plugin: HRM\nGrouped tag, group: Plugin', '', '',
+        '$&::x\nScoped tag, only one value for: $&']);
   });
 
   it('show tags without colors as text, as before', () => {

@@ -2,7 +2,7 @@ fa:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: "از برچسب‌های ناسازگار با یکدیگر استفاده می‌کند"
+        invalid_mutually_exclusive_tags: "%{tags} با یکدیگر ناسازگارند، برچسب انحصاری فقط یک مقدار را می‌پذیرد"
   field_issue_tags: "برچسب‌های مسئله"
   field_tag_list: "برچسب‌ها"
   field_tags: "برچسب‌ها"
@@ -13,10 +13,12 @@ fa:
   label_amount_entities_with_tags: "تعداد %{name} با برچسب"
   label_amount_tags: "تعداد برچسب‌ها"
   label_edit_tags: "ویرایش برچسب‌ها"
+  label_grouped_tag_title: "برچسب گروهی، گروه: %{name}"
   label_manage_tags: "مدیریت برچسب‌ها"
   label_merge_selected_tags: "ادغام برچسب‌های انتخابی"
   label_open_issues_only: "فقط نمایش مسئله‌های باز"
   label_remove_tags: "حذف برچسب‌ها"
+  label_scoped_tag_title: "برچسب انحصاری، فقط یک مقدار برای: %{name}"
   label_show_tags_after_queries: "نمایش برچسب‌ها پس از جستارها"
   label_show_with_count: "نمایش تعداد روی برچسب"
   label_tag_color_theme: تم رنگی %{value}
@@ -47,3 +49,5 @@ fa:
   tags_sidebar_simple_cloud: "ابر ساده"
   tags_sort_by_count: "تعداد"
   tags_sort_by_name: "نام"
+  text_grouped_tags_hint: "نام:مقدار یک برچسب گروهی است: همه برچسب‌های با نام یکسان یک رنگ دارند."
+  text_scoped_tags_hint: "نام::مقدار یک برچسب انحصاری است: برای هر نام فقط یک مقدار مجاز است."

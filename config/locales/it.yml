@@ -2,7 +2,7 @@ it:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: "utilizza etichette mutuamente esclusive"
+        invalid_mutually_exclusive_tags: "%{tags} si escludono a vicenda, un'etichetta esclusiva consente un solo valore"
   field_issue_tags: "Etichette delle segnalazioni"
   field_tag_list: "Etichette"
   field_tags: "Etichette"
@@ -13,10 +13,12 @@ it:
   label_amount_entities_with_tags: "Numero di %{name} con etichette"
   label_amount_tags: "Numero di etichette"
   label_edit_tags: "Modifica le etichette"
+  label_grouped_tag_title: "Etichetta raggruppata, gruppo: %{name}"
   label_manage_tags: "Gestire le etichette"
   label_merge_selected_tags: "Unisci le etichette selezionate"
   label_open_issues_only: "Mostra solo le segnalazioni aperte"
   label_remove_tags: "Rimuovi etichette"
+  label_scoped_tag_title: "Etichetta esclusiva, un solo valore per: %{name}"
   label_show_tags_after_queries: "Mostra le etichette dopo le query"
   label_show_with_count: "Mostra il numero sull'etichetta"
   label_tag_color_theme: "Tema colore %{value}"
@@ -47,3 +49,5 @@ it:
   tags_sidebar_simple_cloud: "Nuvola semplice"
   tags_sort_by_count: "Numero"
   tags_sort_by_name: "Nome"
+  text_grouped_tags_hint: "Nome:valore è un'etichetta raggruppata: tutte le etichette con lo stesso nome hanno lo stesso colore."
+  text_scoped_tags_hint: "Nome::valore è un'etichetta esclusiva: è consentito un solo valore per nome."

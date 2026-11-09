@@ -2,7 +2,7 @@ pl:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: "używa wzajemnie wykluczających się etykiet"
+        invalid_mutually_exclusive_tags: "%{tags} wzajemnie się wykluczają, etykieta wykluczająca dopuszcza tylko jedną wartość"
   field_issue_tags: "Etykiety zagadnień"
   field_tag_list: "Etykiety"
   field_tags: "Etykiety"
@@ -13,10 +13,12 @@ pl:
   label_amount_entities_with_tags: "Liczba wpisów z etykietami: %{name}"
   label_amount_tags: "Liczba etykiet"
   label_edit_tags: "Edycja etykiet"
+  label_grouped_tag_title: "Etykieta grupowana, grupa: %{name}"
   label_manage_tags: "Zarządzaj etykietami"
   label_merge_selected_tags: "Łączenie wybranych etykiet"
   label_open_issues_only: "Wyświetlaj tylko otwarte zagadnienia"
   label_remove_tags: "Usuń etykiety"
+  label_scoped_tag_title: "Etykieta wykluczająca, tylko jedna wartość dla: %{name}"
   label_show_tags_after_queries: "Pokaż etykiety po kwerendach"
   label_show_with_count: "Wyświetlaj liczbę przy etykiecie"
   label_tag_color_theme: "Kolorowy motyw %{value}"
@@ -47,3 +49,5 @@ pl:
   tags_sidebar_simple_cloud: "Prosta chmura"
   tags_sort_by_count: "Liczba"
   tags_sort_by_name: "Nazwa"
+  text_grouped_tags_hint: "Nazwa:wartość to etykieta grupowana: wszystkie etykiety o tej samej nazwie mają ten sam kolor."
+  text_scoped_tags_hint: "Nazwa::wartość to etykieta wykluczająca: dla jednej nazwy dozwolona jest tylko jedna wartość."

@@ -34,20 +34,32 @@ class AdditionalTagTest < AdditionalTags::TestCase
     assert_equal 'grouped:a', AdditionalTag.new(name: 'grouped: 2', color_theme: 'a').name_for_color
   end
 
-  def test_valid_mutually_exclusive_tag
-    assert AdditionalTag.mutually_exclusive_tags?(%w[Foo::1 Bar::2 Test3])
-    assert AdditionalTag.mutually_exclusive_tags?(%w[Foo::1 Foo::Bar::2 Test3])
-    assert AdditionalTag.mutually_exclusive_tags?(['Foo:: 1', 'Bar::2', 'Test3'])
-    assert AdditionalTag.mutually_exclusive_tags?(%w[Test3])
-    assert AdditionalTag.mutually_exclusive_tags?(nil)
-    assert AdditionalTag.mutually_exclusive_tags?(%w[])
+  def test_conflicting_scoped_tags
+    [[%w[Foo::1 Bar::2 Test3], []],
+     [%w[Foo::1 Foo::Bar::2 Test3], []],
+     [['Foo:: 1', 'Bar::2', 'Test3'], []],
+     [%w[Test3 Test:3 Test:4], []],
+     [%w[Foo:: Foo::1], []],
+     [nil, []],
+     [[], []],
+     [%w[Bar::2 Bar::3], [%w[Bar::2 Bar::3]]],
+     [%w[Foo::1 Bar::2 Bar::3 Test3 Foo::4], [%w[Foo::1 Foo::4], %w[Bar::2 Bar::3]]],
+     [['Bar:: 2', 'Bar::3'], [['Bar:: 2', 'Bar::3']]],
+     [['Bar :: 2', 'Bar::3'], [['Bar :: 2', 'Bar::3']]]].each do |tags, conflicts|
+      assert_equal conflicts, AdditionalTag.conflicting_scoped_tags(tags), tags.inspect
+    end
   end
 
-  def test_invalid_mutually_exclusive_tag
-    assert_not AdditionalTag.mutually_exclusive_tags?(%w[Bar::2 Bar::3])
-    assert_not AdditionalTag.mutually_exclusive_tags?(%w[Foo::1 Bar::2 Bar::3 Test3])
-    assert_not AdditionalTag.mutually_exclusive_tags?(['Bar:: 2', 'Bar::3'])
-    assert_not AdditionalTag.mutually_exclusive_tags?(['Bar :: 2', 'Bar::3'])
+  def test_validate_scoped_tags_names_the_conflicting_tags_of_each_scope
+    issue = issues :issues_001
+    issue.tag_list = %w[Bar::2 Foo::1 Bar::3 Test Foo::2]
+    AdditionalTag.validate_scoped_tags issue
+
+    I18n.with_locale :en do
+      assert_equal ['Tags Bar::2, Bar::3 exclude each other, a scoped tag allows only one value',
+                    'Tags Foo::1, Foo::2 exclude each other, a scoped tag allows only one value'],
+                   issue.errors.full_messages
+    end
   end
 
   def test_group_value
@@ -86,7 +98,8 @@ class AdditionalTagTest < AdditionalTags::TestCase
       example.merge 'bg' => (tag.tag_bg_color if use_colors),
                     'fg' => (tag.tag_fg_color if use_colors),
                     'label' => tag.tag_name,
-                    'value' => (tag.group_value if tag.scoped?)
+                    'value' => (tag.group_value if tag.scoped?),
+                    'group' => tag.title_group
     end
 
     assert_equal table, computed

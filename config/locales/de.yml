@@ -2,7 +2,7 @@ de:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: verwendet sich gegenseitig ausschließende TAGs
+        invalid_mutually_exclusive_tags: "%{tags} schließen sich gegenseitig aus, ein exklusiver TAG erlaubt nur einen Wert"
   field_issue_tags: "Ticket-TAGs"
   field_tag_list: TAGs
   field_tags: TAGs
@@ -13,10 +13,12 @@ de:
   label_amount_entities_with_tags: Anzahl %{name} mit TAGs
   label_amount_tags: Anzahl TAGs
   label_edit_tags: TAGs bearbeiten
+  label_grouped_tag_title: "Gruppierter TAG, Gruppe: %{name}"
   label_manage_tags: TAGs verwalten
   label_merge_selected_tags: Ausgewählte TAGs zusammenführen
   label_open_issues_only: Zeige nur offene Tickets
   label_remove_tags: TAGs entfernen
+  label_scoped_tag_title: "Exklusiver TAG, nur ein Wert für: %{name}"
   label_show_tags_after_queries: "Zeige TAGs nach Abfragen"
   label_show_with_count: Zeige Anzahl zu TAG
   label_tag_color_theme: Farbschema %{value}
@@ -47,3 +49,5 @@ de:
   tags_sidebar_simple_cloud: Einfache Cloud
   tags_sort_by_count: Anzahl
   tags_sort_by_name: Name
+  text_grouped_tags_hint: "Name:Wert ist ein gruppierter TAG: alle TAGs mit gleichem Namen erscheinen in derselben Farbe."
+  text_scoped_tags_hint: "Name::Wert ist ein exklusiver TAG: je Name ist nur ein Wert erlaubt."

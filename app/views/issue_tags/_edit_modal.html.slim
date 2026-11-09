@@ -11,7 +11,8 @@ h3.title = l @title
 
 = form_tag issue_tags_path(ids: @issue_ids, search: params[:search], mode: @mode) do
   fieldset.box
-    legend = l :field_tags
+    / Removing tags enters none, so no explanation of scoped and grouped tags
+    legend = @mode == 'remove' ? l(:field_tags) : additional_tags_field_name(l(:field_tags))
     #issue_tags
       - if @mode == 'remove'
         / Only the tags of the chosen issues can be removed, so no search for others

@@ -25,6 +25,31 @@ Each term follows the majority of four translation projects with the same concep
 | zh | 标签 | 标签 | | Nextcloud, Discourse, WordPress, Firefox |
 | zh-TW | 標籤 | 標籤 | | Nextcloud, WordPress, Firefox (Discourse: 標記) |
 
+## Scoped and grouped tags
+
+A tag named `name::value` is a scoped tag: an object takes only one value per name. A tag named `name:value` is a grouped tag: all tags with the same name share one color.
+
+English keeps "scoped tag", the term of GitLab and of the README. Every other locale uses its word for "exclusive", because it names what the user notices. The references are Gitea and Forgejo, which call the same concept "Exclusive" (labels named `scope/item`); GitLab leaves the term untranslated in most locales or translates it inconsistently (German "gescoptes Label"). No product has grouped tags, their term is derived from the tag term above.
+
+| Locale | Scoped tag | Grouped tag | References for scoped tag |
+| ------ | ---------- | ----------- | ------------------------- |
+| bg | ексклузивен етикет | групиран етикет | none, derived from cs and ru |
+| cs | exkluzivní štítek | seskupený štítek | Gitea, Forgejo |
+| de | exklusiver TAG | gruppierter TAG | Gitea, Forgejo |
+| en | scoped tag | grouped tag | GitLab |
+| es | etiqueta exclusiva | etiqueta agrupada | Gitea, Forgejo |
+| fa | برچسب انحصاری | برچسب گروهی | none, derived |
+| fr | étiquette exclusive | étiquette groupée | Gitea, Forgejo |
+| it | etichetta esclusiva | etichetta raggruppata | Forgejo |
+| ja | 排他タグ | グループ化タグ | Gitea, Forgejo |
+| ko | 배타적 태그 | 그룹 태그 | description of Gitea and Forgejo (상호 배타적); their label 독점 means monopoly |
+| pl | etykieta wykluczająca | etykieta grupowana | Forgejo |
+| pt-BR | etiqueta exclusiva | etiqueta agrupada | Gitea, Forgejo |
+| ru | эксклюзивная метка | сгруппированная метка | Gitea, Forgejo |
+| uk | ексклюзивна мітка | згрупована мітка | Gitea, Forgejo |
+| zh | 互斥标签 | 分组标签 | Gitea, Forgejo |
+| zh-TW | 互斥標籤 | 分組標籤 | Gitea, Forgejo |
+
 ## Rules
 
 - Inside a sentence, the term follows the normal capitalization and inflection of the language. Only German writes it in capitals.

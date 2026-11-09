@@ -2,7 +2,7 @@ ru:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: "использует взаимоисключающие метки"
+        invalid_mutually_exclusive_tags: "%{tags} исключают друг друга, эксклюзивная метка допускает только одно значение"
   field_issue_tags: "Метки задач"
   field_tag_list: "Метки"
   field_tags: "Метки"
@@ -13,10 +13,12 @@ ru:
   label_amount_entities_with_tags: "Количество %{name} с метками"
   label_amount_tags: "Количество меток"
   label_edit_tags: "Редактировать метки"
+  label_grouped_tag_title: "Сгруппированная метка, группа: %{name}"
   label_manage_tags: "Управление метками"
   label_merge_selected_tags: "Объединить выбранные метки"
   label_open_issues_only: "Отображать только открытые задачи"
   label_remove_tags: "Удалить метки"
+  label_scoped_tag_title: "Эксклюзивная метка, только одно значение для: %{name}"
   label_show_tags_after_queries: "Показывать метки после запросов"
   label_show_with_count: "Отображать количество на метке"
   label_tag_color_theme: "Цветовая тема %{value}"
@@ -47,3 +49,5 @@ ru:
   tags_sidebar_simple_cloud: "Простое облако"
   tags_sort_by_count: "Количеству"
   tags_sort_by_name: "Имени"
+  text_grouped_tags_hint: "Имя:значение означает сгруппированную метку: все метки с одинаковым именем окрашены в один цвет."
+  text_scoped_tags_hint: "Имя::значение означает эксклюзивную метку: для одного имени допускается только одно значение."

@@ -5,7 +5,8 @@
     "bg": "#703a50",
     "fg": "white",
     "label": "Bug",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Größe",
@@ -13,7 +14,8 @@
     "bg": "#aedc3f",
     "fg": "black",
     "label": "Größe",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Plugin: AI",
@@ -21,7 +23,8 @@
     "bg": "#f14b59",
     "fg": "white",
     "label": "Plugin: AI",
-    "value": null
+    "value": null,
+    "group": "Plugin"
   },
   {
     "name": "Plugin: HRM",
@@ -29,7 +32,8 @@
     "bg": "#f14b59",
     "fg": "white",
     "label": "Plugin: HRM",
-    "value": null
+    "value": null,
+    "group": "Plugin"
   },
   {
     "name": "Prio::High",
@@ -37,7 +41,8 @@
     "bg": "#979704",
     "fg": "black",
     "label": "Prio",
-    "value": "High"
+    "value": "High",
+    "group": "Prio"
   },
   {
     "name": "scope::zwei",
@@ -45,7 +50,8 @@
     "bg": "#a3d80e",
     "fg": "black",
     "label": "scope",
-    "value": "zwei"
+    "value": "zwei",
+    "group": "scope"
   },
   {
     "name": "a::b::c",
@@ -53,7 +59,8 @@
     "bg": "#f8ef6d",
     "fg": "black",
     "label": "a::b",
-    "value": "c"
+    "value": "c",
+    "group": "a::b"
   },
   {
     "name": "a:b:c",
@@ -61,7 +68,8 @@
     "bg": "#b8c7be",
     "fg": "black",
     "label": "a:b:c",
-    "value": null
+    "value": null,
+    "group": "a:b"
   },
   {
     "name": "Foo:",
@@ -69,7 +77,8 @@
     "bg": "#551f0e",
     "fg": "white",
     "label": "Foo:",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a::",
@@ -77,7 +86,8 @@
     "bg": "#a21cc6",
     "fg": "white",
     "label": "a::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": ":Foo",
@@ -85,7 +95,8 @@
     "bg": "#e7ac07",
     "fg": "black",
     "label": ":Foo",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "::Foo",
@@ -93,7 +104,8 @@
     "bg": "#715468",
     "fg": "white",
     "label": "",
-    "value": "Foo"
+    "value": "Foo",
+    "group": null
   },
   {
     "name": "::",
@@ -101,7 +113,8 @@
     "bg": "#715468",
     "fg": "white",
     "label": "::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a:: ",
@@ -109,7 +122,8 @@
     "bg": "#a21cc6",
     "fg": "white",
     "label": "a::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": " Space ",
@@ -117,7 +131,8 @@
     "bg": "#20eac5",
     "fg": "black",
     "label": "Space",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "nbsp ",
@@ -125,7 +140,8 @@
     "bg": "#9f9d70",
     "fg": "black",
     "label": "nbsp ",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "\tTab\t",
@@ -133,7 +149,8 @@
     "bg": "#90ddf1",
     "fg": "black",
     "label": "Tab",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Emoji 😀",
@@ -141,7 +158,8 @@
     "bg": "#422942",
     "fg": "white",
     "label": "Emoji 😀",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Rakete 🚀::Start",
@@ -149,7 +167,8 @@
     "bg": "#542471",
     "fg": "white",
     "label": "Rakete 🚀",
-    "value": "Start"
+    "value": "Start",
+    "group": "Rakete 🚀"
   },
   {
     "name": "Bug",
@@ -157,7 +176,8 @@
     "bg": "#ed964e",
     "fg": "black",
     "label": "Bug",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Größe",
@@ -165,7 +185,8 @@
     "bg": "#4c5c62",
     "fg": "white",
     "label": "Größe",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Plugin: AI",
@@ -173,7 +194,8 @@
     "bg": "#9b21d3",
     "fg": "white",
     "label": "Plugin: AI",
-    "value": null
+    "value": null,
+    "group": "Plugin"
   },
   {
     "name": "Plugin: HRM",
@@ -181,7 +203,8 @@
     "bg": "#9b21d3",
     "fg": "white",
     "label": "Plugin: HRM",
-    "value": null
+    "value": null,
+    "group": "Plugin"
   },
   {
     "name": "Prio::High",
@@ -189,7 +212,8 @@
     "bg": "#9f4e11",
     "fg": "white",
     "label": "Prio",
-    "value": "High"
+    "value": "High",
+    "group": "Prio"
   },
   {
     "name": "scope::zwei",
@@ -197,7 +221,8 @@
     "bg": "#7d0170",
     "fg": "white",
     "label": "scope",
-    "value": "zwei"
+    "value": "zwei",
+    "group": "scope"
   },
   {
     "name": "a::b::c",
@@ -205,7 +230,8 @@
     "bg": "#51a613",
     "fg": "white",
     "label": "a::b",
-    "value": "c"
+    "value": "c",
+    "group": "a::b"
   },
   {
     "name": "a:b:c",
@@ -213,7 +239,8 @@
     "bg": "#913686",
     "fg": "white",
     "label": "a:b:c",
-    "value": null
+    "value": null,
+    "group": "a:b"
   },
   {
     "name": "Foo:",
@@ -221,7 +248,8 @@
     "bg": "#3c9040",
     "fg": "white",
     "label": "Foo:",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a::",
@@ -229,7 +257,8 @@
     "bg": "#06fd1e",
     "fg": "black",
     "label": "a::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": ":Foo",
@@ -237,7 +266,8 @@
     "bg": "#b5c5cc",
     "fg": "black",
     "label": ":Foo",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "::Foo",
@@ -245,7 +275,8 @@
     "bg": "#1e980b",
     "fg": "white",
     "label": "",
-    "value": "Foo"
+    "value": "Foo",
+    "group": null
   },
   {
     "name": "::",
@@ -253,7 +284,8 @@
     "bg": "#1e980b",
     "fg": "white",
     "label": "::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a:: ",
@@ -261,7 +293,8 @@
     "bg": "#06fd1e",
     "fg": "black",
     "label": "a::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": " Space ",
@@ -269,7 +302,8 @@
     "bg": "#8ecd17",
     "fg": "black",
     "label": "Space",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "nbsp ",
@@ -277,7 +311,8 @@
     "bg": "#d995c0",
     "fg": "black",
     "label": "nbsp ",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "\tTab\t",
@@ -285,7 +320,8 @@
     "bg": "#49d277",
     "fg": "black",
     "label": "Tab",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Emoji 😀",
@@ -293,7 +329,8 @@
     "bg": "#917e66",
     "fg": "black",
     "label": "Emoji 😀",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Rakete 🚀::Start",
@@ -301,7 +338,8 @@
     "bg": "#3b451f",
     "fg": "white",
     "label": "Rakete 🚀",
-    "value": "Start"
+    "value": "Start",
+    "group": "Rakete 🚀"
   },
   {
     "name": "Bug",
@@ -309,7 +347,8 @@
     "bg": "#005787",
     "fg": "white",
     "label": "Bug",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Größe",
@@ -317,7 +356,8 @@
     "bg": "#c36c19",
     "fg": "white",
     "label": "Größe",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Plugin: AI",
@@ -325,7 +365,8 @@
     "bg": "#deb77c",
     "fg": "black",
     "label": "Plugin: AI",
-    "value": null
+    "value": null,
+    "group": "Plugin"
   },
   {
     "name": "Plugin: HRM",
@@ -333,7 +374,8 @@
     "bg": "#deb77c",
     "fg": "black",
     "label": "Plugin: HRM",
-    "value": null
+    "value": null,
+    "group": "Plugin"
   },
   {
     "name": "Prio::High",
@@ -341,7 +383,8 @@
     "bg": "#09c181",
     "fg": "black",
     "label": "Prio",
-    "value": "High"
+    "value": "High",
+    "group": "Prio"
   },
   {
     "name": "scope::zwei",
@@ -349,7 +392,8 @@
     "bg": "#b9cb4f",
     "fg": "black",
     "label": "scope",
-    "value": "zwei"
+    "value": "zwei",
+    "group": "scope"
   },
   {
     "name": "a::b::c",
@@ -357,7 +401,8 @@
     "bg": "#44b7cb",
     "fg": "black",
     "label": "a::b",
-    "value": "c"
+    "value": "c",
+    "group": "a::b"
   },
   {
     "name": "a:b:c",
@@ -365,7 +410,8 @@
     "bg": "#ddf34d",
     "fg": "black",
     "label": "a:b:c",
-    "value": null
+    "value": null,
+    "group": "a:b"
   },
   {
     "name": "Foo:",
@@ -373,7 +419,8 @@
     "bg": "#f8f001",
     "fg": "black",
     "label": "Foo:",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a::",
@@ -381,7 +428,8 @@
     "bg": "#5b221e",
     "fg": "white",
     "label": "a::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": ":Foo",
@@ -389,7 +437,8 @@
     "bg": "#d470b6",
     "fg": "black",
     "label": ":Foo",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "::Foo",
@@ -397,7 +446,8 @@
     "bg": "#697267",
     "fg": "white",
     "label": "",
-    "value": "Foo"
+    "value": "Foo",
+    "group": null
   },
   {
     "name": "::",
@@ -405,7 +455,8 @@
     "bg": "#697267",
     "fg": "white",
     "label": "::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a:: ",
@@ -413,7 +464,8 @@
     "bg": "#5b221e",
     "fg": "white",
     "label": "a::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": " Space ",
@@ -421,7 +473,8 @@
     "bg": "#27aed5",
     "fg": "black",
     "label": "Space",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "nbsp ",
@@ -429,7 +482,8 @@
     "bg": "#f80a35",
     "fg": "white",
     "label": "nbsp ",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "\tTab\t",
@@ -437,7 +491,8 @@
     "bg": "#9175da",
     "fg": "black",
     "label": "Tab",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Emoji 😀",
@@ -445,7 +500,8 @@
     "bg": "#8bd3af",
     "fg": "black",
     "label": "Emoji 😀",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Rakete 🚀::Start",
@@ -453,7 +509,8 @@
     "bg": "#d3a385",
     "fg": "black",
     "label": "Rakete 🚀",
-    "value": "Start"
+    "value": "Start",
+    "group": "Rakete 🚀"
   },
   {
     "name": "Bug",
@@ -461,7 +518,8 @@
     "bg": null,
     "fg": null,
     "label": "Bug",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Größe",
@@ -469,7 +527,8 @@
     "bg": null,
     "fg": null,
     "label": "Größe",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Plugin: AI",
@@ -477,7 +536,8 @@
     "bg": null,
     "fg": null,
     "label": "Plugin: AI",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Plugin: HRM",
@@ -485,7 +545,8 @@
     "bg": null,
     "fg": null,
     "label": "Plugin: HRM",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Prio::High",
@@ -493,7 +554,8 @@
     "bg": null,
     "fg": null,
     "label": "Prio::High",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "scope::zwei",
@@ -501,7 +563,8 @@
     "bg": null,
     "fg": null,
     "label": "scope::zwei",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a::b::c",
@@ -509,7 +572,8 @@
     "bg": null,
     "fg": null,
     "label": "a::b::c",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a:b:c",
@@ -517,7 +581,8 @@
     "bg": null,
     "fg": null,
     "label": "a:b:c",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Foo:",
@@ -525,7 +590,8 @@
     "bg": null,
     "fg": null,
     "label": "Foo:",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a::",
@@ -533,7 +599,8 @@
     "bg": null,
     "fg": null,
     "label": "a::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": ":Foo",
@@ -541,7 +608,8 @@
     "bg": null,
     "fg": null,
     "label": ":Foo",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "::Foo",
@@ -549,7 +617,8 @@
     "bg": null,
     "fg": null,
     "label": "::Foo",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "::",
@@ -557,7 +626,8 @@
     "bg": null,
     "fg": null,
     "label": "::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a:: ",
@@ -565,7 +635,8 @@
     "bg": null,
     "fg": null,
     "label": "a::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": " Space ",
@@ -573,7 +644,8 @@
     "bg": null,
     "fg": null,
     "label": "Space",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "nbsp ",
@@ -581,7 +653,8 @@
     "bg": null,
     "fg": null,
     "label": "nbsp ",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "\tTab\t",
@@ -589,7 +662,8 @@
     "bg": null,
     "fg": null,
     "label": "Tab",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Emoji 😀",
@@ -597,7 +671,8 @@
     "bg": null,
     "fg": null,
     "label": "Emoji 😀",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Rakete 🚀::Start",
@@ -605,7 +680,8 @@
     "bg": null,
     "fg": null,
     "label": "Rakete 🚀::Start",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Bug",
@@ -613,7 +689,8 @@
     "bg": "#703a50",
     "fg": "white",
     "label": "Bug",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Größe",
@@ -621,7 +698,8 @@
     "bg": "#aedc3f",
     "fg": "black",
     "label": "Größe",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Plugin: AI",
@@ -629,7 +707,8 @@
     "bg": "#f14b59",
     "fg": "white",
     "label": "Plugin: AI",
-    "value": null
+    "value": null,
+    "group": "Plugin"
   },
   {
     "name": "Plugin: HRM",
@@ -637,7 +716,8 @@
     "bg": "#f14b59",
     "fg": "white",
     "label": "Plugin: HRM",
-    "value": null
+    "value": null,
+    "group": "Plugin"
   },
   {
     "name": "Prio::High",
@@ -645,7 +725,8 @@
     "bg": "#979704",
     "fg": "black",
     "label": "Prio",
-    "value": "High"
+    "value": "High",
+    "group": "Prio"
   },
   {
     "name": "scope::zwei",
@@ -653,7 +734,8 @@
     "bg": "#a3d80e",
     "fg": "black",
     "label": "scope",
-    "value": "zwei"
+    "value": "zwei",
+    "group": "scope"
   },
   {
     "name": "a::b::c",
@@ -661,7 +743,8 @@
     "bg": "#f8ef6d",
     "fg": "black",
     "label": "a::b",
-    "value": "c"
+    "value": "c",
+    "group": "a::b"
   },
   {
     "name": "a:b:c",
@@ -669,7 +752,8 @@
     "bg": "#b8c7be",
     "fg": "black",
     "label": "a:b:c",
-    "value": null
+    "value": null,
+    "group": "a:b"
   },
   {
     "name": "Foo:",
@@ -677,7 +761,8 @@
     "bg": "#551f0e",
     "fg": "white",
     "label": "Foo:",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a::",
@@ -685,7 +770,8 @@
     "bg": "#a21cc6",
     "fg": "white",
     "label": "a::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": ":Foo",
@@ -693,7 +779,8 @@
     "bg": "#e7ac07",
     "fg": "black",
     "label": ":Foo",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "::Foo",
@@ -701,7 +788,8 @@
     "bg": "#715468",
     "fg": "white",
     "label": "",
-    "value": "Foo"
+    "value": "Foo",
+    "group": null
   },
   {
     "name": "::",
@@ -709,7 +797,8 @@
     "bg": "#715468",
     "fg": "white",
     "label": "::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "a:: ",
@@ -717,7 +806,8 @@
     "bg": "#a21cc6",
     "fg": "white",
     "label": "a::",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": " Space ",
@@ -725,7 +815,8 @@
     "bg": "#20eac5",
     "fg": "black",
     "label": "Space",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "nbsp ",
@@ -733,7 +824,8 @@
     "bg": "#9f9d70",
     "fg": "black",
     "label": "nbsp ",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "\tTab\t",
@@ -741,7 +833,8 @@
     "bg": "#90ddf1",
     "fg": "black",
     "label": "Tab",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Emoji 😀",
@@ -749,7 +842,8 @@
     "bg": "#422942",
     "fg": "white",
     "label": "Emoji 😀",
-    "value": null
+    "value": null,
+    "group": null
   },
   {
     "name": "Rakete 🚀::Start",
@@ -757,6 +851,7 @@
     "bg": "#542471",
     "fg": "white",
     "label": "Rakete 🚀",
-    "value": "Start"
+    "value": "Start",
+    "group": "Rakete 🚀"
   }
 ]

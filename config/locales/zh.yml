@@ -2,7 +2,7 @@ zh:
   activerecord:
     errors:
       messages:
-        invalid_mutually_exclusive_tags: "使用了互斥的标签"
+        invalid_mutually_exclusive_tags: "%{tags} 互相排斥，互斥标签只允许一个值"
   field_issue_tags: "问题标签"
   field_tag_list: "标签"
   field_tags: "标签"
@@ -13,10 +13,12 @@ zh:
   label_amount_entities_with_tags: "带标签的%{name}数量"
   label_amount_tags: "标签数量"
   label_edit_tags: "编辑标签"
+  label_grouped_tag_title: "分组标签，分组：%{name}"
   label_manage_tags: "管理标签"
   label_merge_selected_tags: "合并所选标签"
   label_open_issues_only: "仅显示打开的问题"
   label_remove_tags: "移除标签"
+  label_scoped_tag_title: "互斥标签，仅允许一个值：%{name}"
   label_show_tags_after_queries: "在查询之后显示标签"
   label_show_with_count: "在标签上显示数量"
   label_tag_color_theme: "颜色主题 %{value}"
@@ -47,3 +49,5 @@ zh:
   tags_sidebar_simple_cloud: "简单标签云"
   tags_sort_by_count: "数量"
   tags_sort_by_name: "名称"
+  text_grouped_tags_hint: "名称:值 表示分组标签：同名的标签显示为相同颜色。"
+  text_scoped_tags_hint: "名称::值 表示互斥标签：每个名称只允许一个值。"

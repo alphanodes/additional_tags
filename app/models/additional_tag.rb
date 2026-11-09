@@ -45,14 +45,22 @@ class AdditionalTag < ApplicationRecord
       end
     end
 
-    def mutually_exclusive_tags?(tag_list)
-      return true if tag_list.blank?
+    # Scoped tags that share their scope, one list per scope. A scope takes
+    # only one value.
+    def conflicting_scoped_tags(tag_list)
+      return [] if tag_list.blank?
 
-      tags = tag_list.select { |t| t.include? SCOPE_SEP }
-      return true if tags.blank?
+      tags = tag_list.map { |name| new name: }
+      scopes = tags.select(&:scoped?).group_by(&:group_name)
+      scopes.values.filter_map { |scope_tags| scope_tags.map(&:name) if scope_tags.size > 1 }
+    end
 
-      groups = tags.map { |t| new(name: t).group_name }
-      groups == groups.uniq
+    # Adds an error on tag_list of +record+ for every scope with more than one
+    # value, naming its tags
+    def validate_scoped_tags(record)
+      conflicting_scoped_tags(record.tag_list).each do |names|
+        record.errors.add :tag_list, :invalid_mutually_exclusive_tags, tags: names.to_comma_list
+      end
     end
 
     # Returns project IDs where user has the given tag permission as SQL condition string.
@@ -402,6 +410,12 @@ class AdditionalTag < ApplicationRecord
 
   def group_value
     labels.last
+  end
+
+  # Group of a scoped or grouped tag as its title names it, nil for other tags
+  # and for a group without name (":Foo")
+  def title_group
+    group_name.presence if scoped? || grouped?
   end
 
   def scoped?
