@@ -56,10 +56,13 @@ class AdditionalTag < ApplicationRecord
     end
 
     # Adds an error on the tag +attribute+ of +record+ for every scope with
-    # more than one value, naming its tags. The tag names are not escaped:
-    # whoever puts the message into HTML has to escape it.
+    # more than one value, naming its tags. The attribute holds a list or
+    # comma separated text, as the tag_list writer takes it. The tag names are
+    # not escaped: whoever puts the message into HTML has to escape it.
     def validate_scoped_tags(record, attribute = :tag_list)
-      conflicting_scoped_tags(record.public_send(attribute)).each do |names|
+      tags = record.public_send attribute
+      tags = AdditionalTags::DefaultParser.parse tags if tags.is_a? String
+      conflicting_scoped_tags(tags).each do |names|
         record.errors.add attribute, :invalid_mutually_exclusive_tags, tags: names.to_comma_list
       end
     end

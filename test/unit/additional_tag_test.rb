@@ -67,11 +67,14 @@ class AdditionalTagTest < AdditionalTags::TestCase
     include ActiveModel::Validations
   end
 
+  # A list or comma separated text, as the tag_list writer takes it
   def test_validate_scoped_tags_checks_another_tag_attribute
-    defaults = TagDefaults.new %w[Foo::1 Foo::2]
-    AdditionalTag.validate_scoped_tags defaults, :default_tags
+    [%w[Foo::1 Foo::2], 'Foo::1, Foo::2'].each do |tags|
+      defaults = TagDefaults.new tags
+      AdditionalTag.validate_scoped_tags defaults, :default_tags
 
-    assert_equal [:default_tags], defaults.errors.attribute_names
+      assert_equal [:default_tags], defaults.errors.attribute_names, tags.inspect
+    end
   end
 
   def test_group_value
