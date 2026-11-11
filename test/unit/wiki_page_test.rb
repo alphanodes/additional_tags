@@ -122,6 +122,19 @@ class WikiPageTest < AdditionalTags::TestCase
     assert_equal 4, WikiPage.with_tags_scope(project: projects(:projects_002)).count
   end
 
+  # Existing conflicting scoped tags do not block saving other changes, they
+  # are only checked when the tags change
+  def test_scoped_tags_of_the_same_scope_are_only_checked_when_tags_change
+    @page.tag_list = %w[Foo::1 Foo::2]
+
+    assert_not @page.valid?
+
+    @page.save! validate: false
+    @page.reload
+
+    assert_predicate @page, :valid?
+  end
+
   # Unlike Issue, WikiPage does not define reload itself - the override would be
   # reached through include as well. The tag state must be dropped all the same,
   # so this pins the behaviour for the second entity additional_tags makes

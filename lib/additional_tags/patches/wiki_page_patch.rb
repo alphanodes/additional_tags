@@ -109,8 +109,9 @@ module AdditionalTags
           self.tag_list = AdditionalTag.sort_tags tag_list
         end
 
+        # Only on changes, pages saved before the check stay savable
         def validate_tags
-          AdditionalTag.validate_scoped_tags self
+          AdditionalTag.validate_scoped_tags self if tag_list_changed?
         end
       end
     end
