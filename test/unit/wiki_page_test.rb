@@ -128,6 +128,7 @@ class WikiPageTest < AdditionalTags::TestCase
     @page.tag_list = %w[Foo::1 Foo::2]
 
     assert_not @page.valid?
+    assert_equal [:tag_list], @page.errors.attribute_names
 
     @page.save! validate: false
     @page.reload
