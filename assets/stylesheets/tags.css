@@ -39,13 +39,16 @@ span.additional-tag-label-color.additionals-select-pill:has(> .tag-group-value) 
 
 td.tags span.additional-tag-label-color {
   display: inline-block;
-  line-height: normal;
   margin: 2px !important;
 }
 
+/* a pill has a line of its own: not the one of its context (a heading, a
+   table), and not the "normal" one of the font, which differs between fonts
+   and browsers. With its border it is as high as the line of a form control,
+   so it fits into a select field without making it higher. */
 .additional-tag-label-color {
   padding: 0 5px;
-  line-height: initial;
+  line-height: calc(var(--a-control-line-height) - 2px);
   font-size: var(--a-font-size-xs) !important;
   border: 1px solid rgb(0 0 0 / 20%);
   border-radius: 0.75rem;
