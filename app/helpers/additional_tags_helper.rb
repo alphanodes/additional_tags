@@ -17,7 +17,7 @@ module AdditionalTagsHelper
   # The entities with tags, by the type name of the API. Each names its class,
   # which answers available_tags. Only a type whose available_tags is limited
   # to what the user may see marks itself respects_visibility: the others
-  # (e.g. holidays) are listed for admins only.
+  # are listed for admins only.
   def additional_tag_types
     return @additional_tag_types if defined? @additional_tag_types
 

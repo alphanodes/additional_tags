@@ -105,5 +105,44 @@ module ApiTest
 
       assert_response :unprocessable_content
     end
+
+    def test_get_additional_tags_json_should_list_type_without_visibility_for_admins_only
+      with_admin_only_tag_type do
+        get '/additional_tags.json',
+            params: { type: 'admin_only' },
+            headers: credentials('dlopper', 'foo')
+
+        assert_response :forbidden
+
+        get '/additional_tags.json',
+            params: { type: 'admin_only' },
+            headers: credentials('admin')
+
+        assert_response :success
+        assert_equal 'Issue', response.parsed_body['tag_type']
+      end
+    end
+
+    private
+
+    # Registers a tag type without respects_visibility, as a plugin does for
+    # entities whose available_tags ignores the visibility of single entries.
+    # The listener is removed again, so no other test sees the type.
+    def with_admin_only_tag_type
+      Redmine::Hook.add_listener AdminOnlyTagTypeListener
+      yield
+    ensure
+      Redmine::Hook.class_variable_get(:@@listener_classes).delete AdminOnlyTagTypeListener
+      Redmine::Hook.clear_listeners_instances
+    end
+  end
+
+  # Not a Redmine::Hook::Listener: subclasses register themselves for all tests
+  class AdminOnlyTagTypeListener
+    include Singleton
+
+    def helper_additional_manageable_tag_columns(context = {})
+      context[:columns][:admin_only] = { label: 'Admin only', klass: Issue }
+    end
   end
 end
