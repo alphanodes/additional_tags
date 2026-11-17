@@ -14,25 +14,38 @@ module AdditionalTagsHelper
     AdditionalTag.sort_tags AdditionalTag.where({})
   end
 
-  def manageable_tag_columns
-    return @manageable_tag_columns if defined? @manageable_tag_columns
+  # The entities with tags, by the type name of the API. Each names its class,
+  # which answers available_tags. Only a type whose available_tags is limited
+  # to what the user may see marks itself respects_visibility: the others
+  # (e.g. holidays) are listed for admins only.
+  def additional_tag_types
+    return @additional_tag_types if defined? @additional_tag_types
 
-    columns = {}
+    types = {}
 
     if AdditionalTags.setting? :active_issue_tags
-      columns[:issue] = { label: l(:label_issue_plural),
-                          tag_controller: :issues,
-                          counts: Issue.available_tags.to_h { |tag| [tag.id, tag.count] } }
+      types[:issue] = { label: l(:label_issue_plural),
+                        klass: Issue,
+                        tag_controller: :issues,
+                        respects_visibility: true }
     end
 
     if AdditionalTags.setting? :active_wiki_tags
-      columns[:wiki] = { label: l(:label_wiki),
-                         counts: WikiPage.available_tags.to_h { |tag| [tag.id, tag.count] } }
+      types[:wiki] = { label: l(:label_wiki),
+                       klass: WikiPage,
+                       respects_visibility: true }
     end
 
-    call_hook(:helper_additional_manageable_tag_columns, columns:)
+    call_hook :helper_additional_manageable_tag_columns, columns: types
 
-    @manageable_tag_columns = columns
+    @additional_tag_types = types
+  end
+
+  # The tag types with the number of entries per tag, for the tag management
+  def manageable_tag_columns
+    @manageable_tag_columns ||= additional_tag_types.transform_values do |type|
+      type.merge counts: type[:klass].available_tags.to_h { |tag| [tag.id, tag.count] }
+    end
   end
 
   def manageable_tag_column_values(tag)

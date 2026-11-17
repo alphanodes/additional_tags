@@ -45,6 +45,8 @@ module AdditionalTags
 
         def available_tags(**options)
           options[:permission] ||= :view_issue_tags
+          # No tags of issues the user may not see (private, own issues only)
+          options[:visible_condition] = true
           tags = AdditionalTag.available_tags self, **options
           return tags unless options[:open_issues_only]
 

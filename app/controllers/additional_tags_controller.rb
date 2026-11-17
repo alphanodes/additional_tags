@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class AdditionalTagsController < ApplicationController
-  before_action :require_admin
+  before_action :require_admin, except: :index
   before_action :find_tag, only: %i[edit update]
   before_action :bulk_find_tags, only: %i[context_menu merge destroy]
+  before_action :find_tag_project, only: :index
   before_action :set_tag_list_path
 
   helper :additional_tags_issues
@@ -13,18 +14,18 @@ class AdditionalTagsController < ApplicationController
 
   # used by api calls
   def index
-    type_info = manageable_tag_columns.detect { |m| m.first.to_s == params[:type] } if params[:type].present?
-    return render_invalid_tag_type if type_info.nil?
+    # The tags of the page are on the admin tag management
+    return redirect_to @tag_list_path unless api_request?
 
-    klass = type_info.first.to_s.camelize.constantize
-    return render_invalid_tag_type unless klass.respond_to? :available_tags
+    tag_type = additional_tag_types.find { |name, _type| name.to_s == params[:type] }&.last if params[:type].present?
+    return render_invalid_tag_type if tag_type.nil?
+    return deny_access unless User.current.admin? || tag_type[:respects_visibility]
 
-    @tags = klass.available_tags.to_a
+    @tags = tag_type[:klass].available_tags(project: @project).to_a
     @count = @tags.count
-    @tag_type = klass.name
+    @tag_type = tag_type[:klass].name
 
     respond_to do |format|
-      format.html { redirect_to @tag_list_path }
       format.api
     end
   end
@@ -82,6 +83,17 @@ class AdditionalTagsController < ApplicationController
       format.html { render_error message:, status: 422 }
       format.api { render_api_errors message }
     end
+  end
+
+  # Limits the list to the tags of a project and its subprojects (as configured)
+  def find_tag_project
+    return if params[:project_id].blank?
+
+    # Project.find takes the identifier as well, a relation does not
+    @project = Project.find params[:project_id]
+    render_404 unless @project.visible?
+  rescue ActiveRecord::RecordNotFound
+    render_404
   end
 
   def set_tag_list_path

@@ -24,6 +24,8 @@ module AdditionalTags
         def available_tags(**options)
           options[:project_join] = project_joins
           options[:permission] ||= :view_wiki_pages
+          # Core has no visibility of single wiki pages, a plugin may add one
+          options[:visible_condition] = true if respond_to? :visible_condition
           AdditionalTag.available_tags self, **options
         end
 

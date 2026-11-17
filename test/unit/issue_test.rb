@@ -22,6 +22,19 @@ class IssueTest < AdditionalTags::TestCase
     assert_equal 5, Issue.available_tags.to_a.size
   end
 
+  # A role that sees only non-private issues does not get the tags of a
+  # private issue of another author
+  def test_available_tags_skip_private_issues_the_user_may_not_see
+    prepare_tests
+    user = users :users_003
+    issue = Issue.generate! project: projects(:projects_001), author: users(:users_002), is_private: true
+    issue.update! tag_list: %w[private-only]
+
+    assert_not issue.visible?(user)
+    assert_not_includes Issue.available_tags(user:).map(&:name), 'private-only'
+    assert_includes Issue.available_tags(user: users(:users_002)).map(&:name), 'private-only'
+  end
+
   def test_open_issue_tags
     assert_operator Issue.available_tags(open_issues_only: true).to_a.size, :<, Issue.available_tags.to_a.size
   end

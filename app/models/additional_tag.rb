@@ -98,11 +98,10 @@ class AdditionalTag < ApplicationRecord
                 end
       end
 
-      if options[:permission]
-        scope = scope.where tag_access(options[:permission], user, skip_pre_condition: options[:skip_pre_condition])
-      elsif options[:visible_condition]
-        scope = scope.where klass.visible_condition(user)
-      end
+      # Both apply together: the permission to see the tags of a project and
+      # the visibility of the single entry (e.g. private issues)
+      scope = scope.where tag_access(options[:permission], user, skip_pre_condition: options[:skip_pre_condition]) if options[:permission]
+      scope = scope.where klass.visible_condition(user) if options[:visible_condition]
 
       # @TODO: this should be activated and replace next line
       #        Additionals::EntityMethodsGlobal should be included for this

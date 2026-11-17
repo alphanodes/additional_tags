@@ -23,6 +23,8 @@
 - Setting issue tags always requires the permission to edit tags, the permission to create tags only adds new ones, also via bulk edit and REST API
 - New tags can only be entered with the permission to create tags
 - Scoped tags of the same scope are checked in every tag field whenever the tags change, independent of the user, and only then: issues and wiki pages with conflicting tags stay savable
+- Tag filters, tag suggestions and tag lists only show tags of issues and wiki pages the user may see, e.g. no tags of private issues of others
+- REST API `/additional_tags.json` lists the tags for users without admin rights too, limited to what they may see, optionally of one project (`project_id`), and works for wiki and other entity types again
 - Issue import keeps existing tags for users who may only use existing tags
 - Tags without colors use the CSS class `additional-tag-label` instead of `tag-label`, which other plugins style with their own pill design
 - Add Ukrainian, Simplified Chinese and Traditional Chinese translations
