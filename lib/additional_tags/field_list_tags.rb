@@ -4,6 +4,10 @@ module AdditionalTags
   # The tags filter of a list macro (Additionals::FieldList): tags=TAG with the
   # operators and keywords of every other filter of the list. A list includes
   # it and hands filters named tags_filter? to filter_by_tags.
+  #
+  # Every tag of a listed record is asked for, so a list over records whose
+  # tags need a permission of their own (the tags of issues, for example) has
+  # to check it before it offers the filter.
   module FieldListTags
     TAGS_FILTER = 'tags'
 
