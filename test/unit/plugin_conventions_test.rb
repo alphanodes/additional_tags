@@ -36,6 +36,11 @@ class PluginConventionsTest < AdditionalTags::TestCase
     assert_empty RedminePluginKit::Extensions.undeclared_dirs(Redmine::Plugin.find(:additional_tags).directory)
   end
 
+  # An option of a permission swallowed by its actions fails silently
+  def test_permission_options_take_effect
+    assert_permission_options_applied 'additional_tags'
+  end
+
   # Whether another plugin is there is asked through AdditionalsPlugin, at load
   # time with force: true
   def test_plugin_checks_go_through_additionals
